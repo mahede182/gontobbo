@@ -1,6 +1,10 @@
 export const enTranslations = {
   common: {
     back: "Back",
+    increment: "Increment",
+    decrement: "Decrement",
+    reset: "Reset",
+    lang: "English",
   },
   auth: {
     signIn: "Sign In",

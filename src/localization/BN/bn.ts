@@ -1,6 +1,10 @@
 export const bnTranslations = {
   common: {
     back: "পিছনে",
+    increment: "বৃদ্ধি",
+    decrement: "হ্রাস",
+    reset: "রিসেট",
+    lang: "বাংলা",
   },
   auth: {
     signIn: "সাইন ইন করুন",
