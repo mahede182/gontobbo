@@ -15,4 +15,6 @@ export const colors = {
 
   dropdownBg: "#f0f0f0",
   dropdownBorder: "#cccccc",
+
+  sloganColor: "#666666"
 };

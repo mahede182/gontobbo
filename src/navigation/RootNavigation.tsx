@@ -3,6 +3,7 @@ import FavouriteScreens from "../screens/Favourite";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./TabNavigation";
+import AuthNavigation from "./AuthNavigation";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -30,7 +31,12 @@ const RootNavigation = () => {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
-          name="TAB"
+          name="NONE"
+          component={AuthNavigation}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="HOME"
           component={TabNavigation}
         />
         <Stack.Screen

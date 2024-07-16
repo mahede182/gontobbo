@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     alignSelf: "center",
-    width: "80%",
+    width: "50%",
   },
   overlay: {
     flex: 1,
