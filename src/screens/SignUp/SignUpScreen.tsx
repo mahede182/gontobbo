@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 type Props = {};
 
-const SignUpScreen = (props: Props) => {
+const SignUpScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,6 +22,7 @@ const SignUpScreen = (props: Props) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigation = useNavigation();
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -31,13 +33,15 @@ const SignUpScreen = (props: Props) => {
           <Icon name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
-          Sign <Text style={styles.headerTitleHighlight}>up</Text> with Email
+          {t("signIn.sign")}{" "}
+          <Text style={styles.headerTitleHighlight}>{t("signIn.up")}</Text>{" "}
+          {t("signIn.withEmail")}
         </Text>
       </View>
 
       <View style={styles.formContainer}>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Email Address</Text>
+          <Text style={styles.label}>{t("signIn.enterPassword")}</Text>
           <TextInput
             style={styles.input}
             placeholder="Email Address"
@@ -48,7 +52,7 @@ const SignUpScreen = (props: Props) => {
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Enter Password</Text>
+          <Text style={styles.label}>{t("signIn.enterPassword")}</Text>
           <View style={styles.passwordContainer}>
             <TextInput
               style={styles.passwordInput}
@@ -68,7 +72,7 @@ const SignUpScreen = (props: Props) => {
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Confirm Password</Text>
+          <Text style={styles.label}>{t("signIn.confirmPassword")}</Text>
           <View style={styles.passwordContainer}>
             <TextInput
               style={styles.passwordInput}
@@ -90,7 +94,7 @@ const SignUpScreen = (props: Props) => {
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Phone Number</Text>
+          <Text style={styles.label}>{t("signIn.phoneNumber")}</Text>
           <TextInput
             style={styles.input}
             placeholder="Phone Number"
@@ -101,15 +105,15 @@ const SignUpScreen = (props: Props) => {
         </View>
 
         <TouchableOpacity style={styles.signUpButton}>
-          <Text style={styles.signUpButtonText}>Sign up</Text>
+          <Text style={styles.signUpButtonText}>{t("signIn.signUp")}</Text>
         </TouchableOpacity>
 
         <View style={styles.signInContainer}>
-          <Text style={styles.signInText}>Have an account? </Text>
+          <Text style={styles.signInText}>{t("signIn.haveAnAccount")}</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("EMAIL_SIGN_IN")}
           >
-            <Text style={styles.signInLink}>Sign In</Text>
+            <Text style={styles.signInLink}>{t("signIn.singIn")}</Text>
           </TouchableOpacity>
         </View>
       </View>

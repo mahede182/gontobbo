@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
 import Logo from "../../components/Logo";
 import Bg from "../../assets/Bg_texture.png";
 import { useTranslation } from "react-i18next";
@@ -16,6 +11,8 @@ import gamilIcon from "../../assets/signIn/gmailIcon.png";
 import emailIcon from "../../assets/signIn/emailIcon.png";
 import Dropdown from "../../components/Dropdown";
 import { languageData } from "../../data/LanguegeData";
+import { RestyleTransparent } from "../../components/RestyleTransparent";
+import RestyleButton from "../../components/RestyleButton";
 
 type Props = {};
 
@@ -25,29 +22,34 @@ const SigninScreen = (props: Props) => {
   return (
     <ImageBackground source={Bg} style={styles.container}>
       <Box position="absolute" right={0}>
-        <Dropdown data={languageData} label={t("common.lang")} />
+        <RestyleTransparent opacity={0.25}>
+          <Dropdown data={languageData} label={t("common.lang")} />
+        </RestyleTransparent>
       </Box>
       <Logo />
 
       <Box style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, styles.appleButton]}>
-          <Image source={appleIcon} style={styles.iconContainer} />
-          <RestyleText style={styles.buttonRestyleText}>
-            {t("signIn.continueWithApple")}
-          </RestyleText>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.facebookButton]}>
-          <Image source={facebookIcon} style={styles.iconContainer} />
-          <RestyleText style={styles.buttonRestyleText}>
-            {t("signIn.continueWithFacebook")}
-          </RestyleText>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.gmailButton]}>
-          <Image source={gamilIcon} style={styles.iconContainer} />
-          <RestyleText style={styles.buttonRestyleText}>
-            {t("signIn.continueWithGmail")}
-          </RestyleText>
-        </TouchableOpacity>
+        {/* ::: SignIn with Apple Button ::: */}
+        <RestyleButton
+          iconSrc={appleIcon}
+          label={t("signIn.continueWithApple")}
+          onPress={() => alert(t("signIn.continueWithApple"))}
+          style={[styles.button, styles.appleButton]}
+        />
+        {/* ::: SignIn with Apple facebook Button ::: */}
+        <RestyleButton
+          iconSrc={facebookIcon}
+          label={t("signIn.continueWithFacebook")}
+          onPress={() => alert(t("signIn.continueWithFacebook"))}
+          style={[styles.button, styles.facebookButton]}
+        />
+        {/* ::: SignIn with Apple Gmail Button ::: */}
+        <RestyleButton
+          iconSrc={gamilIcon}
+          label={t("signIn.continueWithGmail")}
+          onPress={() => alert(t("signIn.continueWithGmail"))}
+          style={[styles.button, styles.gmailButton]}
+        />
         <Box style={styles.divider}>
           <Box style={styles.dividerLine} />
           <RestyleText style={styles.dividerRestyleText}>
@@ -55,15 +57,13 @@ const SigninScreen = (props: Props) => {
           </RestyleText>
           <Box style={styles.dividerLine} />
         </Box>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("EMAIL_SIGN_IN")}
+        {/* Sign in with Email Button */}
+        <RestyleButton
+          iconSrc={emailIcon}
+          label={t("signIn.signInWithEmail")}
+          onPress={() => alert(t("signIn.continueWithGmail"))}
           style={[styles.button, styles.emailButton]}
-        >
-          <Image source={emailIcon} style={styles.iconContainer} />
-          <RestyleText style={styles.buttonRestyleText}>
-            {t("signIn.signInWithEmail")}
-          </RestyleText>
-        </TouchableOpacity>
+        />
         <Box style={styles.linkContainer}>
           <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
             <RestyleText style={styles.linkRestyleText}>
@@ -77,7 +77,6 @@ const SigninScreen = (props: Props) => {
           </TouchableOpacity>
         </Box>
       </Box>
-
       <Box style={styles.footer}>
         <RestyleText style={styles.footerRestyleText}>
           {t("signIn.termsAndConditions")}

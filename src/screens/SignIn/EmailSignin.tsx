@@ -8,21 +8,23 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 type Props = {};
 
-const EmailSignin = (props: Props) => {
+const EmailSignin: React.FC<Props> = (props: Props): JSX.Element => {
   const [email, setEmail] = useState("gontobbo@gmail.com");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Sign in with Email</Text>
+        <Text style={styles.headerTitle}>{t("signIn.signInWithEmail")}</Text>
       </View>
 
       <View style={styles.formContainer}>

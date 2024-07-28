@@ -20,4 +20,9 @@ export const textVariants = {
     fontSize: 36,
     lineHeight: 40,
   },
+  buttonLabel: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "600",
+  },
 };
