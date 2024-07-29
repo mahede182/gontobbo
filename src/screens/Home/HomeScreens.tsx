@@ -8,6 +8,8 @@ import { toggleMachine } from "@/machine/toggleMachine";
 import "@/machine/counterMachine";
 import i18n from "@/localization/i18n";
 import { useTranslation } from "react-i18next";
+import Icon from "@expo/vector-icons/Ionicons";
+import { colors } from "@/theme/colors";
 
 type Props = {};
 
@@ -33,52 +35,10 @@ const HomeScreens: React.FC<Props> = (props: Props): JSX.Element => {
     return i18n.language === "bn" ? "en" : "bn";
   };
   return (
-    <View style={styles.container}>
-      <RestyleText
-        marginTop="ten"
-        padding="medium"
-        fontSize={21}
-        onPress={() => navigation.navigate("FAVOURITE")}
-        style={{ backgroundColor: "tomato" }}
-      >
-        {t("heartBeats.selectStartAndEnd")}
-      </RestyleText>
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="center"
-        backgroundColor="greenLight"
-      >
-        <Image
-          height={80}
-          width={80}
-          borderRadius={50}
-          source={{ uri: imageUrl }}
-        />
-
-        <Box marginLeft="ten" bg="purpleDark">
-          <RestyleText
-            fontSize={18}
-            color="purpleLight"
-          >{`Id: ${1}`}</RestyleText>
-          <RestyleText fontSize={18}>{`Name: ${name}`}</RestyleText>
-          <RestyleText fontSize={18}>{`Email: ${email}`}</RestyleText>
-          <RestyleText fontSize={18}>{state.context.toggle}</RestyleText>
-        </Box>
-      </Box>
-      <RestyleText
-        marginTop="ten"
-        padding="medium"
-        fontSize={21}
-        onPress={() => i18n.changeLanguage()}
-        style={{ backgroundColor: "tomato" }}
-      >
-        {t("common.lang")}
-      </RestyleText>
-      <RestyleText>{t("common.lang")}</RestyleText>
-      <RestyleText>{t("auth.createAccount")}</RestyleText>
-      <RestyleText color="greenLight">{t("common.increment")}</RestyleText>
-    </View>
+    <Box padding="twenty" flexDirection="row" justifyContent="space-between">
+      <Icon name="menu" size={24} color={colors.black} />
+      <Icon name="notifications" size={24} color={colors.black} />
+    </Box>
   );
 };
 

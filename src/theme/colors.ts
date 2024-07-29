@@ -17,4 +17,7 @@ export const colors = {
   dropdownBorder: "#cccccc",
 
   sloganColor: "#666666",
+
+  tabSelected: "#165E9F",
+  tabUnselected: "#8E8E8E",
 };

@@ -4,12 +4,10 @@ import HomeScreens from "@/screens/Home";
 import TravelScreens from "@/screens/Travel";
 import WishListScreens from "@/screens/Wishlist";
 import ProfileScreen from "@/screens/Profile";
-import {
-  Ionicons,
-  FontAwesome,
-  FontAwesome6,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { Entypo, Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
+import { colors } from "@/theme/colors";
+import { Image } from "react-native";
+import Percent from "@/assets/percent.png";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -44,12 +42,12 @@ const TabNavigation = (props: Props) => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "rgba(0,0,0, 0.2)",
           borderTopWidth: 0,
           position: "absolute",
           bottom: 0,
           left: 0,
           shadowColor: "transparent",
+          paddingVertical: 5,
         },
         tabBarActiveTintColor: "white",
         tabBarHideOnKeyboard: true,
@@ -61,10 +59,10 @@ const TabNavigation = (props: Props) => {
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? "home" : "home-outline"}
-              size={32}
-              color={focused ? "#0A906E" : "#000000"}
+            <Entypo
+              name="home"
+              size={24}
+              color={focused ? colors.tabSelected : colors.tabUnselected}
             />
           ),
         }}
@@ -75,10 +73,10 @@ const TabNavigation = (props: Props) => {
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <FontAwesome
-              name={focused ? "plane" : "plane"}
-              size={32}
-              color={focused ? "#0A906E" : "#000000"}
+            <Ionicons
+              name="planet-outline"
+              size={24}
+              color={focused ? colors.tabSelected : colors.tabUnselected}
             />
           ),
         }}
@@ -89,10 +87,23 @@ const TabNavigation = (props: Props) => {
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <FontAwesome6
-              name="clipboard-list"
-              size={32}
-              color={focused ? "#0A906E" : "#000000"}
+            <Image
+              source={Percent}
+              tintColor={focused ? colors.tabSelected : colors.tabUnselected}
+            />
+          ),
+        }}
+        component={WishListScreens}
+      />
+      <Tab.Screen
+        name="FAVOURITE"
+        options={{
+          title: "",
+          tabBarIcon: ({ focused }) => (
+            <AntDesign
+              name="hearto"
+              size={24}
+              color={focused ? colors.tabSelected : colors.tabUnselected}
             />
           ),
         }}
@@ -103,10 +114,10 @@ const TabNavigation = (props: Props) => {
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="assignment-ind"
-              size={32}
-              color={focused ? "#0A906E" : "#000000"}
+            <FontAwesome
+              name="user-o"
+              size={24}
+              color={focused ? colors.tabSelected : colors.tabUnselected}
             />
           ),
         }}
