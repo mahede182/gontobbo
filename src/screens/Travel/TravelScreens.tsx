@@ -1,8 +1,8 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import Dropdown from "../../components/Dropdown";
+import Dropdown from "@/components/Dropdown";
 import { useTranslation } from "react-i18next";
-import { languageData } from "../../data/LanguegeData";
+import { languageData } from "@/data/LanguegeData";
 
 type Props = {};
 

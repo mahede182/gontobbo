@@ -1,9 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreens from "../screens/Home";
-import TravelScreens from "../screens/Travel";
-import WishListScreens from "../screens/Wishlist";
-import ProfileScreen from "../screens/Profile";
+import HomeScreens from "@/screens/Home";
+import TravelScreens from "@/screens/Travel";
+import WishListScreens from "@/screens/Wishlist";
+import ProfileScreen from "@/screens/Profile";
 import {
   Ionicons,
   FontAwesome,

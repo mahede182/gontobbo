@@ -1,4 +1,4 @@
-import FavouriteScreens from "../screens/Favourite";
+import FavouriteScreens from "@/screens/Favourite";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";

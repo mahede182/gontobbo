@@ -1,12 +1,12 @@
 import { Image, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Box, RestyleText } from "../../theme";
+import { Box, RestyleText } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
-import { fetchUser } from "../../utils/axios";
+import { fetchUser } from "@/utils/axios";
 import { useMachine } from "@xstate/react";
-import { toggleMachine } from "../../machine/toggleMachine";
-import "../../machine/counterMachine";
-import i18n from "../../localization/i18n";
+import { toggleMachine } from "@/machine/toggleMachine";
+import "@/machine/counterMachine";
+import i18n from "@/localization/i18n";
 import { useTranslation } from "react-i18next";
 
 type Props = {};

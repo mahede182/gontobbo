@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useEffect } from "react";
-import { Box, RestyleText } from "../../theme";
-import { counterMachine } from "../../machine/counterMachine";
+import { Box, RestyleText } from "@/theme";
+import { counterMachine } from "@/machine/counterMachine";
 import { useMachine } from "@xstate/react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";

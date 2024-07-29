@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-import GontobboLogo from "../assets/logo.png";
+import GontobboLogo from "@/assets/logo.png";
 import { Box, RestyleText } from "../theme";
 import { useTranslation } from "react-i18next";
 

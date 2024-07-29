@@ -14,8 +14,8 @@ import {
   StyleSheet,
   ImageSourcePropType,
 } from "react-native";
-import { Theme } from "../@types/theme.type";
-import { Box, RestyleText } from "../theme";
+import { Theme } from "@/@types/theme.type";
+import { Box, RestyleText } from "@/theme";
 
 type RestyleProps = SpacingProps<Theme> &
   BorderProps<Theme> &

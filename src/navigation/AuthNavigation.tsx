@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import SignIn from "../screens/SignIn";
-import EmailSignin from "../screens/SignIn/EmailSignin";
-import SignUpScreen from "../screens/SignUp";
+import EmailSignin from "@/screens/SignIn/EmailSignin";
+import SignUpScreen from "@/screens/SignUp";
+import SignIn from "@/screens/SignIn";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

@@ -1,5 +1,5 @@
-import { spacing } from "../theme/spacing";
-import { textVariants } from "../theme/textVariants";
+import { spacing } from "@/theme/spacing";
+import { textVariants } from "@/theme/textVariants";
 
 export const COLORS = {
   purpleLight: "#8C6FF7",

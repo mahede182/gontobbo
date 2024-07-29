@@ -2,12 +2,13 @@ import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import theme from "./src/theme";
 import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
-import "./src/localization/i18n";
 import "react-native-reanimated";
 import RootNavigation from "./src/navigation/RootNavigation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { customFontsToLoad } from "./src/theme/typography";
 import { useFonts } from "expo-font";
+import { I18nextProvider } from "react-i18next";
+import i18next from "i18next";
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>;
@@ -30,7 +31,9 @@ export default function App(props: AppProps) {
     <SafeAreaView style={styles.container}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <RestyleProvider theme={theme}>
-          <RootNavigation />
+          <I18nextProvider i18n={i18next}>
+            <RootNavigation />
+          </I18nextProvider>
         </RestyleProvider>
       </GestureHandlerRootView>
     </SafeAreaView>

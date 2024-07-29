@@ -2,7 +2,7 @@ import React from "react";
 import { TextInput, TextInputProps } from "react-native";
 import { BoxProps } from "@shopify/restyle";
 import { Box, RestyleText as Text } from "../theme";
-import { Theme } from "../@types/theme.type";
+import { Theme } from "@/@types/theme.type";
 
 interface InputProps extends TextInputProps, BoxProps<Theme> {
   label?: string;

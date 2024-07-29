@@ -8,9 +8,9 @@ import {
   Animated,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import i18n from "../localization/i18n";
+import i18n from "@/localization/i18n";
 import { Box, RestyleText } from "../theme";
-import { colors } from "../theme/colors";
+import { colors } from "@/theme/colors";
 
 type DropdownItem = {
   label: string;
