@@ -10,6 +10,8 @@ export const colors = {
   black: "#0B0B0B",
   white: "#F0F2F3",
 
+  greyLight: "#E0E0E0",
+
   red: "#DC3D24",
   redLight: "#E7A2A3",
 
@@ -20,6 +22,8 @@ export const colors = {
 
   tabSelected: "#165E9F",
   tabUnselected: "#8E8E8E",
+
+  tabBarBg: "#FAFAFA",
 } as const;
 
 export type Palette = typeof colors;

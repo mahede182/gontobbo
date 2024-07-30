@@ -6,11 +6,11 @@ import { languageData } from "@/data/LanguegeData";
 
 type Props = {};
 
-const TravelScreens = (props: Props) => {
+const ExploreScreens = (props: Props) => {
   const { t } = useTranslation();
   return (
     <SafeAreaView style={styles.container}>
-      <Text>TravelScreens</Text>
+      <Text>ExploreScreens</Text>
       <View style={{ marginTop: 50 }}>
         <Dropdown
           label={`Current Languege: ${t("common.lang")}`}
@@ -21,7 +21,7 @@ const TravelScreens = (props: Props) => {
   );
 };
 
-export default TravelScreens;
+export default ExploreScreens;
 
 const styles = StyleSheet.create({
   container: {

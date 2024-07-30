@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 type Props = {};
 
-const FavouriteScreens: React.FC<Props> = (): JSX.Element => {
+const FavouriteScreen: React.FC<Props> = (): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [state, send] = useMachine(counterMachine);
@@ -60,7 +60,7 @@ const FavouriteScreens: React.FC<Props> = (): JSX.Element => {
   );
 };
 
-export default FavouriteScreens;
+export default FavouriteScreen;
 
 const styles = StyleSheet.create({
   container: {

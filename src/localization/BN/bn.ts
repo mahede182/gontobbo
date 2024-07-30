@@ -5,6 +5,11 @@ export const bnTranslations = {
     back: "ফিরে যান",
     lang: "বাংলা",
     or: "অথবা",
+    home: "হোম",
+    explore: "অন্বেষণ",
+    offers: "অফার",
+    wishlist: "ইচ্ছার তালিকা",
+    profile: "প্রোফাইল",
   },
   signIn: {
     continueWithApple: "অ্যাপল দিয়ে চালিয়ে যান",

@@ -1,4 +1,4 @@
 // export screen
-export { default } from "./HomeScreens";
+export { default } from "./HomeScreen";
 
 // export component

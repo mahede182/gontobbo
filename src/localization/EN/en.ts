@@ -5,6 +5,11 @@ export const enTranslations = {
     back: "Back",
     lang: "English",
     or: "Or",
+    home: "Home",
+    explore: "Explore",
+    offers: "Offers",
+    wishlist: "Wishlist",
+    profile: "Profile",
   },
   signIn: {
     sign: "Sign",

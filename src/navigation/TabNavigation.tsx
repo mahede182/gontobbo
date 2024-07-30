@@ -1,13 +1,16 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreens from "@/screens/Home";
-import TravelScreens from "@/screens/Travel";
+import TravelScreens from "@/screens/Explore";
 import WishListScreens from "@/screens/Wishlist";
 import ProfileScreen from "@/screens/Profile";
-import { Entypo, Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
 import { colors } from "@/theme/colors";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { images } from "@/theme/images";
+import { Box, RestyleText } from "@/theme";
+import { typography } from "@/theme/typography";
+import OfferScreen from "@/screens/Offer";
+import { useTranslation } from "react-i18next";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -22,7 +25,8 @@ import { images } from "@/theme/images";
 
 export type TabStackParamList = {
   HOME: undefined;
-  TRAVEL: undefined;
+  EXPLORE: undefined;
+  OFFER: undefined;
   WISHLIST: undefined;
   PROFILE: undefined;
 };
@@ -36,6 +40,7 @@ export type TabStackParamList = {
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigation = (props: Props) => {
+  const { t } = useTranslation();
   return (
     <Tab.Navigator
       initialRouteName="HOME"
@@ -47,7 +52,12 @@ const TabNavigation = (props: Props) => {
           bottom: 0,
           left: 0,
           shadowColor: "transparent",
-          paddingVertical: 5,
+          height: 60,
+          paddingHorizontal: 10,
+          backgroundColor: colors.tabBarBg,
+        },
+        tabBarItemStyle: {
+          marginTop: 25,
         },
         tabBarActiveTintColor: "white",
         tabBarHideOnKeyboard: true,
@@ -59,52 +69,73 @@ const TabNavigation = (props: Props) => {
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="home"
-              size={24}
-              color={focused ? colors.tabSelected : colors.tabUnselected}
-            />
+            <Box alignItems={"center"} justifyContent={"center"}>
+              <Image
+                source={focused ? images.homeActive : images.home}
+                tintColor={focused ? colors.tabSelected : colors.tabUnselected}
+                style={{ height: 18, width: 18 }}
+              />
+              <RestyleText style={styles.title(focused)}>
+                {t("common.home")}
+              </RestyleText>
+            </Box>
           ),
         }}
         component={HomeScreens}
       />
       <Tab.Screen
-        name="TRAVEL"
+        name="EXPLORE"
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name="planet-outline"
-              size={24}
-              color={focused ? colors.tabSelected : colors.tabUnselected}
-            />
+            <Box alignItems={"center"} justifyContent={"center"}>
+              <Image
+                source={focused ? images.exploreActive : images.explore}
+                tintColor={focused ? colors.tabSelected : colors.tabUnselected}
+                style={{ height: 18, width: 22 }}
+              />
+              <RestyleText style={styles.title(focused)}>
+                {t("common.explore")}
+              </RestyleText>
+            </Box>
           ),
         }}
         component={TravelScreens}
+      />
+      <Tab.Screen
+        name="OFFERS"
+        options={{
+          title: "",
+          tabBarIcon: ({ focused }) => (
+            <Box alignItems={"center"} justifyContent={"center"}>
+              <Image
+                source={focused ? images.offerActive : images.offer}
+                tintColor={focused ? colors.tabSelected : colors.tabUnselected}
+                style={{ height: 18, width: 18 }}
+              />
+              <RestyleText style={styles.title(focused)}>
+                {t("common.offers")}
+              </RestyleText>
+            </Box>
+          ),
+        }}
+        component={OfferScreen}
       />
       <Tab.Screen
         name="WISHLIST"
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={images.percent}
-              tintColor={focused ? colors.tabSelected : colors.tabUnselected}
-            />
-          ),
-        }}
-        component={WishListScreens}
-      />
-      <Tab.Screen
-        name="FAVOURITE"
-        options={{
-          title: "",
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="hearto"
-              size={24}
-              color={focused ? colors.tabSelected : colors.tabUnselected}
-            />
+            <Box alignItems={"center"} justifyContent={"center"}>
+              <Image
+                source={focused ? images.wishlistActive : images.wishlist}
+                tintColor={focused ? colors.tabSelected : colors.tabUnselected}
+                style={{ height: 18, width: 22 }}
+              />
+              <RestyleText style={styles.title(focused)}>
+                {t("common.wishlist")}
+              </RestyleText>
+            </Box>
           ),
         }}
         component={WishListScreens}
@@ -114,11 +145,16 @@ const TabNavigation = (props: Props) => {
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <FontAwesome
-              name="user-o"
-              size={24}
-              color={focused ? colors.tabSelected : colors.tabUnselected}
-            />
+            <Box alignItems={"center"} justifyContent={"center"}>
+              <Image
+                source={focused ? images.profileActive : images.profile}
+                tintColor={focused ? colors.tabSelected : colors.tabUnselected}
+                style={{ height: 18, width: 18 }}
+              />
+              <RestyleText style={styles.title(focused)}>
+                {t("common.profile")}
+              </RestyleText>
+            </Box>
           ),
         }}
         component={ProfileScreen}
@@ -128,3 +164,13 @@ const TabNavigation = (props: Props) => {
 };
 
 export default TabNavigation;
+
+const styles = StyleSheet.create({
+  title: (focused: boolean) => ({
+    marginTop: 3,
+    fontFamily: focused ? typography.poppinsMedium : typography.poppinsRegular,
+    fontSize: 12,
+    fontWeight: focused ? "600" : "400",
+    color: focused ? colors.tabSelected : colors.tabUnselected,
+  }),
+});

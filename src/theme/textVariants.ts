@@ -25,4 +25,18 @@ export const textVariants = {
     fontSize: 18,
     fontWeight: "600",
   },
+  h2: {
+    fontSize: 20,
+    fontWeight: "bold",
+    lineHeight: 24,
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    lineHeight: 20,
+  },
+  caption: {
+    fontSize: 12,
+    lineHeight: 16,
+  },
 };
