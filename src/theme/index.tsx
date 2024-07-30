@@ -12,6 +12,7 @@ import {
 import { colors } from "./colors";
 import { spacing } from "./spacing";
 import { typography } from "./typography";
+import { images } from "./images";
 import { Theme } from "../@types/theme.type";
 
 export const theme: Theme = createTheme({
@@ -21,6 +22,7 @@ export const theme: Theme = createTheme({
   typography,
   textVariants,
   cardVariants,
+  images,
 });
 export const Box = createBox<Theme>();
 

@@ -1,14 +1,16 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-import GontobboLogo from "@/assets/logo.png";
 import { Box, RestyleText } from "../theme";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from "@/@types/theme.type";
 
 const Logo = () => {
   const { t } = useTranslation();
+  const { images } = useTheme<Theme>();
   return (
     <Box alignItems="center" marginTop="xxl">
-      <Image style={styles.logo} source={GontobboLogo} />
+      <Image style={styles.logo} source={images.appLogo} />
       <RestyleText fontWeight="bold" fontSize={24}>
         {t("common.gontobbo")}
       </RestyleText>

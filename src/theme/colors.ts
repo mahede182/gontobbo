@@ -20,4 +20,6 @@ export const colors = {
 
   tabSelected: "#165E9F",
   tabUnselected: "#8E8E8E",
-};
+} as const;
+
+export type Palette = typeof colors;

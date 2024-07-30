@@ -1,26 +1,24 @@
 import React from "react";
 import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
-import Logo from "../../components/Logo";
-import Bg from "../../assets/Bg_texture.png";
+import Logo from "@/components/Logo";
 import { useTranslation } from "react-i18next";
-import { Box, RestyleText } from "../../theme";
+import { Box, RestyleText } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
-import appleIcon from "../../assets/signIn/appleIcon.png";
-import facebookIcon from "../../assets/signIn/facebookIcon.png";
-import gamilIcon from "../../assets/signIn/gmailIcon.png";
-import emailIcon from "../../assets/signIn/emailIcon.png";
-import Dropdown from "../../components/Dropdown";
-import { languageData } from "../../data/LanguegeData";
-import { RestyleTransparent } from "../../components/RestyleTransparent";
-import RestyleButton from "../../components/RestyleButton";
+import Dropdown from "@/components/Dropdown";
+import { languageData } from "@/data/LanguegeData";
+import { RestyleTransparent } from "@/components/RestyleTransparent";
+import RestyleButton from "@/components/RestyleButton";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from "@/@types/theme.type";
 
 type Props = {};
 
 const SigninScreen = (props: Props) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { images } = useTheme<Theme>();
   return (
-    <ImageBackground source={Bg} style={styles.container}>
+    <ImageBackground source={images.backgroundTexture} style={styles.container}>
       <Box position="absolute" right={0}>
         <RestyleTransparent opacity={0.25}>
           <Dropdown data={languageData} label={t("common.lang")} />
@@ -29,23 +27,23 @@ const SigninScreen = (props: Props) => {
       <Logo />
 
       <Box style={styles.buttonContainer}>
-        {/* ::: SignIn with Apple Button ::: */}
+        {/* ::: SignIn with Button ::: */}
         <RestyleButton
-          iconSrc={appleIcon}
+          iconSrc={images.appleIcon}
           label={t("signIn.continueWithApple")}
           onPress={() => alert(t("signIn.continueWithApple"))}
           style={[styles.button, styles.appleButton]}
         />
-        {/* ::: SignIn with Apple facebook Button ::: */}
+        {/* ::: SignIn with facebook Button ::: */}
         <RestyleButton
-          iconSrc={facebookIcon}
+          iconSrc={images.fbIcon}
           label={t("signIn.continueWithFacebook")}
           onPress={() => alert(t("signIn.continueWithFacebook"))}
           style={[styles.button, styles.facebookButton]}
         />
-        {/* ::: SignIn with Apple Gmail Button ::: */}
+        {/* ::: SignIn with Gmail Button ::: */}
         <RestyleButton
-          iconSrc={gamilIcon}
+          iconSrc={images.gmailIcon}
           label={t("signIn.continueWithGmail")}
           onPress={() => alert(t("signIn.continueWithGmail"))}
           style={[styles.button, styles.gmailButton]}
@@ -59,7 +57,7 @@ const SigninScreen = (props: Props) => {
         </Box>
         {/* Sign in with Email Button */}
         <RestyleButton
-          iconSrc={emailIcon}
+          iconSrc={images.emailIcon}
           label={t("signIn.signInWithEmail")}
           onPress={() => alert(t("signIn.continueWithGmail"))}
           style={[styles.button, styles.emailButton]}

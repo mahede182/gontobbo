@@ -1,5 +1,5 @@
+import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useEffect } from "react";
 import { Box, RestyleText } from "@/theme";
 import { counterMachine } from "@/machine/counterMachine";
 import { useMachine } from "@xstate/react";
@@ -12,9 +12,6 @@ const FavouriteScreens: React.FC<Props> = (): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [state, send] = useMachine(counterMachine);
-  useEffect(() => {
-    console.log(state.context.count);
-  }, [state]);
   return (
     <View style={styles.container}>
       <RestyleText fontSize={21} onPress={() => navigation.navigate("TAB")}>

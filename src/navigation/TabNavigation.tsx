@@ -7,7 +7,7 @@ import ProfileScreen from "@/screens/Profile";
 import { Entypo, Ionicons, FontAwesome, AntDesign } from "@expo/vector-icons";
 import { colors } from "@/theme/colors";
 import { Image } from "react-native";
-import Percent from "@/assets/percent.png";
+import { images } from "@/theme/images";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -88,7 +88,7 @@ const TabNavigation = (props: Props) => {
           title: "",
           tabBarIcon: ({ focused }) => (
             <Image
-              source={Percent}
+              source={images.percent}
               tintColor={focused ? colors.tabSelected : colors.tabUnselected}
             />
           ),
