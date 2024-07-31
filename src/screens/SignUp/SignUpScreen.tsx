@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 
 type Props = {};
 
-const SignUpScreen: React.FC<Props> = (props: Props): JSX.Element => {
+const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

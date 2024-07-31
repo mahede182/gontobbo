@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 
 type Props = {};
 
-const EmailSignin: React.FC<Props> = (props: Props): JSX.Element => {
+const EmailSignin: React.FC<Props> = (props): JSX.Element => {
   const [email, setEmail] = useState("gontobbo@gmail.com");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +28,7 @@ const EmailSignin: React.FC<Props> = (props: Props): JSX.Element => {
       </View>
 
       <View style={styles.formContainer}>
-        <Text style={styles.label}>Email Address</Text>
+        <Text style={styles.label}>{t("signIn.emailAddress")}</Text>
         <TextInput
           style={styles.input}
           value={email}
@@ -36,7 +36,7 @@ const EmailSignin: React.FC<Props> = (props: Props): JSX.Element => {
           keyboardType="email-address"
         />
 
-        <Text style={styles.label}>Password</Text>
+        <Text style={styles.label}>{t("signIn.password")}</Text>
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.passwordInput}
@@ -54,13 +54,13 @@ const EmailSignin: React.FC<Props> = (props: Props): JSX.Element => {
         </View>
 
         <TouchableOpacity style={styles.signInButton}>
-          <Text style={styles.signInButtonText}>Sign In</Text>
+          <Text style={styles.signInButtonText}>{t("signIn.singIn")}</Text>
         </TouchableOpacity>
 
         <View style={styles.signUpContainer}>
-          <Text style={styles.signUpText}>Don't have an account? </Text>
+          <Text style={styles.signUpText}>{t("signIn.dontHaveAnAccount")}</Text>
           <TouchableOpacity>
-            <Text style={styles.signUpLink}>Sign Up</Text>
+            <Text style={styles.signUpLink}>{t("signIn.signUp")}</Text>
           </TouchableOpacity>
         </View>
       </View>

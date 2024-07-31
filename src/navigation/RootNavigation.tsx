@@ -2,7 +2,7 @@ import FavouriteScreens from "@/screens/Favourite";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import TabNavigation from "./TabNavigation";
+import TabNavigation, { TabStackParamList } from "./TabNavigation";
 import AuthNavigation from "./AuthNavigation";
 
 /**
@@ -19,7 +19,7 @@ import AuthNavigation from "./AuthNavigation";
 export type RootStackParamList = {
   HOME: undefined;
   FAVOURITE: undefined;
-  TAB: undefined;
+  TAB: TabStackParamList;
 };
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/

@@ -4,9 +4,9 @@ import Dropdown from "@/components/Dropdown";
 import { useTranslation } from "react-i18next";
 import { languageData } from "@/data/LanguegeData";
 
-type Props = {};
+interface Props {}
 
-const ExploreScreens = (props: Props) => {
+const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
   return (
     <SafeAreaView style={styles.container}>

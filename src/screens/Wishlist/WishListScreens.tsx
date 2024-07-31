@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 type Props = {};
 
-const WishListScreens = (props: Props) => {
+const WishListScreens: React.FC<Props> = (props): JSX.Element => {
   return (
     <View style={styles.container}>
       <Text>WishListScreens</Text>

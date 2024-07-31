@@ -1,6 +1,6 @@
 import React from "react";
 import { TextInput, TextInputProps, StyleSheet } from "react-native";
-import { BoxProps } from "@shopify/restyle";
+import { BoxProps, useTheme } from "@shopify/restyle";
 import { Box, RestyleText as Text } from "../theme";
 import { Theme } from "@/@types/theme.type";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,6 +17,7 @@ export const Input: React.FC<InputProps> = ({
   icon,
   ...props
 }) => {
+  const { colors } = useTheme<Theme>();
   return (
     <Box marginBottom="medium">
       {label && (
@@ -31,14 +32,14 @@ export const Input: React.FC<InputProps> = ({
         borderColor={error ? "red" : "greyLight"}
         borderRadius={8}
         padding="medium"
-        backgroundColor="white"
+        style={{ backgroundColor: "#FFFFFF" }}
       >
         {icon && (
           <Ionicons name={icon} size={24} color="#999" style={styles.icon} />
         )}
         <TextInput
           style={styles.input}
-          placeholderTextColor="#999"
+          placeholderTextColor={colors.greyLight3}
           {...props}
         />
       </Box>

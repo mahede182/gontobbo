@@ -21,10 +21,18 @@ export const bnTranslations = {
     termsAndConditions:
       "চালিয়ে যাওয়ার মাধ্যমে আপনি আমাদের শর্তাবলীতে সম্মতি দেন। আমরা আপনাকে একটি ব্যক্তিগতকৃত অভিজ্ঞতা প্রদানের জন্য আপনার ডেটা ব্যবহার করি।",
     findMore: "আরও জানুন",
+    password: "পাসওয়ার্ড",
+    dontHaveAnAccount: "অ্যাকাউন্ট নেই? ",
   },
   heartBeats: {
     heartBeat: "হার্টবিট",
     selectStartAndEnd:
       "স্মুদ প্লেব্যাকের জন্য শুরু এবং শেষ পয়েন্ট নির্বাচন করুন",
+  },
+  Home: {
+    askAi: "প্রশ্ন করুন AI",
+    askMeAnything: "আমার কাছে যা খুঁজছেন তা প্রশ্ন করুন",
+    featureHotels: "বৈশিষ্ট্যযুক্ত হোটেল",
+    popularTrip: "জনপ্রিয় ভ্রমণ",
   },
 };

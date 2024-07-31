@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 type Props = {};
 
-const Heart = (props: Props) => {
+const Heart: React.FC<Props> = (props): JSX.Element => {
   return (
     <View style={styles.container}>
       <Text>Heart</Text>

@@ -13,7 +13,7 @@ import { Theme } from "@/@types/theme.type";
 
 type Props = {};
 
-const SigninScreen = (props: Props) => {
+const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { images } = useTheme<Theme>();

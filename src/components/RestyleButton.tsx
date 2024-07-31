@@ -40,13 +40,13 @@ const BaseButton = createRestyleComponent<
   Theme
 >([restyleFunctions], TouchableOpacity);
 
-const RestyleButton = ({
+const RestyleButton: React.FC<Props> = ({
   label,
   onPress,
   iconSrc,
   loading = false,
   ...props
-}: Props) => (
+}) => (
   <BaseButton onPress={onPress} {...props}>
     {loading ? (
       <ActivityIndicator color="white" />

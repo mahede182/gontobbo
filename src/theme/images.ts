@@ -28,8 +28,11 @@ export const images = {
     require("@/assets/notification_button.png") as ImageSourcePropType,
 
   magicAiBtn: require("@/assets/magic_ai_button.png") as ImageSourcePropType,
-  dummyCard: require("@/assets/dummyCard.png") as ImageSourcePropType,
-  dummyTrip: require("@/assets/dummyTip.png") as ImageSourcePropType,
+  dummyCard: require("@/assets/Home/dummyCard.png") as ImageSourcePropType,
+  dummyTrip1: require("@/assets/Home/dummyTip.png") as ImageSourcePropType,
+  dummyTri2: require("@/assets/Home/dummyTip2.png") as ImageSourcePropType,
+  avatar1: require("@/assets/Home/avatar1.png") as ImageSourcePropType,
+  avatar2: require("@/assets/Home/avatar2.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;

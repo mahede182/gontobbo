@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Box, RestyleText } from "@/theme";
 import { fetchUser } from "@/utils/axios";
 import "@/machine/counterMachine";
-import Icon from "@expo/vector-icons/Ionicons";
-import { colors } from "@/theme/colors";
+
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
-import { Image, TextInput } from "react-native";
+import { Image, ScrollView } from "react-native";
 import { Input } from "@/components/Input";
-import FeaturedHotels from "./component/HotelCard";
-import PopularTrip from "./component/TripCard";
+import PopularTrip from "./component/PopularTrip";
+import { useTranslation } from "react-i18next";
+import Tag from "./component/Tag";
+import { tagData } from "@/data/tagData";
+import FeaturedHotels from "./component/FeaturedHotels";
 
 type Props = {};
 
 const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
-  // const { t } = useTranslation();
-  // const navigation = useNavigation();
-  // const [state] = useMachine(toggleMachine);
+  const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -32,33 +32,51 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   }, [name, email, imageUrl]);
 
   return (
-    <Box paddingHorizontal={"ten"}>
+    <Box style={{ backgroundColor: "#ffffff", flex: 1 }}>
       {/* === drawer button === */}
-      <Box flexDirection="row" justifyContent="space-between">
+      <Box
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+        paddingVertical="ten"
+      >
         <Image
           source={images.menuBtn}
-          style={{ height: 60, width: 60, resizeMode: "cover" }}
+          style={{ height: 48, width: 48, resizeMode: "contain" }}
         />
         <Image
           source={images.notifiocationBtn}
-          style={{ height: 60, width: 60 }}
+          style={{ height: 48, width: 48, resizeMode: "contain" }}
         />
       </Box>
       {/* === ai section === */}
-      <Box paddingHorizontal={"ten"}>
+      <Box paddingHorizontal="ten">
         <Box
-          flexDirection={"row"}
-          alignItems={"center"}
-          justifyContent={"flex-start"}
-          marginVertical="ten"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="flex-start"
+          marginBottom="ten"
         >
-          <Image source={images.magicAiBtn} />
-          <RestyleText>ASK AI</RestyleText>
+          <Image
+            source={images.magicAiBtn}
+            style={{ height: 20, width: 20, marginRight: 10 }}
+          />
+          <RestyleText>{t("Home.askAi")}</RestyleText>
         </Box>
-        <Input
-          icon="search-outline"
-          placeholder="Ask me anything you're searching for"
-        />
+        <Input placeholder={t("Home.askMeAnything")} />
+      </Box>
+      {/* === Tag === */}
+      <Box>
+        <ScrollView
+          style={{ paddingVertical: 10, paddingHorizontal: 10 }}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+        >
+          {/* Map over tagData and render Tag component */}
+          {tagData.map((tag, index) => (
+            <Tag key={index} icon={tag.icon} label={tag.label} />
+          ))}
+        </ScrollView>
       </Box>
       {/* === Hotel card section === */}
       <FeaturedHotels />

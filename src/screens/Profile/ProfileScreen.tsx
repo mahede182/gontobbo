@@ -1,12 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-type Props = {};
+type Props = {
+  label: "Profile" | "None";
+};
 
-const ProfileScreen = (props: Props) => {
+const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
   return (
     <View style={styles.container}>
-      <Text>ProfileScreen</Text>
+      <Text>{label}</Text>
     </View>
   );
 };

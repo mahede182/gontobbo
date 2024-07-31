@@ -31,9 +31,17 @@ export const enTranslations = {
     termsAndConditions:
       "By continuing you agree to our T&Cs. We use your data to offer you a personalized experience.",
     findMore: " Find out more",
+    password: "Password",
+    dontHaveAnAccount: "Don't have an account? ",
   },
   heartBeats: {
     heartBeat: "Heartbeat",
     selectStartAndEnd: "Select start and end points for smooth playback",
+  },
+  Home: {
+    askAi: "Ask AI",
+    askMeAnything: "Ask me anything you're searching for",
+    featureHotels: "Feature Hotels",
+    popularTrip: "Popular Trip",
   },
 };
