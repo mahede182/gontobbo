@@ -1,3 +1,5 @@
+import { typography } from "./typography";
+
 export const textVariants = {
   defaults: {},
   textBase: {
@@ -38,5 +40,10 @@ export const textVariants = {
   caption: {
     fontSize: 12,
     lineHeight: 16,
+  },
+  gradientTitle: {
+    fontFamily: typography.poppinsSemibold,
+    fontSize: 20,
+    fontWeight: "600",
   },
 };

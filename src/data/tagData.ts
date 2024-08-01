@@ -5,10 +5,11 @@ import flightsIcon from "@/assets/Home/flightTag.png";
 export interface ItagData {
   icon: any;
   label: string;
+  active?: boolean;
 }
 
 export const tagData: ItagData[] = [
-  { icon: hotelsIcon, label: "Hotelas" },
+  { icon: hotelsIcon, label: "Hotels", active: true },
   { icon: tripIcon, label: "Trip" },
   { icon: flightsIcon, label: "Flights" },
   { icon: tripIcon, label: "Trip" },

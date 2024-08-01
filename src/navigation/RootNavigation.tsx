@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation, { TabStackParamList } from "./TabNavigation";
 import AuthNavigation from "./AuthNavigation";
+import LocationSelect from "@/screens/Explore/SelectLocation";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -45,6 +46,12 @@ const RootNavigation = () => {
           }}
           name="FAVOURITE"
           component={FavouriteScreens}
+        />
+        {/* during refactor delete  */}
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SELECT_LOCATION"
+          component={LocationSelect}
         />
       </Stack.Navigator>
     </NavigationContainer>

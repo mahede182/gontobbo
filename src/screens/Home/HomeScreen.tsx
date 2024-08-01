@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, RestyleText } from "@/theme";
+import { Box } from "@/theme";
 import { fetchUser } from "@/utils/axios";
 import "@/machine/counterMachine";
 
@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 import Tag from "./component/Tag";
 import { tagData } from "@/data/tagData";
 import FeaturedHotels from "./component/FeaturedHotels";
+import GradientTitle from "@/components/GradientTtitle";
+import { typography } from "@/theme/typography";
 
 type Props = {};
 
@@ -59,9 +61,13 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
         >
           <Image
             source={images.magicAiBtn}
-            style={{ height: 20, width: 20, marginRight: 10 }}
+            style={{ height: 16, width: 16, marginRight: 10 }}
           />
-          <RestyleText>{t("Home.askAi")}</RestyleText>
+          <GradientTitle
+            style={{ fontFamily: typography.poppinsRegular, fontSize: 13 }}
+          >
+            {t("Home.askAi")}
+          </GradientTitle>
         </Box>
         <Input placeholder={t("Home.askMeAnything")} />
       </Box>

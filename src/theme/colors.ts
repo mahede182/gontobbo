@@ -1,7 +1,7 @@
 export const colors = {
   purpleLight: "#8C6FF7",
   purplePrimary: "#5A31F4",
-  purpleDark: "#3F22AB",
+  purpleDark: "#165E9F",
 
   greenLight: "#56DCBA",
   greenPrimary: "#0ECD9D",
@@ -26,6 +26,9 @@ export const colors = {
   tabUnselected: "#8E8E8E",
 
   tabBarBg: "#FAFAFA",
+
+  linearStart: "#3A70E2",
+  linearEnd: "#F0823F",
 } as const;
 
 export type Palette = typeof colors;

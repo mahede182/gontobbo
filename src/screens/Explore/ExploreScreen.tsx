@@ -1,22 +1,52 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import Dropdown from "@/components/Dropdown";
-import { useTranslation } from "react-i18next";
-import { languageData } from "@/data/LanguegeData";
+import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Box } from "@/theme";
+import { images } from "@/theme/images";
+import { tagData } from "@/data/tagData";
+import Tag from "../Home/component/Tag";
+import SearchForm from "./component/SearchForm";
 
 interface Props {}
 
 const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
-  const { t } = useTranslation();
   return (
     <SafeAreaView style={styles.container}>
-      <Text>ExploreScreens</Text>
-      <View style={{ marginTop: 50 }}>
-        <Dropdown
-          label={`Current Languege: ${t("common.lang")}`}
-          data={languageData}
+      {/* === drawer button === */}
+      <Box
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+        paddingVertical="ten"
+      >
+        <Image
+          source={images.menuBtn}
+          style={{ height: 48, width: 48, resizeMode: "contain" }}
         />
-      </View>
+        <Image
+          source={images.notifiocationBtn}
+          style={{ height: 48, width: 48, resizeMode: "contain" }}
+        />
+      </Box>
+      {/* === Tag === */}
+      <Box>
+        <ScrollView
+          style={{ paddingVertical: 10, paddingHorizontal: 10 }}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+        >
+          {/* Map over tagData and render Tag component */}
+          {tagData.map((tag, index) => (
+            <Tag
+              key={index}
+              icon={tag.icon}
+              label={tag.label}
+              active={tag.active}
+            />
+          ))}
+        </ScrollView>
+      </Box>
+      {/* === Search Form === */}
+      <SearchForm />
     </SafeAreaView>
   );
 };
@@ -25,7 +55,7 @@ export default ExploreScreens;
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "#ffffff",
   },
 });

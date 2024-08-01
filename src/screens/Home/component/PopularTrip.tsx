@@ -1,21 +1,25 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { Box, RestyleText } from "@/theme";
+import { Box } from "@/theme";
 import { useTranslation } from "react-i18next";
 import TripCard from "./TripCard";
 import { popularTrip } from "@/data/popularTripData";
+import GradientTitle from "@/components/GradientTtitle";
 
 const PopularTrip: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <Box marginTop="twenty">
-      <RestyleText
-        variant="h2"
-        style={{ marginVertical: 10, paddingHorizontal: 15 }}
+      <GradientTitle
+        style={{
+          marginVertical: 10,
+          paddingHorizontal: 15,
+        }}
+        variant="gradientTitle"
       >
         {t("Home.popularTrip")}
-      </RestyleText>
+      </GradientTitle>
       <ScrollView style={{ paddingHorizontal: 20 }}>
         {popularTrip.map((trip, index) => (
           <TripCard

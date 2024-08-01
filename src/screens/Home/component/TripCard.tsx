@@ -1,9 +1,7 @@
 // src/screens/Home/component/TripCard.tsx
 import React from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Box, RestyleText } from "@/theme";
-import { images } from "@/theme/images";
-import { useTranslation } from "react-i18next";
 
 interface TripCardProps {
   image: string;

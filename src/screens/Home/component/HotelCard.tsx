@@ -1,14 +1,14 @@
-import React, { useCallback } from "react";
-import { Image, StyleSheet, FlatList, ListRenderItem } from "react-native";
+import React from "react";
+import { Image, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Box, RestyleText as Text } from "@/theme";
-import { useTranslation } from "react-i18next";
-import { HotelCardProps, featuredHotels } from "@/data/hotelData";
+
+import { HotelCardProps } from "@/data/hotelData";
 
 const HotelCard: React.FC<HotelCardProps> = React.memo(
   ({ image, name, location, rating }) => (
     <Box
-      width={160} // Adjust width to match design
+      width={160}
       marginRight="medium"
       backgroundColor="greyLight2"
       borderRadius={10}
@@ -60,46 +60,19 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(
         </Box>
       </Box>
     </Box>
-  )
+  ),
 );
 
 HotelCard.displayName = "HotelCard";
 
-const FeaturedHotels: React.FC = () => {
-  const { t } = useTranslation();
-
-  const renderHotelCard: ListRenderItem<HotelCardProps> = useCallback(
-    ({ item }) => <HotelCard {...item} />,
-    []
-  );
-
-  const keyExtractor = useCallback((item: HotelCardProps) => item.id, []);
-
-  return (
-    <Box paddingHorizontal="medium" marginTop="ten">
-      <Text variant="h2" style={{ marginBottom: 10 }}>
-        {t("Home.featureHotels")}
-      </Text>
-      <FlatList
-        data={featuredHotels}
-        renderItem={renderHotelCard}
-        keyExtractor={keyExtractor}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
-      />
-    </Box>
-  );
-};
-
 const styles = StyleSheet.create({
   image: {
-    width: 160, // Adjust width to match design
-    height: 120, // Adjust height to match design
+    width: 160,
+    height: 120,
     borderRadius: 12,
   },
   listContainer: {
-    paddingRight: 32, // Add extra padding to the right for better scrolling
+    paddingRight: 32,
   },
 });
 
