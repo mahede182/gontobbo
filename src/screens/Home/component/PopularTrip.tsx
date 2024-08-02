@@ -4,7 +4,7 @@ import { Box } from "@/theme";
 import { useTranslation } from "react-i18next";
 import TripCard from "./TripCard";
 import { popularTrip } from "@/data/popularTripData";
-import GradientTitle from "@/components/GradientTtitle";
+import GradientTitle from "@/components/GradientTitle";
 
 const PopularTrip: React.FC = () => {
   const { t } = useTranslation();

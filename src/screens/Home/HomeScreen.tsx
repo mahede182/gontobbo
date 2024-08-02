@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import Tag from "./component/Tag";
 import { tagData } from "@/data/tagData";
 import FeaturedHotels from "./component/FeaturedHotels";
-import GradientTitle from "@/components/GradientTtitle";
+import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
 
 type Props = {};

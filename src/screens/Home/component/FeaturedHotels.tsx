@@ -4,7 +4,7 @@ import { Box } from "@/theme";
 import { useTranslation } from "react-i18next";
 import HotelCard from "./HotelCard";
 import { featuredHotels, HotelCardProps } from "@/data/hotelData";
-import GradientTitle from "@/components/GradientTtitle";
+import GradientTitle from "@/components/GradientTitle";
 
 const FeaturedHotels: React.FC = () => {
   const { t } = useTranslation();

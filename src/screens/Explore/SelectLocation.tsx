@@ -10,7 +10,7 @@ import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { Box, RestyleText } from "@/theme";
 import Icon from "@expo/vector-icons/MaterialIcons";
-import GradientTitle from "@/components/GradientTtitle";
+import GradientTitle from "@/components/GradientTitle";
 import { useNavigation } from "@react-navigation/native";
 import { Input } from "@/components/Input";
 import { typography } from "@/theme/typography";

@@ -5,6 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation, { TabStackParamList } from "./TabNavigation";
 import AuthNavigation from "./AuthNavigation";
 import LocationSelect from "@/screens/Explore/SelectLocation";
+import SelectDateScreen from "@/screens/Explore/DatePicker";
+import SearchResult from "@/screens/Explore/SearchResult";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -52,6 +54,16 @@ const RootNavigation = () => {
           options={{ headerShown: false }}
           name="SELECT_LOCATION"
           component={LocationSelect}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="PICK_DATE"
+          component={SelectDateScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SEARCH_RESULT"
+          component={SearchResult}
         />
       </Stack.Navigator>
     </NavigationContainer>

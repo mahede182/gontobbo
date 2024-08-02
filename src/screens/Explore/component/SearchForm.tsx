@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Box } from "@/theme";
 
@@ -7,9 +7,19 @@ import DateInput from "./DateInput";
 import GuestInput from "./GuestInput";
 import SearchButton from "./SearchInput";
 import { useNavigation } from "@react-navigation/native";
+import GuestModal from "../GuestModal";
 
 const SearchForm = () => {
   const navigation = useNavigation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
   return (
     <Box
       alignSelf={"center"}
@@ -29,11 +39,26 @@ const SearchForm = () => {
         justifyContent="space-between"
         marginVertical="medium"
       >
-        <DateInput date="10, Nov 25" onPress={() => {}} />
-        <DateInput date="15, Nov 25" onPress={() => {}} />
+        <DateInput
+          date="10, Nov 25"
+          onPress={() => {
+            navigation.navigate("PICK_DATE");
+          }}
+        />
+        <DateInput
+          date={"15, Nov 25"}
+          onPress={() => {
+            navigation.navigate("PICK_DATE");
+          }}
+        />
       </Box>
-      <GuestInput guests="1 Room, 2 Adults, 1 Children" onPress={() => {}} />
-      <SearchButton onPress={() => {}} />
+      <GuestInput guests="1 Room, 2 Adults, 1 Children" onPress={openModal} />
+      <GuestModal isVisible={isModalVisible} onClose={closeModal} />
+      <SearchButton
+        onPress={() => {
+          navigation.navigate("SEARCH_RESULT");
+        }}
+      />
     </Box>
   );
 };

@@ -1,0 +1,111 @@
+import React from "react";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { Box, RestyleText } from "@/theme";
+import { colors } from "@/theme/colors";
+
+import searchResults from "../../data/searchResults";
+import ResultCard from "./component/ResultCard";
+import { typography } from "@/theme/typography";
+import Icon from "@expo/vector-icons/Ionicons";
+
+const SearchResult = () => (
+  <Box style={styles.container}>
+    <Box style={styles.header}>
+      <Box style={styles.headerContent}>
+        <RestyleText style={styles.title}>New York</RestyleText>
+        <RestyleText style={styles.subtitle}>
+          10 Nov - 15 Nov, 1 Rooms, 1 Adults...
+        </RestyleText>
+      </Box>
+      <Box style={styles.searchButton}>
+        <RestyleText style={styles.searchButtonText}>Search</RestyleText>
+      </Box>
+    </Box>
+    <Box style={styles.filters}>
+      <TouchableOpacity style={styles.filterContainer}>
+        <Icon name="swap-vertical" size={16} color={"#000"} />
+        <RestyleText style={[styles.label, { marginLeft: 8 }]}>
+          Sort By
+        </RestyleText>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.filterContainer}>
+        {/* <Icon name="search" size={16} color={"#000"} /> */}
+        <RestyleText style={styles.label}>All Filters</RestyleText>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.filterContainer}>
+        <Icon name="star-half-outline" size={16} color={"#000"} />
+        <RestyleText style={styles.label}>Star Rating</RestyleText>
+      </TouchableOpacity>
+    </Box>
+    <FlatList
+      data={searchResults}
+      renderItem={({ item }) => <ResultCard {...item} />}
+      keyExtractor={(item) => item.name}
+    />
+  </Box>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 8,
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
+  headerContent: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "gray",
+  },
+  searchButton: {
+    backgroundColor: colors.purpleDark,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 4,
+  },
+  searchButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontFamily: "Poppins-SemiBold",
+  },
+  filters: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 8,
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
+  filterContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: colors.greyLight,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 4,
+    marginHorizontal: 5,
+  },
+  label: {
+    fontFamily: typography.poppinsRegular,
+    color: "#000",
+  },
+});
+
+export default SearchResult;
