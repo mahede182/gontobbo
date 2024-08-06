@@ -1,7 +1,8 @@
 import { Box, RestyleText } from "@/theme";
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import GradientTitle from "@/components/GradientTitle";
+import { useNavigation } from "@react-navigation/native";
 
 interface ResultCardProps {
   name: string;
@@ -16,8 +17,12 @@ const ResultCard: React.FC<ResultCardProps> = ({
   price,
   imageSource,
 }) => {
+  const navigation = useNavigation();
   return (
-    <Box style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS")}
+      style={styles.container}
+    >
       <Image source={imageSource} style={styles.image} />
       <Box style={styles.detailsContainer}>
         <Box style={styles.titleContainer}>
@@ -31,7 +36,7 @@ const ResultCard: React.FC<ResultCardProps> = ({
           </GradientTitle>
         </Box>
       </Box>
-    </Box>
+    </TouchableOpacity>
   );
 };
 

@@ -10,6 +10,7 @@ export const enTranslations = {
     offers: "Offers",
     wishlist: "Wishlist",
     profile: "Profile",
+    searchHotel: "Search Hotels",
   },
   signIn: {
     sign: "Sign",

@@ -1,0 +1,471 @@
+import React from "react";
+import { Box, RestyleText } from "@/theme";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { colors } from "@/theme/colors";
+import Icon from "@expo/vector-icons/FontAwesome6";
+import detailsImage from "@/assets/hotel_image_1.png";
+import MapView, { Marker } from "react-native-maps";
+import GradientTitle from "@/components/GradientTitle";
+import { useNavigation } from "@react-navigation/native";
+
+const HotelDetails = () => {
+  const name = "Caesars Palace";
+  const rating = 4;
+  const description =
+    "Conveniently situated in the Washington Heights district of New York, Hotel Moca NYC is located 2.8 km from Yankee Stadium, 5 km from Columbia University and 6.3 km from Bronx Zoo.";
+  const checkInDate = "12:00 PM";
+  const checkOutDate = "12:00 PM";
+  const guests = "1 Room / 2 Guests";
+  const amenities = ["Gym", "Laundry", "Free Wi-Fi"];
+  const photos = [detailsImage, detailsImage, detailsImage];
+  const reviews: Review[] = [
+    {
+      name: "Donald Moore",
+      review:
+        "Great hotel with a nice location. The staff was very friendly and helpful.",
+      rating: 4,
+      avatar: "https://example.com/avatar1.jpg",
+    },
+    {
+      name: "Christopher Wilson",
+      review:
+        "Beautiful and clean hotel with amazing views. The rooms were spacious and comfortable.",
+      rating: 4,
+      avatar: "https://example.com/avatar2.jpg",
+    },
+    {
+      name: "Joshua Anderson",
+      review:
+        "A great hotel with a great location. The hotel lobby is beautiful. Highly recommended.",
+      rating: 5,
+      avatar: "https://example.com/avatar3.jpg",
+    },
+  ];
+  const location = {
+    latitude: 40.7829,
+    longitude: -73.9654,
+    address: "3570 Las Vegas Blvd S, Las Vegas, NV 89109",
+  };
+  const price = 450;
+
+  const renderImages = () => {
+    switch (photos.length) {
+      case 1:
+        return <Image source={photos[0]} style={styles.singleImage} />;
+      case 2:
+        return (
+          <View style={styles.twoImagesContainer}>
+            <Image
+              source={photos[0]}
+              style={[styles.twoImagesLeft, { marginRight: 4 }]}
+            />
+            <Image
+              source={photos[1]}
+              style={[styles.twoImagesRight, { marginLeft: 4 }]}
+            />
+          </View>
+        );
+      case 3:
+        return (
+          <View style={styles.threeImagesContainer}>
+            <Image
+              source={photos[0]}
+              style={[styles.threeImagesLeft, { marginRight: 4 }]}
+            />
+            <View style={styles.threeImagesRightContainer}>
+              <Image
+                source={photos[1]}
+                style={[styles.threeImagesRightTop, { marginBottom: 4 }]}
+              />
+              <Image
+                source={photos[2]}
+                style={[styles.threeImagesRightBottom, { marginTop: 4 }]}
+              />
+            </View>
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const navigation = useNavigation();
+  return (
+    <Box style={styles.container}>
+      <Box style={styles.header}>
+        <TouchableOpacity>
+          <Icon name="arrow-back" size={24} color={colors.black} />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Icon name="favorite-border" size={24} color={colors.black} />
+        </TouchableOpacity>
+      </Box>
+
+      {true ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("HOTEL_GALLERY")}
+          style={styles.imageContainer}
+        >
+          {renderImages()}
+        </TouchableOpacity>
+      ) : null}
+
+      <ScrollView style={styles.content}>
+        {/* === Ceasurs Palace === */}
+        <Box
+          borderWidth={0.6}
+          borderRadius={10}
+          padding={"ten"}
+          borderColor={"greyLight3"}
+          marginVertical={"ten"}
+        >
+          <RestyleText style={styles.name}>{name}</RestyleText>
+          <RestyleText style={styles.rating}>
+            {Array(Math.floor(rating))
+              .fill()
+              .map((_, i) => (
+                <Icon key={i} name="star" size={16} color={colors.linearEnd} />
+              ))}
+          </RestyleText>
+          <RestyleText style={styles.description}>{description}</RestyleText>
+        </Box>
+        {/* === Travel Dates & guest === */}
+        <Box
+          borderWidth={0.6}
+          borderRadius={10}
+          padding={"ten"}
+          borderColor={"greyLight3"}
+          marginVertical={"ten"}
+        >
+          <Box style={styles.section}>
+            <RestyleText style={styles.sectionTitle}>
+              Travel Dates & Guests
+            </RestyleText>
+            <RestyleText style={styles.sectionContent}>
+              Check-in: {checkInDate} | Check-out: {checkOutDate} | {guests}
+            </RestyleText>
+          </Box>
+        </Box>
+        {/* === Amenities === */}
+        <Box
+          borderWidth={0.6}
+          borderRadius={10}
+          padding={"ten"}
+          borderColor={"greyLight3"}
+          marginVertical={"ten"}
+          style={styles.section}
+        >
+          <RestyleText style={styles.sectionTitle}>Amenities</RestyleText>
+          <Box style={styles.amenitiesContainer}>
+            {amenities.map((amenity, index) => (
+              <Box key={index} style={styles.amenityContainer}>
+                <Icon name="dumbbell" size={16} color={colors.green} />
+                <RestyleText style={styles.amenity}>{amenity}</RestyleText>
+              </Box>
+            ))}
+            {amenities.length > 3 && (
+              <RestyleText style={styles.moreAmenities}>
+                +{amenities.length - 3} more Amenities
+              </RestyleText>
+            )}
+          </Box>
+        </Box>
+        {/* === Review and Rating === */}
+        <Box
+          borderWidth={0.6}
+          borderRadius={10}
+          padding={"ten"}
+          borderColor={"greyLight3"}
+          marginVertical={"ten"}
+          style={styles.section}
+        >
+          <RestyleText style={styles.sectionTitle}>
+            Reviews & Rating
+          </RestyleText>
+          {reviews.map((review, index) => (
+            <Box key={index} style={styles.reviewContainer}>
+              <Box style={styles.reviewHeader}>
+                {review.avatar ? (
+                  <Image
+                    source={{ uri: review.avatar }}
+                    style={styles.reviewAvatar}
+                  />
+                ) : (
+                  <Box style={styles.reviewAvatarPlaceholder} />
+                )}
+                <RestyleText style={styles.reviewName}>
+                  {review.name}
+                </RestyleText>
+              </Box>
+              <RestyleText style={styles.reviewText}>
+                {review.review}
+              </RestyleText>
+              <Box style={styles.reviewRating}>
+                {Array(review.rating)
+                  .fill()
+                  .map((_, i) => (
+                    <Icon key={i} name="star" size={16} color={colors.yellow} />
+                  ))}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+        {/* === Location === */}
+        <Box
+          borderWidth={0.6}
+          borderRadius={10}
+          padding={"ten"}
+          borderColor={"greyLight3"}
+          marginVertical={"ten"}
+          style={styles.section}
+        >
+          <RestyleText style={styles.sectionTitle}>Location</RestyleText>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            <Marker
+              coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+              }}
+              title={name}
+            />
+          </MapView>
+          <RestyleText style={styles.locationAddress}>
+            {location.address}
+          </RestyleText>
+        </Box>
+
+        <Box style={styles.priceSection}>
+          <Box style={styles.priceContainer}>
+            <GradientTitle style={styles.gradientTitle}>${price}</GradientTitle>
+            <GradientTitle style={{ width: "60%" }}>
+              +$45 taxes & services fees, Per Night for 1 Rooms
+            </GradientTitle>
+          </Box>
+          <TouchableOpacity style={styles.selectRoomButton}>
+            <RestyleText style={styles.selectRoomButtonText}>
+              Select Room
+            </RestyleText>
+          </TouchableOpacity>
+        </Box>
+      </ScrollView>
+    </Box>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+  },
+  imageContainer: {
+    position: "relative",
+  },
+  image: {
+    width: "100%",
+    height: 200,
+  },
+  photoCount: {
+    position: "absolute",
+    bottom: 16,
+    right: 16,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+  },
+  photoCountText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  content: {
+    padding: 16,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  rating: {
+    flexDirection: "row",
+    marginVertical: 8,
+  },
+  description: {
+    color: "gray",
+    marginBottom: 16,
+  },
+  section: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  sectionContent: {
+    color: "gray",
+  },
+  amenitiesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  amenityContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 16,
+    marginBottom: 8,
+  },
+  amenity: {
+    marginLeft: 8,
+  },
+  moreAmenities: {
+    color: "gray",
+  },
+  reviewContainer: {
+    marginBottom: 16,
+  },
+  reviewHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  reviewAvatar: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    marginRight: 8,
+  },
+  reviewAvatarPlaceholder: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.greyLight,
+    marginRight: 8,
+  },
+  reviewName: {
+    fontWeight: "bold",
+  },
+  reviewText: {
+    color: "gray",
+    marginBottom: 4,
+  },
+  reviewRating: {
+    flexDirection: "row",
+  },
+  locationMap: {
+    width: "100%",
+    height: 200,
+    marginBottom: 8,
+  },
+  locationAddress: {
+    color: "gray",
+  },
+  price: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  mainImage: {
+    width: "100%",
+    height: 200,
+  },
+  thumbnailsContainer: {
+    marginTop: 8,
+  },
+  thumbnail: {
+    width: 80,
+    height: 80,
+    marginRight: 8,
+    borderRadius: 4,
+  },
+
+  singleImage: {
+    width: "100%",
+    height: 300,
+  },
+  twoImagesContainer: {
+    flexDirection: "row",
+    height: 300,
+  },
+  twoImagesLeft: {
+    width: "50%",
+    height: "100%",
+  },
+  twoImagesRight: {
+    width: "50%",
+    height: "100%",
+  },
+  threeImagesContainer: {
+    flexDirection: "row",
+    height: 300,
+  },
+  threeImagesLeft: {
+    width: "50%",
+    height: "100%",
+  },
+  threeImagesRightContainer: {
+    width: "50%",
+    height: "98%",
+  },
+  threeImagesRightTop: {
+    width: "100%",
+    height: "50%",
+  },
+  threeImagesRightBottom: {
+    width: "100%",
+    height: "50%",
+  },
+  map: {
+    width: "100%",
+    height: 200,
+  },
+  priceSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 16,
+  },
+  priceContainer: {
+    borderRadius: 8,
+    padding: 8,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  gradientTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  selectRoomButton: {
+    backgroundColor: colors.purpleDark,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  selectRoomButtonText: {
+    color: colors.white,
+    fontWeight: "bold",
+  },
+});
+
+export default HotelDetails;

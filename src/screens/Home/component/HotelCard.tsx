@@ -60,7 +60,7 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(
         </Box>
       </Box>
     </Box>
-  )
+  ),
 );
 
 HotelCard.displayName = "HotelCard";

@@ -7,6 +7,8 @@ import AuthNavigation from "./AuthNavigation";
 import LocationSelect from "@/screens/Explore/SelectLocation";
 import SelectDateScreen from "@/screens/Explore/DatePicker";
 import SearchResult from "@/screens/Explore/SearchResult";
+import HotelDetails from "@/screens/Explore/HotelDetails";
+import HotelGallery from "@/screens/Explore/HotelGallery";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -64,6 +66,16 @@ const RootNavigation = () => {
           options={{ headerShown: false }}
           name="SEARCH_RESULT"
           component={SearchResult}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SEARCH_RESULT_DETAILS"
+          component={HotelDetails}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="HOTEL_GALLERY"
+          component={HotelGallery}
         />
       </Stack.Navigator>
     </NavigationContainer>
