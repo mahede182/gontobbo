@@ -9,6 +9,9 @@ import SelectDateScreen from "@/screens/Explore/DatePicker";
 import SearchResult from "@/screens/Explore/SearchResult";
 import HotelDetails from "@/screens/Explore/HotelDetails";
 import HotelGallery from "@/screens/Explore/HotelGallery";
+import Amenities from "@/screens/Explore/Amenities";
+import ReviewsAndRatings from "@/screens/Explore/ReviewAndRating";
+import FullScreenMap from "@/screens/Explore/FullScreenMap";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -76,6 +79,21 @@ const RootNavigation = () => {
           options={{ headerShown: false }}
           name="HOTEL_GALLERY"
           component={HotelGallery}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="AMENITIES"
+          component={Amenities}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="REVIEW"
+          component={ReviewsAndRatings}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="FULL_SCREEN_MAP"
+          component={FullScreenMap}
         />
       </Stack.Navigator>
     </NavigationContainer>

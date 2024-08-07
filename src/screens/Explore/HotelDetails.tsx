@@ -153,29 +153,32 @@ const HotelDetails = () => {
           </Box>
         </Box>
         {/* === Amenities === */}
-        <Box
-          borderWidth={0.6}
-          borderRadius={10}
-          padding={"ten"}
-          borderColor={"greyLight3"}
-          marginVertical={"ten"}
-          style={styles.section}
-        >
-          <RestyleText style={styles.sectionTitle}>Amenities</RestyleText>
-          <Box style={styles.amenitiesContainer}>
-            {amenities.map((amenity, index) => (
-              <Box key={index} style={styles.amenityContainer}>
-                <Icon name="dumbbell" size={16} color={colors.green} />
-                <RestyleText style={styles.amenity}>{amenity}</RestyleText>
-              </Box>
-            ))}
-            {amenities.length > 3 && (
-              <RestyleText style={styles.moreAmenities}>
-                +{amenities.length - 3} more Amenities
-              </RestyleText>
-            )}
+        <TouchableOpacity onPress={() => navigation.navigate("AMENITIES")}>
+          <Box
+            borderWidth={0.6}
+            borderRadius={10}
+            padding={"ten"}
+            borderColor={"greyLight3"}
+            marginVertical={"ten"}
+            style={styles.section}
+          >
+            <RestyleText style={styles.sectionTitle}>Amenities</RestyleText>
+            <Box style={styles.amenitiesContainer}>
+              {amenities.map((amenity, index) => (
+                <Box key={index} style={styles.amenityContainer}>
+                  <Icon name="dumbbell" size={16} color={colors.green} />
+                  <RestyleText style={styles.amenity}>{amenity}</RestyleText>
+                </Box>
+              ))}
+              {amenities.length > 3 && (
+                <RestyleText style={styles.moreAmenities}>
+                  +{amenities.length - 3} more Amenities
+                </RestyleText>
+              )}
+            </Box>
           </Box>
-        </Box>
+        </TouchableOpacity>
+
         {/* === Review and Rating === */}
         <Box
           borderWidth={0.6}
@@ -215,38 +218,45 @@ const HotelDetails = () => {
               </Box>
             </Box>
           ))}
+          <TouchableOpacity onPress={() => navigation.navigate("REVIEW")}>
+            <RestyleText>Read more 10+</RestyleText>
+          </TouchableOpacity>
         </Box>
         {/* === Location === */}
-        <Box
-          borderWidth={0.6}
-          borderRadius={10}
-          padding={"ten"}
-          borderColor={"greyLight3"}
-          marginVertical={"ten"}
-          style={styles.section}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("FULL_SCREEN_MAP")}
         >
-          <RestyleText style={styles.sectionTitle}>Location</RestyleText>
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
+          <Box
+            borderWidth={0.6}
+            borderRadius={10}
+            padding={"ten"}
+            borderColor={"greyLight3"}
+            marginVertical={"ten"}
+            style={styles.section}
           >
-            <Marker
-              coordinate={{
+            <RestyleText style={styles.sectionTitle}>Location</RestyleText>
+            <MapView
+              style={styles.map}
+              initialRegion={{
                 latitude: location.latitude,
                 longitude: location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
               }}
-              title={name}
-            />
-          </MapView>
-          <RestyleText style={styles.locationAddress}>
-            {location.address}
-          </RestyleText>
-        </Box>
+            >
+              <Marker
+                coordinate={{
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                }}
+                title={name}
+              />
+            </MapView>
+            <RestyleText style={styles.locationAddress}>
+              {location.address}
+            </RestyleText>
+          </Box>
+        </TouchableOpacity>
 
         <Box style={styles.priceSection}>
           <Box style={styles.priceContainer}>

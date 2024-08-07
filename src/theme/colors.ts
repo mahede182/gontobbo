@@ -16,6 +16,7 @@ export const colors = {
 
   red: "#DC3D24",
   redLight: "#E7A2A3",
+  red600: "#FDF2EC",
 
   dropdownBg: "#f0f0f0",
   dropdownBorder: "#cccccc",
