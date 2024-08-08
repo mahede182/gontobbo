@@ -47,7 +47,8 @@ const FullScreenMap = () => {
           title="Hotel Location"
         >
           <RestyleTransparent opacity={0.25}>
-            <Box
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SELECT_ROOM")}
               style={{
                 width: 250,
                 height: 250,

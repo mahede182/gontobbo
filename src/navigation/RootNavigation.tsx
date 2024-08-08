@@ -12,6 +12,8 @@ import HotelGallery from "@/screens/Explore/HotelGallery";
 import Amenities from "@/screens/Explore/Amenities";
 import ReviewsAndRatings from "@/screens/Explore/ReviewAndRating";
 import FullScreenMap from "@/screens/Explore/FullScreenMap";
+import SelectRoom from "@/screens/Explore/SelectRoom";
+import ReviewBooking from "@/screens/Explore/ReviewBooking";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -94,6 +96,16 @@ const RootNavigation = () => {
           options={{ headerShown: false }}
           name="FULL_SCREEN_MAP"
           component={FullScreenMap}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SELECT_ROOM"
+          component={SelectRoom}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="REVIEW_BOOKING"
+          component={ReviewBooking}
         />
       </Stack.Navigator>
     </NavigationContainer>
