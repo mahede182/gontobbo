@@ -5,9 +5,12 @@ import GradientTitle from "@/components/GradientTitle";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const Amenities = () => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
+
   return (
     <Box style={styles.container}>
       {/* Header with back button */}
@@ -15,23 +18,25 @@ const Amenities = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color={colors.black} />
         </TouchableOpacity>
-        <GradientTitle style={styles.headerText}>Amenities</GradientTitle>
+        <GradientTitle style={styles.headerText}>
+          {t("Explore.amenities")}
+        </GradientTitle>
       </Box>
 
       <Box style={styles.section}>
         {/* === Highligted Amenities === */}
         <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          Highlighted Amenities
+          {t("Explore.highlightedAmenities")}
         </RestyleText>
         <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Gym (24-hour)
+              {t("Explore.gym")}
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Business Centre
+              {t("Explore.businessCentre")}
             </RestyleText>
           </Box>
         </Box>
@@ -40,37 +45,37 @@ const Amenities = () => {
       {/* === Basic Facilities === */}
       <Box style={styles.section}>
         <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          Basic Facilities
+          {t("Explore.basicFacilities")}
         </RestyleText>
         <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Laundry Service
+              {t("Explore.laundryService")}
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Elevator/Lift
+              {t("Explore.elevator")}
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Ironing Service
+              {t("Explore.ironingService")}
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Newspaper
+              {t("Explore.newspaper")}
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Free Parking
+              {t("Explore.freeParking")}
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Paid Parking - Reservation Required
+              {t("Explore.paidParking")}
             </RestyleText>
           </Box>
         </Box>
@@ -79,17 +84,17 @@ const Amenities = () => {
       {/* === Transfer === */}
       <Box style={styles.section}>
         <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          Transfers
+          {t("Explore.transfers")}
         </RestyleText>
         <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Airport Transfers
+              {t("Explore.airportTransfers")}
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Shuttle Service
+              {t("Explore.shuttleService")}
             </RestyleText>
           </Box>
         </Box>
@@ -98,15 +103,17 @@ const Amenities = () => {
 
       <Box style={styles.section}>
         <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          Payment Services
+          {t("Explore.paymentServices")}
         </RestyleText>
         <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
           <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>ATM</RestyleText>
+            <RestyleText style={styles.amenityButtonText}>
+              {t("Explore.atm")}
+            </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
-              Currency Exchange
+              {t("Explore.currencyExchange")}
             </RestyleText>
           </Box>
         </Box>

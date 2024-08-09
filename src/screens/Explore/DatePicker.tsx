@@ -7,9 +7,11 @@ import Icon from "@expo/vector-icons/MaterialIcons";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import GradientTitle from "@/components/GradientTitle";
+import { useTranslation } from "react-i18next";
 
 const SelectDateScreen = () => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
   const [selectedCheckInDate, setSelectedCheckInDate] = useState(null);
   const [selectedCheckOutDate, setSelectedCheckOutDate] = useState(null);
 
@@ -30,7 +32,6 @@ const SelectDateScreen = () => {
   };
 
   const handleDonePress = () => {
-    // Handle done button press, e.g., navigate back or collapse the calendar
     navigation.goBack();
   };
 
@@ -39,20 +40,26 @@ const SelectDateScreen = () => {
       <Box flexDirection={"row"} justifyContent={"space-between"}>
         <Box style={styles.dateBox}>
           <RestyleText style={styles.dateText}>
-            {selectedCheckInDate || "10, Nov 25"}
+            {selectedCheckInDate || t("Explore.dateAndGuestDetails")}
           </RestyleText>
-          <RestyleText style={styles.dateLabel}>Check-in</RestyleText>
+          <RestyleText style={styles.dateLabel}>
+            {t("Explore.checkIn")}
+          </RestyleText>
         </Box>
         <Box style={styles.dateBox}>
           <RestyleText style={styles.dateText}>
-            {selectedCheckOutDate || "15, Nov 25"}
+            {selectedCheckOutDate || t("Explore.dateAndGuestDetails")}
           </RestyleText>
-          <RestyleText style={styles.dateLabel}>Check-out</RestyleText>
+          <RestyleText style={styles.dateLabel}>
+            {t("Explore.checkOut")}
+          </RestyleText>
         </Box>
       </Box>
 
       <TouchableOpacity style={styles.doneButton} onPress={handleDonePress}>
-        <RestyleText style={styles.doneButtonText}>Done</RestyleText>
+        <RestyleText style={styles.doneButtonText}>
+          {t("common.done")}
+        </RestyleText>
       </TouchableOpacity>
     </View>
   );
@@ -74,9 +81,8 @@ const SelectDateScreen = () => {
           </TouchableOpacity>
         </Box>
         <GradientTitle variant="gradientTitle">
-          Select Check-In Date
+          {t("Explore.selectCheckInDate")}
         </GradientTitle>
-        {/* <RestyleText variant="h2">Location Select</RestyleText> */}
       </Box>
       <Box style={styles.calendarContainer}>
         <Calendar

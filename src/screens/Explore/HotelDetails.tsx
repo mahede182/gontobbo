@@ -13,8 +13,12 @@ import detailsImage from "@/assets/hotel_image_1.png";
 import MapView, { Marker } from "react-native-maps";
 import GradientTitle from "@/components/GradientTitle";
 import { useNavigation } from "@react-navigation/native";
+import { images } from "@/theme/images";
+import PriceSelect from "./component/PriceSelect";
+import { useTranslation } from "react-i18next";
 
 const HotelDetails = () => {
+  const { t } = useTranslation();
   const name = "Caesars Palace";
   const rating = 4;
   const description =
@@ -98,12 +102,16 @@ const HotelDetails = () => {
   const navigation = useNavigation();
   return (
     <Box style={styles.container}>
-      <Box style={styles.header}>
-        <TouchableOpacity>
-          <Icon name="arrow-back" size={24} color={colors.black} />
+      <Box style={styles.headerContainer}>
+        {/* Back Button */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Image source={images.back} />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="favorite-border" size={24} color={colors.black} />
+        <TouchableOpacity onPress={() => alert("favourite added")}>
+          <Image style={styles.headerFavourite} source={images.wishlist} />
         </TouchableOpacity>
       </Box>
 
@@ -145,10 +153,11 @@ const HotelDetails = () => {
         >
           <Box style={styles.section}>
             <RestyleText style={styles.sectionTitle}>
-              Travel Dates & Guests
+              {t("Explore.travelDatesAndGuests")}
             </RestyleText>
             <RestyleText style={styles.sectionContent}>
-              Check-in: {checkInDate} | Check-out: {checkOutDate} | {guests}
+              {t("Explore.checkIn")}: {checkInDate} | {t("Explore.checkOut")}:{" "}
+              {checkOutDate} | {guests}
             </RestyleText>
           </Box>
         </Box>
@@ -162,7 +171,9 @@ const HotelDetails = () => {
             marginVertical={"ten"}
             style={styles.section}
           >
-            <RestyleText style={styles.sectionTitle}>Amenities</RestyleText>
+            <RestyleText style={styles.sectionTitle}>
+              {t("Explore.amenities")}
+            </RestyleText>
             <Box style={styles.amenitiesContainer}>
               {amenities.map((amenity, index) => (
                 <Box key={index} style={styles.amenityContainer}>
@@ -172,7 +183,7 @@ const HotelDetails = () => {
               ))}
               {amenities.length > 3 && (
                 <RestyleText style={styles.moreAmenities}>
-                  +{amenities.length - 3} more Amenities
+                  +{amenities.length - 3} {t("Explore.moreAmenities")}
                 </RestyleText>
               )}
             </Box>
@@ -189,7 +200,7 @@ const HotelDetails = () => {
           style={styles.section}
         >
           <RestyleText style={styles.sectionTitle}>
-            Reviews & Rating
+            {t("Explore.reviewsAndRating")}
           </RestyleText>
           {reviews.map((review, index) => (
             <Box key={index} style={styles.reviewContainer}>
@@ -219,7 +230,7 @@ const HotelDetails = () => {
             </Box>
           ))}
           <TouchableOpacity onPress={() => navigation.navigate("REVIEW")}>
-            <RestyleText>Read more 10+</RestyleText>
+            <RestyleText>{t("Explore.readMore")} 10+</RestyleText>
           </TouchableOpacity>
         </Box>
         {/* === Location === */}
@@ -234,7 +245,9 @@ const HotelDetails = () => {
             marginVertical={"ten"}
             style={styles.section}
           >
-            <RestyleText style={styles.sectionTitle}>Location</RestyleText>
+            <RestyleText style={styles.sectionTitle}>
+              {t("Explore.location")}
+            </RestyleText>
             <MapView
               style={styles.map}
               initialRegion={{
@@ -258,28 +271,43 @@ const HotelDetails = () => {
           </Box>
         </TouchableOpacity>
 
-        <Box style={styles.priceSection}>
-          <Box style={styles.priceContainer}>
-            <GradientTitle style={styles.gradientTitle}>${price}</GradientTitle>
-            <GradientTitle style={{ width: "60%" }}>
-              +$45 taxes & services fees, Per Night for 1 Rooms
-            </GradientTitle>
-          </Box>
-          <TouchableOpacity style={styles.selectRoomButton}>
-            <RestyleText style={styles.selectRoomButtonText}>
-              Select Room
-            </RestyleText>
-          </TouchableOpacity>
-        </Box>
+        <PriceSelect
+          buttonText={t("Explore.select")}
+          price={450}
+          gradient
+          priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t(
+            "Explore.perNightForRoom"
+          )}`}
+        />
       </ScrollView>
     </Box>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 15,
+    marginHorizontal: 8,
+  },
+  headerFavourite: {
+    height: 20,
+    width: 22,
+    resizeMode: "cover",
+  },
+  backButton: {
+    padding: 10,
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 32,
+    borderColor: colors.greyLight,
+    borderWidth: 1,
   },
   header: {
     flexDirection: "row",

@@ -1,36 +1,41 @@
 import React from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Box } from "@/theme";
 import { colors } from "@/theme/colors";
-import Icon from "@expo/vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import GradientTitle from "@/components/GradientTitle";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { RestyleTransparent } from "@/components/RestyleTransparent";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from "@/@types/theme.type";
+import { useTranslation } from "react-i18next";
 
 const { width, height } = Dimensions.get("window");
 
 const FullScreenMap = () => {
   const navigation = useNavigation();
+  const { images } = useTheme<Theme>();
+  const { t } = useTranslation();
 
   return (
     <Box flex={1}>
       {/* === Header === */}
-      <Box flexDirection={"row"} alignItems={"center"} marginBottom={"medium"}>
-        <Box
-          style={{ height: 32, width: 32, marginRight: 10 }}
-          alignItems={"center"}
-          justifyContent={"center"}
-          borderRadius={32}
-          borderColor={"greyLight"}
-          borderWidth={1}
+      <Box
+        flexDirection={"row"}
+        alignItems={"center"}
+        marginVertical={"medium"}
+      >
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-left" size={24} color={colors.black} />
-          </TouchableOpacity>
-        </Box>
-        <GradientTitle variant="gradientTitle">Full Screen Map</GradientTitle>
+          <Image source={images.back} />
+        </TouchableOpacity>
+
+        <GradientTitle variant="gradientTitle">
+          {t("Explore.fullScreenMap")}
+        </GradientTitle>
       </Box>
 
       <MapView
@@ -71,6 +76,15 @@ const styles = StyleSheet.create({
   map: {
     width: width,
     height: height - 100,
+  },
+  backButton: {
+    padding: 10,
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 32,
+    borderColor: colors.greyLight,
+    borderWidth: 1,
   },
 });
 

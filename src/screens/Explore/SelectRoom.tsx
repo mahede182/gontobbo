@@ -1,22 +1,12 @@
 import React from "react";
 import { Box, RestyleText } from "@/theme";
-import {
-  Image,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HeaderTitle from "./component/HeaderTitle";
 import { typography } from "@/theme/typography";
-import { colors } from "@/theme/colors";
 import Tag from "./component/Tag";
-import GradientTitle from "@/components/GradientTitle";
 import PriceSelect from "./component/PriceSelect";
 import { Divider } from "./component/Divider";
-
-const { height } = Dimensions.get("window");
 
 const SelectRoom = () => {
   const navigation = useNavigation();
@@ -27,7 +17,7 @@ const SelectRoom = () => {
       <HeaderTitle title="Select Room" />
       <ScrollView showsHorizontalScrollIndicator>
         {/* === Room Package 1=== */}
-        {/* === images section ==== */}
+        {/* images section */}
         <Box style={styles.imageContainer}>
           <Image
             source={require("@/assets/hotel_image_1.png")}
@@ -167,7 +157,7 @@ const SelectRoom = () => {
           />
         </Box>
       </ScrollView>
-      <TouchableOpacity onPress={()=>navigation.navigate("REVIEW_BOOKING")}>
+      <TouchableOpacity onPress={() => navigation.navigate("REVIEW_BOOKING")}>
         <PriceSelect
           gradient
           buttonText="Book Now"

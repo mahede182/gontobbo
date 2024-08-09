@@ -7,8 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 import GradientTitle from "@/components/GradientTitle";
 import { images } from "@/theme/images";
 import { ScrollView } from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
 
 const ReviewsAndRatings = () => {
+  const { t } = useTranslation();
   const reviews = [
     {
       name: "David Moore",
@@ -62,7 +64,9 @@ const ReviewsAndRatings = () => {
             <Icon name="arrow-left" size={24} color={colors.black} />
           </TouchableOpacity>
         </Box>
-        <GradientTitle variant="gradientTitle">Reviews & Rating</GradientTitle>
+        <GradientTitle variant="gradientTitle">
+          {t("Explore.reviewsAndRating")}
+        </GradientTitle>
       </Box>
 
       <Box style={styles.ratingContainer}>
@@ -75,14 +79,18 @@ const ReviewsAndRatings = () => {
           <RestyleText style={styles.ratingValue}>4.5</RestyleText>
         </Box>
         <Box>
-          <RestyleText style={styles.ratingTitle}>Very Good</RestyleText>
+          <RestyleText style={styles.ratingTitle}>
+            {t("Explore.veryGood")}
+          </RestyleText>
           <RestyleText style={styles.ratingSubtitle}>
-            10 User Reviews & 5.0 Rating
+            {t("Explore.userReviewsAndRating")}
           </RestyleText>
         </Box>
       </Box>
       <Box style={styles.reviewsContainer}>
-        <RestyleText style={styles.reviewsTitle}>Guest Reviews</RestyleText>
+        <RestyleText style={styles.reviewsTitle}>
+          {t("Explore.guestReviews")}
+        </RestyleText>
         {reviews.map((review, index) => (
           <Box key={index} style={styles.reviewCard}>
             <Box style={styles.reviewHeader}>

@@ -3,6 +3,7 @@ export const enTranslations = {
     gontobbo: "Gontobbo",
     gontobboSlogan: "Unique adventures, Lasting memories.",
     back: "Back",
+    done: "Done",
     lang: "English",
     or: "Or",
     home: "Home",
@@ -44,5 +45,143 @@ export const enTranslations = {
     askMeAnything: "Ask me anything you're searching for",
     featureHotels: "Feature Hotels",
     popularTrip: "Popular Trip",
+  },
+  Explore: {
+    //amenities
+    amenities: "Amenities",
+    highlightedAmenities: "Highlighted Amenities",
+    gym: "Gym (24-hour)",
+    businessCentre: "Business Centre",
+    basicFacilities: "Basic Facilities",
+    laundryService: "Laundry Service",
+    elevator: "Elevator/Lift",
+    ironingService: "Ironing Service",
+    newspaper: "Newspaper",
+    freeParking: "Free Parking",
+    paidParking: "Paid Parking - Reservation Required",
+    transfers: "Transfers",
+    airportTransfers: "Airport Transfers",
+    shuttleService: "Shuttle Service",
+    paymentServices: "Payment Services",
+    atm: "ATM",
+    currencyExchange: "Currency Exchange",
+    //date picker
+    selectCheckInDate: "Select Check-In Date",
+    checkIn: "Check-in",
+    checkOut: "Check-out",
+    done: "Done",
+    //guest modal
+    selectRoomsAndGuests: "Select Rooms & Guests",
+    rooms: "Rooms",
+    adults: "Adults",
+    children: "Children",
+    //hotel details
+    caesarsPalace: "Caesars Palace",
+    description:
+      "Conveniently situated in the Washington Heights district of New York, Hotel Moca NYC is located 2.8 km from Yankee Stadium, 5 km from Columbia University and 6.3 km from Bronx Zoo.",
+
+    guests: "Guests",
+
+    laundry: "Laundry",
+    freeWifi: "Free Wi-Fi",
+    moreAmenities: "more Amenities",
+    reviewsAndRating: "Reviews & Rating",
+    readMore: "Read more",
+    location: "Location",
+    selectRoom: "Select Room",
+    perNightForOneRoom: "+$45 taxes & services fees, Per Night for 1 Rooms",
+    //hotel gallery
+    photosAndVideos: "Photos & Videos",
+    washroom: "Washroom",
+    entrance: "Entrance",
+    commonArea: "Common Area",
+    //review and rating
+    veryGood: "Very Good",
+    userReviewsAndRating: "10 User Reviews & 5.0 Rating",
+    guestReviews: "Guest Reviews",
+    //review booking
+    guestsAndRoom: "Guests & Room",
+    standardRoom: "Standard Room",
+    roomForPersons: "Room for 4 Persons",
+    breakfast: "Breakfast",
+    nonRefundable: "Non-Refundable",
+    freeSelfParking: "Free Self Parking",
+    freeBreakfast: "Free Breakfast",
+    rulesAndRegulation: "Rules & Regulation",
+    petsNotAllowed: "• Pets not allowed",
+    guestsProvidedWithFreeHandSanitizer:
+      "• Guests are provided with free hand sanitizer",
+    protectiveClothing: "• Protective clothing is available to guests",
+    hotelOffersTransfers:
+      "• The hotel offers transfers from this airport (surcharges may apply). Guests must contact the hotel with arrival details before travel, using the contact information on the booking confirmation. Front desk staff will greet guests on arrival.",
+    optionalFees:
+      "• Optional: fee for the buffet breakfast: approximately $20 and $14 for children (Airport shuttle fee: $15 per person / one-way)",
+    imLookingFor: "I'm looking For",
+    myself: "Myself",
+    someoneElse: "Someone Else",
+    title: "Title",
+    firstName: "First Name",
+    lastName: "Last Name",
+    emailAddress: "Email Address",
+    currentAddress: "Current Address",
+    contactNumber: "Contact Number",
+    addNewGuest: "Add New Guest",
+    yourState: "Your State",
+    edit: "Edit",
+    usaOutsideUsa: "USA / Outside USA",
+    confirmAndSaveTheseDetails:
+      "Confirm and save these details to your profile",
+    bookNow: "Book Now",
+    rulesAndRegulations: "Rules and Regulations *",
+    addNewGuests: "Add New Guests",
+    nameShouldBeAsPerOfficialGovtId:
+      "Name should be as per official govt. ID & travelers' details. It cannot be changed after confirmation.",
+    editState: "Edit State",
+    state: "State",
+    //rules and regulation
+    checkInOut: "Check In/Out",
+    checkInOutDescription:
+      "Hotel Check In time is 2:00 PM, Check Out time 12:00 PM",
+    mustRead: "Must Read",
+    safetyAndHygiene: "Safety & Hygiene",
+    hotelImplementingRigorousHealthAndSafetyMeasures:
+      "This hotel and its staff is implementing rigorous health & safety measure guidelines.",
+    guestProfile: "Guest Profile",
+    minimumAgeForGuestToCheckIn:
+      "Minimum age for guest to check-in is 18 years.",
+    gapPeriodEnforcedBetweenGuestStays:
+      "A gap period of at least 24 hours is enforced between guest stays.",
+    foodAndDrinksHygiene: "Food & Drinks Hygiene",
+    individuallyWrappedFoodOptions:
+      "Individually-wrapped food options are available through room service. Individually-wrapped food options are available. Social distancing measures are in place throughout the hotel.",
+    hotelStaffWearsPersonalProtectiveEquipment:
+      "Hotel staff wears personal protective equipment at all times.",
+    roomSafetyAndHygiene: "Room Safety & Hygiene",
+    propertyIsCleanedWithDisinfectants:
+      "This property is cleaned with disinfectants.",
+    petsRelated: "Pet(s) Related",
+    //search result
+    newYork: "New York",
+    dateAndGuestDetails: "10 Nov - 15 Nov, 1 Rooms, 1 Adults...",
+    search: "Search",
+    sortBy: "Sort By",
+    allFilters: "All Filters",
+    starRating: "Star Rating",
+    // select location
+    locationSelect: "Location Select",
+    whereDoYouWantToStay: "Where do you want to stay?",
+    popularLocations: "Popular locations",
+    // select room
+    cityView: "City View",
+    queenBed: "Queen Bed",
+
+    freeAirportShuttle: "Free Airport Shuttle",
+
+    accommodates2AdultsAndChild: "Accommodates 2 Adults & Child",
+
+    select: "Select",
+    //extra
+    fullScreenMap: "Full Screen Map",
+    travelDatesAndGuests: "Travel Dates & Guests",
   },
 };

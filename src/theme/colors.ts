@@ -1,3 +1,4 @@
+// colors.ts
 export const colors = {
   purpleLight: "#8C6FF7",
   purplePrimary: "#5A31F4",
@@ -11,7 +12,7 @@ export const colors = {
   white: "#F0F2F3",
 
   greyLight: "#E0E0E0",
-  greyLight2: "#F5F5F5",
+  greyLight2: "#F5F5F5", // Added greyLight2
   greyLight3: "#E1E1E1",
 
   red: "#DC3D24",

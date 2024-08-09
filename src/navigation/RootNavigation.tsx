@@ -14,6 +14,7 @@ import ReviewsAndRatings from "@/screens/Explore/ReviewAndRating";
 import FullScreenMap from "@/screens/Explore/FullScreenMap";
 import SelectRoom from "@/screens/Explore/SelectRoom";
 import ReviewBooking from "@/screens/Explore/ReviewBooking";
+import RulesAndRegulations from "@/screens/Explore/RulesAndRegulations";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -106,6 +107,11 @@ const RootNavigation = () => {
           options={{ headerShown: false }}
           name="REVIEW_BOOKING"
           component={ReviewBooking}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="RULES_AND_REGULATIONS"
+          component={RulesAndRegulations}
         />
       </Stack.Navigator>
     </NavigationContainer>

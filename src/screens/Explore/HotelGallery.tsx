@@ -17,15 +17,23 @@ import { Box } from "@/theme";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
+import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from "@/@types/theme.type";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 
 const HotelGallery = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("Washroom");
 
   const washroomImages = [Room1, Room2, Room3, Room4, Room2, Room3];
   const entranceImages = [Room1, Room2, Room3, Room4];
   const commonAreaImages = [Room1, Room2, Room3, Room4];
+
+  const navigation = useNavigation();
+  const { images } = useTheme<Theme>();
 
   const renderImages = (images) => (
     <FlatList
@@ -39,13 +47,16 @@ const HotelGallery = () => {
   return (
     <View style={styles.container}>
       <Box style={styles.header}>
-        <TouchableOpacity>
-          <Icon name="arrow-back" size={24} color={colors.black} />
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Image source={images.back} />
         </TouchableOpacity>
         <GradientTitle
           style={{ fontFamily: typography.poppinsMedium, fontSize: 22 }}
         >
-          Photos & Videos
+          {t("Explore.photosAndVideos")}
         </GradientTitle>
         <TouchableOpacity>
           <Icon name="favorite-border" size={24} color={colors.black} />
@@ -63,7 +74,7 @@ const HotelGallery = () => {
               activeTab === "Washroom" && styles.activeTabText,
             ]}
           >
-            Washroom
+            {t("Explore.washroom")}
           </Text>
         </TouchableOpacity>
 
@@ -77,7 +88,7 @@ const HotelGallery = () => {
               activeTab === "Entrance" && styles.activeTabText,
             ]}
           >
-            Entrance
+            {t("Explore.entrance")}
           </Text>
         </TouchableOpacity>
 
@@ -91,7 +102,7 @@ const HotelGallery = () => {
               activeTab === "Common Area" && styles.activeTabText,
             ]}
           >
-            Common Area
+            {t("Explore.commonArea")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -112,6 +123,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
+  },
+  backButton: {
+    padding: 10,
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 32,
+    borderColor: colors.greyLight,
+    borderWidth: 1,
   },
   tabContainer: {
     flexDirection: "row",

@@ -1,17 +1,49 @@
 // ReviewBooking.tsx
-import React from "react";
-import { Image, StyleSheet, ScrollView } from "react-native";
+import React, { useState } from "react";
+import {
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Modal,
+  View,
+  TextInput,
+} from "react-native";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import Tag from "./component/Tag";
-import Button from "@/components/RestyleButton"; // Assuming you have a custom Button component
+import Button from "@/components/RestyleButton";
 import { Input } from "@/components/Input";
 import HeaderTitle from "./component/HeaderTitle";
 import { Box, RestyleText } from "@/theme";
 import PriceSelect from "./component/PriceSelect";
 import { Divider } from "./component/Divider";
+import { useNavigation } from "@react-navigation/native";
+import GradientTitle from "@/components/GradientTitle";
+import { FontAwesome } from "@expo/vector-icons";
+import Dropdown from "@/components/Dropdown";
+import { languageData } from "@/data/LanguegeData";
+import { stateData } from "@/data/stateData";
 
 const ReviewBooking = () => {
+  const navigation = useNavigation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEditVisible, setIsEditVisible] = useState(false);
+  const [title, setTitle] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const handleAddGuest = () => {
+    // Handle adding a new guest here
+    setIsModalVisible(false);
+    setTitle("");
+    setFirstName("");
+    setLastName("");
+  };
+  const handleEdit = () => {
+    setIsEditVisible(false);
+  };
+
   return (
     <Box style={{ flex: 1, marginHorizontal: 10 }}>
       <HeaderTitle title="Select Room" />
@@ -34,7 +66,6 @@ const ReviewBooking = () => {
           <Divider />
 
           {/* Booking Details Section */}
-
           <Box style={styles.bookingDetails}>
             <Box
               alignItems={"center"}
@@ -142,28 +173,55 @@ const ReviewBooking = () => {
             <Input label="Current Address" placeholder="Current Address" />
             <Input label="Contact Number" placeholder="Contact No." />
 
-            <Button title="Add New Guest" style={styles.addGuestButton} />
-
-            <Box style={styles.stateContainer}>
-              <RestyleText style={styles.sectionTitle}>Your State</RestyleText>
-              <Button title="Edit" style={styles.stateButton} />
-            </Box>
-
-            <RestyleText style={styles.stateLabel}>
-              USA / Outside USA
-            </RestyleText>
-            <RestyleText style={styles.stateNote}>
-              Confirm and save these details to your profile
-            </RestyleText>
+            <TouchableOpacity
+              style={styles.addGuestButton}
+              onPress={() => setIsModalVisible(true)}
+            >
+              <RestyleText
+                style={{
+                  color: colors.linearStart,
+                  fontSize: 16,
+                  fontWeight: "600",
+                }}
+              >
+                Add New Guest
+              </RestyleText>
+            </TouchableOpacity>
           </Box>
         </Box>
+        <Box style={styles.section}>
+          <Box style={styles.stateContainer}>
+            <RestyleText style={styles.sectionTitle}>Your State</RestyleText>
+            <TouchableOpacity
+              onPress={() => {
+                setIsEditVisible(true);
+              }}
+              style={styles.stateButton}
+            >
+              <RestyleText style={styles.stateButtonText}>Edit</RestyleText>
+            </TouchableOpacity>
+          </Box>
 
-        {/* Book Now Button */}
-        <Button
-          title="Book Now"
-          style={styles.bookNowButton}
-          textStyle={styles.bookNowButtonText}
-        />
+          <RestyleText style={styles.stateLabel}>USA / Outside USA</RestyleText>
+          <RestyleText style={styles.stateNote}>
+            Confirm and save these details to your profile
+          </RestyleText>
+
+          {/* Book Now Button */}
+          <Button
+            title="Book Now"
+            style={styles.bookNowButton}
+            textStyle={styles.bookNowButtonText}
+          />
+          <TouchableOpacity
+            style={{ alignItems: "flex-end" }}
+            onPress={() => navigation.navigate("RULES_AND_REGULATIONS")}
+          >
+            <RestyleText style={{ color: "#aeaaea" }}>
+              Rules and Regulations *
+            </RestyleText>
+          </TouchableOpacity>
+        </Box>
       </ScrollView>
       <PriceSelect
         price={450}
@@ -172,6 +230,128 @@ const ReviewBooking = () => {
         buttonText="Book Now"
         priceSub="+$45 taxes & services fees, Per Night for 1 Rooms"
       />
+
+      {/* Add Guest Modal */}
+      <Modal visible={isModalVisible} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <Box style={styles.modalContent}>
+            <Box
+              style={{ backgroundColor: "#fff", padding: 10 }}
+              flexDirection="row"
+              alignItems="center"
+            >
+              <FontAwesome
+                onPress={handleAddGuest}
+                name="close"
+                size={16}
+                style={{ marginRight: 8 }}
+              />
+              <GradientTitle style={styles.modalTitle}>
+                Add New Guests
+              </GradientTitle>
+            </Box>
+            <RestyleText style={styles.modalDescription}>
+              Name should be as per official govt. ID & travelers' details. It
+              cannot be changed after confirmation.
+            </RestyleText>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Title"
+              value={title}
+              onChangeText={setTitle}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="First Name"
+              value={firstName}
+              onChangeText={setFirstName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Last Name"
+              value={lastName}
+              onChangeText={setLastName}
+            />
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: colors.purpleDark,
+                alignItems: "center",
+                borderRadius: 8,
+                paddingVertical: 8,
+                marginBottom: 16,
+              }}
+              onPress={handleAddGuest}
+            >
+              <RestyleText
+                style={{
+                  fontFamily: typography.poppinsSemibold,
+                  fontSize: 16,
+                  color: colors.white,
+                }}
+              >
+                Done
+              </RestyleText>
+            </TouchableOpacity>
+          </Box>
+        </View>
+      </Modal>
+      {/* Edit State Modal */}
+      <Modal visible={isEditVisible} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <Box style={styles.modalContent}>
+            <Box
+              style={{ backgroundColor: "#fff", padding: 10 }}
+              flexDirection="row"
+              alignItems="center"
+            >
+              <FontAwesome
+                onPress={handleEdit}
+                name="close"
+                size={16}
+                style={{ marginRight: 8 }}
+              />
+              <GradientTitle style={styles.modalTitle}>
+                Edit State
+              </GradientTitle>
+            </Box>
+            <Box marginVertical={"ten"}>
+              <RestyleText
+                style={{
+                  fontFamily: typography.poppinsRegular,
+                  fontSize: 22,
+                  paddingVertical: 10,
+                }}
+              >
+                State
+              </RestyleText>
+              <Dropdown label="California" data={stateData} />
+            </Box>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: colors.purpleDark,
+                alignItems: "center",
+                borderRadius: 8,
+                paddingVertical: 8,
+                marginBottom: 16,
+              }}
+              onPress={handleEdit}
+            >
+              <RestyleText
+                style={{
+                  fontFamily: typography.poppinsSemibold,
+                  fontSize: 16,
+                  color: colors.white,
+                }}
+              >
+                Done
+              </RestyleText>
+            </TouchableOpacity>
+          </Box>
+        </View>
+      </Modal>
     </Box>
   );
 };
@@ -213,7 +393,6 @@ const styles = StyleSheet.create({
     color: colors.gray,
   },
   bookingDetails: {
-    // flexDirection: "row",
     marginBottom: 16,
   },
   sectionTitle: {
@@ -262,24 +441,6 @@ const styles = StyleSheet.create({
     color: colors.gray,
     marginBottom: 4,
   },
-  priceContainer: {
-    marginBottom: 16,
-  },
-  priceRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
-  },
-  priceLabel: {
-    fontFamily: typography.poppinsRegular,
-    fontSize: 14,
-    color: colors.gray,
-  },
-  priceValue: {
-    fontFamily: typography.poppinsSemiBold,
-    fontSize: 14,
-    color: colors.black,
-  },
   guestInfoContainer: {
     marginBottom: 16,
   },
@@ -312,7 +473,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   stateButton: {
-    backgroundColor: colors.lightGray,
+    // Changed from colors.lightGray to colors.greyLight2
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -337,6 +498,38 @@ const styles = StyleSheet.create({
     fontFamily: typography.poppinsSemiBold,
     fontSize: 16,
     color: colors.white,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: colors.white,
+    padding: 16,
+    borderRadius: 8,
+    width: "100%",
+  },
+  modalTitle: {
+    fontFamily: typography.poppinsMedium,
+    fontSize: 18,
+    color: colors.black,
+  },
+  modalDescription: {
+    fontFamily: typography.poppinsRegular,
+    fontSize: 12,
+    color: colors.black,
+    marginBottom: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.greyLight,
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 16,
+    fontFamily: typography.poppinsRegular,
+    fontSize: 14,
+    color: colors.black,
   },
 });
 
