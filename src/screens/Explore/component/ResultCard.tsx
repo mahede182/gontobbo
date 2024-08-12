@@ -42,7 +42,7 @@ const ResultCard: React.FC<ResultCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "white100",
     borderRadius: 8,
     marginHorizontal: 16, // Added horizontal margin
     marginVertical: 8,

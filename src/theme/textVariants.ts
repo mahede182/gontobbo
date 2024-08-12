@@ -23,7 +23,7 @@ export const textVariants = {
     lineHeight: 40,
   },
   buttonLabel: {
-    color: "white",
+    color: "white100",
     fontSize: 18,
     fontWeight: "600",
   },

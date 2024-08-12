@@ -59,7 +59,7 @@ const TabNavigation = (props: Props) => {
         tabBarItemStyle: {
           marginTop: 25,
         },
-        tabBarActiveTintColor: "white",
+        tabBarActiveTintColor: "white100",
         tabBarHideOnKeyboard: true,
         unmountOnBlur: true,
       }}

@@ -130,7 +130,7 @@ const HotelDetails = () => {
           borderWidth={0.6}
           borderRadius={10}
           padding={"ten"}
-          borderColor={"greyLight3"}
+          borderColor={"neutral300"}
           marginVertical={"ten"}
         >
           <RestyleText style={styles.name}>{name}</RestyleText>
@@ -148,7 +148,7 @@ const HotelDetails = () => {
           borderWidth={0.6}
           borderRadius={10}
           padding={"ten"}
-          borderColor={"greyLight3"}
+          borderColor={"neutral300"}
           marginVertical={"ten"}
         >
           <Box style={styles.section}>
@@ -167,7 +167,7 @@ const HotelDetails = () => {
             borderWidth={0.6}
             borderRadius={10}
             padding={"ten"}
-            borderColor={"greyLight3"}
+            borderColor={"neutral300"}
             marginVertical={"ten"}
             style={styles.section}
           >
@@ -195,7 +195,7 @@ const HotelDetails = () => {
           borderWidth={0.6}
           borderRadius={10}
           padding={"ten"}
-          borderColor={"greyLight3"}
+          borderColor={"neutral300"}
           marginVertical={"ten"}
           style={styles.section}
         >
@@ -241,7 +241,7 @@ const HotelDetails = () => {
             borderWidth={0.6}
             borderRadius={10}
             padding={"ten"}
-            borderColor={"greyLight3"}
+            borderColor={"neutral300"}
             marginVertical={"ten"}
             style={styles.section}
           >
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 32,
-    borderColor: colors.greyLight,
+    borderColor: colors.white200,
     borderWidth: 1,
   },
   header: {
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: colors.greyLight,
+    backgroundColor: colors.white200,
     marginRight: 8,
   },
   reviewName: {
@@ -484,7 +484,7 @@ const styles = StyleSheet.create({
   priceContainer: {
     borderRadius: 8,
     padding: 8,
-    shadowColor: colors.black,
+    shadowColor: colors.black100,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -495,13 +495,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   selectRoomButton: {
-    backgroundColor: colors.purpleDark,
+    backgroundColor: colors.blue800,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
   selectRoomButtonText: {
-    color: colors.white,
+    color: colors.white100,
     fontWeight: "bold",
   },
 });

@@ -44,14 +44,14 @@ const LocationSelect = () => {
       <Box flexDirection={"row"} alignItems={"center"} marginBottom={"medium"}>
         <Box
           style={{ height: 32, width: 32, marginRight: 10 }}
-          alignItems={"center"}
-          justifyContent={"center"}
+          alignItems="center"
+          justifyContent="center"
           borderRadius={32}
-          borderColor={"greyLight"}
+          borderColor="white200"
           borderWidth={1}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" size={24} color={colors.black} />
+            <Icon name="arrow-back" size={24} color={colors.black100} />
           </TouchableOpacity>
         </Box>
         <GradientTitle variant="gradientTitle">Location Select</GradientTitle>
@@ -61,7 +61,7 @@ const LocationSelect = () => {
       <Input placeholder={"Where do you want to stay?"} />
       <Box
         justifyContent={"center"}
-        backgroundColor={"greyLight"}
+        backgroundColor={"white200"}
         padding={"small"}
         marginTop={"medium"}
       >
@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: colors.greyLight,
+    backgroundColor: colors.white200,
   },
   locationText: {
     fontFamily: typography.poppinsMedium,
     fontSize: 16,
     fontWeight: "400",
-    color: colors.greyLight,
+    color: colors.white200,
   },
 });
 

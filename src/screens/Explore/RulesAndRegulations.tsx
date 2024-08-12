@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: typography.poppinsSemiBold,
     fontSize: 20,
-    color: colors.black,
+    color: colors.black100,
     marginBottom: 8,
   },
   sectionDescription: {

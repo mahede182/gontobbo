@@ -49,7 +49,7 @@ const RestyleButton: React.FC<Props> = ({
 }) => (
   <BaseButton onPress={onPress} {...props}>
     {loading ? (
-      <ActivityIndicator color="white" />
+      <ActivityIndicator color="white100" />
     ) : (
       <Box style={styles.button}>
         {iconSrc && <Image source={iconSrc} style={styles.icon} />}

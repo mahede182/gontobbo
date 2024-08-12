@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   selectRoomButton: {
-    backgroundColor: colors.purpleDark,
+    backgroundColor: colors.blue800,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
   selectRoomButtonText: {
-    color: colors.white,
+    color: colors.white100,
     fontWeight: "bold",
   },
 });

@@ -23,7 +23,7 @@ const TripCard: React.FC<TripCardProps> = ({
   <Box
     flexDirection="row"
     marginBottom="large"
-    backgroundColor="greyLight2"
+    backgroundColor="neutral100"
     borderRadius={10}
   >
     <Image source={image} style={styles.image} />
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: "white",
+    borderColor: "white100",
   },
 });
 

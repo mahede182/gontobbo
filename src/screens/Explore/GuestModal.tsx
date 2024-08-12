@@ -70,7 +70,7 @@ const GuestModal = ({ isVisible, onClose }) => {
       >
         <View
           style={{
-            backgroundColor: "white",
+            backgroundColor: "white100",
             padding: 16,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
@@ -85,7 +85,7 @@ const GuestModal = ({ isVisible, onClose }) => {
             }}
           >
             <TouchableOpacity onPress={onClose}>
-              <Text style={{ marginRight: 10, fontSize: 16, color: "black" }}>
+              <Text style={{ marginRight: 10, fontSize: 16, color: "black100" }}>
                 X
               </Text>
             </TouchableOpacity>
@@ -114,7 +114,7 @@ const GuestModal = ({ isVisible, onClose }) => {
                 <Text
                   style={{
                     fontSize: 24,
-                    color: rooms === 1 ? "gray" : "black",
+                    color: rooms === 1 ? "gray" : "black100",
                   }}
                 >
                   -
@@ -122,7 +122,7 @@ const GuestModal = ({ isVisible, onClose }) => {
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{rooms}</Text>
               <TouchableOpacity onPress={() => handleRoomsChange(1)}>
-                <Text style={{ fontSize: 24, color: "black" }}>+</Text>
+                <Text style={{ fontSize: 24, color: "black100" }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -147,7 +147,7 @@ const GuestModal = ({ isVisible, onClose }) => {
                 <Text
                   style={{
                     fontSize: 24,
-                    color: adults === 1 ? "gray" : "black",
+                    color: adults === 1 ? "gray" : "black100",
                   }}
                 >
                   -
@@ -157,7 +157,7 @@ const GuestModal = ({ isVisible, onClose }) => {
                 {adults}
               </Text>
               <TouchableOpacity onPress={() => handleAdultsChange(1)}>
-                <Text style={{ fontSize: 24, color: "black" }}>+</Text>
+                <Text style={{ fontSize: 24, color: "black100" }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -181,7 +181,7 @@ const GuestModal = ({ isVisible, onClose }) => {
                 <Text
                   style={{
                     fontSize: 24,
-                    color: children === 0 ? "gray" : "black",
+                    color: children === 0 ? "gray" : "black100",
                   }}
                 >
                   -
@@ -191,13 +191,13 @@ const GuestModal = ({ isVisible, onClose }) => {
                 {children}
               </Text>
               <TouchableOpacity onPress={() => handleChildrenChange(1)}>
-                <Text style={{ fontSize: 24, color: "black" }}>+</Text>
+                <Text style={{ fontSize: 24, color: "black100" }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
           <TouchableOpacity
             style={{
-              backgroundColor: colors.purpleDark,
+              backgroundColor: colors.blue800,
               padding: 12,
               borderRadius: 8,
               marginVertical: 16,
@@ -207,7 +207,7 @@ const GuestModal = ({ isVisible, onClose }) => {
             <Text
               style={{
                 fontFamily: typography.poppinsBold,
-                color: "white",
+                color: "white100",
                 fontSize: 16,
                 textAlign: "center",
               }}

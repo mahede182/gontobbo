@@ -16,7 +16,7 @@ const Amenities = () => {
       {/* Header with back button */}
       <Box style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color={colors.black} />
+          <Icon name="arrow-back" size={24} color={colors.black100} />
         </TouchableOpacity>
         <GradientTitle style={styles.headerText}>
           {t("Explore.amenities")}
@@ -125,7 +125,7 @@ const Amenities = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "white100",
     padding: 16,
   },
   header: {

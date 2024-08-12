@@ -73,11 +73,11 @@ const SelectDateScreen = () => {
           alignItems={"center"}
           justifyContent={"center"}
           borderRadius={32}
-          borderColor={"greyLight"}
+          borderColor={"white200"}
           borderWidth={1}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" size={24} color={colors.black} />
+            <Icon name="arrow-back" size={24} color={colors.black100} />
           </TouchableOpacity>
         </Box>
         <GradientTitle variant="gradientTitle">
@@ -91,14 +91,14 @@ const SelectDateScreen = () => {
           markedDates={{
             [selectedCheckInDate]: {
               startingDay: true,
-              color: colors.purpleDark,
-              textColor: "white",
+              color: colors.blue800,
+              textColor: "white100",
             },
             color: "green",
             [selectedCheckOutDate]: {
               endingDay: true,
-              color: colors.purpleDark,
-              textColor: "white",
+              color: colors.blue800,
+              textColor: "white100",
             },
           }}
           style={{
@@ -114,14 +114,14 @@ const SelectDateScreen = () => {
             elevation: 2,
           }}
           theme={{
-            calendarBackground: "white",
-            textSectionTitleColor: "black",
+            calendarBackground: "white100",
+            textSectionTitleColor: "black100",
             textSectionTitleDisabledColor: "gray",
-            dayTextColor: "black",
+            dayTextColor: "black100",
             todayTextColor: "#5A31F4",
             selectedDayBackgroundColor: "yellow",
-            selectedDayTextColor: "white",
-            arrowColor: "black",
+            selectedDayTextColor: "white100",
+            arrowColor: "black100",
           }}
           //   === use when you want to custom header===
           //   customHeader={({ date }) => {
@@ -136,14 +136,14 @@ const SelectDateScreen = () => {
           //         <RestyleText
           //           fontFamily={typography.poppinsRegular}
           //           fontSize={16}
-          //           color={"purpleDark"}
-          //           style={{ color: colors.purpleDark }}
+          //           color={"blue800"}
+          //           style={{ color: colors.blue800 }}
           //         >
           //           December 2025
           //         </RestyleText>
           //         <Box flexDirection={"row"} alignItems={"center"}>
-          //           <Icon name="arrow-circle-left" size={24} color="black" />
-          //           <Icon name="arrow-circle-right" size={24} color="black" />
+          //           <Icon name="arrow-circle-left" size={24} color="black100" />
+          //           <Icon name="arrow-circle-right" size={24} color="black100" />
           //         </Box>
           //       </Box>
           //     );
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: colors.greyLight,
+    borderColor: colors.white200,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 5,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     color: "#333333",
   },
   doneButton: {
-    backgroundColor: colors.purpleDark,
+    backgroundColor: colors.blue800,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 24,

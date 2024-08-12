@@ -8,6 +8,7 @@ import GuestInput from "./GuestInput";
 import SearchButton from "./SearchInput";
 import { useNavigation } from "@react-navigation/native";
 import GuestModal from "../GuestModal";
+import { colors } from "@/theme/colors";
 
 const SearchForm = () => {
   const navigation = useNavigation();
@@ -24,7 +25,7 @@ const SearchForm = () => {
     <Box
       alignSelf={"center"}
       width={"80%"}
-      backgroundColor="black"
+      backgroundColor="black100"
       padding="twenty"
       style={styles.container}
     >
@@ -68,7 +69,7 @@ export default SearchForm;
 const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

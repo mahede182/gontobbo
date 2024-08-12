@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   searchButton: {
-    backgroundColor: colors.purpleDark,
+    backgroundColor: colors.blue800,
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 4,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   filterContainer: {
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: colors.greyLight,
+    backgroundColor: colors.white200,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 4,

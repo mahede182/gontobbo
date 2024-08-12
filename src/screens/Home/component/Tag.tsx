@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
   container: (active: boolean) => ({
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: active ? colors.purpleDark : "#fff",
+    backgroundColor: active ? colors.blue800 : "#fff",
     borderWidth: 1,
-    borderColor: colors.greyLight3,
+    borderColor: colors.neutral300,
     borderRadius: 20,
     paddingHorizontal: 12,
     paddingVertical: 10,

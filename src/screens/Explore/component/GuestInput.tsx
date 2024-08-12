@@ -8,9 +8,9 @@ type GuestInputProps = {
 };
 
 const GuestInput = ({ guests, onPress }: GuestInputProps) => (
-  <Pressable style={{ backgroundColor: "white" }} onPress={onPress}>
+  <Pressable style={{ backgroundColor: "white100" }} onPress={onPress}>
     <Box
-      borderColor={"greyLight3"}
+      borderColor={"neutral300"}
       borderWidth={1}
       padding="small"
       borderRadius={5}

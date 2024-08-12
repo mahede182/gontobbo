@@ -10,7 +10,7 @@ export const Divider = (props: Props) => <Box style={styles.divider} />;
 const styles = StyleSheet.create({
   divider: {
     height: 1,
-    backgroundColor: colors.greyLight,
+    backgroundColor: colors.white200,
     marginVertical: 16,
     marginHorizontal: 16,
   },

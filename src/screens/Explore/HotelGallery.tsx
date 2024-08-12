@@ -59,7 +59,7 @@ const HotelGallery = () => {
           {t("Explore.photosAndVideos")}
         </GradientTitle>
         <TouchableOpacity>
-          <Icon name="favorite-border" size={24} color={colors.black} />
+          <Icon name="favorite-border" size={24} color={colors.black100} />
         </TouchableOpacity>
       </Box>
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 32,
-    borderColor: colors.greyLight,
+    borderColor: colors.white200,
     borderWidth: 1,
   },
   tabContainer: {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   activeTab: {
-    backgroundColor: colors.purpleDark,
+    backgroundColor: colors.blue800,
   },
   tabText: {
     fontSize: 16,

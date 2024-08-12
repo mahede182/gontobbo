@@ -62,7 +62,7 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
       closeDropdown();
       i18n.changeLanguage(item.value);
     },
-    [closeDropdown],
+    [closeDropdown]
   );
 
   const renderItem: ListRenderItem<DropdownItem> = useCallback(
@@ -71,7 +71,7 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
         <RestyleText>{item.label}</RestyleText>
       </TouchableOpacity>
     ),
-    [onItemPress],
+    [onItemPress]
   );
 
   const rotateAnimation = animatedValue.interpolate({
@@ -88,7 +88,7 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
       >
         <RestyleText>{label}</RestyleText>
         <Animated.View style={{ transform: [{ rotate: rotateAnimation }] }}>
-          <Ionicons name="chevron-down" size={24} color="black" />
+          <Ionicons name="chevron-down" size={24} color={colors.black} />
         </Animated.View>
       </TouchableOpacity>
 
@@ -149,11 +149,11 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: "absolute",
-    backgroundColor: colors.white,
+    backgroundColor: colors.white100,
     opacity: 0.95,
     width: "70%",
     alignSelf: "center",
-    shadowColor: colors.black,
+    shadowColor: colors.black100,
     shadowRadius: 4,
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 0.5,

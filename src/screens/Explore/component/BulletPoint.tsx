@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: colors.black,
+    backgroundColor: colors.black100,
     marginTop: 6,
     marginRight: 8,
   },

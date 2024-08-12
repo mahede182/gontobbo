@@ -57,11 +57,11 @@ const ReviewsAndRatings = () => {
           alignItems={"center"}
           justifyContent={"center"}
           borderRadius={32}
-          borderColor={"greyLight"}
+          borderColor={"white200"}
           borderWidth={1}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-left" size={24} color={colors.black} />
+            <Icon name="arrow-left" size={24} color={colors.black100} />
           </TouchableOpacity>
         </Box>
         <GradientTitle variant="gradientTitle">
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   ratingBackground: {
-    backgroundColor: colors.red600,
+    backgroundColor: colors.secondary50,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,

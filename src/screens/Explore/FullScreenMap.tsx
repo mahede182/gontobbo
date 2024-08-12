@@ -60,7 +60,7 @@ const FullScreenMap = () => {
                 backgroundColor: "red",
                 borderRadius: 10,
                 borderWidth: 2,
-                borderColor: "white",
+                borderColor: "white100",
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 32,
-    borderColor: colors.greyLight,
+    borderColor: colors.white200,
     borderWidth: 1,
   },
 });

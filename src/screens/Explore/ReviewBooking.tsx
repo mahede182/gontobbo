@@ -276,7 +276,7 @@ const ReviewBooking = () => {
 
             <TouchableOpacity
               style={{
-                backgroundColor: colors.purpleDark,
+                backgroundColor: colors.blue800,
                 alignItems: "center",
                 borderRadius: 8,
                 paddingVertical: 8,
@@ -288,7 +288,7 @@ const ReviewBooking = () => {
                 style={{
                   fontFamily: typography.poppinsSemibold,
                   fontSize: 16,
-                  color: colors.white,
+                  color: colors.white100,
                 }}
               >
                 Done
@@ -331,7 +331,7 @@ const ReviewBooking = () => {
 
             <TouchableOpacity
               style={{
-                backgroundColor: colors.purpleDark,
+                backgroundColor: colors.blue800,
                 alignItems: "center",
                 borderRadius: 8,
                 paddingVertical: 8,
@@ -343,7 +343,7 @@ const ReviewBooking = () => {
                 style={{
                   fontFamily: typography.poppinsSemibold,
                   fontSize: 16,
-                  color: colors.white,
+                  color: colors.white100,
                 }}
               >
                 Done
@@ -359,7 +359,7 @@ const ReviewBooking = () => {
 const styles = StyleSheet.create({
   section: {
     borderWidth: 1,
-    borderColor: colors.greyLight3,
+    borderColor: colors.neutral300,
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
   hotelName: {
     fontFamily: typography.poppinsSemiBold,
     fontSize: 18,
-    color: colors.black,
+    color: colors.black100,
   },
   hotelRating: {
     fontFamily: typography.poppinsRegular,
@@ -398,12 +398,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: typography.poppinsRegular,
     fontSize: 16,
-    color: colors.black,
+    color: colors.black100,
   },
   sectionValue: {
     fontFamily: typography.poppinsMedium,
     fontSize: 16,
-    color: colors.black,
+    color: colors.black100,
     marginBottom: 8,
   },
   roomDetails: {
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
   roomTitle: {
     fontFamily: typography.poppinsSemibold,
     fontSize: 16,
-    color: colors.black,
+    color: colors.black100,
     marginBottom: 4,
   },
   roomDescription: {
@@ -458,7 +458,7 @@ const styles = StyleSheet.create({
   guestTypeButtonText: {
     fontFamily: typography.poppinsRegular,
     fontSize: 14,
-    color: colors.black,
+    color: colors.black100,
   },
   addGuestButton: {
     backgroundColor: colors.primary,
@@ -473,7 +473,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   stateButton: {
-    // Changed from colors.lightGray to colors.greyLight2
+    // Changed from colors.lightGray to colors.neutral100
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
   bookNowButtonText: {
     fontFamily: typography.poppinsSemiBold,
     fontSize: 16,
-    color: colors.white,
+    color: colors.white100,
   },
   modalContainer: {
     flex: 1,
@@ -505,7 +505,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.white100,
     padding: 16,
     borderRadius: 8,
     width: "100%",
@@ -513,23 +513,23 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontFamily: typography.poppinsMedium,
     fontSize: 18,
-    color: colors.black,
+    color: colors.black100,
   },
   modalDescription: {
     fontFamily: typography.poppinsRegular,
     fontSize: 12,
-    color: colors.black,
+    color: colors.black100,
     marginBottom: 16,
   },
   input: {
     borderWidth: 1,
-    borderColor: colors.greyLight,
+    borderColor: colors.white200,
     borderRadius: 4,
     padding: 8,
     marginBottom: 16,
     fontFamily: typography.poppinsRegular,
     fontSize: 14,
-    color: colors.black,
+    color: colors.black100,
   },
 });
 

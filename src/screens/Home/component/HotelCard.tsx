@@ -10,7 +10,7 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(
     <Box
       width={160}
       marginRight="medium"
-      backgroundColor="greyLight2"
+      backgroundColor="neutral100"
       borderRadius={10}
       overflow="hidden"
     >
@@ -20,17 +20,17 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(
           position="absolute"
           top={8}
           right={8}
-          backgroundColor="white"
+          backgroundColor="white100"
           borderRadius={50}
           padding="ten"
         >
-          <Ionicons name="heart-outline" size={18} color="black" />
+          <Ionicons name="heart-outline" size={18} color="black100" />
         </Box>
         <Box
           position="absolute"
           bottom={8}
           left={8}
-          backgroundColor="white"
+          backgroundColor="white100"
           borderRadius={12}
           paddingVertical="tiny"
           paddingHorizontal="small"

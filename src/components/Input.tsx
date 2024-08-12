@@ -21,7 +21,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <Box marginBottom="medium">
       {label && (
-        <Text variant="textBase" color="black" marginBottom="tiny">
+        <Text variant="textBase" color="black100" marginBottom="tiny">
           {label}
         </Text>
       )}
@@ -29,7 +29,7 @@ export const Input: React.FC<InputProps> = ({
         flexDirection="row"
         alignItems="center"
         borderWidth={1}
-        borderColor={error ? "red" : "greyLight"}
+        borderColor={error ? "danger" : "white200"}
         borderRadius={8}
         padding="medium"
         style={{ backgroundColor: "#FFFFFF" }}
@@ -39,12 +39,12 @@ export const Input: React.FC<InputProps> = ({
         )}
         <TextInput
           style={styles.input}
-          placeholderTextColor={colors.greyLight3}
+          placeholderTextColor={colors.neutral300}
           {...props}
         />
       </Box>
       {error && (
-        <Text variant="textBase" color="red" marginTop="tiny">
+        <Text variant="textBase" color="danger" marginTop="tiny">
           {error}
         </Text>
       )}

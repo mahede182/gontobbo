@@ -12,7 +12,7 @@ const SearchButton = ({ onPress }: SearchButtonProps) => {
   return (
     <Pressable onPress={onPress}>
       <Box
-        backgroundColor={"purpleDark"}
+        backgroundColor={"blue800"}
         padding="medium"
         borderRadius={5}
         marginVertical={"medium"}
