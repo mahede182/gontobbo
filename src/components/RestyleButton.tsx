@@ -51,7 +51,7 @@ const RestyleButton: React.FC<Props> = ({
     {loading ? (
       <ActivityIndicator color="white100" />
     ) : (
-      <Box style={styles.button}>
+      <Box style={styles.buttonContainer}>
         {iconSrc && <Image source={iconSrc} style={styles.icon} />}
         <RestyleText variant="buttonLabel">{label}</RestyleText>
       </Box>
@@ -63,15 +63,13 @@ export default RestyleButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    borderRadius: 5,
-  },
-  button: {
     flexDirection: "row",
-    justifyContent: "center",
-    borderRadius: 5,
     alignItems: "center",
+    justifyContent: "center",
   },
   icon: {
     marginHorizontal: 5,
+    width: 14,
+    height: 14,
   },
 });

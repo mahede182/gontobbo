@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {
@@ -33,7 +34,8 @@
             "./assets/fonts/Poppins-Bold.ttf"
           ]
         }
-      ]
+      ],
+      "expo-apple-authentication"
     ]
   }
 }

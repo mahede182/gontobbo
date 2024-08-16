@@ -85,7 +85,9 @@ const GuestModal = ({ isVisible, onClose }) => {
             }}
           >
             <TouchableOpacity onPress={onClose}>
-              <Text style={{ marginRight: 10, fontSize: 16, color: "black100" }}>
+              <Text
+                style={{ marginRight: 10, fontSize: 16, color: "black100" }}
+              >
                 X
               </Text>
             </TouchableOpacity>

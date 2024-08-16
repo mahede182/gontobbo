@@ -33,7 +33,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
           <Icon name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
-          {t("signIn.sign")}{" "}
+          {t("signIn.sign")}
           <Text style={styles.headerTitleHighlight}>{t("signIn.up")}</Text>{" "}
           {t("signIn.withEmail")}
         </Text>

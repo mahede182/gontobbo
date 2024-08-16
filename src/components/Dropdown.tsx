@@ -62,7 +62,7 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
       closeDropdown();
       i18n.changeLanguage(item.value);
     },
-    [closeDropdown]
+    [closeDropdown],
   );
 
   const renderItem: ListRenderItem<DropdownItem> = useCallback(
@@ -71,7 +71,7 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
         <RestyleText>{item.label}</RestyleText>
       </TouchableOpacity>
     ),
-    [onItemPress]
+    [onItemPress],
   );
 
   const rotateAnimation = animatedValue.interpolate({

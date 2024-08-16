@@ -57,7 +57,7 @@ const RootNavigation = () => {
           name="FAVOURITE"
           component={FavouriteScreens}
         />
-        {/* during refactor delete  */}
+        {/* FIXME: refactor as separate stack */}
         <Stack.Screen
           options={{ headerShown: false }}
           name="SELECT_LOCATION"

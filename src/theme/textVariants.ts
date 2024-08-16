@@ -23,9 +23,10 @@ export const textVariants = {
     lineHeight: 40,
   },
   buttonLabel: {
-    color: "white100",
-    fontSize: 18,
-    fontWeight: "600",
+    fontFamily: typography.poppinsMedium,
+    color: "white",
+    fontSize: 16,
+    fontWeight: "500",
   },
   h2: {
     fontSize: 20,

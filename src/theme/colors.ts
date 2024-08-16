@@ -63,6 +63,8 @@ export const colors = {
   warning: "#FFAD0D",
   success: "#47B881",
   info: "#3B82F6",
+  fbBg: "#0470E6",
+  gmailBg: "#EA4335",
 } as const;
 
 export type Palette = typeof colors;

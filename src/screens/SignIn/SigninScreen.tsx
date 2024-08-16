@@ -10,8 +10,42 @@ import { RestyleTransparent } from "@/components/RestyleTransparent";
 import RestyleButton from "@/components/RestyleButton";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
+import { colors } from "@/theme/colors";
+import { typography } from "@/theme/typography";
+import * as AppleAuthentication from "expo-apple-authentication";
 
 type Props = {};
+// <> No one beat you
+/**
+ * <> no one beat you
+ * @param hello
+ *
+ */
+// TODO: refactor code and remove all comment
+const handleAppleSignIn = async () => {
+  try {
+    const credential = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+      ],
+    });
+    // DEBUG: watch out the token
+    // Handle the signed-in user's information
+    console.log("Apple Sign-In Successful:", credential);
+    // You can access the user's information from the `credential` object
+    // For example: credential.user, credential.email, credential.fullName, etc.
+  } catch (error) {
+    if (error.code === "ERR_REQUEST_CANCELED") {
+      // User canceled the sign-in flow
+      console.log("Apple Sign-In Canceled");
+    } else {
+      // Handle other errors
+      console.error("Apple Sign-In Error:", error);
+      Alert.alert("Error", error.message);
+    }
+  }
+};
 
 const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
@@ -19,35 +53,33 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { images } = useTheme<Theme>();
   return (
     <ImageBackground source={images.backgroundTexture} style={styles.container}>
-      <Box position="absolute" right={0}>
-        <RestyleTransparent opacity={0.25}>
-          <Dropdown data={languageData} label={t("common.lang")} />
-        </RestyleTransparent>
-      </Box>
+      <RestyleTransparent position="absolute" right={-25} opacity={0.5}>
+        <Dropdown data={languageData} label={t("common.lang")} />
+      </RestyleTransparent>
+
       <Logo />
 
-      <Box style={styles.buttonContainer}>
-        {/* ::: SignIn with Button ::: */}
+      {/* ::: Social Sign in button container ::: */}
+      <Box>
         <RestyleButton
           iconSrc={images.appleIcon}
           label={t("signIn.continueWithApple")}
-          onPress={() => alert(t("signIn.continueWithApple"))}
+          onPress={handleAppleSignIn}
           style={[styles.button, styles.appleButton]}
         />
-        {/* ::: SignIn with facebook Button ::: */}
         <RestyleButton
           iconSrc={images.fbIcon}
           label={t("signIn.continueWithFacebook")}
           onPress={() => alert(t("signIn.continueWithFacebook"))}
           style={[styles.button, styles.facebookButton]}
         />
-        {/* ::: SignIn with Gmail Button ::: */}
         <RestyleButton
           iconSrc={images.gmailIcon}
           label={t("signIn.continueWithGmail")}
           onPress={() => alert(t("signIn.continueWithGmail"))}
           style={[styles.button, styles.gmailButton]}
         />
+        {/* ::: or ::: */}
         <Box style={styles.divider}>
           <Box style={styles.dividerLine} />
           <RestyleText style={styles.dividerRestyleText}>
@@ -55,7 +87,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
           </RestyleText>
           <Box style={styles.dividerLine} />
         </Box>
-        {/* Sign in with Email Button */}
+
         <RestyleButton
           iconSrc={images.emailIcon}
           label={t("signIn.signInWithEmail")}
@@ -63,11 +95,13 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
           style={[styles.button, styles.emailButton]}
         />
         <Box style={styles.linkContainer}>
+          {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
             <RestyleText style={styles.linkRestyleText}>
               {t("signIn.signUpWithEmail")}
             </RestyleText>
           </TouchableOpacity>
+          {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity onPress={() => navigation.navigate("HOME")}>
             <RestyleText style={styles.linkRestyleText}>
               {t("signIn.continueAsGuest")}
@@ -93,8 +127,7 @@ export default SigninScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    padding: 20,
+    paddingHorizontal: 20,
     justifyContent: "space-between",
   },
   logo: {
@@ -107,20 +140,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 10,
   },
-  tagline: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
-    marginTop: 5,
-  },
   buttonContainer: {
-    marginTop: 10,
+    // marginTop: 10,
   },
   button: {
     flexDirection: "row",
     justifyContent: "center",
     borderRadius: 5,
-    padding: 15,
+    padding: 10,
     alignItems: "center",
     marginBottom: 10,
   },
@@ -133,30 +160,30 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   appleButton: {
-    backgroundColor: "#000000",
+    backgroundColor: colors.black,
   },
   facebookButton: {
-    backgroundColor: "#1877F2",
+    backgroundColor: colors.fbBg,
   },
   gmailButton: {
-    backgroundColor: "#EA4335",
+    backgroundColor: colors.gmailBg,
   },
   emailButton: {
-    backgroundColor: "#4285F4",
+    backgroundColor: colors.primary700,
   },
   divider: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: 10,
   },
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: colors.neutral500,
   },
   dividerRestyleText: {
-    marginHorizontal: 10,
-    color: "#666",
+    marginHorizontal: 5,
+    color: colors.neutral500,
   },
   linkContainer: {
     flexDirection: "row",
@@ -164,18 +191,26 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   linkRestyleText: {
-    color: "#4285F4",
+    color: colors.primary700,
+    fontFamily: typography.poppinsRegular,
     fontSize: 14,
   },
   footer: {
-    marginTop: 20,
+    marginTop: 30,
+    marginBottom: 10,
   },
   footerRestyleText: {
-    fontSize: 12,
-    color: "#666",
+    fontSize: 10,
+    fontFamily: typography.poppinsRegular,
+    fontWeight: "300",
+    color: colors.neutral600,
     textAlign: "center",
   },
   footerLink: {
-    color: "#4285F4",
+    fontSize: 10,
+    fontFamily: typography.poppinsRegular,
+    fontWeight: "300",
+    color: colors.primary700,
+    textAlign: "center",
   },
 });

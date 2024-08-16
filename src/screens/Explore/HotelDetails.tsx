@@ -11,7 +11,6 @@ import { colors } from "@/theme/colors";
 import Icon from "@expo/vector-icons/FontAwesome6";
 import detailsImage from "@/assets/hotel_image_1.png";
 import MapView, { Marker } from "react-native-maps";
-import GradientTitle from "@/components/GradientTitle";
 import { useNavigation } from "@react-navigation/native";
 import { images } from "@/theme/images";
 import PriceSelect from "./component/PriceSelect";
