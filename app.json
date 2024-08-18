@@ -13,13 +13,15 @@
     },
     "ios": {
       "supportsTablet": true,
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "bundleIdentifier": "co.bitsofts.gontobbo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "co.bitsofts.gontobbo"
     },
     "web": {
       "favicon": "./assets/favicon.png"

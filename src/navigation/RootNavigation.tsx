@@ -1,5 +1,3 @@
-import FavouriteScreens from "@/screens/Favourite";
-
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation, { TabStackParamList } from "./TabNavigation";
@@ -49,13 +47,6 @@ const RootNavigation = () => {
           options={{ headerShown: false }}
           name="HOME"
           component={TabNavigation}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name="FAVOURITE"
-          component={FavouriteScreens}
         />
         {/* FIXME: refactor as separate stack */}
         <Stack.Screen
