@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "228779477149",
+    "project_id": "gontobbo-bbdd8",
+    "storage_bucket": "gontobbo-bbdd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228779477149:android:e593be37044bad6b8dec74",
+        "android_client_info": {
+          "package_name": "co.bitsofts.gontobbo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228779477149-kvgi01k770253e9tqdb2sgnb6rljd5ol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.bitsofts.gontobbo",
+            "certificate_hash": "d5d6c597a0ae1a4a8114d6645bf1e47ba711746f"
+          }
+        },
+        {
+          "client_id": "228779477149-r4meno2ipfskc1or21ed5edp4df4fsr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy3LXCDXq_joh91kQrwA-w0ZWXfnkttIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228779477149-r4meno2ipfskc1or21ed5edp4df4fsr2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "228779477149-htkbnhk730s7sssrj68stuntmiglhsu7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.bitsofts.gontobbo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,6 +23,12 @@ import {
   AuthenticationToken,
   LoginManager,
 } from "react-native-fbsdk-next";
+import {
+  statusCodes,
+  isErrorWithCode,
+  GoogleSignin,
+} from "@react-native-google-signin/google-signin";
+import { isIOS } from "@/utils/device";
 
 type Props = {};
 // <> No one beat you
@@ -79,6 +85,47 @@ const handleFacebookSignIn = async () => {
   }
 };
 
+// TODO: Refactor Code
+GoogleSignin.configure({
+  webClientId:
+    "228779477149-r4meno2ipfskc1or21ed5edp4df4fsr2.apps.googleusercontent.com", // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
+  scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
+  offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+  forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+  iosClientId:
+    "228779477149-htkbnhk730s7sssrj68stuntmiglhsu7.apps.googleusercontent.com", // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+  profileImageSize: 160, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
+});
+
+const handleGoogleSignIn = async () => {
+  try {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    console.log(userInfo, "user info");
+  } catch (error) {
+    if (isErrorWithCode(error)) {
+      switch (error.code) {
+        case statusCodes.NO_SAVED_CREDENTIAL_FOUND:
+          console.log("No Saved Credential Found");
+          break;
+        case statusCodes.SIGN_IN_CANCELLED:
+          console.log("Sign in cancel");
+          break;
+        case statusCodes.ONE_TAP_START_FAILED:
+          console.log("One Tap Failed");
+          break;
+        case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+          console.log("PLAY_SERVICES_NOT_AVAILABLE");
+          break;
+        default:
+          console.log(error);
+      }
+    } else {
+      console.log(error);
+    }
+  }
+};
+
 const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -93,12 +140,15 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
 
       {/* ::: Social Sign in button container ::: */}
       <Box>
-        <RestyleButton
-          iconSrc={images.appleIcon}
-          label={t("signIn.continueWithApple")}
-          onPress={handleAppleSignIn}
-          style={[styles.button, styles.appleButton]}
-        />
+        {isIOS && (
+          <RestyleButton
+            iconSrc={images.appleIcon}
+            label={t("signIn.continueWithApple")}
+            onPress={handleAppleSignIn}
+            style={[styles.button, styles.appleButton]}
+          />
+        )}
+
         <RestyleButton
           iconSrc={images.fbIcon}
           label={t("signIn.continueWithFacebook")}
@@ -108,7 +158,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
         <RestyleButton
           iconSrc={images.gmailIcon}
           label={t("signIn.continueWithGmail")}
-          onPress={() => alert(t("signIn.continueWithGmail"))}
+          onPress={handleGoogleSignIn}
           style={[styles.button, styles.gmailButton]}
         />
         {/* ::: or ::: */}
