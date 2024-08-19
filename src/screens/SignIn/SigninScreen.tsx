@@ -1,5 +1,10 @@
 import React from "react";
-import { ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import Logo from "@/components/Logo";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -13,6 +18,11 @@ import { Theme } from "@/@types/theme.type";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import * as AppleAuthentication from "expo-apple-authentication";
+import {
+  AccessToken,
+  AuthenticationToken,
+  LoginManager,
+} from "react-native-fbsdk-next";
 
 type Props = {};
 // <> No one beat you
@@ -47,6 +57,28 @@ const handleAppleSignIn = async () => {
   }
 };
 
+// TODO: Refactor code
+const handleFacebookSignIn = async () => {
+  try {
+    const result = await LoginManager.logInWithPermissions(
+      ["public_profile", "email"],
+      "limited",
+      "my_nonce"
+    );
+    console.log(result);
+
+    if (Platform.OS === "ios") {
+      const result = await AuthenticationToken.getAuthenticationTokenIOS();
+      console.log(result?.authenticationToken);
+    } else {
+      const result = await AccessToken.getCurrentAccessToken();
+      console.log(result?.accessToken);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -70,7 +102,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
         <RestyleButton
           iconSrc={images.fbIcon}
           label={t("signIn.continueWithFacebook")}
-          onPress={() => alert(t("signIn.continueWithFacebook"))}
+          onPress={handleFacebookSignIn}
           style={[styles.button, styles.facebookButton]}
         />
         <RestyleButton

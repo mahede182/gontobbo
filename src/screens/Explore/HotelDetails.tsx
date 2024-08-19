@@ -275,7 +275,7 @@ const HotelDetails = () => {
           price={450}
           gradient
           priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t(
-            "Explore.perNightForRoom"
+            "Explore.perNightForRoom",
           )}`}
         />
       </ScrollView>
