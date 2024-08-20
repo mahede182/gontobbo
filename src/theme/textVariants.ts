@@ -1,26 +1,14 @@
 import { typography } from "./typography";
 
 export const textVariants = {
-  defaults: {},
+  defaults: {
+    fontFamily: typography.poppinsRegular,
+    fontSize: 14,
+    fontWeight: "500",
+  },
   textBase: {
     fontSize: 16,
     lineHeight: 24,
-  },
-  textLg: {
-    fontSize: 18,
-    lineHeight: 28,
-  },
-  textXl: {
-    fontSize: 20,
-    lineHeight: 28,
-  },
-  text2Xl: {
-    fontSize: 24,
-    lineHeight: 32,
-  },
-  text4Xl: {
-    fontSize: 36,
-    lineHeight: 40,
   },
   buttonLabel: {
     fontFamily: typography.poppinsMedium,
@@ -46,5 +34,13 @@ export const textVariants = {
     fontFamily: typography.poppinsSemibold,
     fontSize: 20,
     fontWeight: "600",
+  },
+  inputTitle: {
+    fontFamily: typography.poppinsRegular,
+    color: "neutral700",
+    fontSize: 16,
+    lineHeight: "100%",
+    fontWeight: "500",
+    marginBottom: "five",
   },
 };

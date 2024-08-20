@@ -2,7 +2,7 @@ import React from "react";
 import { Box, RestyleText } from "@/theme";
 import { Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import HeaderTitle from "./component/HeaderTitle";
+import HeaderTitle from "@/components/HeaderTitle";
 import { typography } from "@/theme/typography";
 import Tag from "./component/Tag";
 import PriceSelect from "./component/PriceSelect";

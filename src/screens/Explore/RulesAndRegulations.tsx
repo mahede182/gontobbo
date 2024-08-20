@@ -5,7 +5,7 @@ import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import BulletPoint from "./component/BulletPoint";
-import HeaderTitle from "./component/HeaderTitle";
+import HeaderTitle from "@/components/HeaderTitle";
 import { Divider } from "./component/Divider";
 
 const RulesAndRegulations = () => {

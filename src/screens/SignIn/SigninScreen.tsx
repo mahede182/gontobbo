@@ -1,7 +1,7 @@
 import React from "react";
 import {
+  Alert,
   ImageBackground,
-  Platform,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -18,17 +18,13 @@ import { Theme } from "@/@types/theme.type";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import * as AppleAuthentication from "expo-apple-authentication";
-import {
-  AccessToken,
-  AuthenticationToken,
-  LoginManager,
-} from "react-native-fbsdk-next";
-import {
-  statusCodes,
-  isErrorWithCode,
-  GoogleSignin,
-} from "@react-native-google-signin/google-signin";
 import { isIOS } from "@/utils/device";
+
+import {
+  // handleAppleSignIn,
+  handleFacebookSignIn,
+  handleGoogleSignIn,
+} from "@/utils/socialAuth";
 
 type Props = {};
 // <> No one beat you
@@ -37,7 +33,7 @@ type Props = {};
  * @param hello
  *
  */
-// TODO: refactor code and remove all comment
+// FIXME: apple pay auth not work. split the code @/utils/socialAuth
 const handleAppleSignIn = async () => {
   try {
     const credential = await AppleAuthentication.signInAsync({
@@ -52,6 +48,7 @@ const handleAppleSignIn = async () => {
     // You can access the user's information from the `credential` object
     // For example: credential.user, credential.email, credential.fullName, etc.
   } catch (error) {
+    console.log(error);
     if (error.code === "ERR_REQUEST_CANCELED") {
       // User canceled the sign-in flow
       console.log("Apple Sign-In Canceled");
@@ -59,69 +56,6 @@ const handleAppleSignIn = async () => {
       // Handle other errors
       console.error("Apple Sign-In Error:", error);
       Alert.alert("Error", error.message);
-    }
-  }
-};
-
-// TODO: Refactor code
-const handleFacebookSignIn = async () => {
-  try {
-    const result = await LoginManager.logInWithPermissions(
-      ["public_profile", "email"],
-      "limited",
-      "my_nonce"
-    );
-    console.log(result);
-
-    if (Platform.OS === "ios") {
-      const result = await AuthenticationToken.getAuthenticationTokenIOS();
-      console.log(result?.authenticationToken);
-    } else {
-      const result = await AccessToken.getCurrentAccessToken();
-      console.log(result?.accessToken);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// TODO: Refactor Code
-GoogleSignin.configure({
-  webClientId:
-    "228779477149-r4meno2ipfskc1or21ed5edp4df4fsr2.apps.googleusercontent.com", // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
-  scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
-  offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-  forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-  iosClientId:
-    "228779477149-htkbnhk730s7sssrj68stuntmiglhsu7.apps.googleusercontent.com", // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-  profileImageSize: 160, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
-});
-
-const handleGoogleSignIn = async () => {
-  try {
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    console.log(userInfo, "user info");
-  } catch (error) {
-    if (isErrorWithCode(error)) {
-      switch (error.code) {
-        case statusCodes.NO_SAVED_CREDENTIAL_FOUND:
-          console.log("No Saved Credential Found");
-          break;
-        case statusCodes.SIGN_IN_CANCELLED:
-          console.log("Sign in cancel");
-          break;
-        case statusCodes.ONE_TAP_START_FAILED:
-          console.log("One Tap Failed");
-          break;
-        case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-          console.log("PLAY_SERVICES_NOT_AVAILABLE");
-          break;
-        default:
-          console.log(error);
-      }
-    } else {
-      console.log(error);
     }
   }
 };
@@ -173,7 +107,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
         <RestyleButton
           iconSrc={images.emailIcon}
           label={t("signIn.signInWithEmail")}
-          onPress={() => alert(t("signIn.continueWithGmail"))}
+          onPress={() => navigation.navigate("EMAIL_SIGN_IN")}
           style={[styles.button, styles.emailButton]}
         />
         <Box style={styles.linkContainer}>

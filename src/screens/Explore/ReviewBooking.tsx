@@ -14,7 +14,6 @@ import { typography } from "@/theme/typography";
 import Tag from "./component/Tag";
 import Button from "@/components/RestyleButton";
 import { Input } from "@/components/Input";
-import HeaderTitle from "./component/HeaderTitle";
 import { Box, RestyleText } from "@/theme";
 import PriceSelect from "./component/PriceSelect";
 import { Divider } from "./component/Divider";
@@ -24,6 +23,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import Dropdown from "@/components/Dropdown";
 import { languageData } from "@/data/LanguegeData";
 import { stateData } from "@/data/stateData";
+import HeaderTitle from "@/components/HeaderTitle";
 
 const ReviewBooking = () => {
   const navigation = useNavigation();

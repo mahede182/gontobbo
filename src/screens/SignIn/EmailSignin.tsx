@@ -1,79 +1,87 @@
 import React, { useState } from "react";
 import {
+  Image,
+  ImageBackground,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { Box, RestyleText } from "@/theme";
+import HeaderTitle from "@/components/HeaderTitle";
+import { colors } from "@/theme/colors";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from "@/@types/theme.type";
 
 type Props = {};
 
 const EmailSignin: React.FC<Props> = (props): JSX.Element => {
-  const [email, setEmail] = useState("gontobbo@gmail.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
   const { t } = useTranslation();
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t("signIn.signInWithEmail")}</Text>
-      </View>
+  const { images } = useTheme<Theme>();
 
-      <View style={styles.formContainer}>
-        <Text style={styles.label}>{t("signIn.emailAddress")}</Text>
+  return (
+    <ImageBackground source={images.backgroundTexture} style={styles.container}>
+      <HeaderTitle title={t("signIn.signInWithEmail")} />
+
+      <Box style={styles.formContainer}>
+        <RestyleText variant="inputTitle" style={{ marginBottom: 5 }}>
+          {t("signIn.emailAddress")}
+        </RestyleText>
         <TextInput
           style={styles.input}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
+          placeholder="gontobbo@gmail.co"
         />
 
-        <Text style={styles.label}>{t("signIn.password")}</Text>
-        <View style={styles.passwordContainer}>
+        <RestyleText variant="inputTitle">{t("signIn.password")}</RestyleText>
+        <Box style={styles.passwordContainer}>
           <TextInput
             style={styles.passwordInput}
             value={password}
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
+            placeholder="*****"
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <Icon
-              name={showPassword ? "eye-off" : "eye"}
-              size={24}
-              color="#888"
+            <Image
+              source={images.showPassword}
+              style={styles.showPasswordIcon}
+              tintColor={showPassword ? colors.success : colors.neutral600}
             />
           </TouchableOpacity>
-        </View>
+        </Box>
 
         <TouchableOpacity style={styles.signInButton}>
-          <Text style={styles.signInButtonText}>{t("signIn.singIn")}</Text>
+          <RestyleText variant="buttonLabel">{t("signIn.singIn")}</RestyleText>
         </TouchableOpacity>
-
-        <View style={styles.signUpContainer}>
-          <Text style={styles.signUpText}>{t("signIn.dontHaveAnAccount")}</Text>
-          <TouchableOpacity>
-            <Text style={styles.signUpLink}>{t("signIn.signUp")}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+      </Box>
+      <Box style={styles.signUpContainer}>
+        <RestyleText style={styles.signUpText}>
+          {t("signIn.dontHaveAnAccount")}
+        </RestyleText>
+        <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
+          <RestyleText style={styles.signUpLink}>
+            {t("signIn.signUp")}
+          </RestyleText>
+        </TouchableOpacity>
+      </Box>
+    </ImageBackground>
   );
 };
 
 export default EmailSignin;
-
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 20,
     flex: 1,
-    backgroundColor: "#FFFFFF",
   },
   header: {
     flexDirection: "row",
@@ -88,13 +96,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   formContainer: {
-    padding: 16,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 8,
-    color: "#333",
+    backgroundColor: colors.neutral50,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderRadius: 5,
   },
   input: {
     borderWidth: 1,
@@ -118,9 +125,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   signInButton: {
-    backgroundColor: "#1877F2",
+    backgroundColor: colors.primary700,
     borderRadius: 8,
-    padding: 16,
+    padding: 12,
+    marginBottom: 5,
     alignItems: "center",
   },
   signInButtonText: {
@@ -134,12 +142,14 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   signUpText: {
-    fontSize: 16,
-    color: "#333",
+    color: colors.neutral600,
   },
   signUpLink: {
-    fontSize: 16,
-    color: "#1877F2",
-    fontWeight: "600",
+    color: colors.primary700,
+  },
+  showPasswordIcon: {
+    height: 10,
+    width: 14,
+    marginRight: 15,
   },
 });

@@ -34,6 +34,8 @@ export const images = {
   avatar1: require("@/assets/Home/avatar1.png") as ImageSourcePropType,
   avatar2: require("@/assets/Home/avatar2.png") as ImageSourcePropType,
   back: require("@/assets/Back.png") as ImageSourcePropType,
+  showPassword:
+    require("@/assets/signIn/showPassword.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;
