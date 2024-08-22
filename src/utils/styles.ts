@@ -8,9 +8,6 @@ export const utilityStyles = StyleSheet.create({
   },
 });
 
-export const WIDTH = Dimensions.get("screen").width;
-export const HEIGHT = Dimensions.get("screen").height;
-
 export const dynamicSpace = (value: number) => {
   return StyleSheet.create({
     marginTop: { marginTop: value },
@@ -28,7 +25,7 @@ type StylePropKey = keyof ViewStyle;
 
 export function dynamicCSS<K extends StylePropKey>(
   key: K,
-  value: ViewStyle[K],
+  value: ViewStyle[K]
 ) {
   return { [key]: value };
 }

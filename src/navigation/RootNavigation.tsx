@@ -13,6 +13,7 @@ import FullScreenMap from "@/screens/Explore/FullScreenMap";
 import SelectRoom from "@/screens/Explore/SelectRoom";
 import ReviewBooking from "@/screens/Explore/ReviewBooking";
 import RulesAndRegulations from "@/screens/Explore/RulesAndRegulations";
+import InitScreen from "@/screens/Init/InitScreen";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -40,7 +41,12 @@ const RootNavigation = () => {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
-          name="NONE"
+          name="Init"
+          component={InitScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="AUTH"
           component={AuthNavigation}
         />
         <Stack.Screen

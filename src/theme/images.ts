@@ -36,6 +36,9 @@ export const images = {
   back: require("@/assets/Back.png") as ImageSourcePropType,
   showPassword:
     require("@/assets/signIn/showPassword.png") as ImageSourcePropType,
+  initOne: require("@/assets/init/initOne.png") as ImageSourcePropType,
+  initTwo: require("@/assets/init/initTwo.png") as ImageSourcePropType,
+  initThree: require("@/assets/init/initThree.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;

@@ -27,23 +27,23 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>co.bitsofts.gontobbo</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb388636017272524</string>
+				<string>co.bitsofts.gontobbo</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.228779477149-htkbnhk730s7sssrj68stuntmiglhsu7</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>co.bitsofts.gontobbo</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.228779477149-htkbnhk730s7sssrj68stuntmiglhsu7</string>
+				<string>fb388636017272524</string>
 			</array>
 		</dict>
 	</array>
