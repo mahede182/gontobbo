@@ -55,7 +55,6 @@ const HotelDetails = () => {
     longitude: -73.9654,
     address: "3570 Las Vegas Blvd S, Las Vegas, NV 89109",
   };
-  const price = 450;
 
   const renderImages = () => {
     switch (photos.length) {

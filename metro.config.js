@@ -10,6 +10,7 @@ const { getDefaultConfig } = require("expo/metro-config");
   * <>https://github.com/infinitered/ignite/issues/1904#issuecomment-1054535068
   */
 
+// eslint-disable-next-line no-undef
 const config = getDefaultConfig(__dirname);
 
 module.exports = config;

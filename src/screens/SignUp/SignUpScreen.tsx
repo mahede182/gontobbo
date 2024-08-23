@@ -1,13 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 import {
   Image,
   ImageBackground,
-  SafeAreaView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import Icon from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import HeaderTitle from "@/components/HeaderTitle";

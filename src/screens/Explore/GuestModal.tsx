@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import GradientTitle from "@/components/GradientTitle";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";

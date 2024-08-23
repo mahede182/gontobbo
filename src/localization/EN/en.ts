@@ -12,6 +12,9 @@ export const enTranslations = {
     wishlist: "Wishlist",
     profile: "Profile",
     searchHotel: "Search Hotels",
+    discoveryTheWorld: "Discover the World with",
+    oneJourneyAt: "One Journey at a Time.",
+    uniqueAdvantureAwait: "Unique adventures await, memories.",
   },
   signIn: {
     sign: "Sign",

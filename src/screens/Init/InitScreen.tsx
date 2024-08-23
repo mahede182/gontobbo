@@ -8,10 +8,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import HeaderTitle from "@/components/HeaderTitle";
 import { Box, RestyleText } from "@/theme";
-import { useTheme } from "@shopify/restyle";
-import { Theme } from "@/@types/theme.type";
 import { colors } from "@/theme/colors";
 import { RestyleTransparent } from "@/components/RestyleTransparent";
 import { typography } from "@/theme/typography";
@@ -49,16 +46,18 @@ const InitScreen = () => {
         <Box style={styles.formContainer}>
           <Box flexDirection="row" flexWrap="wrap">
             <RestyleText style={styles.title}>
-              Discover the World with
+              {t("common.discoveryTheWorld")}
             </RestyleText>
-            <GradientTitle style={styles.title}>Gontobbo, </GradientTitle>
+            <GradientTitle style={styles.title}>
+              {`$t("common.gontobbo"),`}
+            </GradientTitle>
             <RestyleText style={[styles.title]}>
-              One Journey at a Time.
+              {t("common.oneJourneyAt")}
             </RestyleText>
           </Box>
           <RestyleTransparent opacity={0.6}>
             <RestyleText style={styles.description}>
-              Unique adventures await, memories.
+              {t("common.uniqueAdvantureAwait")}
             </RestyleText>
           </RestyleTransparent>
           <TouchableOpacity

@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 
 export const utilityStyles = StyleSheet.create({
   center: {
@@ -25,7 +25,7 @@ type StylePropKey = keyof ViewStyle;
 
 export function dynamicCSS<K extends StylePropKey>(
   key: K,
-  value: ViewStyle[K]
+  value: ViewStyle[K],
 ) {
   return { [key]: value };
 }

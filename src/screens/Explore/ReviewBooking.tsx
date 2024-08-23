@@ -21,7 +21,6 @@ import { useNavigation } from "@react-navigation/native";
 import GradientTitle from "@/components/GradientTitle";
 import { FontAwesome } from "@expo/vector-icons";
 import Dropdown from "@/components/Dropdown";
-import { languageData } from "@/data/LanguegeData";
 import { stateData } from "@/data/stateData";
 import HeaderTitle from "@/components/HeaderTitle";
 

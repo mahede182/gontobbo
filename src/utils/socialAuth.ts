@@ -1,4 +1,4 @@
-import * as AppleAuthentication from "expo-apple-authentication";
+// import * as AppleAuthentication from "expo-apple-authentication";
 import {
   AccessToken,
   AuthenticationToken,
