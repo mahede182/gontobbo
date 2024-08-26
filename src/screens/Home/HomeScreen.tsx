@@ -34,18 +34,14 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   }, [name, email, imageUrl]);
 
   return (
-    <Box style={{ backgroundColor: "#ffffff", flex: 1 }}>
+    <Box flex={1} bg="white">
       {/* === drawer button === */}
       <Box
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        paddingVertical="ten"
-      >
-        <Image
-          source={images.menuBtn}
-          style={{ height: 48, width: 48, resizeMode: "contain" }}
-        />
+        paddingVertical="ten">
+        <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
         <Image
           source={images.notifiocationBtn}
           style={{ height: 48, width: 48, resizeMode: "contain" }}
@@ -53,19 +49,9 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
       </Box>
       {/* === ai section === */}
       <Box paddingHorizontal="ten">
-        <Box
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="flex-start"
-          marginBottom="ten"
-        >
-          <Image
-            source={images.magicAiBtn}
-            style={{ height: 16, width: 16, marginRight: 10 }}
-          />
-          <GradientTitle
-            style={{ fontFamily: typography.poppinsRegular, fontSize: 13 }}
-          >
+        <Box flexDirection="row" alignItems="center" justifyContent="flex-start" marginBottom="ten">
+          <Image source={images.magicAiBtn} style={{ height: 16, width: 16, marginRight: 10 }} />
+          <GradientTitle style={{ fontFamily: typography.poppinsRegular, fontSize: 13 }}>
             {t("Home.askAi")}
           </GradientTitle>
         </Box>
@@ -76,8 +62,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
         <ScrollView
           style={{ paddingVertical: 10, paddingHorizontal: 10 }}
           showsHorizontalScrollIndicator={false}
-          horizontal
-        >
+          horizontal>
           {/* Map over tagData and render Tag component */}
           {tagData.map((tag, index) => (
             <Tag key={index} icon={tag.icon} label={tag.label} />

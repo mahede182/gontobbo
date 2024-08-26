@@ -47,15 +47,10 @@ const HotelGallery = () => {
   return (
     <View style={styles.container}>
       <Box style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={images.back} />
         </TouchableOpacity>
-        <GradientTitle
-          style={{ fontFamily: typography.poppinsMedium, fontSize: 22 }}
-        >
+        <GradientTitle style={{ fontFamily: typography.poppinsMedium, fontSize: 22 }}>
           {t("Explore.photosAndVideos")}
         </GradientTitle>
         <TouchableOpacity>
@@ -66,42 +61,24 @@ const HotelGallery = () => {
       <View style={styles.tabContainer}>
         <TouchableOpacity
           style={[styles.tab, activeTab === "Washroom" && styles.activeTab]}
-          onPress={() => setActiveTab("Washroom")}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === "Washroom" && styles.activeTabText,
-            ]}
-          >
+          onPress={() => setActiveTab("Washroom")}>
+          <Text style={[styles.tabText, activeTab === "Washroom" && styles.activeTabText]}>
             {t("Explore.washroom")}
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.tab, activeTab === "Entrance" && styles.activeTab]}
-          onPress={() => setActiveTab("Entrance")}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === "Entrance" && styles.activeTabText,
-            ]}
-          >
+          onPress={() => setActiveTab("Entrance")}>
+          <Text style={[styles.tabText, activeTab === "Entrance" && styles.activeTabText]}>
             {t("Explore.entrance")}
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.tab, activeTab === "Common Area" && styles.activeTab]}
-          onPress={() => setActiveTab("Common Area")}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === "Common Area" && styles.activeTabText,
-            ]}
-          >
+          onPress={() => setActiveTab("Common Area")}>
+          <Text style={[styles.tabText, activeTab === "Common Area" && styles.activeTabText]}>
             {t("Explore.commonArea")}
           </Text>
         </TouchableOpacity>
@@ -142,7 +119,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
-    backgroundColor: "#F0F0F0",
+    backgroundColor: colors.white100,
     marginHorizontal: 4,
   },
   activeTab: {
@@ -150,10 +127,10 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 16,
-    color: "#333333",
+    color: colors.neutral600,
   },
   activeTabText: {
-    color: "#FFFFFF",
+    color: colors.white,
   },
   image: {
     width: width / 2 - 16,

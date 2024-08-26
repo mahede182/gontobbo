@@ -3,6 +3,7 @@ import React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import GradientTitle from "@/components/GradientTitle";
 import { useNavigation } from "@react-navigation/native";
+import { colors } from "@/theme/colors";
 
 interface ResultCardProps {
   name: string;
@@ -11,18 +12,12 @@ interface ResultCardProps {
   imageSource: any;
 }
 
-const ResultCard: React.FC<ResultCardProps> = ({
-  name,
-  location,
-  price,
-  imageSource,
-}) => {
+const ResultCard: React.FC<ResultCardProps> = ({ name, location, price, imageSource }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS")}
-      style={styles.container}
-    >
+      style={styles.container}>
       <Image source={imageSource} style={styles.image} />
       <Box style={styles.detailsContainer}>
         <Box style={styles.titleContainer}>
@@ -31,9 +26,7 @@ const ResultCard: React.FC<ResultCardProps> = ({
         </Box>
         <Box style={styles.subtitleContainer}>
           <RestyleText style={styles.location}>{location}</RestyleText>
-          <GradientTitle style={styles.perNight}>
-            Per Night for 2 Rooms
-          </GradientTitle>
+          <GradientTitle style={styles.perNight}>Per Night for 2 Rooms</GradientTitle>
         </Box>
       </Box>
     </TouchableOpacity>
@@ -42,7 +35,7 @@ const ResultCard: React.FC<ResultCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white100",
+    backgroundColor: colors.white100,
     borderRadius: 8,
     marginHorizontal: 16, // Added horizontal margin
     marginVertical: 8,
@@ -78,7 +71,7 @@ const styles = StyleSheet.create({
   },
   location: {
     fontSize: 14,
-    color: "gray600",
+    color: colors.neutral500,
   },
   perNight: {
     fontSize: 14,

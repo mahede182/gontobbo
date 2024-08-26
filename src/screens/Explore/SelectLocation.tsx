@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, FlatList, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { Box, RestyleText } from "@/theme";
@@ -29,10 +23,7 @@ const LocationSelect = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.locationItem}>
-      <Image
-        style={{ marginRight: 5 }}
-        source={require("@/assets/Explore/locIcon.png")}
-      />
+      <Image style={{ marginRight: 5 }} source={require("@/assets/Explore/locIcon.png")} />
       <RestyleText style={styles.locationText}>{item}</RestyleText>
     </View>
   );
@@ -48,8 +39,7 @@ const LocationSelect = () => {
           justifyContent="center"
           borderRadius={32}
           borderColor="white200"
-          borderWidth={1}
-        >
+          borderWidth={1}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="arrow-back" size={24} color={colors.black100} />
           </TouchableOpacity>
@@ -63,8 +53,7 @@ const LocationSelect = () => {
         justifyContent={"center"}
         backgroundColor={"white200"}
         padding={"small"}
-        marginTop={"medium"}
-      >
+        marginTop={"medium"}>
         <RestyleText variant="textBase">Popular locations</RestyleText>
       </Box>
       <FlatList
@@ -80,12 +69,8 @@ const LocationSelect = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.white,
     padding: spacing.large,
-  },
-  subtitle: {
-    marginTop: spacing.small,
-    marginBottom: spacing.medium,
   },
 
   locationItem: {

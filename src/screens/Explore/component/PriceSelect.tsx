@@ -18,26 +18,18 @@ const PriceSelect = (props: Props) => {
       <Box style={styles.priceContainer}>
         {props.gradient ? (
           <>
-            <GradientTitle style={styles.gradientTitle}>
-              {`$ ${props.price}`}
-            </GradientTitle>
-            <GradientTitle style={{ width: "60%" }}>
-              {props.priceSub}
-            </GradientTitle>
+            <GradientTitle style={styles.gradientTitle}>{`$ ${props.price}`}</GradientTitle>
+            <GradientTitle style={{ width: "60%" }}>{props.priceSub}</GradientTitle>
           </>
         ) : (
           <>
-            <RestyleText style={styles.gradientTitle}>
-              {`$ ${props.price}`}
-            </RestyleText>
+            <RestyleText style={styles.gradientTitle}>{`$ ${props.price}`}</RestyleText>
             <RestyleText style={{ width: "60%" }}>{props.priceSub}</RestyleText>
           </>
         )}
       </Box>
       <TouchableOpacity style={styles.selectRoomButton}>
-        <RestyleText style={styles.selectRoomButtonText}>
-          {props.buttonText}
-        </RestyleText>
+        <RestyleText style={styles.selectRoomButtonText}>{props.buttonText}</RestyleText>
       </TouchableOpacity>
     </Box>
   );

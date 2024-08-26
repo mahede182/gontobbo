@@ -1,7 +1,4 @@
-import {
-  createRestyleFunction,
-  createRestyleComponent,
-} from "@shopify/restyle";
+import { createRestyleFunction, createRestyleComponent } from "@shopify/restyle";
 const transparency = createRestyleFunction({
   property: "transparency",
   styleProperty: "opacity",

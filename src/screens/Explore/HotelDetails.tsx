@@ -1,12 +1,6 @@
 import React from "react";
 import { Box, RestyleText } from "@/theme";
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { colors } from "@/theme/colors";
 import Icon from "@expo/vector-icons/FontAwesome6";
 import detailsImage from "@/assets/hotel_image_1.png";
@@ -30,8 +24,7 @@ const HotelDetails = () => {
   const reviews: Review[] = [
     {
       name: "Donald Moore",
-      review:
-        "Great hotel with a nice location. The staff was very friendly and helpful.",
+      review: "Great hotel with a nice location. The staff was very friendly and helpful.",
       rating: 4,
       avatar: "https://example.com/avatar1.jpg",
     },
@@ -63,32 +56,17 @@ const HotelDetails = () => {
       case 2:
         return (
           <View style={styles.twoImagesContainer}>
-            <Image
-              source={photos[0]}
-              style={[styles.twoImagesLeft, { marginRight: 4 }]}
-            />
-            <Image
-              source={photos[1]}
-              style={[styles.twoImagesRight, { marginLeft: 4 }]}
-            />
+            <Image source={photos[0]} style={[styles.twoImagesLeft, { marginRight: 4 }]} />
+            <Image source={photos[1]} style={[styles.twoImagesRight, { marginLeft: 4 }]} />
           </View>
         );
       case 3:
         return (
           <View style={styles.threeImagesContainer}>
-            <Image
-              source={photos[0]}
-              style={[styles.threeImagesLeft, { marginRight: 4 }]}
-            />
+            <Image source={photos[0]} style={[styles.threeImagesLeft, { marginRight: 4 }]} />
             <View style={styles.threeImagesRightContainer}>
-              <Image
-                source={photos[1]}
-                style={[styles.threeImagesRightTop, { marginBottom: 4 }]}
-              />
-              <Image
-                source={photos[2]}
-                style={[styles.threeImagesRightBottom, { marginTop: 4 }]}
-              />
+              <Image source={photos[1]} style={[styles.threeImagesRightTop, { marginBottom: 4 }]} />
+              <Image source={photos[2]} style={[styles.threeImagesRightBottom, { marginTop: 4 }]} />
             </View>
           </View>
         );
@@ -102,10 +80,7 @@ const HotelDetails = () => {
     <Box style={styles.container}>
       <Box style={styles.headerContainer}>
         {/* Back Button */}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={images.back} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => alert("favourite added")}>
@@ -116,8 +91,7 @@ const HotelDetails = () => {
       {true ? (
         <TouchableOpacity
           onPress={() => navigation.navigate("HOTEL_GALLERY")}
-          style={styles.imageContainer}
-        >
+          style={styles.imageContainer}>
           {renderImages()}
         </TouchableOpacity>
       ) : null}
@@ -129,8 +103,7 @@ const HotelDetails = () => {
           borderRadius={10}
           padding={"ten"}
           borderColor={"neutral300"}
-          marginVertical={"ten"}
-        >
+          marginVertical={"ten"}>
           <RestyleText style={styles.name}>{name}</RestyleText>
           <RestyleText style={styles.rating}>
             {Array(Math.floor(rating))
@@ -147,15 +120,14 @@ const HotelDetails = () => {
           borderRadius={10}
           padding={"ten"}
           borderColor={"neutral300"}
-          marginVertical={"ten"}
-        >
+          marginVertical={"ten"}>
           <Box style={styles.section}>
             <RestyleText style={styles.sectionTitle}>
               {t("Explore.travelDatesAndGuests")}
             </RestyleText>
             <RestyleText style={styles.sectionContent}>
-              {t("Explore.checkIn")}: {checkInDate} | {t("Explore.checkOut")}:{" "}
-              {checkOutDate} | {guests}
+              {t("Explore.checkIn")}: {checkInDate} | {t("Explore.checkOut")}: {checkOutDate} |{" "}
+              {guests}
             </RestyleText>
           </Box>
         </Box>
@@ -167,11 +139,8 @@ const HotelDetails = () => {
             padding={"ten"}
             borderColor={"neutral300"}
             marginVertical={"ten"}
-            style={styles.section}
-          >
-            <RestyleText style={styles.sectionTitle}>
-              {t("Explore.amenities")}
-            </RestyleText>
+            style={styles.section}>
+            <RestyleText style={styles.sectionTitle}>{t("Explore.amenities")}</RestyleText>
             <Box style={styles.amenitiesContainer}>
               {amenities.map((amenity, index) => (
                 <Box key={index} style={styles.amenityContainer}>
@@ -195,29 +164,19 @@ const HotelDetails = () => {
           padding={"ten"}
           borderColor={"neutral300"}
           marginVertical={"ten"}
-          style={styles.section}
-        >
-          <RestyleText style={styles.sectionTitle}>
-            {t("Explore.reviewsAndRating")}
-          </RestyleText>
+          style={styles.section}>
+          <RestyleText style={styles.sectionTitle}>{t("Explore.reviewsAndRating")}</RestyleText>
           {reviews.map((review, index) => (
             <Box key={index} style={styles.reviewContainer}>
               <Box style={styles.reviewHeader}>
                 {review.avatar ? (
-                  <Image
-                    source={{ uri: review.avatar }}
-                    style={styles.reviewAvatar}
-                  />
+                  <Image source={{ uri: review.avatar }} style={styles.reviewAvatar} />
                 ) : (
                   <Box style={styles.reviewAvatarPlaceholder} />
                 )}
-                <RestyleText style={styles.reviewName}>
-                  {review.name}
-                </RestyleText>
+                <RestyleText style={styles.reviewName}>{review.name}</RestyleText>
               </Box>
-              <RestyleText style={styles.reviewText}>
-                {review.review}
-              </RestyleText>
+              <RestyleText style={styles.reviewText}>{review.review}</RestyleText>
               <Box style={styles.reviewRating}>
                 {Array(review.rating)
                   .fill()
@@ -232,20 +191,15 @@ const HotelDetails = () => {
           </TouchableOpacity>
         </Box>
         {/* === Location === */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate("FULL_SCREEN_MAP")}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("FULL_SCREEN_MAP")}>
           <Box
             borderWidth={0.6}
             borderRadius={10}
             padding={"ten"}
             borderColor={"neutral300"}
             marginVertical={"ten"}
-            style={styles.section}
-          >
-            <RestyleText style={styles.sectionTitle}>
-              {t("Explore.location")}
-            </RestyleText>
+            style={styles.section}>
+            <RestyleText style={styles.sectionTitle}>{t("Explore.location")}</RestyleText>
             <MapView
               style={styles.map}
               initialRegion={{
@@ -253,8 +207,7 @@ const HotelDetails = () => {
                 longitude: location.longitude,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
-              }}
-            >
+              }}>
               <Marker
                 coordinate={{
                   latitude: location.latitude,
@@ -263,9 +216,7 @@ const HotelDetails = () => {
                 title={name}
               />
             </MapView>
-            <RestyleText style={styles.locationAddress}>
-              {location.address}
-            </RestyleText>
+            <RestyleText style={styles.locationAddress}>{location.address}</RestyleText>
           </Box>
         </TouchableOpacity>
 
@@ -273,9 +224,7 @@ const HotelDetails = () => {
           buttonText={t("Explore.select")}
           price={450}
           gradient
-          priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t(
-            "Explore.perNightForRoom",
-          )}`}
+          priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t("Explore.perNightForRoom")}`}
         />
       </ScrollView>
     </Box>
@@ -284,7 +233,7 @@ const HotelDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
   },
   headerContainer: {
     flexDirection: "row",
@@ -307,31 +256,8 @@ const styles = StyleSheet.create({
     borderColor: colors.white200,
     borderWidth: 1,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
-  },
   imageContainer: {
     position: "relative",
-  },
-  image: {
-    width: "100%",
-    height: 200,
-  },
-  photoCount: {
-    position: "absolute",
-    bottom: 16,
-    right: 16,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-  },
-  photoCountText: {
-    color: "#fff",
-    fontWeight: "bold",
   },
   content: {
     padding: 16,
@@ -345,7 +271,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   description: {
-    color: "gray",
+    color: colors.neutral700,
     marginBottom: 16,
   },
   section: {
@@ -357,7 +283,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   sectionContent: {
-    color: "gray",
+    color: colors.neutral700,
   },
   amenitiesContainer: {
     flexDirection: "row",
@@ -373,7 +299,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   moreAmenities: {
-    color: "gray",
+    color: colors.neutral700,
   },
   reviewContainer: {
     marginBottom: 16,
@@ -400,37 +326,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   reviewText: {
-    color: "gray",
+    color: colors.neutral700,
     marginBottom: 4,
   },
   reviewRating: {
     flexDirection: "row",
   },
-  locationMap: {
-    width: "100%",
-    height: 200,
-    marginBottom: 8,
-  },
+
   locationAddress: {
-    color: "gray",
-  },
-  price: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-  mainImage: {
-    width: "100%",
-    height: 200,
-  },
-  thumbnailsContainer: {
-    marginTop: 8,
-  },
-  thumbnail: {
-    width: 80,
-    height: 80,
-    marginRight: 8,
-    borderRadius: 4,
+    color: colors.neutral700,
   },
 
   singleImage: {
@@ -472,35 +376,6 @@ const styles = StyleSheet.create({
   map: {
     width: "100%",
     height: 200,
-  },
-  priceSection: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 16,
-  },
-  priceContainer: {
-    borderRadius: 8,
-    padding: 8,
-    shadowColor: colors.black100,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  gradientTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  selectRoomButton: {
-    backgroundColor: colors.blue800,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  selectRoomButtonText: {
-    color: colors.white100,
-    fontWeight: "bold",
   },
 });
 

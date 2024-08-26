@@ -26,10 +26,7 @@ const RulesAndRegulations = () => {
       {/* Must Read Section */}
       <Box style={styles.section}>
         <RestyleText style={styles.sectionTitle}>Must Read</RestyleText>
-        <BulletPoint
-          text="Pets not allowed."
-          style={styles.sectionDescription}
-        />
+        <BulletPoint text="Pets not allowed." style={styles.sectionDescription} />
         <BulletPoint
           text="Guests are provided with free hand sanitizer. Protective clothing is available to guests. Masks are available to guests."
           style={styles.sectionDescription}
@@ -75,9 +72,7 @@ const RulesAndRegulations = () => {
 
       {/* Food & Drinks Hygiene Section */}
       <Box style={styles.section}>
-        <RestyleText style={styles.sectionTitle}>
-          Food & Drinks Hygiene
-        </RestyleText>
+        <RestyleText style={styles.sectionTitle}>Food & Drinks Hygiene</RestyleText>
         <BulletPoint
           text="Individually-wrapped food options are available through room service. Individually-wrapped food options are available. Social distancing measures are in place throughout the hotel."
           style={styles.sectionDescription}
@@ -91,9 +86,7 @@ const RulesAndRegulations = () => {
 
       {/* Room Safety & Hygiene Section */}
       <Box style={styles.section}>
-        <RestyleText style={styles.sectionTitle}>
-          Room Safety & Hygiene
-        </RestyleText>
+        <RestyleText style={styles.sectionTitle}>Room Safety & Hygiene</RestyleText>
         <BulletPoint
           text="This property is cleaned with disinfectants."
           style={styles.sectionDescription}
@@ -104,10 +97,7 @@ const RulesAndRegulations = () => {
       {/* Pet(s) Related Section */}
       <Box style={styles.section}>
         <RestyleText style={styles.sectionTitle}>Pet(s) Related</RestyleText>
-        <BulletPoint
-          text="Pets not allowed."
-          style={styles.sectionDescription}
-        />
+        <BulletPoint text="Pets not allowed." style={styles.sectionDescription} />
       </Box>
     </ScrollView>
   );

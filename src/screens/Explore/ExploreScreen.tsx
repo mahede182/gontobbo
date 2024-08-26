@@ -5,6 +5,7 @@ import { images } from "@/theme/images";
 import { tagData } from "@/data/tagData";
 import Tag from "../Home/component/Tag";
 import SearchForm from "./component/SearchForm";
+import { colors } from "@/theme/colors";
 
 interface Props {}
 
@@ -16,12 +17,8 @@ const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        paddingVertical="ten"
-      >
-        <Image
-          source={images.menuBtn}
-          style={{ height: 48, width: 48, resizeMode: "contain" }}
-        />
+        paddingVertical="ten">
+        <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
         <Image
           source={images.notifiocationBtn}
           style={{ height: 48, width: 48, resizeMode: "contain" }}
@@ -32,16 +29,10 @@ const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
         <ScrollView
           style={{ paddingVertical: 10, paddingHorizontal: 10 }}
           showsHorizontalScrollIndicator={false}
-          horizontal
-        >
+          horizontal>
           {/* Map over tagData and render Tag component */}
           {tagData.map((tag, index) => (
-            <Tag
-              key={index}
-              icon={tag.icon}
-              label={tag.label}
-              active={tag.active}
-            />
+            <Tag key={index} icon={tag.icon} label={tag.label} active={tag.active} />
           ))}
         </ScrollView>
       </Box>
@@ -56,6 +47,6 @@ export default ExploreScreens;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.white,
   },
 });

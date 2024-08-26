@@ -8,6 +8,7 @@ import GradientTitle from "@/components/GradientTitle";
 import { images } from "@/theme/images";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
+import { dynamicCSS } from "@/utils/styles";
 
 const ReviewsAndRatings = () => {
   const { t } = useTranslation();
@@ -49,7 +50,7 @@ const ReviewsAndRatings = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView style={{ backgroundColor: "#ffffff" }}>
+    <ScrollView style={dynamicCSS("backgroundColor", colors.white)}>
       {/* === Header === */}
       <Box flexDirection={"row"} alignItems={"center"} marginBottom={"medium"}>
         <Box
@@ -58,50 +59,35 @@ const ReviewsAndRatings = () => {
           justifyContent={"center"}
           borderRadius={32}
           borderColor={"white200"}
-          borderWidth={1}
-        >
+          borderWidth={1}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="arrow-left" size={24} color={colors.black100} />
           </TouchableOpacity>
         </Box>
-        <GradientTitle variant="gradientTitle">
-          {t("Explore.reviewsAndRating")}
-        </GradientTitle>
+        <GradientTitle variant="gradientTitle">{t("Explore.reviewsAndRating")}</GradientTitle>
       </Box>
 
       <Box style={styles.ratingContainer}>
         <Box flexDirection={"row"} style={styles.ratingBackground}>
-          <Icon
-            name="star"
-            color={colors.linearEnd}
-            style={{ marginHorizontal: 5 }}
-          />
+          <Icon name="star" color={colors.linearEnd} style={{ marginHorizontal: 5 }} />
           <RestyleText style={styles.ratingValue}>4.5</RestyleText>
         </Box>
         <Box>
-          <RestyleText style={styles.ratingTitle}>
-            {t("Explore.veryGood")}
-          </RestyleText>
+          <RestyleText style={styles.ratingTitle}>{t("Explore.veryGood")}</RestyleText>
           <RestyleText style={styles.ratingSubtitle}>
             {t("Explore.userReviewsAndRating")}
           </RestyleText>
         </Box>
       </Box>
       <Box style={styles.reviewsContainer}>
-        <RestyleText style={styles.reviewsTitle}>
-          {t("Explore.guestReviews")}
-        </RestyleText>
+        <RestyleText style={styles.reviewsTitle}>{t("Explore.guestReviews")}</RestyleText>
         {reviews.map((review, index) => (
           <Box key={index} style={styles.reviewCard}>
             <Box style={styles.reviewHeader}>
               <Image source={review.avatar} style={styles.avatar} />
               <Box>
-                <RestyleText style={styles.reviewName}>
-                  {review.name}
-                </RestyleText>
-                <RestyleText style={styles.reviewDate}>
-                  {review.date}
-                </RestyleText>
+                <RestyleText style={styles.reviewName}>{review.name}</RestyleText>
+                <RestyleText style={styles.reviewDate}>{review.date}</RestyleText>
               </Box>
             </Box>
             <RestyleText style={styles.reviewText}>{review.review}</RestyleText>
@@ -109,12 +95,7 @@ const ReviewsAndRatings = () => {
               {Array(review.rating)
                 .fill()
                 .map((_, i) => (
-                  <Icon
-                    key={i}
-                    name="star"
-                    size={16}
-                    color={colors.linearEnd}
-                  />
+                  <Icon key={i} name="star" size={16} color={colors.linearEnd} />
                 ))}
             </Box>
           </Box>
@@ -138,7 +119,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   ratingValue: {
-    color: "#000",
+    color: colors.black,
     fontSize: 12,
     fontWeight: "bold",
   },
@@ -147,7 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   ratingSubtitle: {
-    color: "gray",
+    color: colors.neutral500,
   },
   reviewsContainer: {
     padding: 16,
@@ -158,7 +139,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   reviewCard: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.secondary50,
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
@@ -178,7 +159,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   reviewDate: {
-    color: "gray",
+    color: colors.neutral500,
   },
   reviewText: {
     marginBottom: 8,

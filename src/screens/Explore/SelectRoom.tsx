@@ -19,19 +19,10 @@ const SelectRoom = () => {
         {/* === Room Package 1=== */}
         {/* images section */}
         <Box style={styles.imageContainer}>
-          <Image
-            source={require("@/assets/hotel_image_1.png")}
-            style={styles.leftImage}
-          />
+          <Image source={require("@/assets/hotel_image_1.png")} style={styles.leftImage} />
           <Box style={styles.rightImageContainer}>
-            <Image
-              source={require("@/assets/hotel_image_1.png")}
-              style={styles.rightImage}
-            />
-            <Image
-              source={require("@/assets/hotel_image_1.png")}
-              style={styles.rightImage}
-            />
+            <Image source={require("@/assets/hotel_image_1.png")} style={styles.rightImage} />
+            <Image source={require("@/assets/hotel_image_1.png")} style={styles.rightImage} />
           </Box>
         </Box>
         <Box>
@@ -41,8 +32,7 @@ const SelectRoom = () => {
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
-            }}
-          >
+            }}>
             <Tag tag="200 sq.ft" />
             <Tag tag="City View" />
             <Tag tag="Queen Bed" />
@@ -65,19 +55,10 @@ const SelectRoom = () => {
         </Box>
         {/* === Room Package 2=== */}
         <Box style={styles.imageContainer}>
-          <Image
-            source={require("@/assets/hotel_image_1.png")}
-            style={styles.leftImage}
-          />
+          <Image source={require("@/assets/hotel_image_1.png")} style={styles.leftImage} />
           <Box style={styles.rightImageContainer}>
-            <Image
-              source={require("@/assets/hotel_image_1.png")}
-              style={styles.rightImage}
-            />
-            <Image
-              source={require("@/assets/hotel_image_1.png")}
-              style={styles.rightImage}
-            />
+            <Image source={require("@/assets/hotel_image_1.png")} style={styles.rightImage} />
+            <Image source={require("@/assets/hotel_image_1.png")} style={styles.rightImage} />
           </Box>
         </Box>
         <Box>
@@ -87,8 +68,7 @@ const SelectRoom = () => {
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
-            }}
-          >
+            }}>
             <Tag tag="200 sq.ft" />
             <Tag tag="City View" />
             <Tag tag="Queen Bed" />
@@ -111,19 +91,10 @@ const SelectRoom = () => {
         </Box>
         {/* === Room Package 3=== */}
         <Box style={styles.imageContainer}>
-          <Image
-            source={require("@/assets/hotel_image_1.png")}
-            style={styles.leftImage}
-          />
+          <Image source={require("@/assets/hotel_image_1.png")} style={styles.leftImage} />
           <Box style={styles.rightImageContainer}>
-            <Image
-              source={require("@/assets/hotel_image_1.png")}
-              style={styles.rightImage}
-            />
-            <Image
-              source={require("@/assets/hotel_image_1.png")}
-              style={styles.rightImage}
-            />
+            <Image source={require("@/assets/hotel_image_1.png")} style={styles.rightImage} />
+            <Image source={require("@/assets/hotel_image_1.png")} style={styles.rightImage} />
           </Box>
         </Box>
         <Box>
@@ -134,8 +105,7 @@ const SelectRoom = () => {
               flexDirection: "row",
               flexWrap: "wrap",
               marginHorizontal: 20,
-            }}
-          >
+            }}>
             <Tag tag="200 sq.ft" />
             <Tag tag="City View" />
             <Tag tag="Queen Bed" />

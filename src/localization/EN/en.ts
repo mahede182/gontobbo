@@ -1,6 +1,7 @@
 export const enTranslations = {
   common: {
     gontobbo: "Gontobbo",
+    gontobboC: "Gontobbo,",
     gontobboSlogan: "Unique adventures, Lasting memories.",
     back: "Back",
     done: "Done",
@@ -112,8 +113,7 @@ export const enTranslations = {
     freeBreakfast: "Free Breakfast",
     rulesAndRegulation: "Rules & Regulation",
     petsNotAllowed: "• Pets not allowed",
-    guestsProvidedWithFreeHandSanitizer:
-      "• Guests are provided with free hand sanitizer",
+    guestsProvidedWithFreeHandSanitizer: "• Guests are provided with free hand sanitizer",
     protectiveClothing: "• Protective clothing is available to guests",
     hotelOffersTransfers:
       "• The hotel offers transfers from this airport (surcharges may apply). Guests must contact the hotel with arrival details before travel, using the contact information on the booking confirmation. Front desk staff will greet guests on arrival.",
@@ -132,8 +132,7 @@ export const enTranslations = {
     yourState: "Your State",
     edit: "Edit",
     usaOutsideUsa: "USA / Outside USA",
-    confirmAndSaveTheseDetails:
-      "Confirm and save these details to your profile",
+    confirmAndSaveTheseDetails: "Confirm and save these details to your profile",
     bookNow: "Book Now",
     rulesAndRegulations: "Rules and Regulations *",
     addNewGuests: "Add New Guests",
@@ -143,15 +142,13 @@ export const enTranslations = {
     state: "State",
     //rules and regulation
     checkInOut: "Check In/Out",
-    checkInOutDescription:
-      "Hotel Check In time is 2:00 PM, Check Out time 12:00 PM",
+    checkInOutDescription: "Hotel Check In time is 2:00 PM, Check Out time 12:00 PM",
     mustRead: "Must Read",
     safetyAndHygiene: "Safety & Hygiene",
     hotelImplementingRigorousHealthAndSafetyMeasures:
       "This hotel and its staff is implementing rigorous health & safety measure guidelines.",
     guestProfile: "Guest Profile",
-    minimumAgeForGuestToCheckIn:
-      "Minimum age for guest to check-in is 18 years.",
+    minimumAgeForGuestToCheckIn: "Minimum age for guest to check-in is 18 years.",
     gapPeriodEnforcedBetweenGuestStays:
       "A gap period of at least 24 hours is enforced between guest stays.",
     foodAndDrinksHygiene: "Food & Drinks Hygiene",
@@ -160,8 +157,7 @@ export const enTranslations = {
     hotelStaffWearsPersonalProtectiveEquipment:
       "Hotel staff wears personal protective equipment at all times.",
     roomSafetyAndHygiene: "Room Safety & Hygiene",
-    propertyIsCleanedWithDisinfectants:
-      "This property is cleaned with disinfectants.",
+    propertyIsCleanedWithDisinfectants: "This property is cleaned with disinfectants.",
     petsRelated: "Pet(s) Related",
     //search result
     newYork: "New York",

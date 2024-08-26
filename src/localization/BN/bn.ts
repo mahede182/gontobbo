@@ -26,8 +26,7 @@ export const bnTranslations = {
   },
   heartBeats: {
     heartBeat: "হার্টবিট",
-    selectStartAndEnd:
-      "স্মুদ প্লেব্যাকের জন্য শুরু এবং শেষ পয়েন্ট নির্বাচন করুন",
+    selectStartAndEnd: "স্মুদ প্লেব্যাকের জন্য শুরু এবং শেষ পয়েন্ট নির্বাচন করুন",
   },
   Home: {
     askAi: "প্রশ্ন করুন AI",

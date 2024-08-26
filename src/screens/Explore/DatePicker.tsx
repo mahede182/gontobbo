@@ -42,24 +42,18 @@ const SelectDateScreen = () => {
           <RestyleText style={styles.dateText}>
             {selectedCheckInDate || t("Explore.dateAndGuestDetails")}
           </RestyleText>
-          <RestyleText style={styles.dateLabel}>
-            {t("Explore.checkIn")}
-          </RestyleText>
+          <RestyleText style={styles.dateLabel}>{t("Explore.checkIn")}</RestyleText>
         </Box>
         <Box style={styles.dateBox}>
           <RestyleText style={styles.dateText}>
             {selectedCheckOutDate || t("Explore.dateAndGuestDetails")}
           </RestyleText>
-          <RestyleText style={styles.dateLabel}>
-            {t("Explore.checkOut")}
-          </RestyleText>
+          <RestyleText style={styles.dateLabel}>{t("Explore.checkOut")}</RestyleText>
         </Box>
       </Box>
 
       <TouchableOpacity style={styles.doneButton} onPress={handleDonePress}>
-        <RestyleText style={styles.doneButtonText}>
-          {t("common.done")}
-        </RestyleText>
+        <RestyleText style={styles.doneButtonText}>{t("common.done")}</RestyleText>
       </TouchableOpacity>
     </View>
   );
@@ -74,15 +68,12 @@ const SelectDateScreen = () => {
           justifyContent={"center"}
           borderRadius={32}
           borderColor={"white200"}
-          borderWidth={1}
-        >
+          borderWidth={1}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="arrow-back" size={24} color={colors.black100} />
           </TouchableOpacity>
         </Box>
-        <GradientTitle variant="gradientTitle">
-          {t("Explore.selectCheckInDate")}
-        </GradientTitle>
+        <GradientTitle variant="gradientTitle">{t("Explore.selectCheckInDate")}</GradientTitle>
       </Box>
       <Box style={styles.calendarContainer}>
         <Calendar
@@ -98,13 +89,13 @@ const SelectDateScreen = () => {
             [selectedCheckOutDate]: {
               endingDay: true,
               color: colors.blue800,
-              textColor: "white100",
+              textColor: colors.white100,
             },
           }}
           style={{
             borderRadius: 10,
             height: 350,
-            shadowColor: "#000",
+            shadowColor: colors.black,
             shadowOffset: {
               width: 0,
               height: 1,
@@ -159,19 +150,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    backgroundColor: "#F5F5F5",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  headerTitle: {
-    fontFamily: "Poppins-Bold",
-    fontSize: 18,
-    color: "#333333",
-  },
   calendarContainer: {
     marginVertical: 24,
     paddingHorizontal: 24,
@@ -182,9 +160,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     paddingVertical: 16,
     paddingHorizontal: 24,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
     borderRadius: 5,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 1,
@@ -206,12 +184,12 @@ const styles = StyleSheet.create({
   dateText: {
     fontFamily: typography.poppinsBold,
     fontSize: 14,
-    color: "#333333",
+    color: colors.neutral600,
   },
   dateLabel: {
     fontFamily: "Poppins-Regular",
     fontSize: 12,
-    color: "#333333",
+    color: colors.neutral600,
   },
   doneButton: {
     backgroundColor: colors.blue800,
@@ -224,7 +202,7 @@ const styles = StyleSheet.create({
   doneButtonText: {
     fontFamily: "Poppins-Semibold",
     fontSize: 16,
-    color: "#FFFFFF",
+    color: colors.white,
   },
 });
 

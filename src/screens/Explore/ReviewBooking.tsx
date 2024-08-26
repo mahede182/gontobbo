@@ -50,48 +50,31 @@ const ReviewBooking = () => {
         {/* Header Section */}
         <Box style={styles.section}>
           <Box style={styles.header}>
-            <Image
-              source={require("@/assets/hotel_image_1.png")}
-              style={styles.hotelImage}
-            />
+            <Image source={require("@/assets/hotel_image_1.png")} style={styles.hotelImage} />
             <Box style={styles.hotelInfo}>
               <RestyleText style={styles.hotelName}>Caesars Palace</RestyleText>
               <RestyleText style={styles.hotelRating}>★★★★☆</RestyleText>
-              <RestyleText style={styles.hotelLocation}>
-                9 W 42nd St, Medtown, New York
-              </RestyleText>
+              <RestyleText style={styles.hotelLocation}>9 W 42nd St, Medtown, New York</RestyleText>
             </Box>
           </Box>
           <Divider />
 
           {/* Booking Details Section */}
           <Box style={styles.bookingDetails}>
-            <Box
-              alignItems={"center"}
-              flexDirection={"row"}
-              justifyContent={"space-between"}
-            >
+            <Box alignItems={"center"} flexDirection={"row"} justifyContent={"space-between"}>
               <Box>
                 <RestyleText style={styles.sectionTitle}>Check In</RestyleText>
-                <RestyleText style={styles.sectionValue}>
-                  01 Nov 2023, Sun
-                </RestyleText>
+                <RestyleText style={styles.sectionValue}>01 Nov 2023, Sun</RestyleText>
               </Box>
               <Box>
                 <RestyleText style={styles.sectionTitle}>Check Out</RestyleText>
-                <RestyleText style={styles.sectionValue}>
-                  15 Nov 2023, Tue
-                </RestyleText>
+                <RestyleText style={styles.sectionValue}>15 Nov 2023, Tue</RestyleText>
               </Box>
             </Box>
             <Divider />
             <Box>
-              <RestyleText style={styles.sectionTitle}>
-                Guests & Room
-              </RestyleText>
-              <RestyleText style={styles.sectionValue}>
-                2 Adults + 2 Rooms
-              </RestyleText>
+              <RestyleText style={styles.sectionTitle}>Guests & Room</RestyleText>
+              <RestyleText style={styles.sectionValue}>2 Adults + 2 Rooms</RestyleText>
             </Box>
           </Box>
         </Box>
@@ -100,9 +83,7 @@ const ReviewBooking = () => {
         <Box style={styles.section}>
           <Box style={styles.roomDetails}>
             <RestyleText style={styles.roomTitle}>2x Standard Room</RestyleText>
-            <RestyleText style={styles.roomDescription}>
-              Room for 4 Persons
-            </RestyleText>
+            <RestyleText style={styles.roomDescription}>Room for 4 Persons</RestyleText>
             <Box style={styles.tagContainer}>
               <Tag tag="Breakfast" />
               <Tag tag="Non-Refundable" />
@@ -121,12 +102,8 @@ const ReviewBooking = () => {
         {/* Rules & Regulations Section */}
         <Box style={styles.section}>
           <Box style={styles.rulesContainer}>
-            <RestyleText style={styles.sectionTitle}>
-              Rules & Regulation
-            </RestyleText>
-            <RestyleText style={styles.ruleItem}>
-              • Pets not allowed
-            </RestyleText>
+            <RestyleText style={styles.sectionTitle}>Rules & Regulation</RestyleText>
+            <RestyleText style={styles.ruleItem}>• Pets not allowed</RestyleText>
             <RestyleText style={styles.ruleItem}>
               • Guests are provided with free hand sanitizer
             </RestyleText>
@@ -134,14 +111,13 @@ const ReviewBooking = () => {
               • Protective clothing is available to guests
             </RestyleText>
             <RestyleText style={styles.ruleItem}>
-              • The hotel offers transfers from this airport (surcharges may
-              apply). Guests must contact the hotel with arrival details before
-              travel, using the contact information on the booking confirmation.
-              Front desk staff will greet guests on arrival.
+              • The hotel offers transfers from this airport (surcharges may apply). Guests must
+              contact the hotel with arrival details before travel, using the contact information on
+              the booking confirmation. Front desk staff will greet guests on arrival.
             </RestyleText>
             <RestyleText style={styles.ruleItem}>
-              • Optional: fee for the buffet breakfast: approximately $20 and
-              $14 for children (Airport shuttle fee: $15 per person / one-way)
+              • Optional: fee for the buffet breakfast: approximately $20 and $14 for children
+              (Airport shuttle fee: $15 per person / one-way)
             </RestyleText>
           </Box>
         </Box>
@@ -149,9 +125,7 @@ const ReviewBooking = () => {
         {/* Guest Information Section */}
         <Box style={styles.section}>
           <Box style={styles.guestInfoContainer}>
-            <RestyleText style={styles.sectionTitle}>
-              I'm looking For
-            </RestyleText>
+            <RestyleText style={styles.sectionTitle}>I'm looking For</RestyleText>
             <Box style={styles.guestTypeContainer}>
               <Button
                 title="Myself"
@@ -172,17 +146,13 @@ const ReviewBooking = () => {
             <Input label="Current Address" placeholder="Current Address" />
             <Input label="Contact Number" placeholder="Contact No." />
 
-            <TouchableOpacity
-              style={styles.addGuestButton}
-              onPress={() => setIsModalVisible(true)}
-            >
+            <TouchableOpacity style={styles.addGuestButton} onPress={() => setIsModalVisible(true)}>
               <RestyleText
                 style={{
                   color: colors.linearStart,
                   fontSize: 16,
                   fontWeight: "600",
-                }}
-              >
+                }}>
                 Add New Guest
               </RestyleText>
             </TouchableOpacity>
@@ -195,8 +165,7 @@ const ReviewBooking = () => {
               onPress={() => {
                 setIsEditVisible(true);
               }}
-              style={styles.stateButton}
-            >
+              style={styles.stateButton}>
               <RestyleText style={styles.stateButtonText}>Edit</RestyleText>
             </TouchableOpacity>
           </Box>
@@ -214,11 +183,8 @@ const ReviewBooking = () => {
           />
           <TouchableOpacity
             style={{ alignItems: "flex-end" }}
-            onPress={() => navigation.navigate("RULES_AND_REGULATIONS")}
-          >
-            <RestyleText style={{ color: "#aeaaea" }}>
-              Rules and Regulations *
-            </RestyleText>
+            onPress={() => navigation.navigate("RULES_AND_REGULATIONS")}>
+            <RestyleText style={{ color: colors.primary700 }}>Rules and Regulations *</RestyleText>
           </TouchableOpacity>
         </Box>
       </ScrollView>
@@ -235,23 +201,20 @@ const ReviewBooking = () => {
         <View style={styles.modalContainer}>
           <Box style={styles.modalContent}>
             <Box
-              style={{ backgroundColor: "#fff", padding: 10 }}
+              style={{ backgroundColor: colors.white, padding: 10 }}
               flexDirection="row"
-              alignItems="center"
-            >
+              alignItems="center">
               <FontAwesome
                 onPress={handleAddGuest}
                 name="close"
                 size={16}
                 style={{ marginRight: 8 }}
               />
-              <GradientTitle style={styles.modalTitle}>
-                Add New Guests
-              </GradientTitle>
+              <GradientTitle style={styles.modalTitle}>Add New Guests</GradientTitle>
             </Box>
             <RestyleText style={styles.modalDescription}>
-              Name should be as per official govt. ID & travelers' details. It
-              cannot be changed after confirmation.
+              Name should be as per official govt. ID & travelers' details. It cannot be changed
+              after confirmation.
             </RestyleText>
 
             <TextInput
@@ -281,15 +244,13 @@ const ReviewBooking = () => {
                 paddingVertical: 8,
                 marginBottom: 16,
               }}
-              onPress={handleAddGuest}
-            >
+              onPress={handleAddGuest}>
               <RestyleText
                 style={{
                   fontFamily: typography.poppinsSemibold,
                   fontSize: 16,
                   color: colors.white100,
-                }}
-              >
+                }}>
                 Done
               </RestyleText>
             </TouchableOpacity>
@@ -301,19 +262,11 @@ const ReviewBooking = () => {
         <View style={styles.modalContainer}>
           <Box style={styles.modalContent}>
             <Box
-              style={{ backgroundColor: "#fff", padding: 10 }}
+              style={{ backgroundColor: colors.white, padding: 10 }}
               flexDirection="row"
-              alignItems="center"
-            >
-              <FontAwesome
-                onPress={handleEdit}
-                name="close"
-                size={16}
-                style={{ marginRight: 8 }}
-              />
-              <GradientTitle style={styles.modalTitle}>
-                Edit State
-              </GradientTitle>
+              alignItems="center">
+              <FontAwesome onPress={handleEdit} name="close" size={16} style={{ marginRight: 8 }} />
+              <GradientTitle style={styles.modalTitle}>Edit State</GradientTitle>
             </Box>
             <Box marginVertical={"ten"}>
               <RestyleText
@@ -321,8 +274,7 @@ const ReviewBooking = () => {
                   fontFamily: typography.poppinsRegular,
                   fontSize: 22,
                   paddingVertical: 10,
-                }}
-              >
+                }}>
                 State
               </RestyleText>
               <Dropdown label="California" data={stateData} />
@@ -336,15 +288,13 @@ const ReviewBooking = () => {
                 paddingVertical: 8,
                 marginBottom: 16,
               }}
-              onPress={handleEdit}
-            >
+              onPress={handleEdit}>
               <RestyleText
                 style={{
                   fontFamily: typography.poppinsSemibold,
                   fontSize: 16,
                   color: colors.white100,
-                }}
-              >
+                }}>
                 Done
               </RestyleText>
             </TouchableOpacity>
@@ -498,6 +448,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.white100,
   },
+  // eslint-disable-next-line react-native/no-color-literals
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",

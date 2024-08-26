@@ -1,12 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Image, ImageBackground, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import HeaderTitle from "@/components/HeaderTitle";
@@ -33,15 +27,9 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
 
   const isValidEmail = validateEmail(email);
   const isValidPassword = validatePassword(password);
-  console.log(isValidPassword, "is valid password");
   // Function to check if all input fields are filled
   const areAllFieldsFilled = () => {
-    return (
-      isValidEmail &&
-      isValidPassword &&
-      confirmPassword.length > 0 &&
-      phoneNumber.length > 0
-    );
+    return isValidEmail && isValidPassword && confirmPassword.length > 0 && phoneNumber.length > 0;
   };
   // Update the button enabled state whenever the input fields change
   React.useEffect(() => {
@@ -58,9 +46,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
 
       <Box style={styles.formContainer}>
         <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">
-            {t("signIn.emailAddress")}
-          </RestyleText>
+          <RestyleText variant="inputTitle">{t("signIn.emailAddress")}</RestyleText>
           <TextInput
             style={[
               styles.input,
@@ -75,19 +61,14 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
         </Box>
 
         <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">
-            {t("signIn.enterPassword")}
-          </RestyleText>
+          <RestyleText variant="inputTitle">{t("signIn.enterPassword")}</RestyleText>
           <Box
             style={[
               styles.passwordContainer,
               {
-                borderColor: isValidPassword
-                  ? colors.neutral300
-                  : colors.danger,
+                borderColor: isValidPassword ? colors.neutral300 : colors.danger,
               },
-            ]}
-          >
+            ]}>
             <TextInput
               style={styles.passwordInput}
               placeholder="Enter Password"
@@ -106,9 +87,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
         </Box>
 
         <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">
-            {t("signIn.confirmPassword")}
-          </RestyleText>
+          <RestyleText variant="inputTitle">{t("signIn.confirmPassword")}</RestyleText>
           <Box style={styles.passwordContainer}>
             <TextInput
               style={styles.passwordInput}
@@ -117,24 +96,18 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
               onChangeText={setConfirmPassword}
               secureTextEntry={!showConfirmPassword}
             />
-            <TouchableOpacity
-              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
+            <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
               <Image
                 source={images.showPassword}
                 style={styles.showPasswordIcon}
-                tintColor={
-                  showConfirmPassword ? colors.success : colors.neutral600
-                }
+                tintColor={showConfirmPassword ? colors.success : colors.neutral600}
               />
             </TouchableOpacity>
           </Box>
         </Box>
 
         <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">
-            {t("signIn.phoneNumber")}
-          </RestyleText>
+          <RestyleText variant="inputTitle">{t("signIn.phoneNumber")}</RestyleText>
           <TextInput
             style={styles.input}
             placeholder="Phone Number"
@@ -146,8 +119,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
 
         <TouchableOpacity
           onPress={() => navigation.navigate("HOME")}
-          style={styles.signUpButton(isButtonEnabled)}
-        >
+          style={styles.signUpButton(isButtonEnabled)}>
           <RestyleText style={styles.signUpButtonText(isButtonEnabled)}>
             {t("signIn.signUp")}
           </RestyleText>
@@ -155,9 +127,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
       </Box>
 
       <Box style={styles.signInContainer}>
-        <RestyleText style={styles.signInText}>
-          {t("signIn.haveAnAccount")}
-        </RestyleText>
+        <RestyleText style={styles.signInText}>{t("signIn.haveAnAccount")}</RestyleText>
         <TouchableOpacity onPress={() => navigation.navigate("EMAIL_SIGN_IN")}>
           <RestyleText variant="inputTitle" style={styles.signInLink}>
             {t("signIn.singIn")}
@@ -175,24 +145,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 20,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    marginLeft: 24,
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  headerTitleHighlight: {
-    color: "#FF6600",
-  },
+
   formContainer: {
     backgroundColor: colors.neutral50,
     marginHorizontal: 10,
@@ -204,15 +157,10 @@ const styles = StyleSheet.create({
   inputGroup: {
     marginBottom: 16,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 8,
-    color: "#333",
-  },
+
   input: {
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: colors.neutral300,
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
@@ -221,7 +169,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: colors.neutral300,
     borderRadius: 8,
   },
   passwordInput: {

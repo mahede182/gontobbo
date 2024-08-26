@@ -39,21 +39,9 @@ const RootNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Init"
-          component={InitScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="AUTH"
-          component={AuthNavigation}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="HOME"
-          component={TabNavigation}
-        />
+        <Stack.Screen options={{ headerShown: false }} name="Init" component={InitScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="AUTH" component={AuthNavigation} />
+        <Stack.Screen options={{ headerShown: false }} name="HOME" component={TabNavigation} />
         {/* FIXME: refactor as separate stack */}
         <Stack.Screen
           options={{ headerShown: false }}
@@ -80,11 +68,7 @@ const RootNavigation = () => {
           name="HOTEL_GALLERY"
           component={HotelGallery}
         />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="AMENITIES"
-          component={Amenities}
-        />
+        <Stack.Screen options={{ headerShown: false }} name="AMENITIES" component={Amenities} />
         <Stack.Screen
           options={{ headerShown: false }}
           name="REVIEW"
@@ -95,11 +79,7 @@ const RootNavigation = () => {
           name="FULL_SCREEN_MAP"
           component={FullScreenMap}
         />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SELECT_ROOM"
-          component={SelectRoom}
-        />
+        <Stack.Screen options={{ headerShown: false }} name="SELECT_ROOM" component={SelectRoom} />
         <Stack.Screen
           options={{ headerShown: false }}
           name="REVIEW_BOOKING"

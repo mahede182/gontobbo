@@ -16,11 +16,8 @@ const SearchButton = ({ onPress }: SearchButtonProps) => {
         padding="medium"
         borderRadius={5}
         marginVertical={"medium"}
-        alignItems="center"
-      >
-        <RestyleText variant="buttonLabel">
-          {t("common.searchHotel")}
-        </RestyleText>
+        alignItems="center">
+        <RestyleText variant="buttonLabel">{t("common.searchHotel")}</RestyleText>
       </Box>
     </Pressable>
   );

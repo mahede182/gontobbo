@@ -1,10 +1,6 @@
+/* eslint-disable no-console */
 import React from "react";
-import {
-  Alert,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Alert, ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
 import Logo from "@/components/Logo";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -98,9 +94,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
         {/* ::: or ::: */}
         <Box style={styles.divider}>
           <Box style={styles.dividerLine} />
-          <RestyleText style={styles.dividerRestyleText}>
-            {t("common.or")}
-          </RestyleText>
+          <RestyleText style={styles.dividerRestyleText}>{t("common.or")}</RestyleText>
           <Box style={styles.dividerLine} />
         </Box>
 
@@ -113,25 +107,18 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
         <Box style={styles.linkContainer}>
           {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
-            <RestyleText style={styles.linkRestyleText}>
-              {t("signIn.signUpWithEmail")}
-            </RestyleText>
+            <RestyleText style={styles.linkRestyleText}>{t("signIn.signUpWithEmail")}</RestyleText>
           </TouchableOpacity>
           {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity onPress={() => navigation.navigate("HOME")}>
-            <RestyleText style={styles.linkRestyleText}>
-              {t("signIn.continueAsGuest")}
-            </RestyleText>
+            <RestyleText style={styles.linkRestyleText}>{t("signIn.continueAsGuest")}</RestyleText>
           </TouchableOpacity>
         </Box>
       </Box>
       <Box style={styles.footer}>
         <RestyleText style={styles.footerRestyleText}>
           {t("signIn.termsAndConditions")}
-          <RestyleText style={styles.footerLink}>
-            {" "}
-            {t("signIn.findMore")}
-          </RestyleText>
+          <RestyleText style={styles.footerLink}> {t("signIn.findMore")}</RestyleText>
         </RestyleText>
       </Box>
     </ImageBackground>
@@ -146,19 +133,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: "space-between",
   },
-  logo: {
-    width: 100,
-    height: 100,
-    resizeMode: "contain",
-  },
-  appName: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 10,
-  },
-  buttonContainer: {
-    // marginTop: 10,
-  },
   button: {
     flexDirection: "row",
     justifyContent: "center",
@@ -167,14 +141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  buttonRestyleText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  iconContainer: {
-    marginHorizontal: 5,
-  },
+
   appleButton: {
     backgroundColor: colors.black,
   },

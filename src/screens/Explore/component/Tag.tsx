@@ -2,6 +2,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { RestyleText } from "@/theme";
 import { typography } from "@/theme/typography";
+import { colors } from "@/theme/colors";
 
 type Props = {
   tag: string;
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   tagContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
     padding: 10,

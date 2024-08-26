@@ -1,9 +1,6 @@
+/* eslint-disable no-console */
 // import * as AppleAuthentication from "expo-apple-authentication";
-import {
-  AccessToken,
-  AuthenticationToken,
-  LoginManager,
-} from "react-native-fbsdk-next";
+import { AccessToken, AuthenticationToken, LoginManager } from "react-native-fbsdk-next";
 import {
   GoogleSignin,
   statusCodes,

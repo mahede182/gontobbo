@@ -4,6 +4,7 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 import { colors } from "../theme/colors";
 import { RestyleText } from "@/theme";
+import { dynamicCSS } from "@/utils/styles";
 
 interface GradientTitleProps {
   style?: TextStyle;
@@ -21,9 +22,8 @@ const GradientTitle: React.FC<GradientTitleProps> = (props) => {
         colors={[colors.linearStart, colors.linearEnd]}
         locations={[0, 1]}
         start={{ x: 0, y: 0 }}
-        end={{ x: 0.25, y: 0 }}
-      >
-        <RestyleText {...props} style={[props.style, { opacity: 0 }]}>
+        end={{ x: 0.25, y: 0 }}>
+        <RestyleText {...props} style={[props.style, dynamicCSS("opacity", 0)]}>
           {props.children}
         </RestyleText>
       </LinearGradient>

@@ -21,21 +21,12 @@ const FullScreenMap = () => {
   return (
     <Box flex={1}>
       {/* === Header === */}
-      <Box
-        flexDirection={"row"}
-        alignItems={"center"}
-        marginVertical={"medium"}
-      >
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
+      <Box flexDirection={"row"} alignItems={"center"} marginVertical={"medium"}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={images.back} />
         </TouchableOpacity>
 
-        <GradientTitle variant="gradientTitle">
-          {t("Explore.fullScreenMap")}
-        </GradientTitle>
+        <GradientTitle variant="gradientTitle">{t("Explore.fullScreenMap")}</GradientTitle>
       </Box>
 
       <MapView
@@ -45,22 +36,18 @@ const FullScreenMap = () => {
           longitude: -122.4324,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-        }}
-      >
-        <Marker
-          coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-          title="Hotel Location"
-        >
+        }}>
+        <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }} title="Hotel Location">
           <RestyleTransparent opacity={0.25}>
             <TouchableOpacity
               onPress={() => navigation.navigate("SELECT_ROOM")}
               style={{
                 width: 250,
                 height: 250,
-                backgroundColor: "red",
+                backgroundColor: colors.danger,
                 borderRadius: 10,
                 borderWidth: 2,
-                borderColor: "white100",
+                borderColor: colors.white100,
                 alignItems: "center",
                 justifyContent: "center",
               }}

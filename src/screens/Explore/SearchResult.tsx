@@ -13,9 +13,7 @@ const SearchResult = () => (
     <Box style={styles.header}>
       <Box style={styles.headerContent}>
         <RestyleText style={styles.title}>New York</RestyleText>
-        <RestyleText style={styles.subtitle}>
-          10 Nov - 15 Nov, 1 Rooms, 1 Adults...
-        </RestyleText>
+        <RestyleText style={styles.subtitle}>10 Nov - 15 Nov, 1 Rooms, 1 Adults...</RestyleText>
       </Box>
       <Box style={styles.searchButton}>
         <RestyleText style={styles.searchButtonText}>Search</RestyleText>
@@ -24,9 +22,7 @@ const SearchResult = () => (
     <Box style={styles.filters}>
       <TouchableOpacity style={styles.filterContainer}>
         <Icon name="swap-vertical" size={16} color={"#000"} />
-        <RestyleText style={[styles.label, { marginLeft: 8 }]}>
-          Sort By
-        </RestyleText>
+        <RestyleText style={[styles.label, { marginLeft: 8 }]}>Sort By</RestyleText>
       </TouchableOpacity>
       <TouchableOpacity style={styles.filterContainer}>
         {/* <Icon name="search" size={16} color={"#000"} /> */}
@@ -48,16 +44,16 @@ const SearchResult = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: colors.secondary500,
     borderRadius: 8,
     marginHorizontal: 16,
     marginVertical: 8,
@@ -71,7 +67,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: "gray",
+    color: colors.neutral500,
   },
   searchButton: {
     backgroundColor: colors.blue800,
@@ -80,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   searchButtonText: {
-    color: "#fff",
+    color: colors.white,
     fontWeight: "bold",
     fontFamily: "Poppins-SemiBold",
   },
@@ -104,7 +100,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: typography.poppinsRegular,
-    color: "#000",
+    color: colors.black,
   },
 });
 

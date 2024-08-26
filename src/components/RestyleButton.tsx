@@ -17,14 +17,9 @@ import {
 import { Theme } from "@/@types/theme.type";
 import { Box, RestyleText } from "@/theme";
 
-type RestyleProps = SpacingProps<Theme> &
-  BorderProps<Theme> &
-  BackgroundColorProps<Theme>;
+type RestyleProps = SpacingProps<Theme> & BorderProps<Theme> & BackgroundColorProps<Theme>;
 
-const restyleFunctions = composeRestyleFunctions<Theme, RestyleProps>([
-  spacing,
-  backgroundColor,
-]);
+const restyleFunctions = composeRestyleFunctions<Theme, RestyleProps>([spacing, backgroundColor]);
 
 type Props = {
   label: string;
@@ -34,19 +29,11 @@ type Props = {
 };
 
 const BaseButton = createRestyleComponent<
-  React.ComponentProps<typeof TouchableOpacity> &
-    Props &
-    RestyleComponentProps<Theme>,
+  React.ComponentProps<typeof TouchableOpacity> & Props & RestyleComponentProps<Theme>,
   Theme
 >([restyleFunctions], TouchableOpacity);
 
-const RestyleButton: React.FC<Props> = ({
-  label,
-  onPress,
-  iconSrc,
-  loading = false,
-  ...props
-}) => (
+const RestyleButton: React.FC<Props> = ({ label, onPress, iconSrc, loading = false, ...props }) => (
   <BaseButton onPress={onPress} {...props}>
     {loading ? (
       <ActivityIndicator color="white100" />

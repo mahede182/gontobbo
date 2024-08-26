@@ -23,9 +23,6 @@ export const dynamicSpace = (value: number) => {
 
 type StylePropKey = keyof ViewStyle;
 
-export function dynamicCSS<K extends StylePropKey>(
-  key: K,
-  value: ViewStyle[K],
-) {
+export function dynamicCSS<K extends StylePropKey>(key: K, value: ViewStyle[K]) {
   return { [key]: value };
 }

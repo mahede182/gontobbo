@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, ImageBackground, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -24,10 +18,7 @@ const Indicator = ({ currentIndex }) => {
       {images.map((_, index) => (
         <View
           key={index}
-          style={[
-            styles.indicator,
-            index === currentIndex ? styles.activeIndicator : null,
-          ]}
+          style={[styles.indicator, index === currentIndex ? styles.activeIndicator : null]}
         />
       ))}
     </View>
@@ -45,20 +36,12 @@ const InitScreen = () => {
       <Box style={styles.darkish}>
         <Box style={styles.formContainer}>
           <Box flexDirection="row" flexWrap="wrap">
-            <RestyleText style={styles.title}>
-              {t("common.discoveryTheWorld")}
-            </RestyleText>
-            <GradientTitle style={styles.title}>
-              {`$t("common.gontobbo"),`}
-            </GradientTitle>
-            <RestyleText style={[styles.title]}>
-              {t("common.oneJourneyAt")}
-            </RestyleText>
+            <RestyleText style={styles.title}>{t("common.discoveryTheWorld")}</RestyleText>
+            <GradientTitle style={styles.title}>{t("common.gontobboC")}</GradientTitle>
+            <RestyleText style={styles.title}>{t("common.oneJourneyAt")}</RestyleText>
           </Box>
           <RestyleTransparent opacity={0.6}>
-            <RestyleText style={styles.description}>
-              {t("common.uniqueAdvantureAwait")}
-            </RestyleText>
+            <RestyleText style={styles.description}>{t("common.uniqueAdvantureAwait")}</RestyleText>
           </RestyleTransparent>
           <TouchableOpacity
             onPress={() => {
@@ -75,8 +58,7 @@ const InitScreen = () => {
               currentIndex === images.length - 1
                 ? { backgroundColor: colors.primary600 }
                 : { backgroundColor: colors.neutral500 },
-            ]}
-          >
+            ]}>
             <RestyleText variant="buttonLabel">Start Your Journey</RestyleText>
           </TouchableOpacity>
         </Box>
@@ -96,9 +78,7 @@ const InitScreen = () => {
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         onScroll={(event) => {
-          const currentIndex = Math.round(
-            event.nativeEvent.contentOffset.x / WIDTH
-          );
+          const currentIndex = Math.round(event.nativeEvent.contentOffset.x / WIDTH);
           setCurrentIndex(currentIndex);
         }}
       />
@@ -106,15 +86,13 @@ const InitScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   imageContainer: {
     flex: 1,
     width: WIDTH,
     resizeMode: "cover",
     justifyContent: "flex-end",
   },
+  // eslint-disable-next-line react-native/no-color-literals
   darkish: {
     flex: 1,
     justifyContent: "flex-end",

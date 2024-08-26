@@ -14,11 +14,7 @@ type Props = {
 const Tag = ({ icon, label, active }: Props) => {
   return (
     <Box style={styles.container(active)}>
-      <Image
-        source={icon}
-        style={styles.icon}
-        tintColor={active ? "#fff" : "#000"}
-      />
+      <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
       <RestyleText style={styles.label(active)}>{label}</RestyleText>
     </Box>
   );

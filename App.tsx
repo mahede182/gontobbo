@@ -9,6 +9,7 @@ import { customFontsToLoad } from "./src/theme/typography";
 import { useFonts } from "expo-font";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
+import { dynamicCSS } from "@/utils/styles";
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>;
@@ -29,7 +30,7 @@ export default function App(props: AppProps) {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaView style={styles.container}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureHandlerRootView style={dynamicCSS("flex", 1)}>
         <RestyleProvider theme={theme}>
           <I18nextProvider i18n={i18next}>
             <RootNavigation />

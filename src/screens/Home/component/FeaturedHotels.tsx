@@ -34,11 +34,6 @@ const FeaturedHotels: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: 160,
-    height: 120,
-    borderRadius: 12,
-  },
   listContainer: {
     paddingRight: 32,
   },

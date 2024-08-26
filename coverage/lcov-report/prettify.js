@@ -24,10 +24,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
   ];
   var r =
     "all,and,by,catch,class,else,extends,false,finally,for,if,in,is,isnt,loop,new,no,not,null,of,off,on,or,return,super,then,true,try,unless,until,when,while,yes";
-  var w = [
-    p,
-    "debugger,eval,export,function,get,null,set,undefined,var,with,Infinity,NaN",
-  ];
+  var w = [p, "debugger,eval,export,function,get,null,set,undefined,var,with,Infinity,NaN"];
   var s =
     "caller,delete,die,do,dump,elsif,eval,exit,foreach,for,goto,if,import,last,local,my,next,no,our,print,package,redo,require,sub,undef,unless,until,use,wantarray,while,BEGIN,END";
   var I = [
@@ -66,11 +63,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
       if (ae.ignoreCase) {
         ac = true;
       } else {
-        if (
-          /[a-z]/i.test(
-            ae.source.replace(/\\u[0-9a-f]{4}|\\x[0-9a-f]{2}|\\[^ux]/gi, ""),
-          )
-        ) {
+        if (/[a-z]/i.test(ae.source.replace(/\\u[0-9a-f]{4}|\\x[0-9a-f]{2}|\\[^ux]/gi, ""))) {
           S = true;
           ac = false;
           break;
@@ -263,9 +256,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
       S = V.currentStyle.whiteSpace;
     } else {
       if (window.getComputedStyle) {
-        S = document.defaultView
-          .getComputedStyle(V, null)
-          .getPropertyValue("white-space");
+        S = document.defaultView.getComputedStyle(V, null).getPropertyValue("white-space");
       }
     }
     var Y = S && "pre" === S.substring(0, 3);
@@ -454,11 +445,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
             "#",
           ]);
         }
-        S.push([
-          C,
-          /^<(?:(?:(?:\.\.\/)*|\/?)(?:[\w-]+(?:\/[\w-]+)+)?[\w-]+\.h|[a-z]\w*)>/,
-          null,
-        ]);
+        S.push([C, /^<(?:(?:(?:\.\.\/)*|\/?)(?:[\w-]+(?:\/[\w-]+)+)?[\w-]+\.h|[a-z]\w*)>/, null]);
       } else {
         W.push([j, /^#[^\r\n]*/, null, "#"]);
       }
@@ -478,11 +465,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
     }
     var U = ("" + T.keywords).replace(/^ | $/g, "");
     if (U.length) {
-      S.push([
-        z,
-        new RegExp("^(?:" + U.replace(/[\s,]+/g, "|") + ")\\b"),
-        null,
-      ]);
+      S.push([z, new RegExp("^(?:" + U.replace(/[\s,]+/g, "|") + ")\\b"), null]);
     }
     W.push([F, /^\s+/, null, " \r\n\t\xA0"]);
     S.push(
@@ -519,9 +502,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
       S = V.currentStyle.whiteSpace;
     } else {
       if (window.getComputedStyle) {
-        S = ac.defaultView
-          .getComputedStyle(V, null)
-          .getPropertyValue("white-space");
+        S = ac.defaultView.getComputedStyle(V, null).getPropertyValue("white-space");
       }
     }
     var Z = S && "pre" === S.substring(0, 3);
@@ -764,11 +745,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
     ["cs"],
   );
   c(i({ keywords: x, cStyleComments: true }), ["java"]);
-  c(i({ keywords: H, hashComments: true, multiLineStrings: true }), [
-    "bsh",
-    "csh",
-    "sh",
-  ]);
+  c(i({ keywords: H, hashComments: true, multiLineStrings: true }), ["bsh", "csh", "sh"]);
   c(
     i({
       keywords: I,
@@ -876,9 +853,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
           var al = false;
           for (var ak = aj.parentNode; ak; ak = ak.parentNode) {
             if (
-              (ak.tagName === "pre" ||
-                ak.tagName === "code" ||
-                ak.tagName === "xmp") &&
+              (ak.tagName === "pre" || ak.tagName === "code" || ak.tagName === "xmp") &&
               ak.className &&
               ak.className.indexOf("prettyprint") >= 0
             ) {
@@ -957,34 +932,20 @@ PR.registerLangHandler(
   PR.createSimpleLexer(
     [[PR.PR_PLAIN, /^[ \t\r\n\f]+/, null, " \t\r\n\f"]],
     [
-      [
-        PR.PR_STRING,
-        /^\"(?:[^\n\r\f\\\"]|\\(?:\r\n?|\n|\f)|\\[\s\S])*\"/,
-        null,
-      ],
-      [
-        PR.PR_STRING,
-        /^\'(?:[^\n\r\f\\\']|\\(?:\r\n?|\n|\f)|\\[\s\S])*\'/,
-        null,
-      ],
+      [PR.PR_STRING, /^\"(?:[^\n\r\f\\\"]|\\(?:\r\n?|\n|\f)|\\[\s\S])*\"/, null],
+      [PR.PR_STRING, /^\'(?:[^\n\r\f\\\']|\\(?:\r\n?|\n|\f)|\\[\s\S])*\'/, null],
       ["lang-css-str", /^url\(([^\)\"\']*)\)/i],
       [
         PR.PR_KEYWORD,
         /^(?:url|rgb|\!important|@import|@page|@media|@charset|inherit)(?=[^\-\w]|$)/i,
         null,
       ],
-      [
-        "lang-css-kw",
-        /^(-?(?:[_a-z]|(?:\\[0-9a-f]+ ?))(?:[_a-z0-9\-]|\\(?:\\[0-9a-f]+ ?))*)\s*:/i,
-      ],
+      ["lang-css-kw", /^(-?(?:[_a-z]|(?:\\[0-9a-f]+ ?))(?:[_a-z0-9\-]|\\(?:\\[0-9a-f]+ ?))*)\s*:/i],
       [PR.PR_COMMENT, /^\/\*[^*]*\*+(?:[^\/*][^*]*\*+)*\//],
       [PR.PR_COMMENT, /^(?:<!--|-->)/],
       [PR.PR_LITERAL, /^(?:\d+|\d*\.\d+)(?:%|[a-z]+)?/i],
       [PR.PR_LITERAL, /^#(?:[0-9a-f]{3}){1,2}/i],
-      [
-        PR.PR_PLAIN,
-        /^-?(?:[_a-z]|(?:\\[\da-f]+ ?))(?:[_a-z\d\-]|\\(?:\\[\da-f]+ ?))*/i,
-      ],
+      [PR.PR_PLAIN, /^-?(?:[_a-z]|(?:\\[\da-f]+ ?))(?:[_a-z\d\-]|\\(?:\\[\da-f]+ ?))*/i],
       [PR.PR_PUNCTUATION, /^[^\s\w\'\"]+/],
     ],
   ),
@@ -993,16 +954,8 @@ PR.registerLangHandler(
 PR.registerLangHandler(
   PR.createSimpleLexer(
     [],
-    [
-      [
-        PR.PR_KEYWORD,
-        /^-?(?:[_a-z]|(?:\\[\da-f]+ ?))(?:[_a-z\d\-]|\\(?:\\[\da-f]+ ?))*/i,
-      ],
-    ],
+    [[PR.PR_KEYWORD, /^-?(?:[_a-z]|(?:\\[\da-f]+ ?))(?:[_a-z\d\-]|\\(?:\\[\da-f]+ ?))*/i]],
   ),
   ["css-kw"],
 );
-PR.registerLangHandler(
-  PR.createSimpleLexer([], [[PR.PR_STRING, /^[^\)\"\']+/]]),
-  ["css-str"],
-);
+PR.registerLangHandler(PR.createSimpleLexer([], [[PR.PR_STRING, /^[^\)\"\']+/]]), ["css-str"]);

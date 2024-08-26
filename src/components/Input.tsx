@@ -4,6 +4,8 @@ import { BoxProps, useTheme } from "@shopify/restyle";
 import { Box, RestyleText as Text } from "../theme";
 import { Theme } from "@/@types/theme.type";
 import { Ionicons } from "@expo/vector-icons";
+import { dynamicCSS } from "@/utils/styles";
+import { colors } from "@/theme/colors";
 
 interface InputProps extends TextInputProps, BoxProps<Theme> {
   label?: string;
@@ -11,12 +13,7 @@ interface InputProps extends TextInputProps, BoxProps<Theme> {
   icon?: string;
 }
 
-export const Input: React.FC<InputProps> = ({
-  label,
-  error,
-  icon,
-  ...props
-}) => {
+export const Input: React.FC<InputProps> = ({ label, error, icon, ...props }) => {
   const { colors } = useTheme<Theme>();
   return (
     <Box marginBottom="medium">
@@ -32,16 +29,9 @@ export const Input: React.FC<InputProps> = ({
         borderColor={error ? "danger" : "white200"}
         borderRadius={8}
         padding="medium"
-        style={{ backgroundColor: "#FFFFFF" }}
-      >
-        {icon && (
-          <Ionicons name={icon} size={24} color="#999" style={styles.icon} />
-        )}
-        <TextInput
-          style={styles.input}
-          placeholderTextColor={colors.neutral300}
-          {...props}
-        />
+        style={dynamicCSS("backgroundColor", colors.white)}>
+        {icon && <Ionicons name={icon} size={24} color="#999" style={styles.icon} />}
+        <TextInput style={styles.input} placeholderTextColor={colors.neutral300} {...props} />
       </Box>
       {error && (
         <Text variant="textBase" color="danger" marginTop="tiny">
@@ -59,6 +49,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: "#333",
+    color: colors.neutral300,
   },
 });

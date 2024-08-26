@@ -26,21 +26,9 @@ const Stack = createStackNavigator<AuthStackParamList>();
 const AuthNavigation = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="SIGN_IN"
-        component={SignIn}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="EMAIL_SIGN_IN"
-        component={EmailSignin}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="SIGN_UP"
-        component={SignUpScreen}
-      />
+      <Stack.Screen options={{ headerShown: false }} name="SIGN_IN" component={SignIn} />
+      <Stack.Screen options={{ headerShown: false }} name="EMAIL_SIGN_IN" component={EmailSignin} />
+      <Stack.Screen options={{ headerShown: false }} name="SIGN_UP" component={SignUpScreen} />
     </Stack.Navigator>
   );
 };

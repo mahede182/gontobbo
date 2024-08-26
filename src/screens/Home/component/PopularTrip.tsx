@@ -16,8 +16,7 @@ const PopularTrip: React.FC = () => {
           marginVertical: 10,
           paddingHorizontal: 15,
         }}
-        variant="gradientTitle"
-      >
+        variant="gradientTitle">
         {t("Home.popularTrip")}
       </GradientTitle>
       <ScrollView style={{ paddingHorizontal: 20 }}>

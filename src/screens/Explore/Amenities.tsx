@@ -18,9 +18,7 @@ const Amenities = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color={colors.black100} />
         </TouchableOpacity>
-        <GradientTitle style={styles.headerText}>
-          {t("Explore.amenities")}
-        </GradientTitle>
+        <GradientTitle style={styles.headerText}>{t("Explore.amenities")}</GradientTitle>
       </Box>
 
       <Box style={styles.section}>
@@ -30,9 +28,7 @@ const Amenities = () => {
         </RestyleText>
         <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
           <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.gym")}
-            </RestyleText>
+            <RestyleText style={styles.amenityButtonText}>{t("Explore.gym")}</RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
@@ -54,9 +50,7 @@ const Amenities = () => {
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.elevator")}
-            </RestyleText>
+            <RestyleText style={styles.amenityButtonText}>{t("Explore.elevator")}</RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
@@ -64,19 +58,13 @@ const Amenities = () => {
             </RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.newspaper")}
-            </RestyleText>
+            <RestyleText style={styles.amenityButtonText}>{t("Explore.newspaper")}</RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.freeParking")}
-            </RestyleText>
+            <RestyleText style={styles.amenityButtonText}>{t("Explore.freeParking")}</RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.paidParking")}
-            </RestyleText>
+            <RestyleText style={styles.amenityButtonText}>{t("Explore.paidParking")}</RestyleText>
           </Box>
         </Box>
         <Box style={styles.separator} />
@@ -107,9 +95,7 @@ const Amenities = () => {
         </RestyleText>
         <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
           <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.atm")}
-            </RestyleText>
+            <RestyleText style={styles.amenityButtonText}>{t("Explore.atm")}</RestyleText>
           </Box>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
@@ -125,7 +111,7 @@ const Amenities = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white100",
+    backgroundColor: colors.white100,
     padding: 16,
   },
   header: {
@@ -154,7 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   amenityButton: {
-    backgroundColor: "#F0F0F0",
+    backgroundColor: colors.neutral400,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
@@ -164,14 +150,10 @@ const styles = StyleSheet.create({
   amenityButtonText: {
     fontSize: 14,
   },
-  amenityText: {
-    fontSize: 14,
-    marginRight: 16,
-    marginBottom: 8,
-  },
+
   separator: {
     height: 1,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: colors.white200,
     marginVertical: 8,
   },
 });

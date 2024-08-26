@@ -16,7 +16,6 @@ export const validateEmail = (email: string): boolean => {
  * @returns {boolean} - True if the email is valid, false otherwise.
  */
 export const validatePassword = (password: string): boolean => {
-  const passwordRegex =
-    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   return passwordRegex.test(password);
 };

@@ -17,10 +17,7 @@ const HeaderTitle = (props: Props) => {
   return (
     <Box style={styles.headerContainer}>
       {/* Back Button */}
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Image source={images.back} />
       </TouchableOpacity>
       {/* Title */}

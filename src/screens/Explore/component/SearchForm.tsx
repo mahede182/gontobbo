@@ -27,19 +27,14 @@ const SearchForm = () => {
       width={"80%"}
       backgroundColor="black100"
       padding="twenty"
-      style={styles.container}
-    >
+      style={styles.container}>
       <LocationInput
         location="New York, United States"
         onPress={() => {
           navigation.navigate("SELECT_LOCATION");
         }}
       />
-      <Box
-        flexDirection="row"
-        justifyContent="space-between"
-        marginVertical="medium"
-      >
+      <Box flexDirection="row" justifyContent="space-between" marginVertical="medium">
         <DateInput
           date="10, Nov 25"
           onPress={() => {
@@ -70,7 +65,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
     backgroundColor: colors.white,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 3,

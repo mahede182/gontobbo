@@ -62,8 +62,7 @@ const TabNavigation = (props: Props) => {
         tabBarActiveTintColor: "white100",
         tabBarHideOnKeyboard: true,
         unmountOnBlur: true,
-      }}
-    >
+      }}>
       <Tab.Screen
         name="HOME"
         options={{
@@ -75,9 +74,7 @@ const TabNavigation = (props: Props) => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={{ height: 18, width: 18 }}
               />
-              <RestyleText style={styles.title(focused)}>
-                {t("common.home")}
-              </RestyleText>
+              <RestyleText style={styles.title(focused)}>{t("common.home")}</RestyleText>
             </Box>
           ),
         }}
@@ -94,9 +91,7 @@ const TabNavigation = (props: Props) => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={{ height: 18, width: 22 }}
               />
-              <RestyleText style={styles.title(focused)}>
-                {t("common.explore")}
-              </RestyleText>
+              <RestyleText style={styles.title(focused)}>{t("common.explore")}</RestyleText>
             </Box>
           ),
         }}
@@ -113,9 +108,7 @@ const TabNavigation = (props: Props) => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={{ height: 18, width: 18 }}
               />
-              <RestyleText style={styles.title(focused)}>
-                {t("common.offers")}
-              </RestyleText>
+              <RestyleText style={styles.title(focused)}>{t("common.offers")}</RestyleText>
             </Box>
           ),
         }}
@@ -132,9 +125,7 @@ const TabNavigation = (props: Props) => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={{ height: 18, width: 22 }}
               />
-              <RestyleText style={styles.title(focused)}>
-                {t("common.wishlist")}
-              </RestyleText>
+              <RestyleText style={styles.title(focused)}>{t("common.wishlist")}</RestyleText>
             </Box>
           ),
         }}
@@ -151,9 +142,7 @@ const TabNavigation = (props: Props) => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={{ height: 18, width: 18 }}
               />
-              <RestyleText style={styles.title(focused)}>
-                {t("common.profile")}
-              </RestyleText>
+              <RestyleText style={styles.title(focused)}>{t("common.profile")}</RestyleText>
             </Box>
           ),
         }}

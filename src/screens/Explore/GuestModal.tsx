@@ -3,7 +3,7 @@ import GradientTitle from "@/components/GradientTitle";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, Animated } from "react-native";
+import { View, Text, TouchableOpacity, Modal, Animated, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 
 const GuestModal = ({ isVisible, onClose }) => {
@@ -55,42 +55,24 @@ const GuestModal = ({ isVisible, onClose }) => {
   });
 
   return (
-    <Modal
-      visible={isVisible}
-      transparent
-      animationType="none"
-      onRequestClose={onClose}
-    >
-      <Animated.View
-        style={{
-          flex: 1,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          justifyContent: "flex-end",
-          transform: [{ translateY: modalTranslateY }],
-        }}
-      >
+    <Modal visible={isVisible} transparent animationType="none" onRequestClose={onClose}>
+      <Animated.View style={styles.animatedViewContainer(modalTranslateY)}>
         <View
           style={{
-            backgroundColor: "white100",
+            backgroundColor: colors.white100,
             padding: 16,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
-          }}
-        >
+          }}>
           <View
             style={{
               flexDirection: "row",
               marginHorizontal: 5,
               alignItems: "center",
               marginBottom: 16,
-            }}
-          >
+            }}>
             <TouchableOpacity onPress={onClose}>
-              <Text
-                style={{ marginRight: 10, fontSize: 16, color: "black100" }}
-              >
-                X
-              </Text>
+              <Text style={{ marginRight: 10, fontSize: 16, color: colors.black100 }}>X</Text>
             </TouchableOpacity>
             <GradientTitle variant="gradientTitle">
               {t("Explore.selectRoomsAndGuests")}
@@ -102,30 +84,23 @@ const GuestModal = ({ isVisible, onClose }) => {
               justifyContent: "space-between",
               alignItems: "center",
               marginBottom: 8,
-            }}
-          >
-            <Text
-              style={{ fontFamily: typography.poppinsSemibold, fontSize: 16 }}
-            >
+            }}>
+            <Text style={{ fontFamily: typography.poppinsSemibold, fontSize: 16 }}>
               {t("Explore.rooms")}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity
-                onPress={() => handleRoomsChange(-1)}
-                disabled={rooms === 1}
-              >
+              <TouchableOpacity onPress={() => handleRoomsChange(-1)} disabled={rooms === 1}>
                 <Text
                   style={{
                     fontSize: 24,
-                    color: rooms === 1 ? "gray" : "black100",
-                  }}
-                >
+                    color: rooms === 1 ? colors.neutral50 : colors.black100,
+                  }}>
                   -
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{rooms}</Text>
               <TouchableOpacity onPress={() => handleRoomsChange(1)}>
-                <Text style={{ fontSize: 24, color: "black100" }}>+</Text>
+                <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -135,32 +110,23 @@ const GuestModal = ({ isVisible, onClose }) => {
               justifyContent: "space-between",
               alignItems: "center",
               marginBottom: 8,
-            }}
-          >
-            <Text
-              style={{ fontFamily: typography.poppinsSemibold, fontSize: 16 }}
-            >
+            }}>
+            <Text style={{ fontFamily: typography.poppinsSemibold, fontSize: 16 }}>
               {t("Explore.adults")}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity
-                onPress={() => handleAdultsChange(-1)}
-                disabled={adults === 1}
-              >
+              <TouchableOpacity onPress={() => handleAdultsChange(-1)} disabled={adults === 1}>
                 <Text
                   style={{
                     fontSize: 24,
-                    color: adults === 1 ? "gray" : "black100",
-                  }}
-                >
+                    color: adults === 1 ? colors.neutral700 : colors.black100,
+                  }}>
                   -
                 </Text>
               </TouchableOpacity>
-              <Text style={{ fontSize: 16, marginHorizontal: 8 }}>
-                {adults}
-              </Text>
+              <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{adults}</Text>
               <TouchableOpacity onPress={() => handleAdultsChange(1)}>
-                <Text style={{ fontSize: 24, color: "black100" }}>+</Text>
+                <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -169,32 +135,23 @@ const GuestModal = ({ isVisible, onClose }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-            }}
-          >
-            <Text
-              style={{ fontFamily: typography.poppinsSemibold, fontSize: 16 }}
-            >
+            }}>
+            <Text style={{ fontFamily: typography.poppinsSemibold, fontSize: 16 }}>
               {t("Explore.children")}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity
-                onPress={() => handleChildrenChange(-1)}
-                disabled={children === 0}
-              >
+              <TouchableOpacity onPress={() => handleChildrenChange(-1)} disabled={children === 0}>
                 <Text
                   style={{
                     fontSize: 24,
-                    color: children === 0 ? "gray" : "black100",
-                  }}
-                >
+                    color: children === 0 ? colors.neutral700 : colors.black100,
+                  }}>
                   -
                 </Text>
               </TouchableOpacity>
-              <Text style={{ fontSize: 16, marginHorizontal: 8 }}>
-                {children}
-              </Text>
+              <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{children}</Text>
               <TouchableOpacity onPress={() => handleChildrenChange(1)}>
-                <Text style={{ fontSize: 24, color: "black100" }}>+</Text>
+                <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -205,16 +162,14 @@ const GuestModal = ({ isVisible, onClose }) => {
               borderRadius: 8,
               marginVertical: 16,
             }}
-            onPress={onClose}
-          >
+            onPress={onClose}>
             <Text
               style={{
                 fontFamily: typography.poppinsBold,
-                color: "white100",
+                color: colors.white100,
                 fontSize: 16,
                 textAlign: "center",
-              }}
-            >
+              }}>
               {t("common.done")}
             </Text>
           </TouchableOpacity>
@@ -225,3 +180,13 @@ const GuestModal = ({ isVisible, onClose }) => {
 };
 
 export default GuestModal;
+
+const styles = StyleSheet.create({
+  animatedViewContainer: (modalTranslateY) => ({
+    flex: 1,
+    backgroundColor: colors.black,
+    opacity: 0.5,
+    justifyContent: "flex-end",
+    transform: [{ translateY: modalTranslateY }],
+  }),
+});

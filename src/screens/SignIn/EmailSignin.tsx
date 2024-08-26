@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Image, ImageBackground, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -63,13 +57,9 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
         </TouchableOpacity>
       </Box>
       <Box style={styles.signUpContainer}>
-        <RestyleText style={styles.signUpText}>
-          {t("signIn.dontHaveAnAccount")}
-        </RestyleText>
+        <RestyleText style={styles.signUpText}>{t("signIn.dontHaveAnAccount")}</RestyleText>
         <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
-          <RestyleText style={styles.signUpLink}>
-            {t("signIn.signUp")}
-          </RestyleText>
+          <RestyleText style={styles.signUpLink}>{t("signIn.signUp")}</RestyleText>
         </TouchableOpacity>
       </Box>
     </ImageBackground>
@@ -82,18 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-  },
-  headerTitle: {
-    marginLeft: 32,
-    fontSize: 18,
-    fontWeight: "600",
-  },
+
   formContainer: {
     backgroundColor: colors.neutral50,
     marginHorizontal: 10,
@@ -104,7 +83,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: colors.neutral300,
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
@@ -114,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: colors.neutral300,
     borderRadius: 8,
     marginBottom: 24,
   },
@@ -130,11 +109,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     alignItems: "center",
   },
-  signInButtonText: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "600",
-  },
+
   signUpContainer: {
     flexDirection: "row",
     justifyContent: "center",

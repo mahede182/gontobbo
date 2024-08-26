@@ -81,11 +81,7 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
 
   return (
     <Box style={styles.container}>
-      <TouchableOpacity
-        ref={dropdownButtonRef}
-        style={styles.button}
-        onPress={toggleDropdown}
-      >
+      <TouchableOpacity ref={dropdownButtonRef} style={styles.button} onPress={toggleDropdown}>
         <RestyleText>{label}</RestyleText>
         <Animated.View style={{ transform: [{ rotate: rotateAnimation }] }}>
           <Ionicons name="chevron-down" size={24} color={colors.black} />
@@ -93,11 +89,7 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
       </TouchableOpacity>
 
       <Modal visible={visible} transparent animationType="none">
-        <TouchableOpacity
-          style={styles.overlay}
-          activeOpacity={1}
-          onPress={closeDropdown}
-        >
+        <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={closeDropdown}>
           <Animated.View
             style={[
               styles.dropdown,
@@ -113,13 +105,8 @@ const Dropdown: React.FC<Props> = ({ label, data }) => {
                   },
                 ],
               },
-            ]}
-          >
-            <FlatList
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.value}
-            />
+            ]}>
+            <FlatList data={data} renderItem={renderItem} keyExtractor={(item) => item.value} />
           </Animated.View>
         </TouchableOpacity>
       </Modal>
@@ -143,6 +130,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "50%",
   },
+  // eslint-disable-next-line react-native/no-color-literals
   overlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.2)",
