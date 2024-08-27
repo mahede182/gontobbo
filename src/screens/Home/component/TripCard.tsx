@@ -3,6 +3,8 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
+import { useDummyLoading } from "@/hooks/useDummyLoading";
+import { Skeleton } from "moti/skeleton";
 
 interface TripCardProps {
   image: string;
@@ -20,43 +22,49 @@ const TripCard: React.FC<TripCardProps> = ({
   feature,
   peopleJoined,
   avatars,
-}) => (
-  <Box flexDirection="row" marginBottom="large" backgroundColor="neutral100" borderRadius={10}>
-    <Image source={image} style={styles.image} />
-    <Box
-      width="60%"
-      paddingVertical="five"
-      paddingHorizontal="medium"
-      alignItems="flex-start"
-      justifyContent="space-between">
-      <RestyleText variant="subtitle" marginBottom="ten" paddingHorizontal="two">
-        {title}
-      </RestyleText>
-      <Box flexDirection="row" alignItems="center" marginBottom="small">
-        <RestyleText variant="caption" color="gray" marginRight="tiny">
-          {duration}
-        </RestyleText>
-        <RestyleText variant="caption" color="gray">
-          {feature}
-        </RestyleText>
-      </Box>
-      <Box flexDirection="row" alignItems="center">
-        <Box flexDirection="row" marginRight="small">
-          {avatars.slice(0, 4).map((avatar, index) => (
-            <Image
-              key={index}
-              source={avatar}
-              style={[styles.avatar, { marginLeft: index > 0 ? -10 : 0 }]}
-            />
-          ))}
+}) => {
+  const { isLoading } = useDummyLoading();
+  return (
+    <Skeleton show={isLoading} colorMode="light" radius="square" height={100} width={"100%"}>
+      <Box flexDirection="row" marginBottom="large" backgroundColor="neutral100" borderRadius={10}>
+        <Image source={image} style={styles.image} />
+
+        <Box
+          width="60%"
+          paddingVertical="five"
+          paddingHorizontal="medium"
+          alignItems="flex-start"
+          justifyContent="space-between">
+          <RestyleText variant="subtitle" marginBottom="ten" paddingHorizontal="two">
+            {title}
+          </RestyleText>
+          <Box flexDirection="row" alignItems="center" marginBottom="small">
+            <RestyleText variant="caption" color="gray" marginRight="tiny">
+              {duration}
+            </RestyleText>
+            <RestyleText variant="caption" color="gray">
+              {feature}
+            </RestyleText>
+          </Box>
+          <Box flexDirection="row" alignItems="center">
+            <Box flexDirection="row" marginRight="small">
+              {avatars.slice(0, 4).map((avatar, index) => (
+                <Image
+                  key={index}
+                  source={avatar}
+                  style={[styles.avatar, { marginLeft: index > 0 ? -10 : 0 }]}
+                />
+              ))}
+            </Box>
+            <RestyleText variant="caption" color="gray">
+              {peopleJoined}+ People Joined
+            </RestyleText>
+          </Box>
         </Box>
-        <RestyleText variant="caption" color="gray">
-          {peopleJoined}+ People Joined
-        </RestyleText>
       </Box>
-    </Box>
-  </Box>
-);
+    </Skeleton>
+  );
+};
 
 const styles = StyleSheet.create({
   image: {

@@ -5,7 +5,7 @@ import "@/machine/counterMachine";
 
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
-import { Image, ScrollView } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Input } from "@/components/Input";
 import PopularTrip from "./component/PopularTrip";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import { tagData } from "@/data/tagData";
 import FeaturedHotels from "./component/FeaturedHotels";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
+import { colors } from "@/theme/colors";
 
 type Props = {};
 
@@ -34,13 +35,9 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   }, [name, email, imageUrl]);
 
   return (
-    <Box flex={1} bg="white">
+    <SafeAreaView style={styles.safeAreaContainer}>
       {/* === drawer button === */}
-      <Box
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        paddingVertical="ten">
+      <Box flexDirection="row" justifyContent="space-between" alignItems="center">
         <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
         <Image
           source={images.notifiocationBtn}
@@ -73,8 +70,15 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
       <FeaturedHotels />
       {/* === trip card === */}
       <PopularTrip />
-    </Box>
+    </SafeAreaView>
   );
 };
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  safeAreaContainer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: colors.neutral100,
+  },
+});

@@ -1,5 +1,4 @@
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
 import theme from "./src/theme";
 import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
 import "react-native-reanimated";
@@ -20,7 +19,6 @@ interface AppProps {
  */
 export default function App(props: AppProps) {
   const [areFontsLoaded] = useFonts(customFontsToLoad);
-
   // Before we show the app, we have to wait for our state to be ready.
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
@@ -29,20 +27,12 @@ export default function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
-    <SafeAreaView style={styles.container}>
-      <GestureHandlerRootView style={dynamicCSS("flex", 1)}>
-        <RestyleProvider theme={theme}>
-          <I18nextProvider i18n={i18next}>
-            <RootNavigation />
-          </I18nextProvider>
-        </RestyleProvider>
-      </GestureHandlerRootView>
-    </SafeAreaView>
+    <GestureHandlerRootView style={dynamicCSS("flex", 1)}>
+      <RestyleProvider theme={theme}>
+        <I18nextProvider i18n={i18next}>
+          <RootNavigation />
+        </I18nextProvider>
+      </RestyleProvider>
+    </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

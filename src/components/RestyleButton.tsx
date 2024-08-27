@@ -1,3 +1,4 @@
+import React from "react";
 import {
   createRestyleComponent,
   composeRestyleFunctions,
@@ -7,15 +8,11 @@ import {
   BorderProps,
   BackgroundColorProps,
 } from "@shopify/restyle";
-import {
-  TouchableOpacity,
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  ImageSourcePropType,
-} from "react-native";
+import { TouchableOpacity, Image, StyleSheet, ImageSourcePropType } from "react-native";
 import { Theme } from "@/@types/theme.type";
 import { Box, RestyleText } from "@/theme";
+import { Skeleton } from "moti/skeleton";
+import { useDummyLoading } from "@/hooks/useDummyLoading";
 
 type RestyleProps = SpacingProps<Theme> & BorderProps<Theme> & BackgroundColorProps<Theme>;
 
@@ -33,18 +30,20 @@ const BaseButton = createRestyleComponent<
   Theme
 >([restyleFunctions], TouchableOpacity);
 
-const RestyleButton: React.FC<Props> = ({ label, onPress, iconSrc, loading = false, ...props }) => (
-  <BaseButton onPress={onPress} {...props}>
-    {loading ? (
-      <ActivityIndicator color="white100" />
-    ) : (
-      <Box style={styles.buttonContainer}>
-        {iconSrc && <Image source={iconSrc} style={styles.icon} />}
-        <RestyleText variant="buttonLabel">{label}</RestyleText>
-      </Box>
-    )}
-  </BaseButton>
-);
+const RestyleButton: React.FC<Props> = ({ label, onPress, iconSrc, loading = false, ...props }) => {
+  const { isLoading } = useDummyLoading();
+
+  return (
+    <Skeleton show={isLoading} colorMode="light" radius="square" height={43} width={"100%"}>
+      <BaseButton onPress={onPress} {...props}>
+        <Box style={styles.buttonContainer}>
+          {iconSrc && <Image source={iconSrc} style={styles.icon} />}
+          <RestyleText variant="buttonLabel">{label}</RestyleText>
+        </Box>
+      </BaseButton>
+    </Skeleton>
+  );
+};
 
 export default RestyleButton;
 
