@@ -14,6 +14,7 @@ import SelectRoom from "@/screens/Explore/SelectRoom";
 import ReviewBooking from "@/screens/Explore/ReviewBooking";
 import RulesAndRegulations from "@/screens/Explore/RulesAndRegulations";
 import InitScreen from "@/screens/Init/InitScreen";
+import DrawerNavigation from "./DrawerNavigation";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -90,6 +91,7 @@ const RootNavigation = () => {
           name="RULES_AND_REGULATIONS"
           component={RulesAndRegulations}
         />
+        <Stack.Screen options={{ headerShown: false }} name="DRAWER" component={DrawerNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

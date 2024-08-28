@@ -5,7 +5,7 @@ import "@/machine/counterMachine";
 
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
-import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Input } from "@/components/Input";
 import PopularTrip from "./component/PopularTrip";
 import { useTranslation } from "react-i18next";
@@ -15,10 +15,13 @@ import FeaturedHotels from "./component/FeaturedHotels";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { useDrawerStatus } from "@react-navigation/drawer";
 
 type Props = {};
 
 const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   const [name, setName] = useState<string>("");
@@ -34,11 +37,18 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
     });
   }, [name, email, imageUrl]);
 
+  const drawerOpen = () => {
+    navigation.navigate("DRAWER");
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       {/* === drawer button === */}
       <Box flexDirection="row" justifyContent="space-between" alignItems="center">
-        <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
+        <TouchableOpacity onPress={drawerOpen}>
+          <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
+        </TouchableOpacity>
         <Image
           source={images.notifiocationBtn}
           style={{ height: 48, width: 48, resizeMode: "contain" }}

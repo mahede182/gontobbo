@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
-import { Image, ImageBackground, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import HeaderTitle from "@/components/HeaderTitle";
@@ -9,6 +9,8 @@ import { colors } from "@/theme/colors";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { validateEmail, validatePassword } from "@/utils/helper";
+import Background from "@/components/Background";
+import { View } from "moti";
 
 type Props = {};
 
@@ -37,115 +39,112 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
   }, [email, password, confirmPassword, phoneNumber]);
 
   return (
-    <ImageBackground source={images.backgroundTexture} style={styles.container}>
-      <HeaderTitle
-        title={`${t("signIn.sign")} ${t("signIn.up")} ${t("signIn.withEmail")}`}
-        showBackButton
-        onBackPress={() => navigation.goBack()}
-      />
+    <Background>
+      <View>
+        <HeaderTitle
+          title={`${t("signIn.sign")} ${t("signIn.up")} ${t("signIn.withEmail")}`}
+          showBackButton
+          onBackPress={() => navigation.goBack()}
+        />
 
-      <Box style={styles.formContainer}>
-        <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">{t("signIn.emailAddress")}</RestyleText>
-          <TextInput
-            style={[
-              styles.input,
-              { borderColor: isValidEmail ? colors.neutral300 : colors.danger },
-            ]}
-            placeholder="Email Address"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            blurOnSubmit
-          />
-        </Box>
-
-        <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">{t("signIn.enterPassword")}</RestyleText>
-          <Box
-            style={[
-              styles.passwordContainer,
-              {
-                borderColor: isValidPassword ? colors.neutral300 : colors.danger,
-              },
-            ]}>
+        <Box style={styles.formContainer}>
+          <Box style={styles.inputGroup}>
+            <RestyleText variant="inputTitle">{t("signIn.emailAddress")}</RestyleText>
             <TextInput
-              style={styles.passwordInput}
-              placeholder="Enter Password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
+              style={[
+                styles.input,
+                { borderColor: isValidEmail ? colors.neutral300 : colors.danger },
+              ]}
+              placeholder="Email Address"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              blurOnSubmit
             />
-            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              <Image
-                source={images.showPassword}
-                style={styles.showPasswordIcon}
-                tintColor={showPassword ? colors.success : colors.neutral600}
-              />
-            </TouchableOpacity>
           </Box>
-        </Box>
 
-        <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">{t("signIn.confirmPassword")}</RestyleText>
-          <Box style={styles.passwordContainer}>
+          <Box style={styles.inputGroup}>
+            <RestyleText variant="inputTitle">{t("signIn.enterPassword")}</RestyleText>
+            <Box
+              style={[
+                styles.passwordContainer,
+                {
+                  borderColor: isValidPassword ? colors.neutral300 : colors.danger,
+                },
+              ]}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Enter Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Image
+                  source={images.showPassword}
+                  style={styles.showPasswordIcon}
+                  tintColor={showPassword ? colors.success : colors.neutral600}
+                />
+              </TouchableOpacity>
+            </Box>
+          </Box>
+
+          <Box style={styles.inputGroup}>
+            <RestyleText variant="inputTitle">{t("signIn.confirmPassword")}</RestyleText>
+            <Box style={styles.passwordContainer}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry={!showConfirmPassword}
+              />
+              <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                <Image
+                  source={images.showPassword}
+                  style={styles.showPasswordIcon}
+                  tintColor={showConfirmPassword ? colors.success : colors.neutral600}
+                />
+              </TouchableOpacity>
+            </Box>
+          </Box>
+
+          <Box style={styles.inputGroup}>
+            <RestyleText variant="inputTitle">{t("signIn.phoneNumber")}</RestyleText>
             <TextInput
-              style={styles.passwordInput}
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry={!showConfirmPassword}
+              style={styles.input}
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              keyboardType="phone-pad"
             />
-            <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-              <Image
-                source={images.showPassword}
-                style={styles.showPasswordIcon}
-                tintColor={showConfirmPassword ? colors.success : colors.neutral600}
-              />
-            </TouchableOpacity>
           </Box>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("HOME")}
+            style={styles.signUpButton(isButtonEnabled)}>
+            <RestyleText style={styles.signUpButtonText(isButtonEnabled)}>
+              {t("signIn.signUp")}
+            </RestyleText>
+          </TouchableOpacity>
         </Box>
 
-        <Box style={styles.inputGroup}>
-          <RestyleText variant="inputTitle">{t("signIn.phoneNumber")}</RestyleText>
-          <TextInput
-            style={styles.input}
-            placeholder="Phone Number"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="phone-pad"
-          />
+        <Box style={styles.signInContainer}>
+          <RestyleText style={styles.signInText}>{t("signIn.haveAnAccount")}</RestyleText>
+          <TouchableOpacity onPress={() => navigation.navigate("EMAIL_SIGN_IN")}>
+            <RestyleText variant="inputTitle" style={styles.signInLink}>
+              {t("signIn.singIn")}
+            </RestyleText>
+          </TouchableOpacity>
         </Box>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("HOME")}
-          style={styles.signUpButton(isButtonEnabled)}>
-          <RestyleText style={styles.signUpButtonText(isButtonEnabled)}>
-            {t("signIn.signUp")}
-          </RestyleText>
-        </TouchableOpacity>
-      </Box>
-
-      <Box style={styles.signInContainer}>
-        <RestyleText style={styles.signInText}>{t("signIn.haveAnAccount")}</RestyleText>
-        <TouchableOpacity onPress={() => navigation.navigate("EMAIL_SIGN_IN")}>
-          <RestyleText variant="inputTitle" style={styles.signInLink}>
-            {t("signIn.singIn")}
-          </RestyleText>
-        </TouchableOpacity>
-      </Box>
-    </ImageBackground>
+      </View>
+    </Background>
   );
 };
 
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginHorizontal: 20,
-  },
-
   formContainer: {
     backgroundColor: colors.neutral50,
     marginHorizontal: 10,

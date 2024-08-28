@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from "react";
-import { Alert, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import Logo from "@/components/Logo";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -21,6 +21,7 @@ import {
   handleFacebookSignIn,
   handleGoogleSignIn,
 } from "@/utils/socialAuth";
+import Background from "@/components/Background";
 
 type Props = {};
 // <> No one beat you
@@ -62,88 +63,73 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { images } = useTheme<Theme>();
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      <ImageBackground source={images.backgroundTexture} style={styles.container}>
-        <RestyleTransparent position="absolute" right={-25} opacity={0.5}>
-          <Dropdown data={languageData} label={t("common.lang")} />
-        </RestyleTransparent>
+    <Background>
+      <RestyleTransparent position="absolute" right={-25} opacity={0.5}>
+        <Dropdown data={languageData} label={t("common.lang")} />
+      </RestyleTransparent>
 
-        <Logo />
+      <Logo />
 
-        {/* ::: Social Sign in button container ::: */}
-        <Box>
-          {isIOS && (
-            <RestyleButton
-              iconSrc={images.appleIcon}
-              label={t("signIn.continueWithApple")}
-              onPress={handleAppleSignIn}
-              style={[styles.button, styles.appleButton]}
-            />
-          )}
-
+      {/* ::: Social Sign in button container ::: */}
+      <Box>
+        {isIOS && (
           <RestyleButton
-            iconSrc={images.fbIcon}
-            label={t("signIn.continueWithFacebook")}
-            onPress={handleFacebookSignIn}
-            style={[styles.button, styles.facebookButton]}
+            iconSrc={images.appleIcon}
+            label={t("signIn.continueWithApple")}
+            onPress={handleAppleSignIn}
+            style={[styles.button, styles.appleButton]}
           />
-          <RestyleButton
-            iconSrc={images.gmailIcon}
-            label={t("signIn.continueWithGmail")}
-            onPress={handleGoogleSignIn}
-            style={[styles.button, styles.gmailButton]}
-          />
-          {/* ::: or ::: */}
-          <Box style={styles.divider}>
-            <Box style={styles.dividerLine} />
-            <RestyleText style={styles.dividerRestyleText}>{t("common.or")}</RestyleText>
-            <Box style={styles.dividerLine} />
-          </Box>
+        )}
 
-          <RestyleButton
-            iconSrc={images.emailIcon}
-            label={t("signIn.signInWithEmail")}
-            onPress={() => navigation.navigate("EMAIL_SIGN_IN")}
-            style={[styles.button, styles.emailButton]}
-          />
-          <Box style={styles.linkContainer}>
-            {/* TODO: split code and create a reusable component button */}
-            <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
-              <RestyleText style={styles.linkRestyleText}>
-                {t("signIn.signUpWithEmail")}
-              </RestyleText>
-            </TouchableOpacity>
-            {/* TODO: split code and create a reusable component button */}
-            <TouchableOpacity onPress={() => navigation.navigate("HOME")}>
-              <RestyleText style={styles.linkRestyleText}>
-                {t("signIn.continueAsGuest")}
-              </RestyleText>
-            </TouchableOpacity>
-          </Box>
+        <RestyleButton
+          iconSrc={images.fbIcon}
+          label={t("signIn.continueWithFacebook")}
+          onPress={handleFacebookSignIn}
+          style={[styles.button, styles.facebookButton]}
+        />
+        <RestyleButton
+          iconSrc={images.gmailIcon}
+          label={t("signIn.continueWithGmail")}
+          onPress={handleGoogleSignIn}
+          style={[styles.button, styles.gmailButton]}
+        />
+        {/* ::: or ::: */}
+        <Box style={styles.divider}>
+          <Box style={styles.dividerLine} />
+          <RestyleText style={styles.dividerRestyleText}>{t("common.or")}</RestyleText>
+          <Box style={styles.dividerLine} />
         </Box>
-        <Box style={styles.footer}>
-          <RestyleText style={styles.footerRestyleText}>
-            {t("signIn.termsAndConditions")}
-            <RestyleText style={styles.footerLink}> {t("signIn.findMore")}</RestyleText>
-          </RestyleText>
+
+        <RestyleButton
+          iconSrc={images.emailIcon}
+          label={t("signIn.signInWithEmail")}
+          onPress={() => navigation.navigate("EMAIL_SIGN_IN")}
+          style={[styles.button, styles.emailButton]}
+        />
+        <Box style={styles.linkContainer}>
+          {/* TODO: split code and create a reusable component button */}
+          <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
+            <RestyleText style={styles.linkRestyleText}>{t("signIn.signUpWithEmail")}</RestyleText>
+          </TouchableOpacity>
+          {/* TODO: split code and create a reusable component button */}
+          <TouchableOpacity onPress={() => navigation.navigate("HOME")}>
+            <RestyleText style={styles.linkRestyleText}>{t("signIn.continueAsGuest")}</RestyleText>
+          </TouchableOpacity>
         </Box>
-      </ImageBackground>
-    </SafeAreaView>
+      </Box>
+      <Box style={styles.footer}>
+        <RestyleText style={styles.footerRestyleText}>
+          {t("signIn.termsAndConditions")}
+          <RestyleText style={styles.footerLink}> {t("signIn.findMore")}</RestyleText>
+        </RestyleText>
+      </Box>
+    </Background>
   );
 };
 
 export default SigninScreen;
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: colors.neutral100,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    justifyContent: "space-between",
-  },
   button: {
     flexDirection: "row",
     justifyContent: "center",
