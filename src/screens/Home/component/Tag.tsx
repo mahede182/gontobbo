@@ -1,22 +1,33 @@
 // src/screens/Home/component/Tag.tsx
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
+import { useMachine } from "@xstate/react";
+import { tagMachine } from "@/machine/tagMachine";
 
 type Props = {
   icon: any;
   label: string;
-  active?: boolean;
 };
 
-const Tag = ({ icon, label, active }: Props) => {
+const Tag = ({ icon, label }: Props) => {
+  const [state, send] = useMachine(tagMachine);
+
+  const handlePress = () => {
+    send({ type: "TOGGLE" });
+  };
+
+  const { active } = state.context;
+
   return (
-    <Box style={styles.container(active)}>
-      <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
-      <RestyleText style={styles.label(active)}>{label}</RestyleText>
-    </Box>
+    <TouchableOpacity onPress={handlePress}>
+      <Box style={styles.container(active)}>
+        <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
+        <RestyleText style={styles.label(active)}>{label}</RestyleText>
+      </Box>
+    </TouchableOpacity>
   );
 };
 

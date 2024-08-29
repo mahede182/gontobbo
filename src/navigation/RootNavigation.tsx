@@ -91,7 +91,7 @@ const RootNavigation = () => {
           name="RULES_AND_REGULATIONS"
           component={RulesAndRegulations}
         />
-        <Stack.Screen options={{ headerShown: false }} name="DRAWER" component={DrawerNavigation} />
+        {/* <Stack.Screen options={{ headerShown: false }} name="DRAWER" component={DrawerNavigation} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

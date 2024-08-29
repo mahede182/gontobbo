@@ -1,6 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreens from "@/screens/Home";
 import TravelScreens from "@/screens/Explore";
 import WishListScreens from "@/screens/Wishlist";
 import ProfileScreen from "@/screens/Profile";
@@ -11,6 +10,7 @@ import { Box, RestyleText } from "@/theme";
 import { typography } from "@/theme/typography";
 import OfferScreen from "@/screens/Offer";
 import { useTranslation } from "react-i18next";
+import DrawerNavigation from "./DrawerNavigation";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -78,7 +78,7 @@ const TabNavigation = (props: Props) => {
             </Box>
           ),
         }}
-        component={HomeScreens}
+        component={DrawerNavigation}
       />
       <Tab.Screen
         name="EXPLORE"

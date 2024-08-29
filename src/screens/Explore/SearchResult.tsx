@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 
@@ -7,9 +7,10 @@ import searchResults from "../../data/searchResults";
 import ResultCard from "./component/ResultCard";
 import { typography } from "@/theme/typography";
 import Icon from "@expo/vector-icons/Ionicons";
+import Dropdown from "@/components/Dropdown";
 
 const SearchResult = () => (
-  <Box style={styles.container}>
+  <SafeAreaView style={styles.container}>
     <Box style={styles.header}>
       <Box style={styles.headerContent}>
         <RestyleText style={styles.title}>New York</RestyleText>
@@ -20,25 +21,55 @@ const SearchResult = () => (
       </Box>
     </Box>
     <Box style={styles.filters}>
-      <TouchableOpacity style={styles.filterContainer}>
+      {/* <TouchableOpacity style={styles.filterContainer}>
         <Icon name="swap-vertical" size={16} color={"#000"} />
         <RestyleText style={[styles.label, { marginLeft: 8 }]}>Sort By</RestyleText>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.filterContainer}>
-        {/* <Icon name="search" size={16} color={"#000"} /> */}
+      </TouchableOpacity> */}
+      <Box alignItems={"center"} justifyContent={"center"}>
+        <Dropdown
+          label="Sort By"
+          data={[
+            { label: "A-Z", value: "A-Z" },
+            { label: "Price low - high", value: "price" },
+            { label: "Year", value: "Year" },
+          ]}
+        />
+      </Box>
+      <Box alignItems={"center"} justifyContent={"center"}>
+        <Dropdown
+          label="All Filter"
+          data={[
+            { label: "A-Z", value: "A-Z" },
+            { label: "Price low - high", value: "price" },
+            { label: "Year", value: "Year" },
+          ]}
+        />
+      </Box>
+      <Box alignItems={"center"} justifyContent={"center"}>
+        <Dropdown
+          label="Star Rating"
+          data={[
+            { label: "*****", value: "5" },
+            { label: "****", value: "4" },
+            { label: "***", value: "3" },
+          ]}
+        />
+      </Box>
+      {/* <TouchableOpacity style={styles.filterContainer}>
+        <Icon name="search" size={16} color={"#000"} /> 
         <RestyleText style={styles.label}>All Filters</RestyleText>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.filterContainer}>
+      </TouchableOpacity> */}
+      {/* <TouchableOpacity style={styles.filterContainer}>
         <Icon name="star-half-outline" size={16} color={"#000"} />
         <RestyleText style={styles.label}>Star Rating</RestyleText>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </Box>
     <FlatList
       data={searchResults}
       renderItem={({ item }) => <ResultCard {...item} />}
       keyExtractor={(item) => item.name}
     />
-  </Box>
+  </SafeAreaView>
 );
 
 const styles = StyleSheet.create({

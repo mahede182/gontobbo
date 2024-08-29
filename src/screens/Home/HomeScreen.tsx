@@ -16,7 +16,6 @@ import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useDrawerStatus } from "@react-navigation/drawer";
 
 type Props = {};
 

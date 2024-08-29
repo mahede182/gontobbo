@@ -1,24 +1,28 @@
 import React from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Box } from "@/theme";
 import { images } from "@/theme/images";
 import { tagData } from "@/data/tagData";
 import Tag from "../Home/component/Tag";
 import SearchForm from "./component/SearchForm";
 import { colors } from "@/theme/colors";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 
 interface Props {}
 
 const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
+  const navigation = useNavigation();
+  const drawerOpen = () => {
+    navigation.navigate("DRAWER");
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
   return (
     <SafeAreaView style={styles.container}>
       {/* === drawer button === */}
-      <Box
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        paddingVertical="ten">
-        <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
+      <Box flexDirection="row" justifyContent="space-between" alignItems="center">
+        <TouchableOpacity onPress={drawerOpen}>
+          <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
+        </TouchableOpacity>
         <Image
           source={images.notifiocationBtn}
           style={{ height: 48, width: 48, resizeMode: "contain" }}

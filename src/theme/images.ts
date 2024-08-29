@@ -32,6 +32,13 @@ export const images = {
   initOne: require("@/assets/init/initOne.png") as ImageSourcePropType,
   initTwo: require("@/assets/init/initTwo.png") as ImageSourcePropType,
   initThree: require("@/assets/init/initThree.png") as ImageSourcePropType,
+  languegeIcon: require("@/assets/Drawer/languegeIcon.png") as ImageSourcePropType,
+  logoutIcon: require("@/assets/Drawer/logoutIcon.png") as ImageSourcePropType,
+  myBookingIcon: require("@/assets/Drawer/myBookingIcon.png") as ImageSourcePropType,
+  rateUsIcon: require("@/assets/Drawer/rateUsIcon.png") as ImageSourcePropType,
+  referIcon: require("@/assets/Drawer/referIcon.png") as ImageSourcePropType,
+  savedIcon: require("@/assets/Drawer/savedIcon.png") as ImageSourcePropType,
+  supportIcon: require("@/assets/Drawer/supportIcon.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;
