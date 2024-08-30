@@ -6,7 +6,6 @@ import { colors } from "@/theme/colors";
 import searchResults from "../../data/searchResults";
 import ResultCard from "./component/ResultCard";
 import { typography } from "@/theme/typography";
-import Icon from "@expo/vector-icons/Ionicons";
 import Dropdown from "@/components/Dropdown";
 
 const SearchResult = () => (
@@ -119,19 +118,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 16,
     marginVertical: 8,
-  },
-  filterContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    backgroundColor: colors.white200,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 4,
-    marginHorizontal: 5,
-  },
-  label: {
-    fontFamily: typography.poppinsRegular,
-    color: colors.black,
   },
 });
 

@@ -17,8 +17,11 @@ const GuestInput = ({ guests, onPress }: GuestInputProps) => (
       borderRadius={5}
       flexDirection="row"
       alignItems="center">
-      <Image source={images.profile} style={{ marginRight: 6 }} />
-      <RestyleText variant="textBase">{guests}</RestyleText>
+      <Image
+        source={images.profile}
+        style={{ marginRight: 6, height: 24, width: 24, resizeMode: "contain" }}
+      />
+      <RestyleText variant="gradientTitle">{guests}</RestyleText>
     </Box>
   </Pressable>
 );

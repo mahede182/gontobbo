@@ -14,7 +14,6 @@ import SelectRoom from "@/screens/Explore/SelectRoom";
 import ReviewBooking from "@/screens/Explore/ReviewBooking";
 import RulesAndRegulations from "@/screens/Explore/RulesAndRegulations";
 import InitScreen from "@/screens/Init/InitScreen";
-import DrawerNavigation from "./DrawerNavigation";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

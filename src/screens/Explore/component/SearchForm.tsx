@@ -9,6 +9,7 @@ import SearchButton from "./SearchInput";
 import { useNavigation } from "@react-navigation/native";
 import GuestModal from "../GuestModal";
 import { colors } from "@/theme/colors";
+import SelectFlight from "./SelectFlight";
 
 const SearchForm = () => {
   const navigation = useNavigation();
@@ -49,6 +50,11 @@ const SearchForm = () => {
         />
       </Box>
       <GuestInput guests="1 Room, 2 Adults, 1 Children" onPress={openModal} />
+      <SelectFlight
+        onPress={openModal}
+        title="Select Flights"
+        subTitle="Choose with or Without Flight"
+      />
       <GuestModal isVisible={isModalVisible} onClose={closeModal} />
       <SearchButton
         onPress={() => {

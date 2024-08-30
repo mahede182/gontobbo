@@ -55,7 +55,7 @@ const GuestModal = ({ isVisible, onClose }) => {
   });
 
   return (
-    <Modal visible={isVisible} transparent animationType="none" onRequestClose={onClose}>
+    <Modal visible={isVisible} transparent animationType="slide" onRequestClose={onClose}>
       <Animated.View style={styles.animatedViewContainer(modalTranslateY)}>
         <View
           style={{
@@ -184,8 +184,7 @@ export default GuestModal;
 const styles = StyleSheet.create({
   animatedViewContainer: (modalTranslateY) => ({
     flex: 1,
-    backgroundColor: colors.black,
-    opacity: 0.5,
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "flex-end",
     transform: [{ translateY: modalTranslateY }],
   }),
