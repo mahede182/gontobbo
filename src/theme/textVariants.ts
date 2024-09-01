@@ -27,8 +27,7 @@ export const textVariants = {
     lineHeight: 20,
   },
   caption: {
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 8,
   },
   gradientTitle: {
     fontFamily: typography.poppinsSemibold,
@@ -42,5 +41,9 @@ export const textVariants = {
     lineHeight: "100%",
     fontWeight: "500",
     marginBottom: "five",
+  },
+  thinTitle: {
+    fontFamily: typography.poppinsRegular,
+    fontSize: 8,
   },
 };

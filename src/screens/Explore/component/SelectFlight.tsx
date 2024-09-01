@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable } from "react-native";
 import React from "react";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
@@ -34,5 +34,3 @@ const SelectFlight: React.FC<SelectFlightProps> = ({ title, subTitle, onPress })
 };
 
 export default SelectFlight;
-
-const styles = StyleSheet.create({});

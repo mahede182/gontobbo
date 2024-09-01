@@ -5,19 +5,20 @@ import { colors } from "@/theme/colors";
 
 import searchResults from "../../data/searchResults";
 import ResultCard from "./component/ResultCard";
-import { typography } from "@/theme/typography";
 import Dropdown from "@/components/Dropdown";
 
-const SearchResult = () => (
+const SearchResult = ({ navigation }) => (
   <SafeAreaView style={styles.container}>
     <Box style={styles.header}>
       <Box style={styles.headerContent}>
         <RestyleText style={styles.title}>New York</RestyleText>
         <RestyleText style={styles.subtitle}>10 Nov - 15 Nov, 1 Rooms, 1 Adults...</RestyleText>
       </Box>
-      <Box style={styles.searchButton}>
+      <TouchableOpacity
+        style={styles.searchButton}
+        onPress={() => navigation.navigate("SWITCH_TO_FLIGHT")}>
         <RestyleText style={styles.searchButtonText}>Search</RestyleText>
-      </Box>
+      </TouchableOpacity>
     </Box>
     <Box style={styles.filters}>
       {/* <TouchableOpacity style={styles.filterContainer}>
