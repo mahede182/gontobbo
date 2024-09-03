@@ -71,7 +71,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
           horizontal>
           {/* Map over tagData and render Tag component */}
           {tagData.map((tag, index) => (
-            <Tag key={index} icon={tag.icon} label={tag.label} />
+            <Tag key={index} id={tag.id} icon={tag.icon} label={tag.label} />
           ))}
         </ScrollView>
       </Box>

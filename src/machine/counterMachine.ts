@@ -1,32 +1,87 @@
-import { createMachine, assign } from "xstate";
+import { setup, assign, createActor } from "xstate";
 
-export const counterMachine = createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QGMD2BXAdgFzAJwDoBDZbASwDcwBiASQDkBhAbQAYBdRUAB1VjPKpMXEAA9EAZgkBGAtIBM8gOxKAHKvmsArKw0AaEAE9E8ifIIBOJQBYLE1tYBsSx-OsSAvh4NosuQiTkVNQAIgCiLBwivPyCwkhiiAC0EtasBKpSEkrS2RaOthYGxgjSORnS1qrSOipp1k5ePhg4+MSklDQASmEAymEAKmycCTECZEIi4qWOBAU1TopK8qpa1tLFiFYE8lpSldKqKkfS0l7eIJioEHAivq140XzjkwnTKeoZWTl5BRZFRi2lnsEn+rAs8lOTgsqiaIHu-naQTAT1iE3ioGm1iUmwQ2XMulW0ghjhhumkjnOHiAA */
+type Context = {
+  rooms: number;
+  adults: number;
+  children: number;
+};
+
+type Event =
+  | { type: "INCREMENT_ROOMS" }
+  | { type: "DECREMENT_ROOMS" }
+  | { type: "INCREMENT_ADULTS" }
+  | { type: "DECREMENT_ADULTS" }
+  | { type: "INCREMENT_CHILDREN" }
+  | { type: "DECREMENT_CHILDREN" };
+
+export const counterMachine = setup({
+  types: {
+    context: {} as Context,
+    events: {} as Event,
+  },
+  guards: {
+    lessRoom: function ({ context }) {
+      return context.rooms > 1;
+    },
+    lessAdults: function ({ context }) {
+      return context.adults > 0;
+    },
+    lessChildren: function ({ context }) {
+      return context.children > 0;
+    },
+  },
+}).createMachine({
   id: "counter",
   initial: "active",
   context: {
-    count: 0,
+    rooms: 1,
+    adults: 1,
+    children: 0,
   },
   states: {
     active: {
       on: {
-        INC: {
+        INCREMENT_ROOMS: {
           actions: assign({
-            count: (context) => context.count + 1,
+            rooms: (state) => state.context.rooms + 1,
           }),
         },
-        DEC: {
+        DECREMENT_ROOMS: {
           actions: assign({
-            count: (context) => context.count - 1,
+            rooms: (state) => state.context.rooms - 1,
+          }),
+          guard: {
+            type: "lessRoom",
+          },
+        },
+        INCREMENT_ADULTS: {
+          actions: assign({
+            adults: (state) => state.context.adults + 1,
           }),
         },
-        RESET: {
-          target: "active",
+        DECREMENT_ADULTS: {
           actions: assign({
-            count: 0,
+            adults: (state) => state.context.adults - 1,
           }),
+          guard: { type: "lessAdults" },
+        },
+        INCREMENT_CHILDREN: {
+          actions: assign({
+            children: (state) => state.context.children + 1,
+          }),
+        },
+        DECREMENT_CHILDREN: {
+          actions: assign({
+            children: (state) => state.context.children - 1,
+          }),
+          guard: { type: "lessChildren" },
         },
       },
     },
   },
 });
+
+// Create the actor
+export const counterActor = createActor(counterMachine);
+// Start the actor
+counterActor.start();

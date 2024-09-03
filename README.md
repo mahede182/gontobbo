@@ -2,7 +2,14 @@
 
 At Gontobbo.co, every reservation is instantly confirmed. When you find your perfect stay, a few clicks are all it takes.
 
-## Web system
+**required**
+
+- Expo : 51
+- Node : 20.13.1
+- Supported iOS versions: 13.4+
+- Supported Android versions: 7.0+
+
+## Web App
 
 Url: https://www.gontobbo.co/
 

@@ -8,15 +8,16 @@ import { useMachine } from "@xstate/react";
 import { tagMachine } from "@/machine/tagMachine";
 
 type Props = {
+  id: number;
   icon: any;
   label: string;
 };
 
-const Tag = ({ icon, label }: Props) => {
+const Tag = ({ icon, label, id }: Props) => {
   const [state, send] = useMachine(tagMachine);
 
   const handlePress = () => {
-    send({ type: "TOGGLE" });
+    send({ type: "TOGGLE", id });
   };
 
   const { active } = state.context;

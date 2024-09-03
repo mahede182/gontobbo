@@ -15,6 +15,7 @@ import ReviewBooking from "@/screens/Explore/ReviewBooking";
 import RulesAndRegulations from "@/screens/Explore/RulesAndRegulations";
 import InitScreen from "@/screens/Init/InitScreen";
 import SwitchFlight from "@/screens/Explore/component/SwitchFlight";
+import { CounterProvider } from "@/hooks/useApp";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -39,65 +40,72 @@ const Stack = createStackNavigator<RootStackParamList>();
 const RootNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Init" component={InitScreen} />
-        <Stack.Screen options={{ headerShown: false }} name="AUTH" component={AuthNavigation} />
-        <Stack.Screen options={{ headerShown: false }} name="HOME" component={TabNavigation} />
-        {/* FIXME: refactor as separate stack */}
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SELECT_LOCATION"
-          component={LocationSelect}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="PICK_DATE"
-          component={SelectDateScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SEARCH_RESULT"
-          component={SearchResult}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SEARCH_RESULT_DETAILS"
-          component={HotelDetails}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="HOTEL_GALLERY"
-          component={HotelGallery}
-        />
-        <Stack.Screen options={{ headerShown: false }} name="AMENITIES" component={Amenities} />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="REVIEW"
-          component={ReviewsAndRatings}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="FULL_SCREEN_MAP"
-          component={FullScreenMap}
-        />
-        <Stack.Screen options={{ headerShown: false }} name="SELECT_ROOM" component={SelectRoom} />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="REVIEW_BOOKING"
-          component={ReviewBooking}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="RULES_AND_REGULATIONS"
-          component={RulesAndRegulations}
-        />
-        {/* <Stack.Screen options={{ headerShown: false }} name="DRAWER" component={DrawerNavigation} /> */}
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SWITCH_TO_FLIGHT"
-          component={SwitchFlight}
-        />
-      </Stack.Navigator>
+      {/* FIXME: refact as remove counter provider */}
+      <CounterProvider>
+        <Stack.Navigator>
+          <Stack.Screen options={{ headerShown: false }} name="Init" component={InitScreen} />
+          <Stack.Screen options={{ headerShown: false }} name="AUTH" component={AuthNavigation} />
+          <Stack.Screen options={{ headerShown: false }} name="HOME" component={TabNavigation} />
+          {/* FIXME: refactor as separate stack */}
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SELECT_LOCATION"
+            component={LocationSelect}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="PICK_DATE"
+            component={SelectDateScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SEARCH_RESULT"
+            component={SearchResult}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SEARCH_RESULT_DETAILS"
+            component={HotelDetails}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="HOTEL_GALLERY"
+            component={HotelGallery}
+          />
+          <Stack.Screen options={{ headerShown: false }} name="AMENITIES" component={Amenities} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="REVIEW"
+            component={ReviewsAndRatings}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="FULL_SCREEN_MAP"
+            component={FullScreenMap}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SELECT_ROOM"
+            component={SelectRoom}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="REVIEW_BOOKING"
+            component={ReviewBooking}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="RULES_AND_REGULATIONS"
+            component={RulesAndRegulations}
+          />
+          {/* <Stack.Screen options={{ headerShown: false }} name="DRAWER" component={DrawerNavigation} /> */}
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SWITCH_TO_FLIGHT"
+            component={SwitchFlight}
+          />
+        </Stack.Navigator>
+      </CounterProvider>
     </NavigationContainer>
   );
 };

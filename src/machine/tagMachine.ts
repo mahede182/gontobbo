@@ -6,6 +6,7 @@ export const tagMachine = createMachine({
   initial: "inactive",
   context: {
     active: false,
+    activeIds: [],
   },
   states: {
     inactive: {

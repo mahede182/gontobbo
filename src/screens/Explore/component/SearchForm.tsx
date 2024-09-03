@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import GuestModal from "../GuestModal";
 import { colors } from "@/theme/colors";
 import SelectFlight from "./SelectFlight";
+// import { searchHotel } from "@/machine/searchService";
 
 const SearchForm = () => {
   const navigation = useNavigation();
@@ -49,7 +50,7 @@ const SearchForm = () => {
           }}
         />
       </Box>
-      <GuestInput guests="1 Room, 2 Adults, 1 Children" onPress={openModal} />
+      <GuestInput onPress={openModal} />
       <SelectFlight
         onPress={openModal}
         title="Select Flights"

@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState } from "react";
 import GradientTitle from "@/components/GradientTitle";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
-import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal, Animated, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import { useApp } from "@/hooks/useApp";
 
-const GuestModal = ({ isVisible, onClose }) => {
+const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
   const { t } = useTranslation();
-  const [rooms, setRooms] = useState(1);
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
   const [modalAnimation] = useState(new Animated.Value(0));
+
+  const { state, send } = useApp();
+  const { rooms, adults, children } = state.context;
 
   const openModal = () => {
     Animated.timing(modalAnimation, {
@@ -29,16 +30,14 @@ const GuestModal = ({ isVisible, onClose }) => {
     }).start(() => onClose());
   };
 
-  const handleRoomsChange = (value) => {
-    setRooms(Math.max(rooms + value, 1));
+  const handleAdultsChange = (type) => {
+    // setAdults(Math.max(adults + value, 1));
+    send({ type });
   };
 
-  const handleAdultsChange = (value) => {
-    setAdults(Math.max(adults + value, 1));
-  };
-
-  const handleChildrenChange = (value) => {
-    setChildren(Math.max(children + value, 0));
+  const handleChildrenChange = (type) => {
+    send({ type });
+    // setChildren(Math.max(children + value, 0));
   };
 
   React.useEffect(() => {
@@ -89,7 +88,9 @@ const GuestModal = ({ isVisible, onClose }) => {
               {t("Explore.rooms")}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity onPress={() => handleRoomsChange(-1)} disabled={rooms === 1}>
+              <TouchableOpacity
+                onPress={() => send({ type: "DECREMENT_ROOMS" })}
+                disabled={rooms === 1}>
                 <Text
                   style={{
                     fontSize: 24,
@@ -99,7 +100,7 @@ const GuestModal = ({ isVisible, onClose }) => {
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{rooms}</Text>
-              <TouchableOpacity onPress={() => handleRoomsChange(1)}>
+              <TouchableOpacity onPress={() => send({ type: "INCREMENT_ROOMS" })}>
                 <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
@@ -115,7 +116,9 @@ const GuestModal = ({ isVisible, onClose }) => {
               {t("Explore.adults")}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity onPress={() => handleAdultsChange(-1)} disabled={adults === 1}>
+              <TouchableOpacity
+                onPress={() => handleAdultsChange("DECREMENT_ADULTS")}
+                disabled={adults === 1}>
                 <Text
                   style={{
                     fontSize: 24,
@@ -125,7 +128,7 @@ const GuestModal = ({ isVisible, onClose }) => {
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{adults}</Text>
-              <TouchableOpacity onPress={() => handleAdultsChange(1)}>
+              <TouchableOpacity onPress={() => handleAdultsChange("INCREMENT_ADULTS")}>
                 <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
@@ -140,7 +143,9 @@ const GuestModal = ({ isVisible, onClose }) => {
               {t("Explore.children")}
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity onPress={() => handleChildrenChange(-1)} disabled={children === 0}>
+              <TouchableOpacity
+                onPress={() => handleChildrenChange("DECREMENT_CHILDREN")}
+                disabled={children === 0}>
                 <Text
                   style={{
                     fontSize: 24,
@@ -150,7 +155,7 @@ const GuestModal = ({ isVisible, onClose }) => {
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{children}</Text>
-              <TouchableOpacity onPress={() => handleChildrenChange(1)}>
+              <TouchableOpacity onPress={() => handleChildrenChange("INCREMENT_CHILDREN")}>
                 <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
