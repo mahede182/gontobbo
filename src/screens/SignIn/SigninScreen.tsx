@@ -22,6 +22,7 @@ import {
   handleGoogleSignIn,
 } from "@/utils/socialAuth";
 import Background from "@/components/Background";
+import { useApp } from "@/hooks/useApp";
 
 type Props = {};
 // <> No one beat you
@@ -61,6 +62,8 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { images } = useTheme<Theme>();
+  const { state: appState, send } = useApp();
+  const rooms = appState.context.rooms;
 
   return (
     <Background>
@@ -112,9 +115,10 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
             <RestyleText style={styles.linkRestyleText}>{t("signIn.signUpWithEmail")}</RestyleText>
           </TouchableOpacity>
           {/* TODO: split code and create a reusable component button */}
-          <TouchableOpacity onPress={() => navigation.navigate("HOME")}>
+          <TouchableOpacity onPress={() => send({ type: "INCREMENT" })}>
             <RestyleText style={styles.linkRestyleText}>{t("signIn.continueAsGuest")}</RestyleText>
           </TouchableOpacity>
+          <RestyleText>{rooms}</RestyleText>
         </Box>
       </Box>
       <Box style={styles.footer}>

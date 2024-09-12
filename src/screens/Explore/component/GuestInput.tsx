@@ -5,15 +5,16 @@ import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
 import { useApp } from "@/hooks/useApp";
 import { typography } from "@/theme/typography";
+import { useSelector } from "@xstate/react";
+import { counterActor } from "@/machine/counterMachine";
 
 type GuestInputProps = {
   onPress: () => void;
 };
 
 const GuestInput = ({ onPress }: GuestInputProps) => {
-  const { state } = useApp();
-  const { rooms, adults, children } = state.context;
-
+  // const { state } = useApp();
+  const { rooms, adults, children } = useSelector(counterActor, (snapshot) => snapshot.context);
   return (
     <Pressable style={{ backgroundColor: colors.white100, marginBottom: 15 }} onPress={onPress}>
       <Box

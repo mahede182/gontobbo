@@ -15,7 +15,7 @@ import ReviewBooking from "@/screens/Explore/ReviewBooking";
 import RulesAndRegulations from "@/screens/Explore/RulesAndRegulations";
 import InitScreen from "@/screens/Init/InitScreen";
 import SwitchFlight from "@/screens/Explore/component/SwitchFlight";
-import { CounterProvider } from "@/hooks/useApp";
+import { AppProvider } from "@/hooks/useApp";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -41,7 +41,7 @@ const RootNavigation = () => {
   return (
     <NavigationContainer>
       {/* FIXME: refact as remove counter provider */}
-      <CounterProvider>
+      <AppProvider>
         <Stack.Navigator>
           <Stack.Screen options={{ headerShown: false }} name="Init" component={InitScreen} />
           <Stack.Screen options={{ headerShown: false }} name="AUTH" component={AuthNavigation} />
@@ -105,7 +105,7 @@ const RootNavigation = () => {
             component={SwitchFlight}
           />
         </Stack.Navigator>
-      </CounterProvider>
+      </AppProvider>
     </NavigationContainer>
   );
 };
