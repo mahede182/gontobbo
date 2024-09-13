@@ -3,7 +3,7 @@ import { assign, setup } from "xstate";
 export const appMachine = setup({
   types: {
     events: {} as { type: "START_APP" } | { type: "INCREMENT" } | { type: "MESSAGE" },
-    context: {} as { rooms: number; message: string },
+    context: {} as { rooms: number; message: string; initial: boolean },
   },
   actions: {},
   actors: {},
@@ -12,8 +12,9 @@ export const appMachine = setup({
   id: "app",
   initial: "printRoom",
   context: {
-    rooms: 1,
+    rooms: 4,
     message: "Hello world",
+    initial: true,
   },
   states: {
     init: {},
@@ -27,6 +28,16 @@ export const appMachine = setup({
           }),
         },
         MESSAGE: { message: (state) => state.context.message },
+        INIT: {
+          actions: [
+            assign({
+              initial: false,
+            }),
+            (state) => {
+              saveItem("initial", state.context.initial);
+            },
+          ],
+        },
       },
     },
   },

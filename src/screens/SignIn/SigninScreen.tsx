@@ -23,6 +23,7 @@ import {
 } from "@/utils/socialAuth";
 import Background from "@/components/Background";
 import { useApp } from "@/hooks/useApp";
+import { saveItem } from "@/utils/storage";
 
 type Props = {};
 // <> No one beat you
@@ -63,7 +64,11 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const navigation = useNavigation();
   const { images } = useTheme<Theme>();
   const { state: appState, send } = useApp();
-  const rooms = appState.context.rooms;
+  const { rooms } = appState.context;
+
+  const updateRoom = async () => {
+    await saveItem("ROOM", rooms);
+  };
 
   return (
     <Background>
@@ -115,10 +120,14 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
             <RestyleText style={styles.linkRestyleText}>{t("signIn.signUpWithEmail")}</RestyleText>
           </TouchableOpacity>
           {/* TODO: split code and create a reusable component button */}
-          <TouchableOpacity onPress={() => send({ type: "INCREMENT" })}>
+          <TouchableOpacity
+            onPress={() => {
+              send({ type: "INCREMENT" });
+              updateRoom();
+              navigation.navigate("HOME");
+            }}>
             <RestyleText style={styles.linkRestyleText}>{t("signIn.continueAsGuest")}</RestyleText>
           </TouchableOpacity>
-          <RestyleText>{rooms}</RestyleText>
         </Box>
       </Box>
       <Box style={styles.footer}>

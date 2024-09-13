@@ -1,16 +1,34 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getItem = async (key: string) => {
-  if (!key) {
-    return Promise.reject("Invalid key");
+  try {
+    const res = await AsyncStorage.getItem(key);
+    if (!res) return "";
+    return JSON.parse(res);
+  } catch (e) {
+    console.log("ERROR: Cannot get item from asyncStorage");
   }
-  return await AsyncStorage.getItem(key);
 };
 
 export const saveItem = async (key: "string", value: string) => {
-  if (!key || !value) {
-    return Promise.reject("Invalid key or value");
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.log("ERROR: Cannot store item in asyncStorage", e);
   }
-
-  return await AsyncStorage.setItem(key, value);
 };
+
+export const multiGetAsyncStore = async (keyList: [], callback: (arg0: string | null) => void) => {
+  await AsyncStorage.multiGet(keyList).then((data) => {
+    callback(JSON.parse(data));
+  });
+};
+
+/**
+ * Burn it all to the ground.
+ */
+export async function clear(): Promise<void> {
+  try {
+    await AsyncStorage.clear();
+  } catch {}
+}

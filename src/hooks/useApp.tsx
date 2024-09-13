@@ -1,10 +1,6 @@
 import { appMachine } from "@/machine/appMachine";
-import { counterMachine } from "@/machine/counterMachine";
 import { createActorContext, useSelector } from "@xstate/react";
-import { createActor } from "xstate";
 
-export const counterActor = createActor(counterMachine);
-export const CounterContext = createActorContext(counterMachine);
 export const AppContext = createActorContext(appMachine);
 
 export function AppProvider({ children }: React.PropsWithChildren<unknown>) {

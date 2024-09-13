@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@/theme";
+import { Box, RestyleText } from "@/theme";
 import { fetchUser } from "@/utils/axios";
 import "@/machine/counterMachine";
 
@@ -16,6 +16,8 @@ import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { useApp } from "@/hooks/useApp";
+import { getItem } from "@/utils/storage";
 
 type Props = {};
 
@@ -26,6 +28,16 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
+  const { state: appState, send } = useApp();
+
+  const getRooms = async () => {
+    const rooms = await getItem("ROOM");
+    console.log(rooms);
+    return rooms;
+  };
+  useEffect(() => {
+    getRooms();
+  }, []);
 
   useEffect(() => {
     fetchUser().then((response) => {

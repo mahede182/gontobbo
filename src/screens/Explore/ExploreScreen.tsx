@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Box } from "@/theme";
 import { images } from "@/theme/images";
@@ -7,6 +7,7 @@ import Tag from "../Home/component/Tag";
 import SearchForm from "./component/SearchForm";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { getItem } from "@/utils/storage";
 
 interface Props {}
 
@@ -16,6 +17,14 @@ const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
     navigation.navigate("DRAWER");
     navigation.dispatch(DrawerActions.openDrawer());
   };
+  const getRooms = async () => {
+    const rooms = await getItem("ROOM");
+    console.log(rooms, "explore");
+    return rooms;
+  };
+  useEffect(() => {
+    getRooms();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       {/* === drawer button === */}
