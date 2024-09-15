@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getItem = async (key: string) => {
@@ -6,7 +7,7 @@ export const getItem = async (key: string) => {
     if (!res) return "";
     return JSON.parse(res);
   } catch (e) {
-    console.log("ERROR: Cannot get item from asyncStorage");
+    console.log("ERROR: Cannot get item from asyncStorage", e);
   }
 };
 

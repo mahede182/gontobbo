@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, ImageBackground, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -9,9 +9,6 @@ import { typography } from "@/theme/typography";
 import GradientTitle from "@/components/GradientTitle";
 import { images as img } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
-import { useMachine } from "@xstate/react";
-import { initialLoad } from "@/machine/initialLoad";
-import { saveItem } from "@/utils/storage";
 
 const images = [img.initOne, img.initTwo, img.initThree];
 
@@ -33,15 +30,6 @@ const InitScreen = () => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const flatListRef = React.useRef(null);
-  const [state, send] = useMachine(initialLoad);
-
-  useEffect(() => {
-    console.log(state.context);
-  }, []);
-
-  const updateInit = async () => {
-    await saveItem("init", false);
-  };
 
   const renderItem = ({ item }) => (
     <ImageBackground source={item} style={styles.imageContainer}>
@@ -57,8 +45,6 @@ const InitScreen = () => {
           </RestyleTransparent>
           <TouchableOpacity
             onPress={() => {
-              send({ type: "TOGGLE_FIRST_TIME" });
-              updateInit();
               if (currentIndex === images.length - 1) {
                 navigation.navigate("AUTH");
               } else if (currentIndex === 1) {

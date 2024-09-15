@@ -1,15 +1,15 @@
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import TravelScreens from "@/screens/Explore";
-import WishListScreens from "@/screens/Wishlist";
-import ProfileScreen from "@/screens/Profile";
-import { colors } from "@/theme/colors";
 import { Image, StyleSheet } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import { Box, RestyleText } from "@/theme";
 import { typography } from "@/theme/typography";
-import OfferScreen from "@/screens/Offer";
 import { useTranslation } from "react-i18next";
+import OfferScreen from "@/screens/Offer";
+import TravelScreens from "@/screens/Explore";
+import WishListScreens from "@/screens/Wishlist";
+import ProfileScreen from "@/screens/Profile";
 import DrawerNavigation from "./DrawerNavigation";
 
 /**
@@ -29,6 +29,7 @@ export type TabStackParamList = {
   OFFER: undefined;
   WISHLIST: undefined;
   PROFILE: undefined;
+  DRAWER: undefined;
 };
 /**
  * Helper for automatically generating navigation prop types for each route.
@@ -64,7 +65,7 @@ const TabNavigation = (props: Props) => {
         unmountOnBlur: true,
       }}>
       <Tab.Screen
-        name="HOME"
+        name="DRAWER"
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (

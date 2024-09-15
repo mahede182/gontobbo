@@ -1,4 +1,5 @@
-import { ActorRefFrom, setup, assign, fromCallback } from "xstate";
+/* eslint-disable import/no-unresolved */
+import { ActorRefFrom, setup, assign } from "xstate";
 import { AuthenticatedParamList } from "../types/navigation";
 import { HomeMachineActor, homeMachine } from "./home";
 import { ListMachineActor, listMachine } from "./list";
@@ -40,6 +41,7 @@ export const authenticatedMachine = setup({
     },
   },
 }).createMachine({
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMAOqA2BLAxsgLlgPYB2AxAHICCAagJIDiVAKgKIDaADALqKipFYWQqT4gAHogAsAJgA0IAJ6IZAVgBsAOnUB2VTvUBGHTIDMR1QE5VAXxsK0mXAWLlq9Jm3aHeSEAKEREjFJBFkFZQRDVUNNUwMZS3VVAA5TGRSdSyk7exASIgg4MUdsPCCxAOFXEMQAWnUI+tVNSzb2jvaU9TsHdDKXUk0ACyIAWzAAZRwAJzAwYL8qir9Q03jNfUTDdUsUmTVLGSkmhDNTTSl0jM5LQzvM7t6QUucgzWxYfGm5hcrBaqiVaIdY6TYmO67faHY6nQwZTSGdIpTimQzw9TqFJSHq5IA */
   context: { refHome: undefined, refList: undefined },
   id: "application",
   initial: "homeScreen",

@@ -23,7 +23,7 @@ export type AuthStackParamList = {
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createStackNavigator<AuthStackParamList>();
 
-const AuthNavigation = () => {
+const AuthenticatingNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="SIGN_IN" component={SignIn} />
@@ -33,4 +33,4 @@ const AuthNavigation = () => {
   );
 };
 
-export default AuthNavigation;
+export default AuthenticatingNavigation;

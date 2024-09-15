@@ -3,7 +3,6 @@ import { Pressable, Image } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
-import { useApp } from "@/hooks/useApp";
 import { typography } from "@/theme/typography";
 import { useSelector } from "@xstate/react";
 import { counterActor } from "@/machine/counterMachine";
