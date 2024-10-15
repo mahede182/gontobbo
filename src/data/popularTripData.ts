@@ -27,5 +27,4 @@ export const popularTrip: IpopularTrip[] = [
     peopleJoined: 14,
     avatars: [images.avatar1, images.avatar2, images.avatar1, images.avatar2],
   },
-  // Add more trip data objects here
 ];

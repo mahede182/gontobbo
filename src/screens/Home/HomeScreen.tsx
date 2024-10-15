@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@/theme";
-import { fetchUser } from "@/utils/axios";
+import { getUser } from "@/utils/axios";
 import "@/machine/counterMachine";
 
 import { useTheme } from "@shopify/restyle";
@@ -28,7 +28,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
   useEffect(() => {
-    fetchUser().then((response) => {
+    getUser().then((response) => {
       const data = response.data.data;
       setName(`${data?.first_name} ${data?.last_name}`);
       setEmail(data?.email);

@@ -63,7 +63,7 @@ const SelectDateScreen = () => {
       {/* === Header === */}
       <Box flexDirection={"row"} alignItems={"center"} margin={"medium"}>
         <Box
-          style={{ height: 32, width: 32, marginRight: 10 }}
+          style={styles.mainContainer}
           alignItems={"center"}
           justifyContent={"center"}
           borderRadius={32}
@@ -92,18 +92,7 @@ const SelectDateScreen = () => {
               textColor: colors.white100,
             },
           }}
-          style={{
-            borderRadius: 10,
-            height: 350,
-            shadowColor: colors.black,
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.1,
-            shadowRadius: 2,
-            elevation: 2,
-          }}
+          style={styles.calenderStyle}
           theme={{
             calendarBackground: "white100",
             textSectionTitleColor: "black100",
@@ -114,31 +103,6 @@ const SelectDateScreen = () => {
             selectedDayTextColor: "white100",
             arrowColor: "black100",
           }}
-          //   === use when you want to custom header===
-          //   customHeader={({ date }) => {
-          //     return (
-          //       <Box
-          //         marginVertical={"ten"}
-          //         paddingHorizontal={"ten"}
-          //         flexDirection={"row"}
-          //         alignItems={"center"}
-          //         justifyContent={"space-between"}
-          //       >
-          //         <RestyleText
-          //           fontFamily={typography.poppinsRegular}
-          //           fontSize={16}
-          //           color={"blue800"}
-          //           style={{ color: colors.blue800 }}
-          //         >
-          //           December 2025
-          //         </RestyleText>
-          //         <Box flexDirection={"row"} alignItems={"center"}>
-          //           <Icon name="arrow-circle-left" size={24} color="black100" />
-          //           <Icon name="arrow-circle-right" size={24} color="black100" />
-          //         </Box>
-          //       </Box>
-          //     );
-          //   }}
         />
       </Box>
       {renderFooter()}
@@ -147,6 +111,7 @@ const SelectDateScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  mainContainer: { height: 32, width: 32, marginRight: 10 },
   container: {
     flex: 1,
   },
@@ -154,9 +119,19 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     paddingHorizontal: 24,
   },
+  calenderStyle: {
+    borderRadius: 10,
+    height: 350,
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
   footer: {
-    // flexDirection: "row",
-    // justifyContent: "space-around",
     marginHorizontal: 24,
     paddingVertical: 16,
     paddingHorizontal: 24,

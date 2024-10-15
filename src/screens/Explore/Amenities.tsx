@@ -23,10 +23,8 @@ const Amenities = () => {
 
       <Box style={styles.section}>
         {/* === Highligted Amenities === */}
-        <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          {t("Explore.highlightedAmenities")}
-        </RestyleText>
-        <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
+        <RestyleText style={styles.sectionTitle}>{t("Explore.highlightedAmenities")}</RestyleText>
+        <Box style={styles.amenityRow}>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>{t("Explore.gym")}</RestyleText>
           </Box>
@@ -40,10 +38,8 @@ const Amenities = () => {
       </Box>
       {/* === Basic Facilities === */}
       <Box style={styles.section}>
-        <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          {t("Explore.basicFacilities")}
-        </RestyleText>
-        <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
+        <RestyleText style={styles.sectionTitle}>{t("Explore.basicFacilities")}</RestyleText>
+        <Box style={styles.amenityRow}>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
               {t("Explore.laundryService")}
@@ -71,10 +67,8 @@ const Amenities = () => {
       </Box>
       {/* === Transfer === */}
       <Box style={styles.section}>
-        <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          {t("Explore.transfers")}
-        </RestyleText>
-        <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
+        <RestyleText style={styles.sectionTitle}>{t("Explore.transfers")}</RestyleText>
+        <Box style={styles.amenityRow}>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>
               {t("Explore.airportTransfers")}
@@ -90,10 +84,8 @@ const Amenities = () => {
       </Box>
 
       <Box style={styles.section}>
-        <RestyleText style={[styles.sectionTitle, { fontSize: 18 }]}>
-          {t("Explore.paymentServices")}
-        </RestyleText>
-        <Box style={[styles.amenityRow, { marginHorizontal: 16 }]}>
+        <RestyleText style={styles.sectionTitle}>{t("Explore.paymentServices")}</RestyleText>
+        <Box style={styles.amenityRow}>
           <Box style={styles.amenityButton}>
             <RestyleText style={styles.amenityButtonText}>{t("Explore.atm")}</RestyleText>
           </Box>
@@ -130,7 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
   },
@@ -138,6 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 8,
+    marginHorizontal: 16,
   },
   amenityButton: {
     backgroundColor: colors.neutral400,

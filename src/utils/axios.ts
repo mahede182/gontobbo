@@ -9,7 +9,7 @@ const config = {
   url: `${BASE_URL}/api/users/5`,
 };
 
-export const fetchUser = async () => {
+export const getUser = async () => {
   const response = await axios(config);
   return response;
 };

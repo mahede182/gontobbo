@@ -14,6 +14,7 @@ import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
+import { dynamicCSS } from "@/utils/styles";
 
 type Props = {};
 
@@ -22,7 +23,7 @@ const Drawer = createDrawerNavigator();
 const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
   return (
-    <BlurView intensity={100} tint="prominent" style={{ flex: 1 }}>
+    <BlurView intensity={100} tint="prominent" style={dynamicCSS("flex", 1)}>
       <DrawerContentScrollView {...props}>
         <TouchableOpacity onPress={() => navigation.navigate("SIGN_IN")}>
           <LinearGradient
@@ -43,7 +44,7 @@ const CustomDrawerContent = (props) => {
 
         {/* ::: My Trip ::: */}
         <Box style={styles.group}>
-          <GradientTitle style={{ marginBottom: 5 }}>My Trip</GradientTitle>
+          <GradientTitle style={dynamicCSS("marginBottom", 5)}>My Trip</GradientTitle>
           <TouchableOpacity style={styles.drawerItemContainer}>
             <Image source={images.myBookingIcon} style={styles.iconStyle} />
             <RestyleText>My Booking</RestyleText>
@@ -59,7 +60,7 @@ const CustomDrawerContent = (props) => {
         </Box>
         {/* ::: Settings ::: */}
         <Box style={styles.group}>
-          <GradientTitle style={{ marginBottom: 5 }}>Settings</GradientTitle>
+          <GradientTitle style={dynamicCSS("marginBottom", 5)}>Settings</GradientTitle>
           <TouchableOpacity style={styles.drawerItemContainer}>
             <Image source={images.supportIcon} style={styles.iconStyle} />
             <RestyleText>Support</RestyleText>

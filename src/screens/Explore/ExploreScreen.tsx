@@ -7,6 +7,7 @@ import Tag from "../Home/component/Tag";
 import SearchForm from "./component/SearchForm";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { dynamicCSS } from "@/utils/styles";
 
 interface Props {}
 
@@ -22,17 +23,14 @@ const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
       {/* === drawer button === */}
       <Box flexDirection="row" justifyContent="space-between" alignItems="center">
         <TouchableOpacity onPress={drawerOpen}>
-          <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
+          <Image source={images.menuBtn} style={styles.imgStyle} />
         </TouchableOpacity>
-        <Image
-          source={images.notifiocationBtn}
-          style={{ height: 48, width: 48, resizeMode: "contain" }}
-        />
+        <Image source={images.notifiocationBtn} style={styles.imgStyle} />
       </Box>
       {/* === Tag === */}
       <Box>
         <ScrollView
-          style={{ paddingVertical: 10, paddingHorizontal: 10 }}
+          style={dynamicCSS("padding", 10)}
           showsHorizontalScrollIndicator={false}
           horizontal>
           {/* Map over tagData and render Tag component */}
@@ -54,4 +52,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  imgStyle: { height: 48, width: 48, resizeMode: "contain" },
 });

@@ -41,16 +41,7 @@ const FullScreenMap = () => {
           <RestyleTransparent opacity={0.25}>
             <TouchableOpacity
               onPress={() => navigation.navigate("SELECT_ROOM")}
-              style={{
-                width: 250,
-                height: 250,
-                backgroundColor: colors.danger,
-                borderRadius: 10,
-                borderWidth: 2,
-                borderColor: colors.white100,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              style={styles.markerStyle}
             />
           </RestyleTransparent>
         </Marker>
@@ -72,6 +63,16 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     borderColor: colors.white200,
     borderWidth: 1,
+  },
+  markerStyle: {
+    width: 250,
+    height: 250,
+    backgroundColor: colors.danger,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: colors.white100,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

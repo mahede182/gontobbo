@@ -73,7 +73,7 @@ const TabNavigation = (props: Props) => {
               <Image
                 source={focused ? images.homeActive : images.home}
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
-                style={{ height: 18, width: 18 }}
+                style={styles.imgStyle}
               />
               <RestyleText style={styles.title(focused)}>{t("common.home")}</RestyleText>
             </Box>
@@ -107,7 +107,7 @@ const TabNavigation = (props: Props) => {
               <Image
                 source={focused ? images.offerActive : images.offer}
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
-                style={{ height: 18, width: 18 }}
+                style={styles.imgStyle}
               />
               <RestyleText style={styles.title(focused)}>{t("common.offers")}</RestyleText>
             </Box>
@@ -141,7 +141,7 @@ const TabNavigation = (props: Props) => {
               <Image
                 source={focused ? images.profileActive : images.profile}
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
-                style={{ height: 18, width: 18 }}
+                style={styles.imgStyle}
               />
               <RestyleText style={styles.title(focused)}>{t("common.profile")}</RestyleText>
             </Box>
@@ -163,4 +163,5 @@ const styles = StyleSheet.create({
     fontWeight: focused ? "600" : "400",
     color: focused ? colors.tabSelected : colors.tabUnselected,
   }),
+  imgStyle: { height: 18, width: 18 },
 });

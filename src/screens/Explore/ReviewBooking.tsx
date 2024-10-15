@@ -44,7 +44,7 @@ const ReviewBooking = () => {
   };
 
   return (
-    <Box style={{ flex: 1, marginHorizontal: 10 }}>
+    <Box style={styles.mainContainer}>
       <HeaderTitle title="Select Room" />
       <ScrollView>
         {/* Header Section */}
@@ -306,6 +306,7 @@ const ReviewBooking = () => {
 };
 
 const styles = StyleSheet.create({
+  mainContainer: { flex: 1, marginHorizontal: 10 },
   section: {
     borderWidth: 1,
     borderColor: colors.neutral300,

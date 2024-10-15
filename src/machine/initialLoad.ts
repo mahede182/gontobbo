@@ -1,68 +1,86 @@
-import { assign, createMachine, setup } from "xstate";
+import { setup, fromCallback } from "xstate";
+import { NavigationProp } from "@react-navigation/native";
 
-export const initialLoad = setup({
+interface InitContext {
+  isFirstLaunch: boolean;
+}
+
+interface InitEvent {
+  type: "NEXT" | "NAVIGATE_TO_HOME";
+}
+
+export const initMachine = setup<InitContext, InitEvent>({
   types: {
-    context: {} as { retryCount: number; errorMessage: null; isFirstTime: boolean },
-  },
-  actions: {
-    logInitializing: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-    logLoading: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-    logSuccess: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-    logError: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-    setErrorMessage: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
+    context: {} as InitContext,
+    events: {} as InitEvent,
   },
   actors: {
-    initializeApp: createMachine({
-      /* ... */
+    checkFirstLaunch: fromCallback(async (callback) => {
+      const isFirstLaunch = await getItem("isFirstLaunch");
+      if (isFirstLaunch === null) {
+        await saveItem("isFirstLaunch", "false");
+        callback({ data: true });
+      } else {
+        callback({ data: false });
+      }
     }),
   },
-}).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEsB2yAuyCGAbAMgPbYQB0AxgBZjkDWaUAYsgE6wYAqyAtmAMQBtAAwBdRKAAOhWJmSFU4kAA9EAJgDMQ0gFYAHEIDsqgJyqzQgCzGANCACeaq6QsBGfUJcXtQ3etXbtAF9A2zRZPCISCmo6BmY2Th5+ARcxJBApGSx5RRUEDS09QxMzVUsbe0QXIQA2UhMhdV0DRuNNAPVg0PQsCOIyVEIMePYuXj4OAHkAcWn8AFEAfUYASQAlAGUORY4VgFl54TTJaVkc9Lyaj1IDC3VtA2MhYxqrmtsHBF0XUl0zU1ULVq1UswRCIEGEDgijCvQI-UUmTOCguiAAtO9Kgg0dpnMZ8TVmnpPDUXLcuiBYTh4VEqDR6KgmKxRklEadsijQHkLKoPo4tMY3BYLIZtK8auoDDUKVS+lEAGbMxK8NlZOSc5SIAx-HTGXT6tx-NrNPn5CwGUjqK1NFoGFwBYwPGU9amRAZDEbKsCq5G5RDqYwW7QWQnqK4uQWqXQVT7VCz1IQPbwGbzCtoWMGBIA */
-  id: "initialLoad",
-  initial: "checkingFirstTime",
-  context: {
-    isFirstTime: true, // Set the initial value here
-  },
-  states: {
-    checkingFirstTime: {
-      always: [
-        {
-          cond: "isFirstTime",
-          target: "firstTime",
-        },
-        {
-          target: "notFirstTime",
-        },
-      ],
+}).createMachine(
+  {
+    /** @xstate-layout N4IgpgJg5mDOIC5QEsB2yAuBiAcgQQDUBJAcTwBUBRAfXIHlqAJOgWUoG0AGAXUVAAcA9rEzJBqPiAAeiAKwBmWQDoALAHZOneQE41ADj0AmeYYA0IAJ6IAjIYC+d82kxKAxgAswrgNZooAMWQAJ1gMABkAQwBXVA8sCHEwJTQAN0FvJOcMN08fP0CQ8OjY9wRUwVcIjDFULm46ySERavFJGQRDPTVVQ20ANjVtPT75HT7tcysEaz1rJVl9Wz7ZaxURvpUVByd0bIAzYNDImLicSgANcgakECbRVpv2jbmh8b7jTj1+7RVJxENOIYlINZAt5Gp5F8VHpQdsQFklLAvOIIABlVxBMBgVC4C5XHiNYT3CSPRDaLRKGbQiGcbTWHTqP4dQHA7SgiEQqEw2RwhEeLy+VABQ5FE7uLBgIJBQRBJT8AA2VT2MoAtsldjkBfkRccSmVUGlKi1ajxrgIica2ogVHTgXpOBDZHpodY1PSmSYVEpDPp7bT9INONYHI4QKhBBA4JIsoTmjUrQgALTWJk-b2ggEqWR9B2KPq8jX8vJCgpHYoeWPEhOMyw2bTyYF9YZ9axBmHyZb50MIg6FXUVm53S2khCyTjKawrQGfd6cFRaWRMgFAtkaUYmQw2gFqAsuJGuFHozHYyvD0DtNSbYEQlSGFbZn0mJcs1daUaGTfaQzB7sa9yCFUwCPLESXNOMHnPGxNGUXR6UUethiGRda2metr3kQFDCbNkMxDOwgA */
+    id: "init",
+    initial: "checkingFirstLaunch",
+    context: {
+      isFirstLaunch: true,
     },
-    firstTime: {},
-    notFirstTime: {
-      on: {
-        TOGGLE_FIRST_TIME: {
-          target: "firstTime",
-          actions: assign({
-            isFirstTime: false,
-          }),
+    states: {
+      checkingFirstLaunch: {
+        invoke: {
+          src: "checkFirstLaunch",
+
+          onDone: {
+            target: "firstLaunch",
+            actions: assign({
+              isFirstLaunch: (_, event) => event.data,
+            }),
+          },
+
+          onError: {
+            target: "homeScreen",
+            reenter: true,
+          },
         },
+      },
+
+      firstLaunch: {
+        on: {
+          NEXT: "secondScreen",
+        },
+      },
+
+      secondScreen: {
+        on: {
+          NEXT: "homeScreen",
+        },
+      },
+
+      homeScreen: {
+        entry: "navigateToHome",
+        type: "final",
+      },
+    },
+    on: {
+      NAVIGATE_TO_HOME: {
+        actions: "navigateToHome",
       },
     },
   },
-  guards: {
-    isFirstTime: (context) => context.isFirstTime,
+  {
+    actions: {
+      navigateToHome: (_, event) => {
+        const { navigation } = event as { navigation: NavigationProp<any> };
+        navigation.navigate("HOME");
+      },
+    },
   },
-});
+);
