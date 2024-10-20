@@ -5,9 +5,12 @@ import { useTranslation } from "react-i18next";
 import HotelCard from "./HotelCard";
 import { featuredHotels, HotelCardProps } from "@/data/hotelData";
 import GradientTitle from "@/components/GradientTitle";
+import { useNavigation } from "@react-navigation/native";
 
 const FeaturedHotels: React.FC = () => {
   const { t } = useTranslation();
+  const navigation = useNavigation();
+
 
   const renderHotelCard: ListRenderItem<HotelCardProps> = useCallback(
     ({ item }) => <HotelCard {...item} />,

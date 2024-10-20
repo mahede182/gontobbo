@@ -8,6 +8,7 @@ import GradientTitle from "@/components/GradientTitle";
 import { useNavigation } from "@react-navigation/native";
 import { Input } from "@/components/Input";
 import { typography } from "@/theme/typography";
+import { SafeAreaView } from "moti";
 
 const LocationSelect = () => {
   const popularLocations = [
@@ -29,8 +30,15 @@ const LocationSelect = () => {
   );
 
   const navigation = useNavigation();
+
+  const [searchQuery, setSearchQuery] = React.useState<string>("");
+
+  const filteredLocations = popularLocations.filter((location) =>
+    location.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* === Header === */}
       <Box flexDirection={"row"} alignItems={"center"} marginBottom={"medium"}>
         <Box
@@ -48,7 +56,11 @@ const LocationSelect = () => {
         {/* <RestyleText variant="h2">Location Select</RestyleText> */}
       </Box>
 
-      <Input placeholder={"Where do you want to stay?"} />
+      <Input
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        placeholder={"Where do you want to stay?"}
+      />
       <Box
         justifyContent={"center"}
         backgroundColor={"white200"}
@@ -57,20 +69,20 @@ const LocationSelect = () => {
         <RestyleText variant="textBase">Popular locations</RestyleText>
       </Box>
       <FlatList
-        data={popularLocations}
+        data={filteredLocations}
         renderItem={renderItem}
         keyExtractor={(item) => item}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
     padding: spacing.large,
+    marginHorizontal: spacing.twenty,
   },
 
   locationItem: {
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: typography.poppinsMedium,
     fontSize: 16,
     fontWeight: "400",
-    color: colors.white200,
+    color: colors.neutral600,
   },
 });
 

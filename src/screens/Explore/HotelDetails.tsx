@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { images } from "@/theme/images";
 import PriceSelect from "./component/PriceSelect";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "moti";
 
 const HotelDetails = () => {
   const { t } = useTranslation();
@@ -77,7 +78,7 @@ const HotelDetails = () => {
 
   const navigation = useNavigation();
   return (
-    <Box style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Box style={styles.headerContainer}>
         {/* Back Button */}
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -227,7 +228,7 @@ const HotelDetails = () => {
           priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t("Explore.perNightForRoom")}`}
         />
       </ScrollView>
-    </Box>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

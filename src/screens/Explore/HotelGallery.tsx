@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "moti";
 
 const { width } = Dimensions.get("window");
 
@@ -45,7 +46,7 @@ const HotelGallery = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Box style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={images.back} />
@@ -87,7 +88,7 @@ const HotelGallery = () => {
       {activeTab === "Washroom" && renderImages(washroomImages)}
       {activeTab === "Entrance" && renderImages(entranceImages)}
       {activeTab === "Common Area" && renderImages(commonAreaImages)}
-    </View>
+    </SafeAreaView>
   );
 };
 

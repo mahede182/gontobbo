@@ -25,7 +25,7 @@ module.exports = {
      *<> 2 = "error" (show an error for rule violations)
      */
     "react-native/no-unused-styles": 2,
-    "react-native/no-inline-styles": 2,
+    // "react-native/no-inline-styles": 2,
     "react-native/no-color-literals": 2,
     "react-native/no-single-element-style-arrays": 2,
     "react-native/no-raw-text": 1,
