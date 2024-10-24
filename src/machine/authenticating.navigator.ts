@@ -1,10 +1,11 @@
-/* eslint-disable import/no-unresolved */
-import { ActorRefFrom, setup, sendParent, fromPromise } from "xstate";
+import { ActorRefFrom, setup, sendParent, fromPromise, stop } from "xstate";
 
 import { AuthenticatingParamList } from "../types/navigation";
 import { signIn } from "../api";
 
-export type AuthenticatingMachineActor = ActorRefFrom<typeof authenticatingMachine>;
+export type AuthenticatingMachineActor = ActorRefFrom<
+  typeof authenticatingMachine
+>;
 
 export const authenticatingMachine = setup({
   types: {
@@ -14,16 +15,17 @@ export const authenticatingMachine = setup({
       | { type: "STOP" },
   },
   actors: {
-    signIn: fromPromise(async () => {
-      const result = await signIn("michaelw", "michaelwpass");
-      return result as { status: string; user: { name: string } };
+    signIn: fromPromise(async ({ input }) => {
+      const { user, password } = input;
+      const result = await signIn(user, password);
+      return result;
     }),
   },
   actions: {
-    sendParentSignIn: sendParent((_, { user: { name } }: { user: { name: string } }) => {
+    sendParentSignIn: sendParent((_, { user }) => {
       return {
         type: "SIGN_IN",
-        username: name,
+        user,
       };
     }),
   },
@@ -42,6 +44,10 @@ export const authenticatingMachine = setup({
     signingIn: {
       invoke: {
         src: "signIn",
+        input: ({ event }) => {
+          const { user, password } = event.type === "SIGN_IN" ? event : {};
+          return { user, password };
+        },
         onDone: {
           actions: [
             {

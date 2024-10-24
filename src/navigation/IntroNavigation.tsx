@@ -10,7 +10,11 @@ const Stack = createStackNavigator<IntroStackParamList>();
 const IntroNavigation = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="INIT" component={InitScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="INIT">
+        {(props) => {
+          return <InitScreen {...props} />;
+        }}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

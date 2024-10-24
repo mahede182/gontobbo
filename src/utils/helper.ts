@@ -1,3 +1,4 @@
+import { createNavigationContainerRef } from "@react-navigation/native";
 /**
  * Validates an email address using a regular expression.
  * <>inspired by: https://stackoverflow.com/questions/43676695/email-validation-react-native-returning-the-result-as-invalid-for-all-the-e
@@ -19,3 +20,16 @@ export const validatePassword = (password: string): boolean => {
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   return passwordRegex.test(password);
 };
+
+/**
+ * <> Get the current route name from the navigation ref.
+ */
+export const navigationRef = createNavigationContainerRef();
+
+export function getCurrentRouteName() {
+  if (navigationRef.isReady()) {
+    return navigationRef.getCurrentRoute()?.name;
+  } else {
+    return undefined;
+  }
+}

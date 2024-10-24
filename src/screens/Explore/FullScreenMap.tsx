@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Dimensions, Image } from "react-native";
+import { StyleSheet, Dimensions, Image, SafeAreaView } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Box } from "@/theme";
 import { colors } from "@/theme/colors";
@@ -10,6 +10,7 @@ import { RestyleTransparent } from "@/components/RestyleTransparent";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { useTranslation } from "react-i18next";
+import { dynamicCSS } from "@/utils/styles";
 
 const { width, height } = Dimensions.get("window");
 
@@ -19,7 +20,7 @@ const FullScreenMap = () => {
   const { t } = useTranslation();
 
   return (
-    <Box flex={1}>
+    <SafeAreaView style={dynamicCSS("flex", 1)}>
       {/* === Header === */}
       <Box flexDirection={"row"} alignItems={"center"} marginVertical={"medium"}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -46,7 +47,7 @@ const FullScreenMap = () => {
           </RestyleTransparent>
         </Marker>
       </MapView>
-    </Box>
+    </SafeAreaView>
   );
 };
 

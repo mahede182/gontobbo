@@ -15,6 +15,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
 import { dynamicCSS } from "@/utils/styles";
+import SignIn from "@/screens/SignIn";
+import TermsAndCondition from "@/screens/Terms/TermsAndCondition";
 
 type Props = {};
 
@@ -25,7 +27,7 @@ const CustomDrawerContent = (props) => {
   return (
     <BlurView intensity={100} tint="prominent" style={dynamicCSS("flex", 1)}>
       <DrawerContentScrollView {...props}>
-        <TouchableOpacity onPress={() => navigation.navigate("SIGN_IN")}>
+        <TouchableOpacity onPress={() => navigation.navigate("PROFILE")}>
           <LinearGradient
             colors={[colors.linearStart, colors.linearEnd]}
             locations={[0, 1]}
@@ -74,13 +76,15 @@ const CustomDrawerContent = (props) => {
             <RestyleText>Language</RestyleText>
           </TouchableOpacity>
         </Box>
-        {/* ::: Logout :::
+        {/* ::: Logout ::: */}
         <Box style={styles.group}>
-          <TouchableOpacity style={styles.drawerItemContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SIGN_IN")}
+            style={styles.drawerItemContainer}>
             <Image source={images.logoutIcon} style={styles.iconStyle} />
             <RestyleText>Logout</RestyleText>
           </TouchableOpacity>
-        </Box> */}
+        </Box>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
     </BlurView>
@@ -101,17 +105,14 @@ const DrawerNavigation = (props: Props) => {
         drawerType: "slide",
       }}>
       <Drawer.Screen
-        name="Logout"
+        name="v1.0.1"
         component={Home}
         options={{
-          drawerIcon: ({ color }) => <Image source={images.logoutIcon} style={styles.iconStyle} />,
           drawerInactiveBackgroundColor: colors.neutral50,
           drawerItemStyle: {
-            marginTop: 20,
+            marginTop: 80,
             marginHorizontal: 20,
             paddingHorizontal: 15,
-            borderWidth: 1,
-            borderColor: colors.neutral500,
             borderRadius: 10,
             backgroundColor: colors.neutral100,
           },
@@ -119,7 +120,8 @@ const DrawerNavigation = (props: Props) => {
             fontFamily: typography.poppinsRegular,
             color: colors.black,
             textAlign: "left",
-            left: -30,
+            fontSize: 12,
+            fontWeight: "400",
           },
           drawerContentStyle: {
             flexDirection: "row",

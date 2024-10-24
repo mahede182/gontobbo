@@ -6,7 +6,7 @@ type Props = {};
 const WishListScreens: React.FC<Props> = (props): JSX.Element => {
   return (
     <View style={styles.container}>
-      <Text>WishListScreens</Text>
+      <Text>WishList Screens 🚧 🚧 🚧</Text>
     </View>
   );
 };

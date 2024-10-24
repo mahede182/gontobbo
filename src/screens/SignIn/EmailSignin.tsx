@@ -54,7 +54,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
             </TouchableOpacity>
           </Box>
 
-          <TouchableOpacity style={styles.signInButton}>
+          <TouchableOpacity style={styles.signInButton} onPress={() => navigation.navigate("HOME")}>
             <RestyleText variant="buttonLabel">{t("signIn.singIn")}</RestyleText>
           </TouchableOpacity>
         </Box>

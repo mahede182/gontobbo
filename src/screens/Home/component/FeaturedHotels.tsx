@@ -11,7 +11,6 @@ const FeaturedHotels: React.FC = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-
   const renderHotelCard: ListRenderItem<HotelCardProps> = useCallback(
     ({ item }) => <HotelCard {...item} />,
     [],
