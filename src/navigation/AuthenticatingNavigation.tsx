@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EmailSignin from "@/screens/SignIn/EmailSignin";
 import SignUpScreen from "@/screens/SignUp";
 import SignIn from "@/screens/SignIn";
+import { useSelector } from "@xstate/react";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -23,17 +24,34 @@ export type AuthStackParamList = {
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createStackNavigator<AuthStackParamList>();
 
-const AuthenticatingNavigation = () => {
+const AuthenticatingNavigation = ({ actorRef }) => {
+  const state = useSelector(actorRef, (snapshot) => {
+    return snapshot;
+  });
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="SIGN_IN">
         {(props) => {
-          return <SignIn {...props} />;
+          return (
+            <SignIn
+              onSignInPress={(user, password) => {
+                actorRef.send({ type: "SIGN_IN", user, password });
+              }}
+              {...props}
+            />
+          );
         }}
       </Stack.Screen>
       <Stack.Screen options={{ headerShown: false }} name="EMAIL_SIGN_IN">
         {(props) => {
-          return <EmailSignin {...props} />;
+          return (
+            <EmailSignin
+              onSignInPress={(user, password) => {
+                actorRef.send({ type: "SIGN_IN", user, password });
+              }}
+              {...props}
+            />
+          );
         }}
       </Stack.Screen>
       <Stack.Screen options={{ headerShown: false }} name="SIGN_UP">

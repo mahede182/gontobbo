@@ -8,6 +8,7 @@ import { colors } from "@/theme/colors";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import Background from "@/components/Background";
+import { useApp } from "@/hooks/useApp";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
+  const { state: appState } = useApp();
 
   return (
     <Background>
@@ -31,7 +33,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
           <TextInput
             style={styles.input}
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(newText) => setEmail(newText.toLowerCase())}
             keyboardType="email-address"
             placeholder="gontobbo@gmail.co"
           />
@@ -41,7 +43,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
             <TextInput
               style={styles.passwordInput}
               value={password}
-              onChangeText={setPassword}
+              onChangeText={(newText) => setPassword(newText.toLowerCase())}
               secureTextEntry={!showPassword}
               placeholder="*****"
             />
@@ -54,7 +56,11 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
             </TouchableOpacity>
           </Box>
 
-          <TouchableOpacity style={styles.signInButton} onPress={() => navigation.navigate("HOME")}>
+          <TouchableOpacity
+            style={styles.signInButton}
+            onPress={() => {
+              props.onSignInPress(email, password);
+            }}>
             <RestyleText variant="buttonLabel">{t("signIn.singIn")}</RestyleText>
           </TouchableOpacity>
         </Box>

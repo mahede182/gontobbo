@@ -1,11 +1,9 @@
 import { ActorRefFrom, setup, sendParent, fromPromise, stop } from "xstate";
 
 import { AuthenticatingParamList } from "../types/navigation";
-import { signIn } from "../api";
+import { signIn } from "@/api/auth";
 
-export type AuthenticatingMachineActor = ActorRefFrom<
-  typeof authenticatingMachine
->;
+export type AuthenticatingMachineActor = ActorRefFrom<typeof authenticatingMachine>;
 
 export const authenticatingMachine = setup({
   types: {
@@ -14,19 +12,19 @@ export const authenticatingMachine = setup({
       | { type: "NAVIGATE"; screen: keyof AuthenticatingParamList }
       | { type: "STOP" },
   },
-  actors: {
-    signIn: fromPromise(async ({ input }) => {
-      const { user, password } = input;
-      const result = await signIn(user, password);
-      return result;
-    }),
-  },
   actions: {
     sendParentSignIn: sendParent((_, { user }) => {
       return {
         type: "SIGN_IN",
         user,
       };
+    }),
+  },
+  actors: {
+    signIn: fromPromise(async ({ input }) => {
+      const { user, password } = input;
+      const result = await signIn(user, password);
+      return result;
     }),
   },
 }).createMachine({

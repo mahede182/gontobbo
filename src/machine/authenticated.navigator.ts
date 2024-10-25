@@ -1,11 +1,9 @@
 import { ActorRefFrom, setup, assign } from "xstate";
 import { AuthenticatedParamList } from "../types/navigation";
-import { HomeMachineActor, homeMachine } from "./home";
+import { HomeMachineActor, homeMachine } from "./homeMachine";
 import { navigationSubscriber } from "./shared/actors";
 
-export type AuthenticatedMachineActor = ActorRefFrom<
-  typeof authenticatedMachine
->;
+export type AuthenticatedMachineActor = ActorRefFrom<typeof authenticatedMachine>;
 
 export const authenticatedMachine = setup({
   types: {
@@ -27,14 +25,14 @@ export const authenticatedMachine = setup({
   },
   guards: {
     isHomeScreen(_, params: { screen: keyof AuthenticatedParamList }) {
-      return params.screen === "Home";
+      return params.screen === "HOME";
     },
     isListScreen(_, params: { screen: keyof AuthenticatedParamList }) {
       return params.screen === "List";
     },
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMAOqA2BLAxsgLlgPYB2AxAHICCAagJIDiVAKgKIDaADALqKipFYWQqT4gAHogAsAJgA0IAJ6IZAVgBsAOnUB2VToCcnVVJ2ddUqQF8rCtJlwFi5avSZt2ARl5IQAoSIkYpIIsgrKCJ6qnpoAzDrqsZzGJqaxJja2ICREEHBi9th4gWL+ws7BiAC06uHV6jZ26EVOpJoAFkQAtmAAyjgATmBgQb5lJb4hsfGa+jIAHAZSqvP68zI6dQgy05pSsTIyBvPG87Hq+o0ghY6Bmtiw+P1DI6WC5aKTiNM6szoLSxWaw2W08C00ngOJxOFx0Ok8cMyViAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMAOqA2BLAxsgLlgPYB2AxAHICCAagJIDiVAKgKIDaADALqKipFYWQqT4gAHogAsAJgA0IAJ6IAjAFYVAOgDMAdgBsMgJz6AHJylGjpmaYC+DhSSIQ4YtJlwFiJMQKEivkgSiAC0+grKCKFqmlbxCQmm+o4gHth4gZoAFkQAtmAAyjgATmBgQfyCwj5ikgjGpppSplJ6+pyc+tb6ulKRqraaKtq2Kpa62qamuroyDg5AA */
   context: { refHome: undefined, refList: undefined },
   id: "application",
   initial: "homeScreen",

@@ -16,6 +16,7 @@ import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { useApp } from "@/hooks/useApp";
 
 type Props = {};
 
@@ -27,6 +28,8 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
 
+  const { state: appState } = useApp();
+  console.log(appState?.context?.user)
   useEffect(() => {
     getUser().then((response) => {
       const data = response.data.data;

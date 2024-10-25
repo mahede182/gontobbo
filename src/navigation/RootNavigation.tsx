@@ -1,9 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthenticatingNavigation, { AuthStackParamList } from "./AuthenticatingNavigation";
-import { AppProvider } from "@/hooks/useApp";
+import { AppProvider, useApp } from "@/hooks/useApp";
 import IntroNavigation, { IntroStackParamList } from "./IntroNavigation";
 import AuthenticatedNavigation, { AuthdStackParamList } from "./AuthenticatedNavigation";
+import { navigationRef } from "@/utils/helper";
+import { useEffect } from "react";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -26,28 +28,48 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation = () => {
+  const { send, state } = useApp();
+
+  const isAuthenticating = state.matches("authenticating");
+  const isAuthenticated = state.matches("authenticated");
+  const isInitializing = state.matches("initializing");
+
   return (
-    <AppProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
+    <NavigationContainer
+      onReady={() => {
+        send({ type: "START_APP" });
+      }}
+      ref={navigationRef}>
+      <Stack.Navigator>
+        {isInitializing && (
           <Stack.Screen
             options={{ headerShown: false }}
             name="INITIAL_LOAD"
             component={IntroNavigation}
           />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="AUTH"
-            component={AuthenticatingNavigation}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="HOME"
-            component={AuthenticatedNavigation}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AppProvider>
+        )}
+
+        {isAuthenticating && (
+          <Stack.Screen options={{ headerShown: false }} name="AUTHENTICATING">
+            {(props) => {
+              return state.context.refAuthenticating ? (
+                <AuthenticatingNavigation actorRef={state.context.refAuthenticating} {...props} />
+              ) : null;
+            }}
+          </Stack.Screen>
+        )}
+
+        {isAuthenticated && (
+          <Stack.Screen options={{ headerShown: false }} name="AUTHENTICATED">
+            {(props) => {
+              return state.context.refAuthenticated ? (
+                <AuthenticatedNavigation actorRef={state.context.refAuthenticated} {...props} />
+              ) : null;
+            }}
+          </Stack.Screen>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

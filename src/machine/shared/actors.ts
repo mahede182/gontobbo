@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { fromCallback } from "xstate";
-import { getCurrentRouteName, navigationRef } from "../../navigation/NavigationRef";
+import { getCurrentRouteName, navigationRef } from "@/utils/helper";
 
 export const navigationSubscriber = fromCallback(({ sendBack }) => {
   const unsubscribe = navigationRef.addListener("state", (_event) => {

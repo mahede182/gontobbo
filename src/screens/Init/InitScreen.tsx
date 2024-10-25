@@ -46,7 +46,7 @@ const InitScreen = () => {
           <TouchableOpacity
             onPress={() => {
               if (currentIndex === images.length - 1) {
-                navigation.navigate("AUTH");
+                navigation.navigate("AUTHENTICATING");
               } else if (currentIndex === 1) {
                 flatListRef.current.scrollToIndex({ index: 2, animated: true });
               } else {
