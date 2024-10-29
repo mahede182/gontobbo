@@ -1,6 +1,7 @@
 import { assign, setup, stopChild } from "xstate";
 import { AuthenticatingMachineActor, authenticatingMachine } from "./authenticating.navigator";
 import { AuthenticatedMachineActor, authenticatedMachine } from "./authenticated.navigator";
+import { NAuthenticatedMachineActor, NAuthenticatedMachine } from "./commonMachine";
 
 export const appMachine = setup({
   types: {
@@ -14,6 +15,7 @@ export const appMachine = setup({
       user: any | null;
       refAuthenticating: AuthenticatingMachineActor | null;
       refAuthenticated: AuthenticatedMachineActor | null;
+      refNAuthenticated: NAuthenticatedMachineActor | null;
     },
   },
   actions: {
@@ -40,6 +42,7 @@ export const appMachine = setup({
   actors: {
     authenticatingMachine,
     authenticatedMachine,
+    NAuthenticatedMachine,
   },
 }).createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QEMAOqA2BLAxsgLlgPYB2AdFiVoctgF6VQDEAygCoCCASmwPocAFAQG0ADAF1EoVEVjViJKSAAeiAEyjRZAJwBmNWr0BWUWoBsARgu6ALABoQAT0RWA7GSOW11s2psAOAP9-AF8QhzRMXAIFMmQAV3wACzASQjxCEmYWAEkAcQA5XhyCsUkkEBk5QlIlVQQzURsyUV0rbVczExtTIwdnBG1m-11tfzMbIxsLIyN-VrCI9GwM2NQAJ0p8LiIiAFsmEoBhLgBRAFlTgrYypSr5Wor6gLI2oytJzz1xv37EXVcFjIhiGnj8okarhsrkWIEiKxipDIGy2O32TEuLBYHDyp1uFXuNUUT0QnjI0x6ZihgI0Nhsaj+CH0QICZm0sypFjMEyMulh8OiRORmzSaIOJRyNwkd1kD2JoHqRm0HlE-iMgL0Nk5jIs7PJ-h8+lcrlV7JhsJIRAgcCUAtWj2ksqJdUQAFozIz3S1NJpde9-MazPzloLYpR5LQsAwsjLqgoXQh6Yyhq8LMbrDNOlNAcGovbyAlkql0jEYwSnfGSUyXqNmQY3iapoyDa8DHpAdzbJZQuE4SH83FEik0oLILG5QnXO8WrozADRuyjGpZs2gfpDBoAZpobmEUKUaLdntx86q2SzPMxnMlRN6dpGdCgbMtfM06I5qqwmEgA */

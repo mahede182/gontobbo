@@ -121,7 +121,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
           </Box>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("HOME")}
+            onPress={() => navigation.navigate("OTP")}
             style={styles.signUpButton(isButtonEnabled)}>
             <RestyleText style={styles.signUpButtonText(isButtonEnabled)}>
               {t("signIn.signUp")}

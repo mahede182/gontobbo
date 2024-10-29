@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,8 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import Background from "@/components/Background";
 import { useApp } from "@/hooks/useApp";
+import { NAuthenticatedMachine } from "@/machine/commonMachine";
+import { useMachine } from "@xstate/react";
 
 type Props = {};
 
@@ -20,6 +22,13 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   const { state: appState } = useApp();
+
+  const [state, send] = useMachine(NAuthenticatedMachine);
+
+  const user = state?.context?.userData;
+  const accessToken = state?.context?.accessToken;
+
+  console.log(accessToken, "accessToken");
 
   return (
     <Background>
@@ -59,7 +68,12 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
           <TouchableOpacity
             style={styles.signInButton}
             onPress={() => {
-              props.onSignInPress(email, password);
+              // props.onSignInPress(email, password);
+              send({
+                type: "LOGIN",
+                user: email,
+                password,
+              });
             }}>
             <RestyleText variant="buttonLabel">{t("signIn.singIn")}</RestyleText>
           </TouchableOpacity>

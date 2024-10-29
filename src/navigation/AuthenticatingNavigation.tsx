@@ -3,6 +3,7 @@ import EmailSignin from "@/screens/SignIn/EmailSignin";
 import SignUpScreen from "@/screens/SignUp";
 import SignIn from "@/screens/SignIn";
 import { useSelector } from "@xstate/react";
+import OtpScreen from "@/screens/Otp/OtpScreen";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -57,6 +58,11 @@ const AuthenticatingNavigation = ({ actorRef }) => {
       <Stack.Screen options={{ headerShown: false }} name="SIGN_UP">
         {(props) => {
           return <SignUpScreen {...props} />;
+        }}
+      </Stack.Screen>
+      <Stack.Screen options={{ headerShown: false }} name="OTP">
+        {(props) => {
+          return <OtpScreen {...props} />;
         }}
       </Stack.Screen>
     </Stack.Navigator>

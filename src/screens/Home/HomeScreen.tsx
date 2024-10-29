@@ -29,7 +29,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
   const { state: appState } = useApp();
-  console.log(appState?.context?.user)
+
   useEffect(() => {
     getUser().then((response) => {
       const data = response.data.data;
