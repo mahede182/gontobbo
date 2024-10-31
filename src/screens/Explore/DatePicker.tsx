@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { Calendar } from "react-native-calendars";
 import { useNavigation } from "@react-navigation/native";
@@ -59,7 +59,7 @@ const SelectDateScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* === Header === */}
       <Box flexDirection={"row"} alignItems={"center"} margin={"medium"}>
         <Box
@@ -106,7 +106,7 @@ const SelectDateScreen = () => {
         />
       </Box>
       {renderFooter()}
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   Modal,
   View,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
@@ -44,7 +45,7 @@ const ReviewBooking = () => {
   };
 
   return (
-    <Box style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
       <HeaderTitle title="Select Room" />
       <ScrollView>
         {/* Header Section */}
@@ -301,7 +302,7 @@ const ReviewBooking = () => {
           </Box>
         </View>
       </Modal>
-    </Box>
+    </SafeAreaView>
   );
 };
 

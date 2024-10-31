@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, RestyleText } from "@/theme";
-import { Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HeaderTitle from "@/components/HeaderTitle";
 import { typography } from "@/theme/typography";
@@ -12,7 +12,7 @@ const SelectRoom = () => {
   const navigation = useNavigation();
 
   return (
-    <Box style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* === Header Section === */}
       <HeaderTitle title="Select Room" />
       <ScrollView showsHorizontalScrollIndicator>
@@ -136,17 +136,18 @@ const SelectRoom = () => {
           priceSub="+$45 taxes & services fees, Per Night for 1 Rooms"
         />
       </TouchableOpacity>
-    </Box>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginHorizontal: 10
   },
   imageContainer: {
     flexDirection: "row",
-    padding: 10,
+    paddingVertical: 10,
   },
   leftImage: {
     width: "50%",
