@@ -1,18 +1,19 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { spacing } from "@shopify/restyle";
 
 const Amenities = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   return (
-    <Box style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Header with back button */}
       <Box style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -96,7 +97,7 @@ const Amenities = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </SafeAreaView>
   );
 };
 
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white100,
+    marginHorizontal: 20,
     padding: 16,
   },
   header: {

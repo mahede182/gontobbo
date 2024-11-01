@@ -1,6 +1,6 @@
 import { ActorRefFrom, setup, sendParent, fromPromise, stop } from "xstate";
 
-import { AuthenticatingParamList } from "../types/navigation";
+// import { AuthenticatingParamList } from "../types/navigation";
 import { signIn } from "@/api/auth";
 
 export type AuthenticatingMachineActor = ActorRefFrom<typeof authenticatingMachine>;

@@ -10,6 +10,7 @@ import { images } from "@/theme/images";
 import PriceSelect from "./component/PriceSelect";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "moti";
+import { typography } from "@/theme/typography";
 
 const HotelDetails = () => {
   const { t } = useTranslation();
@@ -105,7 +106,7 @@ const HotelDetails = () => {
           padding={"ten"}
           borderColor={"neutral300"}
           marginVertical={"ten"}>
-          <RestyleText style={styles.name}>{name}</RestyleText>
+          <RestyleText style={styles.sectionTitle}>{name}</RestyleText>
           <RestyleText style={styles.rating}>
             {Array(Math.floor(rating))
               .fill()
@@ -222,7 +223,7 @@ const HotelDetails = () => {
         </TouchableOpacity>
 
         <PriceSelect
-          buttonText={t("Explore.select")}
+          buttonText={t("Explore.selectRoom")}
           price={450}
           gradient
           priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t("Explore.perNightForRoom")}`}
@@ -263,10 +264,6 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
   },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
   rating: {
     flexDirection: "row",
     marginVertical: 8,
@@ -279,7 +276,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontFamily: typography.poppinsBold,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
   },

@@ -13,13 +13,13 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
-import * as AppleAuthentication from "expo-apple-authentication";
 import { isIOS } from "@/utils/device";
 
 import {
   // handleAppleSignIn,
   handleFacebookSignIn,
   handleGoogleSignIn,
+  handleAppleSignIn,
 } from "@/utils/socialAuth";
 import Background from "@/components/Background";
 import { useApp } from "@/hooks/useApp";
@@ -32,32 +32,6 @@ type Props = {};
  * @param hello
  *
  */
-// FIXME: apple pay auth not work. split the code @/utils/socialAuth
-const handleAppleSignIn = async () => {
-  try {
-    const credential = await AppleAuthentication.signInAsync({
-      requestedScopes: [
-        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-        AppleAuthentication.AppleAuthenticationScope.EMAIL,
-      ],
-    });
-    // DEBUG: watch out the token
-    // Handle the signed-in user's information
-    console.log("Apple Sign-In Successful:", credential);
-    // You can access the user's information from the `credential` object
-    // For example: credential.user, credential.email, credential.fullName, etc.
-  } catch (error) {
-    console.log(error);
-    if (error.code === "ERR_REQUEST_CANCELED") {
-      // User canceled the sign-in flow
-      console.log("Apple Sign-In Canceled");
-    } else {
-      // Handle other errors
-      console.error("Apple Sign-In Error:", error);
-      Alert.alert("Error", error.message);
-    }
-  }
-};
 
 const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();

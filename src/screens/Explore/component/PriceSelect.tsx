@@ -19,12 +19,12 @@ const PriceSelect = (props: Props) => {
         {props.gradient ? (
           <>
             <GradientTitle style={styles.gradientTitle}>{`$ ${props.price}`}</GradientTitle>
-            <GradientTitle style={{ width: "60%" }}>{props.priceSub}</GradientTitle>
+            <GradientTitle>{props.priceSub}</GradientTitle>
           </>
         ) : (
           <>
             <RestyleText style={styles.gradientTitle}>{`$ ${props.price}`}</RestyleText>
-            <RestyleText style={{ width: "60%" }}>{props.priceSub}</RestyleText>
+            <RestyleText>{props.priceSub}</RestyleText>
           </>
         )}
       </Box>
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginHorizontal: 10,
-    marginVertical: 5,
+    marginHorizontal: 5,
+    marginVertical: 10,
   },
   priceContainer: {
     width: "60%",
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   },
   selectRoomButtonText: {
     color: colors.white100,
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

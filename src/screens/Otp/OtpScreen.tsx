@@ -68,18 +68,7 @@ const styles = StyleSheet.create({
     ...typography.header1,
     marginBottom: 16,
   },
-  otpContainer: {
-    // Add styles for the OTP container
-  },
-  otpInput: {
-    // Add styles for the individual OTP input fields
-  },
   resendButton: {
     // Add styles for the "Resend New Code" button
-  },
-  resendButtonText: {
-    ...typography.button,
-    color: colors.primary,
-    // Add other styles as needed
   },
 });

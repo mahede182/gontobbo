@@ -1,4 +1,5 @@
 import { ActorRefFrom, setup, assign } from "xstate";
+// eslint-disable-next-line import/no-unresolved
 import { AuthenticatedParamList } from "../types/navigation";
 import { HomeMachineActor, homeMachine } from "./homeMachine";
 import { navigationSubscriber } from "./shared/actors";

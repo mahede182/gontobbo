@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-// import * as AppleAuthentication from "expo-apple-authentication";
+import { Alert, Platform } from "react-native";
+import * as AppleAuthentication from "expo-apple-authentication";
 import { AccessToken, AuthenticationToken, LoginManager } from "react-native-fbsdk-next";
 import {
   GoogleSignin,
   statusCodes,
   isErrorWithCode,
 } from "@react-native-google-signin/google-signin";
-import { Platform } from "react-native";
 import { googleSignInConfig } from "@/config/google";
 
 export const handleFacebookSignIn = async () => {
@@ -56,6 +56,29 @@ export const handleGoogleSignIn = async () => {
       }
     } else {
       console.log(error);
+    }
+  }
+};
+
+// FIXME: apple pay auth not work. split the code @/utils/socialAuth
+export const handleAppleSignIn = async () => {
+  try {
+    const credential = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+      ],
+    });
+    return credential;
+  } catch (error) {
+    console.log(error);
+    if (error.code === "ERR_REQUEST_CANCELED") {
+      // User canceled the sign-in flow
+      console.log("Apple Sign-In Canceled");
+    } else {
+      // Handle other errors
+      console.error("Apple Sign-In Error:", error);
+      Alert.alert("Error", error.message);
     }
   }
 };

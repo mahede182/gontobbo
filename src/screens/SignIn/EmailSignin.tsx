@@ -68,7 +68,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
           <TouchableOpacity
             style={styles.signInButton}
             onPress={() => {
-               props.onSignInPress(email, password);
+              props.onSignInPress(email, password);
               // send({
               //   type: "LOGIN",
               //   user: email,

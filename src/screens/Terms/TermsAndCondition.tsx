@@ -12,5 +12,3 @@ const TermsAndCondition = (props: Props) => {
 };
 
 export default TermsAndCondition;
-
-const styles = StyleSheet.create({});

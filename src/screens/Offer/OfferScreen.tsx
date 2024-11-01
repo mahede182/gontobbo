@@ -1,6 +1,6 @@
 import { SafeAreaView } from "moti";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 const OfferScreen: React.FC = (): JSX.Element => {
   return (

@@ -38,7 +38,11 @@ const FullScreenMap = () => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}>
-        <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }} title="Hotel Location">
+        <Marker
+          coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+          title="Hotel Location"
+          pinColor={"purple"} // any color
+          description={"description"}>
           <RestyleTransparent opacity={0.25}>
             <TouchableOpacity
               onPress={() => navigation.navigate("SELECT_ROOM")}
