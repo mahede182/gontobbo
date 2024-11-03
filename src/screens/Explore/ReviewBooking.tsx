@@ -46,7 +46,7 @@ const ReviewBooking = () => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <HeaderTitle title="Select Room" />
+      <HeaderTitle title="Review Booking" />
       <ScrollView>
         {/* Header Section */}
         <Box style={styles.section}>

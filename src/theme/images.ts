@@ -41,6 +41,7 @@ export const images = {
   supportIcon: require("@/assets/Drawer/supportIcon.png") as ImageSourcePropType,
   flightIcon: require("@/assets/flight.png") as ImageSourcePropType,
   plane: require("@/assets/plane.png") as ImageSourcePropType,
+  bin: require("@/assets/bin.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;

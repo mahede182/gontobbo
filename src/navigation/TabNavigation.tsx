@@ -121,6 +121,24 @@ const TabNavigation = (props: Props) => {
           title: "",
           tabBarIcon: ({ focused }) => (
             <Box alignItems={"center"} justifyContent={"center"}>
+              {true ? (
+                <Box
+                  style={{
+                    position: "absolute",
+                    backgroundColor: colors.danger,
+                    bottom: 0,
+                    right: 5,
+                    zIndex: 999,
+                    height: 16,
+                    width: 16,
+                    borderRadius: 20,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}>
+                  <RestyleText style={{ fontSize: 13, color: colors.white }}>7</RestyleText>
+                </Box>
+              ) : null}
+
               <Image
                 source={focused ? images.wishlistActive : images.wishlist}
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
