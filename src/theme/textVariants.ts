@@ -1,4 +1,6 @@
+import { color } from "@shopify/restyle";
 import { typography } from "./typography";
+import { colors } from "./colors";
 
 export const textVariants = {
   defaults: {
@@ -27,11 +29,19 @@ export const textVariants = {
     lineHeight: 20,
   },
   caption: {
-    fontSize: 8,
+    fontSize: 12,
+    fontFamily: typography.poppinsRegular,
+    fontWeight: "200"
   },
   gradientTitle: {
     fontFamily: typography.poppinsSemibold,
     fontSize: 20,
+    fontWeight: "600",
+  },
+  searchHotelTitle: {
+    color: "neutral700",
+    fontFamily: typography.poppinsMedium,
+    fontSize: 16,
     fontWeight: "600",
   },
   inputTitle: {
@@ -47,3 +57,4 @@ export const textVariants = {
     fontSize: 8,
   },
 };
+

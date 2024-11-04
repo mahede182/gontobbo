@@ -25,7 +25,7 @@ const SelectFlight: React.FC<SelectFlightProps> = ({ title, subTitle, onPress })
           style={{ marginRight: 6, height: 24, width: 24, resizeMode: "contain" }}
         />
         <Box>
-          <RestyleText variant="gradientTitle">{title}</RestyleText>
+          <RestyleText variant="searchHotelTitle">{title}</RestyleText>
           <RestyleText variant="caption">{subTitle}</RestyleText>
         </Box>
       </Box>

@@ -27,13 +27,13 @@ const GuestInput = ({ onPress }: GuestInputProps) => {
           source={images.profile}
           style={{ marginRight: 6, height: 16, width: 16, resizeMode: "contain" }}
         />
-        <RestyleText
-          style={{
-            width: "89%",
-            fontFamily: typography.poppinsSemibold,
-            fontWeight: "600",
-            fontSize: 16,
-          }}>{`${rooms} rooms, ${adults} adults, ${children} Children`}</RestyleText>
+        <Box flexDirection={"column"}>
+          <RestyleText
+            variant={
+              "searchHotelTitle"
+            }>{`${rooms} rooms, ${adults} adults, ${children} Children`}</RestyleText>
+          <RestyleText variant={"caption"}>Rooms and Guests</RestyleText>
+        </Box>
       </Box>
     </Pressable>
   );

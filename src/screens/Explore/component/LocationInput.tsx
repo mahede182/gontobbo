@@ -7,10 +7,11 @@ import { colors } from "@/theme/colors";
 
 type LocationInputProps = {
   location: string;
+  country: string;
   onPress: () => void;
 };
 
-const LocationInput = ({ location, onPress }: LocationInputProps) => (
+const LocationInput = ({ country, location, onPress }: LocationInputProps) => (
   <Pressable style={{ backgroundColor: colors.white100 }} onPress={onPress}>
     <Box
       borderColor={"neutral300"}
@@ -21,7 +22,10 @@ const LocationInput = ({ location, onPress }: LocationInputProps) => (
       flexDirection="row"
       alignItems="center">
       <Image source={LocationIcon} style={{ marginRight: spacing.small }} />
-      <RestyleText variant="textBase">{location}</RestyleText>
+      <Box flexDirection="column">
+        <RestyleText variant="searchHotelTitle">{location}</RestyleText>
+        <RestyleText variant="caption">{country}</RestyleText>
+      </Box>
     </Box>
   </Pressable>
 );
