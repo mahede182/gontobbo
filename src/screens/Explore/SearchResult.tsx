@@ -49,20 +49,12 @@ const SearchResult = ({ navigation }) => (
         <Dropdown
           label="Star Rating"
           data={[
-            { label: "*****", value: "5" },
-            { label: "****", value: "4" },
-            { label: "***", value: "3" },
+            { label: "⭐⭐⭐⭐⭐", value: "5" },
+            { label: "⭐⭐⭐⭐", value: "4" },
+            { label: "⭐⭐⭐", value: "3" },
           ]}
         />
       </Box>
-      {/* <TouchableOpacity style={styles.filterContainer}>
-        <Icon name="search" size={16} color={"#000"} /> 
-        <RestyleText style={styles.label}>All Filters</RestyleText>
-      </TouchableOpacity> */}
-      {/* <TouchableOpacity style={styles.filterContainer}>
-        <Icon name="star-half-outline" size={16} color={"#000"} />
-        <RestyleText style={styles.label}>Star Rating</RestyleText>
-      </TouchableOpacity> */}
     </Box>
     <FlatList
       data={searchResults}

@@ -14,7 +14,8 @@ const DateInput = ({ date, onPress }: DateInputProps) => (
     <Box
       borderColor="neutral300"
       borderWidth={1}
-      paddingHorizontal="large"
+      paddingLeft="small"
+      paddingRight="twenty"
       paddingVertical="small"
       borderRadius={5}
       flexDirection="row"

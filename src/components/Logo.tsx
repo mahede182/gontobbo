@@ -1,20 +1,25 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, NativeModules, StyleSheet } from "react-native";
 import { Box, RestyleText } from "../theme";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
+import Config from "react-native-config";
 
 const Logo = () => {
+  const env = NativeModules.RNMultiEnv.env;
+  console.log(Config.APP_ENV);
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   return (
     <Box alignItems="center" marginTop="thirty">
       <Image style={styles.logo} source={images.appLogo} />
       {/* TODO: create a new variant of text if found another same size and weight */}
-      <RestyleText style={styles.title}>{t("common.gontobbo")}</RestyleText>
+      <RestyleText style={styles.title}>
+        {t("common.gontobbo")} - {env}
+      </RestyleText>
       <RestyleText style={styles.subtitle} textAlign="center">
         {t("common.gontobboSlogan")}
       </RestyleText>

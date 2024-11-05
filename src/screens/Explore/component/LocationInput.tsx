@@ -21,7 +21,10 @@ const LocationInput = ({ country, location, onPress }: LocationInputProps) => (
       borderRadius={5}
       flexDirection="row"
       alignItems="center">
-      <Image source={LocationIcon} style={{ marginRight: spacing.small }} />
+      <Image
+        source={LocationIcon}
+        style={{ marginRight: spacing.small, height: 18, width: 18, resizeMode: "contain" }}
+      />
       <Box flexDirection="column">
         <RestyleText variant="searchHotelTitle">{location}</RestyleText>
         <RestyleText variant="caption">{country}</RestyleText>

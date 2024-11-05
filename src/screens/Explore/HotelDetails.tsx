@@ -86,7 +86,11 @@ const HotelDetails = () => {
           <Image source={images.back} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => alert("favourite added")}>
-          <Image style={styles.headerFavourite} source={images.wishlist} />
+          <Image
+            tintColor={colors.danger}
+            style={styles.headerFavourite}
+            source={images.wishlist}
+          />
         </TouchableOpacity>
       </Box>
 
@@ -242,7 +246,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginVertical: 15,
-    marginHorizontal: 8,
+    marginHorizontal: 10,
   },
   headerFavourite: {
     height: 20,

@@ -22,7 +22,7 @@ const SelectFlight: React.FC<SelectFlightProps> = ({ title, subTitle, onPress })
         alignItems="center">
         <Image
           source={images.flightIcon}
-          style={{ marginRight: 6, height: 24, width: 24, resizeMode: "contain" }}
+          style={{ marginRight: 6, height: 20, width: 20, resizeMode: "contain" }}
         />
         <Box>
           <RestyleText variant="searchHotelTitle">{title}</RestyleText>

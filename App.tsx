@@ -19,6 +19,7 @@ interface AppProps {
  * This is the root component of our app.
  */
 export default function App(props: AppProps) {
+
   const [areFontsLoaded] = useFonts(customFontsToLoad);
   // Before we show the app, we have to wait for our state to be ready.
   // In iOS: application:didFinishLaunchingWithOptions:
