@@ -22,6 +22,7 @@ const SelectFlight: React.FC<SelectFlightProps> = ({ title, subTitle, onPress })
         alignItems="center">
         <Image
           source={images.flightIcon}
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{ marginRight: 6, height: 20, width: 20, resizeMode: "contain" }}
         />
         <Box>

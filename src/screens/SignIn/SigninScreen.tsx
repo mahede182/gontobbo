@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from "react";
-import { Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import Logo from "@/components/Logo";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";

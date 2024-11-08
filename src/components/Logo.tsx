@@ -6,11 +6,9 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
-import Config from "react-native-config";
 
 const Logo = () => {
   const env = NativeModules.RNMultiEnv.env;
-  console.log(Config.APP_ENV);
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   return (

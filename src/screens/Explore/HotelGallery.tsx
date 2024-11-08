@@ -51,9 +51,7 @@ const HotelGallery = () => {
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={images.back} />
         </TouchableOpacity>
-        <GradientTitle style={{ fontFamily: typography.poppinsMedium, fontSize: 22 }}>
-          {t("Explore.photosAndVideos")}
-        </GradientTitle>
+        <GradientTitle style={styles.gradientTitle}>{t("Explore.photosAndVideos")}</GradientTitle>
         <TouchableOpacity>
           <Icon name="favorite-border" size={24} color={colors.black100} />
         </TouchableOpacity>
@@ -139,6 +137,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     marginVertical: 8,
   },
+  gradientTitle: { fontFamily: typography.poppinsMedium, fontSize: 22 },
 });
 
 export default HotelGallery;

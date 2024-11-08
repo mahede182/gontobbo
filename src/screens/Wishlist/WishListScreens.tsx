@@ -2,6 +2,7 @@ import HeaderTitle from "@/components/HeaderTitle";
 import { wishlistItems } from "@/data/wishlistItem";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
+import { dynamicCSS } from "@/utils/styles";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
@@ -31,7 +32,7 @@ const WishListScreens: React.FC<Props> = (props): JSX.Element => {
                 <Text style={styles.location}>{item.location}</Text>
                 <Text style={styles.price}>${item.price.toLocaleString()}</Text>
               </View>
-              <View style={{ flexDirection: "column" }}>
+              <View style={dynamicCSS("flexDirection", "column")}>
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate("TRIP_REVIEW_BOOKING");

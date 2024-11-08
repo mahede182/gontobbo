@@ -5,11 +5,10 @@ import { useTranslation } from "react-i18next";
 import HotelCard from "./HotelCard";
 import { featuredHotels, HotelCardProps } from "@/data/hotelData";
 import GradientTitle from "@/components/GradientTitle";
-import { useNavigation } from "@react-navigation/native";
+import { dynamicCSS } from "@/utils/styles";
 
 const FeaturedHotels: React.FC = () => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
 
   const renderHotelCard: ListRenderItem<HotelCardProps> = useCallback(
     ({ item }) => <HotelCard {...item} />,
@@ -20,7 +19,7 @@ const FeaturedHotels: React.FC = () => {
 
   return (
     <Box paddingHorizontal="medium" marginTop="ten">
-      <GradientTitle variant="gradientTitle" style={{ marginBottom: 10 }}>
+      <GradientTitle variant="gradientTitle" style={dynamicCSS("marginBottom", 10)}>
         {t("Home.featureHotels")}
       </GradientTitle>
       <FlatList

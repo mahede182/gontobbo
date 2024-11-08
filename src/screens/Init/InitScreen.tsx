@@ -9,6 +9,7 @@ import { typography } from "@/theme/typography";
 import GradientTitle from "@/components/GradientTitle";
 import { images as img } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
+import { dynamicCSS } from "@/utils/styles";
 
 const images = [img.initOne, img.initTwo, img.initThree];
 
@@ -68,7 +69,7 @@ const InitScreen = () => {
   );
 
   return (
-    <Box style={{ flex: 1 }}>
+    <Box style={dynamicCSS("flex", 1)}>
       <FlatList
         ref={flatListRef}
         data={images}

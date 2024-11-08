@@ -63,15 +63,15 @@ const styles = StyleSheet.create({
   },
   category: {
     fontSize: 16,
-    color: "#888",
+    color: colors.neutral600,
     marginBottom: 10,
   },
   offerContainer: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.white200,
     padding: 20,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: colors.neutral400,
   },
   offerTitle: {
     fontSize: 18,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   offerSubtitle: {
     fontSize: 14,
-    color: "#888",
+    color: colors.neutral600,
     marginBottom: 10,
   },
   offerDetails: {
@@ -92,10 +92,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.primary700,
     marginRight: 10,
-  },
-  offerDescription: {
-    fontSize: 16,
-    color: "#888",
   },
   offerDiscount: {
     fontSize: 20,
@@ -122,14 +118,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary700,
   },
   secondaryButton: {
-    backgroundColor: "#888",
+    backgroundColor: colors.neutral400,
   },
   primaryButtonText: {
-    color: "#fff",
+    color: colors.white,
     fontWeight: "bold",
   },
   secondaryButtonText: {
-    color: "#fff",
+    color: colors.white,
     fontWeight: "bold",
   },
 });

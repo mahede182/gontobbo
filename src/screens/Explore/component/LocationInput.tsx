@@ -23,6 +23,7 @@ const LocationInput = ({ country, location, onPress }: LocationInputProps) => (
       alignItems="center">
       <Image
         source={LocationIcon}
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{ marginRight: spacing.small, height: 18, width: 18, resizeMode: "contain" }}
       />
       <Box flexDirection="column">

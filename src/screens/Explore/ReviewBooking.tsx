@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 // ReviewBooking.tsx
 import React, { useState } from "react";
 import {

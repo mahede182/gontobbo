@@ -15,9 +15,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
 import { dynamicCSS } from "@/utils/styles";
-import SignIn from "@/screens/SignIn";
-import TermsAndCondition from "@/screens/Terms/TermsAndCondition";
-
 type Props = {};
 
 const Drawer = createDrawerNavigator();

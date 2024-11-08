@@ -15,7 +15,7 @@ import {
 
 const AddNewTraveller = () => {
   const [fullName, setFullName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState(new Date());
+  // const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [gender, setGender] = useState("");
   const [nationality, setNationality] = useState("");
   const [passportNumber, setPassportNumber] = useState("");
@@ -23,23 +23,10 @@ const AddNewTraveller = () => {
   const [travellerType, setTravellerType] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const handleSubmit = () => {
-    // Submit form data
-    console.log({
-      fullName,
-      dateOfBirth,
-      gender,
-      nationality,
-      passportNumber,
-      passportIssuingCountry,
-      travellerType,
-    });
-  };
-
-  const handleDateChange = (date) => {
-    setShowDatePicker(false);
-    setDateOfBirth(date);
-  };
+  // const handleDateChange = (date) => {
+  //   setShowDatePicker(false);
+  //   setDateOfBirth(date);
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -125,7 +112,6 @@ const AddNewTraveller = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "white",
     marginHorizontal: 20,
   },
   innerContainer: {
@@ -136,11 +122,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   title: { fontFamily: typography.poppinsMedium, fontSize: 16, marginTop: 4, marginBottom: 2 },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
   subheader: {
     fontSize: 18,
     fontWeight: "bold",
@@ -149,7 +130,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: "gray",
+    borderColor: colors.neutral500,
     borderWidth: 1,
     marginBottom: 16,
     paddingHorizontal: 8,
@@ -165,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "white",
+    color: colors.white,
     fontWeight: "bold",
   },
   modalContainer: {
@@ -174,14 +155,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalButton: {
-    backgroundColor: "blue",
+    backgroundColor: colors.primary700,
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 4,
     marginTop: 16,
   },
   modalButtonText: {
-    color: "white",
+    color: colors.white,
     fontWeight: "bold",
   },
 });

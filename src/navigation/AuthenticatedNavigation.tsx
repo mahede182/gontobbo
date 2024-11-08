@@ -12,7 +12,6 @@ import ReviewBooking from "@/screens/Explore/ReviewBooking";
 import RulesAndRegulations from "@/screens/Explore/RulesAndRegulations";
 import SwitchFlight from "@/screens/Explore/component/SwitchFlight";
 import TabNavigation, { TabStackParamList } from "./TabNavigation";
-import FinalReviewBookingScreen from "@/screens/ReviewBooking/ReviewBookingScreen";
 import TripReviewBookingScreen from "@/screens/TripReviewBooking/TripReviewBookingScreen";
 import AddNewTraveller from "@/screens/TripReviewBooking/AddedTraveller";
 

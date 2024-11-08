@@ -6,7 +6,6 @@ import Icon from "@expo/vector-icons/MaterialIcons";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { spacing } from "@shopify/restyle";
 
 const Amenities = () => {
   const navigation = useNavigation();

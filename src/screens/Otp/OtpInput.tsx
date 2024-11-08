@@ -4,12 +4,12 @@ import { TextInput, StyleSheet } from "react-native";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 
-type Props = {
-  value: string;
-  index: number;
-  onChange: (index: number, value: string) => void;
-  // Add other props as needed
-};
+// type Props = {
+//   value: string;
+//   index: number;
+//   onChange: (index: number, value: string) => void;
+//   // Add other props as needed
+// };
 
 const OtpInput = ({ value, index, onChange }) => {
   const inputRef = useRef(null);

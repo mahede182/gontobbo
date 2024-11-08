@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import TripCard from "./TripCard";
 import { popularTrip } from "@/data/popularTripData";
 import GradientTitle from "@/components/GradientTitle";
+import { dynamicCSS } from "@/utils/styles";
 
 const PopularTrip: React.FC = () => {
   const { t } = useTranslation();
@@ -12,14 +13,11 @@ const PopularTrip: React.FC = () => {
   return (
     <Box marginTop="twenty">
       <GradientTitle
-        style={{
-          marginVertical: 10,
-          paddingHorizontal: 15,
-        }}
+        style={(dynamicCSS("marginVertical", 10), dynamicCSS("paddingHorizontal", 15))}
         variant="gradientTitle">
         {t("Home.popularTrip")}
       </GradientTitle>
-      <ScrollView style={{ paddingHorizontal: 20 }}>
+      <ScrollView style={dynamicCSS("paddingHorizontal", 20)}>
         {popularTrip.map((trip, index) => (
           <TripCard
             key={index}

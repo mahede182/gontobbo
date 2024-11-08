@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "@/theme/colors";
@@ -69,7 +70,7 @@ const ReviewsAndRatings = () => {
 
       <Box style={styles.ratingContainer}>
         <Box flexDirection={"row"} style={styles.ratingBackground}>
-          <Icon name="star" color={colors.linearEnd} style={{ marginHorizontal: 5 }} />
+          <Icon name="star" color={colors.linearEnd} style={dynamicCSS("marginHorizontal", 5)} />
           <RestyleText style={styles.ratingValue}>4.5</RestyleText>
         </Box>
         <Box>

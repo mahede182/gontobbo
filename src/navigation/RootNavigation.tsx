@@ -1,11 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthenticatingNavigation, { AuthStackParamList } from "./AuthenticatingNavigation";
-import { AppProvider, useApp } from "@/hooks/useApp";
+import { useApp } from "@/hooks/useApp";
 import IntroNavigation, { IntroStackParamList } from "./IntroNavigation";
 import AuthenticatedNavigation, { AuthdStackParamList } from "./AuthenticatedNavigation";
 import { navigationRef } from "@/utils/helper";
-import { useEffect } from "react";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

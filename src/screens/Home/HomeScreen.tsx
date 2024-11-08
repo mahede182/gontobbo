@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from "react";
 import { Box } from "@/theme";
 import { getUser } from "@/utils/axios";
@@ -17,6 +18,7 @@ import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { useApp } from "@/hooks/useApp";
+import { dynamicCSS } from "@/utils/styles";
 
 type Props = {};
 
@@ -28,6 +30,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { state: appState } = useApp();
 
   useEffect(() => {
@@ -69,7 +72,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
       {/* === Tag === */}
       <Box>
         <ScrollView
-          style={{ paddingVertical: 10, paddingHorizontal: 10 }}
+          style={(dynamicCSS("paddingVertical", 10), dynamicCSS("paddingHorizontal", 10))}
           showsHorizontalScrollIndicator={false}
           horizontal>
           {/* Map over tagData and render Tag component */}

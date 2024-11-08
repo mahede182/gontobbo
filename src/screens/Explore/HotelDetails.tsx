@@ -11,6 +11,7 @@ import PriceSelect from "./component/PriceSelect";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "moti";
 import { typography } from "@/theme/typography";
+import { dynamicCSS } from "@/utils/styles";
 
 const HotelDetails = () => {
   const { t } = useTranslation();
@@ -58,17 +59,32 @@ const HotelDetails = () => {
       case 2:
         return (
           <View style={styles.twoImagesContainer}>
-            <Image source={photos[0]} style={[styles.twoImagesLeft, { marginRight: 4 }]} />
-            <Image source={photos[1]} style={[styles.twoImagesRight, { marginLeft: 4 }]} />
+            <Image
+              source={photos[0]}
+              style={[styles.twoImagesLeft, dynamicCSS("marginRight", 4)]}
+            />
+            <Image
+              source={photos[1]}
+              style={[styles.twoImagesRight, dynamicCSS("marginRight", 4)]}
+            />
           </View>
         );
       case 3:
         return (
           <View style={styles.threeImagesContainer}>
-            <Image source={photos[0]} style={[styles.threeImagesLeft, { marginRight: 4 }]} />
+            <Image
+              source={photos[0]}
+              style={[styles.threeImagesLeft, dynamicCSS("marginRight", 4)]}
+            />
             <View style={styles.threeImagesRightContainer}>
-              <Image source={photos[1]} style={[styles.threeImagesRightTop, { marginBottom: 4 }]} />
-              <Image source={photos[2]} style={[styles.threeImagesRightBottom, { marginTop: 4 }]} />
+              <Image
+                source={photos[1]}
+                style={[styles.threeImagesRightTop, dynamicCSS("marginBottom", 4)]}
+              />
+              <Image
+                source={photos[2]}
+                style={[styles.threeImagesRightBottom, dynamicCSS("marginTop", 4)]}
+              />
             </View>
           </View>
         );

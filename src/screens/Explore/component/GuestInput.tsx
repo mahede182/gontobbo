@@ -1,9 +1,8 @@
 import React from "react";
-import { Pressable, Image } from "react-native";
+import { Pressable, Image, StyleSheet } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
-import { typography } from "@/theme/typography";
 import { useSelector } from "@xstate/react";
 import { counterActor } from "@/machine/counterMachine";
 
@@ -15,7 +14,7 @@ const GuestInput = ({ onPress }: GuestInputProps) => {
   // const { state } = useApp();
   const { rooms, adults, children } = useSelector(counterActor, (snapshot) => snapshot.context);
   return (
-    <Pressable style={{ backgroundColor: colors.white100, marginBottom: 15 }} onPress={onPress}>
+    <Pressable style={styles.container} onPress={onPress}>
       <Box
         borderColor={"neutral300"}
         borderWidth={1}
@@ -23,10 +22,7 @@ const GuestInput = ({ onPress }: GuestInputProps) => {
         borderRadius={5}
         flexDirection="row"
         alignItems="center">
-        <Image
-          source={images.profile}
-          style={{ marginRight: 6, height: 16, width: 16, resizeMode: "contain" }}
-        />
+        <Image source={images.profile} style={styles.imgStyle} />
         <Box flexDirection={"column"}>
           <RestyleText
             variant={
@@ -40,3 +36,8 @@ const GuestInput = ({ onPress }: GuestInputProps) => {
 };
 
 export default GuestInput;
+
+const styles = StyleSheet.create({
+  container: { backgroundColor: colors.white100, marginBottom: 15 },
+  imgStyle: { marginRight: 6, height: 16, width: 16, resizeMode: "contain" },
+});

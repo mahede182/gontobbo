@@ -32,7 +32,7 @@ const SearchForm = () => {
       style={styles.container}>
       <LocationInput
         location="New York,"
-        country = "United States"
+        country="United States"
         onPress={() => {
           navigation.navigate("SELECT_LOCATION");
         }}

@@ -22,7 +22,6 @@ export const getUser = async (accessToken: string): Promise<TUser> => {
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching authenticated user:", error);
     throw error;
   }
 };

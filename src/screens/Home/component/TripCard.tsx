@@ -52,6 +52,7 @@ const TripCard: React.FC<TripCardProps> = ({
                 <Image
                   key={index}
                   source={avatar}
+                  // eslint-disable-next-line react-native/no-inline-styles
                   style={[styles.avatar, { marginLeft: index > 0 ? -10 : 0 }]}
                 />
               ))}

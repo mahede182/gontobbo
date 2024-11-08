@@ -26,6 +26,7 @@ const SwitchFlight = (props: Props) => {
               <TouchableOpacity
                 style={[
                   styles.selectButton,
+                  // eslint-disable-next-line react-native/no-inline-styles
                   {
                     backgroundColor: colors.blue800,
                     paddingHorizontal: 12,
@@ -67,13 +68,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -110,13 +105,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -166,13 +155,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -209,13 +192,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -265,13 +242,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -308,13 +279,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -364,13 +329,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -407,13 +366,7 @@ const SwitchFlight = (props: Props) => {
                 </Box>
                 <Box>
                   <RestyleText variant="thinTitle">14 hours</RestyleText>
-                  <Box
-                    style={{
-                      backgroundColor: colors.primary500,
-                      height: 1,
-                      marginVertical: 2,
-                    }}
-                  />
+                  <Box style={styles.stopContainer} />
                   <RestyleText variant="thinTitle">1 stop</RestyleText>
                 </Box>
                 <Box>
@@ -489,5 +442,10 @@ const styles = StyleSheet.create({
   },
   marginHorizontal: {
     marginHorizontal: 8,
+  },
+  stopContainer: {
+    backgroundColor: colors.primary500,
+    height: 1,
+    marginVertical: 2,
   },
 });

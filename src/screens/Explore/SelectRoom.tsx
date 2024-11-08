@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import { Box, RestyleText } from "@/theme";
 import { Image, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";

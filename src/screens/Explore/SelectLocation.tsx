@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Input } from "@/components/Input";
 import { typography } from "@/theme/typography";
 import { SafeAreaView } from "moti";
+import { dynamicCSS } from "@/utils/styles";
 
 const LocationSelect = () => {
   const popularLocations = [
@@ -24,7 +25,10 @@ const LocationSelect = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.locationItem}>
-      <Image style={{ marginRight: 5 }} source={require("@/assets/Explore/locIcon.png")} />
+      <Image
+        style={dynamicCSS("marginRight", 5)}
+        source={require("@/assets/Explore/locIcon.png")}
+      />
       <RestyleText style={styles.locationText}>{item}</RestyleText>
     </View>
   );
@@ -42,7 +46,7 @@ const LocationSelect = () => {
       {/* === Header === */}
       <Box flexDirection={"row"} alignItems={"center"} marginBottom={"medium"}>
         <Box
-          style={{ height: 32, width: 32, marginRight: 10 }}
+          style={styles.iconContainer}
           alignItems="center"
           justifyContent="center"
           borderRadius={32}
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: colors.neutral600,
   },
+  iconContainer: { height: 32, width: 32, marginRight: 10 },
 });
 
 export default LocationSelect;

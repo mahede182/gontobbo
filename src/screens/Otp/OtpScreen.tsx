@@ -1,27 +1,20 @@
 // src/screens/Otp/OtpScreen.tsx
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
-import { useTranslation } from "react-i18next";
 import { OtpInput } from "react-native-otp-entry";
 import { useNavigation } from "@react-navigation/native";
 
 type Props = {};
 
 const OtpScreen = (props: Props) => {
-  const { t } = useTranslation();
-  const [otp, setOtp] = useState("");
   const navigation = useNavigation();
-
-  const handleOtpChange = (newOtp: string) => {
-    setOtp(newOtp);
-  };
 
   const handleResendCode = () => {
     // Implement logic to resend the OTP code
-    setOtp("");
+    // setOtp("");
   };
 
   return (
@@ -36,6 +29,7 @@ const OtpScreen = (props: Props) => {
         numberOfDigits={4}
         focusColor="green"
         focusStickBlinkingDuration={500}
+        // eslint-disable-next-line no-console
         onTextChange={(text) => console.log(text)}
         onFilled={(text) => {
           navigation.navigate("AUTHENTICATING");

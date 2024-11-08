@@ -1,4 +1,4 @@
-import { ActorRefFrom, assign, setup } from "xstate";
+import { ActorRefFrom, setup } from "xstate";
 
 export type HomeMachineActor = ActorRefFrom<typeof homeMachine>;
 

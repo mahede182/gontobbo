@@ -18,28 +18,11 @@ const FavouriteScreen: React.FC<Props> = (): JSX.Element => {
       <RestyleText fontSize={21} onPress={() => navigation.navigate("TAB")}>
         Home
       </RestyleText>
-      <Box
-        alignItems="center"
-        justifyContent="center"
-        style={{ width: "100%", backgroundColor: colors.white }}>
-        <TouchableOpacity
-          style={{
-            padding: 10,
-            borderRadius: 5,
-            borderColor: colors.black,
-            borderWidth: 2,
-          }}
-          onPress={() => send({ type: "INC" })}>
+      <Box alignItems="center" justifyContent="center" style={styles.subContainer}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => send({ type: "INC" })}>
           <RestyleText fontSize={21}> + {t("common.increment")}</RestyleText>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            padding: 10,
-            borderRadius: 5,
-            borderColor: colors.black,
-            borderWidth: 2,
-          }}
-          onPress={() => send({ type: "DEC" })}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => send({ type: "DEC" })}>
           <RestyleText fontSize={21}> - {t("common.decrement")} </RestyleText>
         </TouchableOpacity>
 
@@ -61,5 +44,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  subContainer: { width: "100%", backgroundColor: colors.white },
+  buttonContainer: {
+    padding: 10,
+    borderRadius: 5,
+    borderColor: colors.black,
+    borderWidth: 2,
   },
 });

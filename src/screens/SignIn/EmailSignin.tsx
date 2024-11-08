@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -8,9 +8,10 @@ import { colors } from "@/theme/colors";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import Background from "@/components/Background";
-import { useApp } from "@/hooks/useApp";
-import { NAuthenticatedMachine } from "@/machine/commonMachine";
-import { useMachine } from "@xstate/react";
+// import { useApp } from "@/hooks/useApp";
+// import { NAuthenticatedMachine } from "@/machine/commonMachine";
+// import { useMachine } from "@xstate/react";
+import { dynamicCSS } from "@/utils/styles";
 
 type Props = {};
 
@@ -21,14 +22,12 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
-  const { state: appState } = useApp();
+  // const { state: appState } = useApp();
 
-  const [state, send] = useMachine(NAuthenticatedMachine);
+  // const [state, send] = useMachine(NAuthenticatedMachine);
 
-  const user = state?.context?.userData;
-  const accessToken = state?.context?.accessToken;
-
-  console.log(accessToken, "accessToken");
+  // const user = state?.context?.userData;
+  // const accessToken = state?.context?.accessToken;
 
   return (
     <Background>
@@ -36,7 +35,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
         <HeaderTitle title={t("signIn.signInWithEmail")} />
 
         <Box style={styles.formContainer}>
-          <RestyleText variant="inputTitle" style={{ marginBottom: 5 }}>
+          <RestyleText variant="inputTitle" style={dynamicCSS("marginBottom", 5)}>
             {t("signIn.emailAddress")}
           </RestyleText>
           <TextInput

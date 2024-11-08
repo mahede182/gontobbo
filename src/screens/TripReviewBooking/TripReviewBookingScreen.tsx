@@ -165,15 +165,15 @@ const styles = StyleSheet.create({
   },
   hotelPackage: {
     fontSize: 16,
-    color: "#888",
+    color: colors.neutral400,
   },
   hotelRating: {
     fontSize: 16,
-    color: "#ffa500",
+    color: colors.linearEnd,
   },
   hotelLocation: {
     fontSize: 14,
-    color: "#888",
+    color: colors.neutral400,
   },
   datesContainer: {
     marginBottom: 16,
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   packageContainer: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.white200,
     padding: 16,
     borderRadius: 8,
     marginBottom: 16,
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   packageDuration: {
     fontSize: 16,
-    color: "#888",
+    color: colors.neutral400,
     marginBottom: 8,
   },
   packageDetails: {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   packageNonRefundable: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#ff0000",
+    color: colors.neutral400,
   },
   priceContainer: {
     marginBottom: 16,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
   priceLabel: {
     fontSize: 16,
-    color: "#888",
+    color: colors.neutral400,
   },
   priceValue: {
     fontSize: 16,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   travellerDetailsRow: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.white200,
     padding: 16,
     borderRadius: 8,
     marginBottom: 8,
@@ -285,11 +285,11 @@ const styles = StyleSheet.create({
   },
   contactLabel: {
     fontSize: 16,
-    color: "#888",
+    color: colors.neutral400,
   },
   contactPlaceholder: {
     fontSize: 16,
-    color: "#888",
+    color: colors.neutral400,
   },
   contactNumberRow: {
     flexDirection: "row",
@@ -303,10 +303,10 @@ const styles = StyleSheet.create({
   },
   stateLabel: {
     fontSize: 16,
-    color: "#888",
+    color: colors.neutral400,
   },
   stateButton: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.neutral600,
     padding: 8,
     borderRadius: 8,
   },
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   stateCheckbox: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#00ff00",
+    color: colors.blue600,
   },
   bookNowButton: {
     backgroundColor: colors.primary700,
@@ -331,6 +331,6 @@ const styles = StyleSheet.create({
   bookNowButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#fff",
+    color: colors.white,
   },
 });

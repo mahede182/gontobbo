@@ -1,6 +1,4 @@
-import { color } from "@shopify/restyle";
 import { typography } from "./typography";
-import { colors } from "./colors";
 
 export const textVariants = {
   defaults: {
@@ -31,7 +29,7 @@ export const textVariants = {
   caption: {
     fontSize: 12,
     fontFamily: typography.poppinsRegular,
-    fontWeight: "200"
+    fontWeight: "200",
   },
   gradientTitle: {
     fontFamily: typography.poppinsSemibold,
@@ -57,4 +55,3 @@ export const textVariants = {
     fontSize: 8,
   },
 };
-

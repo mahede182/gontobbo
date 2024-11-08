@@ -2,7 +2,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EmailSignin from "@/screens/SignIn/EmailSignin";
 import SignUpScreen from "@/screens/SignUp";
 import SignIn from "@/screens/SignIn";
-import { useSelector } from "@xstate/react";
 import OtpScreen from "@/screens/Otp/OtpScreen";
 
 /**
@@ -26,9 +25,6 @@ export type AuthStackParamList = {
 const Stack = createStackNavigator<AuthStackParamList>();
 
 const AuthenticatingNavigation = ({ actorRef }) => {
-  const state = useSelector(actorRef, (snapshot) => {
-    return snapshot;
-  });
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="SIGN_IN">
