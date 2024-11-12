@@ -1,8 +1,10 @@
-import { assign, setup, fromPromise } from "xstate";
+import { assign, setup, fromPromise, ActorRefFrom } from "xstate";
 import { getItem } from "../utils/storage";
 import { TOKEN } from "../constants/config";
 
-export const authActor = setup({
+export type PersistMachineActor = ActorRefFrom<typeof persistMachine>;
+
+export const persistMachine = setup({
   types: {
     context: {} as {
       has_loaded_initial_data: boolean;
@@ -28,8 +30,8 @@ export const authActor = setup({
     }),
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOgA5gDsIBLAqAYlnWQCd0BtABgF1FRcB7WY9YjgtiAAeiAIwBWcdgBMANgAc0gCzT5AdhUBmNWoCcAGhABPMWtHYzm3bNnTdS+7vlKAvi8Nos2Uj2LIANgD6yLjEgaQAbhwA1mDkEPxg3gRRsdieOD68AcGh4SkxYAiRHADGyLz8TMzVgpzclQJIwohqjIwWspqMsrqiorrSjPaGJgjy5prSdqKM2v3i0hJuHhg4+DTcVKQUCQRJJWkbW7xktc31vvyCIgjiomrYXfKMSmryuuJzE6NislLiJSyJSacSaF66NQKaQrEAZPBgTbEbZkciImgcGh4fwVABmmIAtgikSioOd2Fwrk1QLdpOJHm9GOotPJbFNfncOtYltooaIJv9RK5YQQOBA4IIMnVKY0bogALSyDnyzSybCqxjvcTWNRg+kw9xwtYIog7aUNPjUloIFQch7mdSA0FKJQSd6iWHwrJ+IIhMKHMDmqlyhAKNW6JnqN2iGxzO3vbD0ubDZTWJSMGOe43HZGnKBB2XNWmLGSaEE6DNzJQfO1dRNDKzA4FlpyaNxuIA */
-  id: "auth",
+  /** @xstate-layout N4IgpgJg5mDOIC5QAcwCdYEtYBcB0qAdhJoVAMS4CGaOA2gAwC6iKA9ljpm4ayAB6IAjAFYReAEwA2ABwShUoTIDsIqRIAsAGhABPYTKl5lUgMwBOBqZNipUjSIC+jnagzZ8pTFyoAbAPpUyJj+pABubADWYOQQPGB44VEJbli4iYTemH6BwaGEEdEISQDGVFw8jExVfMgcWTx8ggjKDAzG6uZS5hIMGqZCpjI6+ggyQnimEhLmQuZTrTIMqs6u6Gn4qR6kFHGECUnRBOvbZDVIIHWc3LwXzSJCynhmyuZyM+NSyqYjwlLiIg09n6GksElUMmcLhAhDYEDgtROuFq9Qqt1AzQAtFJfghsatLkjNmBiDsUddGndEBoJLilEYeiJTKDWqoNDIpgStukvD4AkEQocwOSGuiBIhZAyGDIlrIJGoRMpaXphMoZHhFVZlrNAUJpJDodzie5cGSLldRU1EPKJJJmcz5hIhgNmXSzBrejSnSJzCDlFDHEA */
+  id: "persist",
   initial: "pending",
   context: {
     persisted: false,
@@ -42,6 +44,7 @@ export const authActor = setup({
         start: "persisting",
       },
     },
+
     initial_api_invoke: {
       invoke: {
         onDone: {
@@ -49,20 +52,22 @@ export const authActor = setup({
             has_loaded_initial_data: true,
           }),
         },
-        src: "load_initial_data",
+
+        src: "load_initial_data"
       },
     },
+
     persisting: {
       id: "persisting",
       invoke: {
         id: "persisting",
+
         onDone: {
           actions: assign({
             persisted: true,
           }),
           target: "initial_api_invoke",
         },
-        onError: {},
 
         src: "persisting",
       },

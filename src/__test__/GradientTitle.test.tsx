@@ -11,7 +11,7 @@ describe("GradientTitle", () => {
 
   it("renders the text content", () => {
     const tree = renderer.create(<GradientTitle>Test Title</GradientTitle>).toJSON();
-    expect(tree?.children?.some(child => child === "Test Title")).toBeTruthy();
+    expect(tree?.children?.some((child) => child === "Test Title")).toBeTruthy();
   });
 
   it("applies the gradient colors correctly", () => {

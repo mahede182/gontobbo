@@ -1,5 +1,8 @@
 import { setup, assign, ActorRefFrom } from "xstate";
 import { signIn } from "./shared/actors";
+import { persistMachine } from "./persistiMachine";
+import { saveItem } from "@/utils/storage";
+import { TOKEN } from "@/constants/config";
 
 export type NAuthenticatedMachineActor = ActorRefFrom<typeof newAuthMachine>;
 export const NAuthenticatedMachine = setup({
@@ -9,6 +12,7 @@ export const NAuthenticatedMachine = setup({
   },
   actors: {
     signInActor: signIn,
+    persistActor: persistMachine,
   },
   actions: {
     setUserInfo: assign({
@@ -16,9 +20,10 @@ export const NAuthenticatedMachine = setup({
       accessToken: (_, event) => event?.userData?.user?.accessToken,
       error: null,
     }),
+    saveToken: (context) => saveItem(TOKEN, context.accessToken),
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOlQOzSzD3QEsBjZdSAYgBkB5AcQEkA5AbQAYBdRUAA4B7WKTJC8-EAA9EAJjldsATgAsAVjkA2ABxbl69VrkB2ADQgAnogCMq5dh2atJxTq73VXOQF8fFwhxA4jJKMjwoGggJMGxSPAA3IQBrWOiAQQxMEIoqMG4+JBBhUXFJItkELVU5R2UdLx09AGYDVXMreTlm7GadbTl1Li0bE2auZT8ArOxgklzwyLAAJ2WhZewBABsqADN1gFtsDKycsPzeKRKxUgkpSuranXrGlraO6wQbZptsb80PDYtD89DUpiBArNTvNzhB6MwGABVAAqBSuIhudwqiFcSi46nqzRMXFaNjkBgsnx+6mwwK4HgJWm8JnURPBkMCADFkKQtrQAEoAUWR-IAmgB9RisTiXIrXMr3RC6X7VBpArzKCZGSmIHS-ZoKEw2TXKZSDI1+fwgPBCCBwKSBdGlW7lUCVAC0Wh1CE97Jm+DmoTyECdmNdMkQNW9NnUOmwWrG6iN-T6Ji0fqwUKIMKo8SgoYV2IQBoc9lN42UP2UwIpnS+2lpEyByhs7meqnTVo50KD1BDcoxhbduo0KmGikUJgMzQN3sGSmaqh+qbUpk0GaCWW5vMgBZdioQDRpmuM3i4U9Zs7rz2wRiTprkoMTnb8QA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFgOlQOzSzD3QEsBjZdSAYggHs8xtS8A3ega2fMzHM4AFMACdYpWOgAqXYgG0ADAF1EoAA71xZRqpAAPRAGYAHAHZsCgIwAmAJzHDtgGymArNdeuANCACeiABZDJwtggKcFBQDrBTcAgF94n0IcfBTiMkpqCBpREXoRbDUAGyoAMwKAW2xefiFRcUkZbjxFFSQQDS1SHQ6DBEsFV2xXBVtBw0No11MXAJ9-BGsAhRHjGIDTMwUI2OtE5IxUgiOMiipaABkAeQBxAEkAOTbdLtJtPF1+k3MrOwdnG4PN4-IhLAFbNhjO4HAFLO5AbYDiAUth0iRzmQ8FA6IxmKwONxsAwAIKnDFZMAvDpvD5fRC2ZbYUybQyuSw2DzQ2wLRDWayGbAmazrcGzcEi5Go9GZKisHF5ApFUroCoiaqk8my6jU9Sad49T59BlMlmmNkc-mubm8gaGSzYSxslamWwrGJOdZSo5orWYq53a4AVSkus6+rpxoGkQdtgUZmMAXcHsctvtwychisroCxk9ntc3qwvqwADFkKRirQAEoAUSk1YAmgB9G4PZ7KV4Rw30hDOQUQ0wi3NOFxOyy24wOwz84z2ExzywuUyJJIgPD0CBwXQpLvdXqgfoAWlsgvGTnZM9scam1ltR5CkRjJk28OWtkLa9RaT9lIge4NA99EQI8k2wc9LzsG84R5UEEHtVZnCCNlXHsaxXSiIscBlTF5QAyND0QJwOSFXM43HAJKKCW0bBCCJTwcT0ITndCsJLPgKQuf8aW7ID+g5QxzDcdlwmMSIGMMW0PACIVE0GIZlnjcInDYlJy0rSB8J7KMBKEzxwU9cSTEkuC5xGC9bFMSwh0swSBVXeIgA */
   context: {
     error: null,
     userData: null,
@@ -28,6 +33,23 @@ export const NAuthenticatedMachine = setup({
   initial: "unauthenticated",
   states: {
     unauthenticated: {
+      invoke: {
+        id: "checkPersistToken",
+        src: "persistActor",
+        onDone: {
+          target: "authenticated",
+          actions: [
+            assign({
+              userData: (_, event) => event.data,
+              accessToken: (_, event) => event.data?.accessToken,
+            }),
+            (context) => saveItem(TOKEN, context.accessToken),
+          ],
+        },
+        onError: {
+          target: "unauthenticated",
+        },
+      },
       on: {
         LOGIN: {
           target: "authenticating",
@@ -47,6 +69,9 @@ export const NAuthenticatedMachine = setup({
               params: ({ event: { output } }) => {
                 return { userData: output, error: null };
               },
+            },
+            {
+              type: "saveToken",
             },
           ],
         },

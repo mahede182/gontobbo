@@ -10,6 +10,7 @@ import GradientTitle from "@/components/GradientTitle";
 import { images as img } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
 import { dynamicCSS } from "@/utils/styles";
+import { useIntroShown } from "@/hooks/useIntroShown";
 
 const images = [img.initOne, img.initTwo, img.initThree];
 
@@ -31,6 +32,7 @@ const InitScreen = () => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const flatListRef = React.useRef(null);
+  const { showIntro } = useIntroShown();
 
   const renderItem = ({ item }) => (
     <ImageBackground source={item} style={styles.imageContainer}>
@@ -47,6 +49,7 @@ const InitScreen = () => {
           <TouchableOpacity
             onPress={() => {
               if (currentIndex === images.length - 1) {
+                console.log(showIntro);
                 navigation.navigate("AUTHENTICATING");
               } else if (currentIndex === 1) {
                 flatListRef.current.scrollToIndex({ index: 2, animated: true });

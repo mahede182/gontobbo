@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import theme from "./src/theme";
 import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
 import "react-native-reanimated";
@@ -10,6 +10,8 @@ import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { dynamicCSS } from "@/utils/styles";
 import { AppProvider } from "@/hooks/useApp";
+import { clear, getItem, saveItem } from "@/utils/storage";
+import { TOKEN } from "@/constants/config";
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>;
