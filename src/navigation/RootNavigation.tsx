@@ -47,7 +47,6 @@ const RootNavigation = () => {
     fetch();
   });
 
-  console.log(init, "init");
   const isInitializing = init;
   const isAuthenticating = !isInitializing && state.matches("authenticating");
   const isAuthenticated = !isInitializing && state.matches("authenticated");
@@ -76,17 +75,19 @@ const RootNavigation = () => {
 
         <Stack.Screen options={{ headerShown: false }} name="AUTHENTICATING">
           {(props) => {
-            return state.context.refAuthenticating ? (
+            // return state.context.refAuthenticating ? (
+            return (
               <AuthenticatingNavigation actorRef={state.context.refAuthenticating} {...props} />
-            ) : null;
+            );
           }}
         </Stack.Screen>
 
         <Stack.Screen options={{ headerShown: false }} name="AUTHENTICATED">
           {(props) => {
-            return state.context.refAuthenticated ? (
-              <AuthenticatedNavigation actorRef={state.context.refAuthenticated} {...props} />
-            ) : null;
+            // return state.context.refAuthenticated ? (
+            return <AuthenticatedNavigation actorRef={state.context.refAuthenticated} {...props} />;
+
+            // ) : null;
           }}
         </Stack.Screen>
       </Stack.Navigator>

@@ -96,9 +96,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
           {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity
             onPress={() => {
-              send({ type: "INCREMENT" });
-              updateRoom();
-              navigation.navigate("HOME");
+              navigation.navigate("AUTHENTICATED");
             }}>
             <RestyleText style={styles.linkRestyleText}>{t("signIn.continueAsGuest")}</RestyleText>
           </TouchableOpacity>

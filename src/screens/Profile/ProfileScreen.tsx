@@ -1,5 +1,6 @@
 import { useApp } from "@/hooks/useApp";
 import { colors } from "@/theme/colors";
+import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "moti";
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -10,15 +11,9 @@ type Props = {
 
 const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
   const { state: appState } = useApp();
-  const { username, firstName, id, image } = appState?.context?.user;
-
-  // const userData = {
-  //   name: "Anais Fourati",
-  //   membershipLevel: "Gold Member",
-  //   memberNumber: "477 833 9222 922",
-  //   milesCollected: 14934,
-  //   memberClass: "Gold",
-  // };
+  const user = appState?.context?.user || {};
+  const { username, firstName, id, image } = user;
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -86,7 +81,11 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
             <Text style={styles.sectionItemArrow}>{">"}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.logoutButton}>
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={() => {
+            navigation.navigate("AUTHENTICATING");
+          }}>
           <Text style={styles.logoutButtonText}>Log out</Text>
         </TouchableOpacity>
       </ScrollView>

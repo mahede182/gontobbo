@@ -53,7 +53,7 @@ export const persistMachine = setup({
           }),
         },
 
-        src: "load_initial_data"
+        src: "load_initial_data",
       },
     },
 
