@@ -6,9 +6,10 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
+import { isIOS } from "@/utils/device";
 
 const Logo = () => {
-  const env = NativeModules.RNMultiEnv.env;
+  const env = isIOS ? NativeModules.RNMultiEnv.env : "";
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   return (
@@ -16,7 +17,7 @@ const Logo = () => {
       <Image style={styles.logo} source={images.appLogo} />
       {/* TODO: create a new variant of text if found another same size and weight */}
       <RestyleText style={styles.title}>
-        {t("common.gontobbo")} - {env}
+        {t("common.gontobbo")} {env}
       </RestyleText>
       <RestyleText style={styles.subtitle} textAlign="center">
         {t("common.gontobboSlogan")}

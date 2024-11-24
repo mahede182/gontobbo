@@ -12,6 +12,7 @@ import TravelScreens from "@/screens/Explore";
 import WishListScreens from "@/screens/Wishlist";
 import ProfileScreen from "@/screens/Profile";
 import DrawerNavigation from "./DrawerNavigation";
+import { isIOS } from "@/utils/device";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -128,6 +129,7 @@ const TabNavigation = (props: Props) => {
                     position: "absolute",
                     backgroundColor: colors.danger,
                     bottom: 0,
+                    top: isIOS ? "undefined" : -10,
                     right: 5,
                     zIndex: 999,
                     height: 16,
