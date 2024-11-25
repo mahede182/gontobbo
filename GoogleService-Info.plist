@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>228779477149-htkbnhk730s7sssrj68stuntmiglhsu7.apps.googleusercontent.com</string>
+	<string>369835037060-0e1hi89j38dvsoojhl4ieapg4ekpmdtk.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.228779477149-htkbnhk730s7sssrj68stuntmiglhsu7</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>228779477149-kvgi01k770253e9tqdb2sgnb6rljd5ol.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.369835037060-0e1hi89j38dvsoojhl4ieapg4ekpmdtk</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAtYyeGF4fqJbnkMngZxaTeUKfBeKbs0Uo</string>
+	<string>AIzaSyA1h_iffRebRxEGTaltWks0Fe-SFc6cr0c</string>
 	<key>GCM_SENDER_ID</key>
-	<string>228779477149</string>
+	<string>369835037060</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>co.bitsofts.gontobbo</string>
+	<string>io.bitsofts.gontobbo</string>
 	<key>PROJECT_ID</key>
-	<string>gontobbo-bbdd8</string>
+	<string>gontobbo-442813</string>
 	<key>STORAGE_BUCKET</key>
-	<string>gontobbo-bbdd8.appspot.com</string>
+	<string>gontobbo-442813.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:228779477149:ios:5ccd0a67c86378398dec74</string>
+	<string>1:369835037060:ios:2814d075fb51cb622c8dd1</string>
 </dict>
 </plist>
