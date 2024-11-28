@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "moti";
 import { typography } from "@/theme/typography";
 import { dynamicCSS } from "@/utils/styles";
+import { isIOS } from "@/utils/device";
 
 const HotelDetails = () => {
   const { t } = useTranslation();
@@ -217,27 +218,31 @@ const HotelDetails = () => {
           <Box
             borderWidth={0.6}
             borderRadius={10}
+            backgroundColor={"primary100"}
             padding={"ten"}
             borderColor={"neutral300"}
             marginVertical={"ten"}
             style={styles.section}>
             <RestyleText style={styles.sectionTitle}>{t("Explore.location")}</RestyleText>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}>
-              <Marker
-                coordinate={{
+            {isIOS ? (
+              <MapView
+                style={styles.map}
+                initialRegion={{
                   latitude: location.latitude,
                   longitude: location.longitude,
-                }}
-                title={name}
-              />
-            </MapView>
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}>
+                <Marker
+                  coordinate={{
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                  }}
+                  title={name}
+                />
+              </MapView>
+            ) : null}
+
             <RestyleText style={styles.locationAddress}>{location.address}</RestyleText>
           </Box>
         </TouchableOpacity>

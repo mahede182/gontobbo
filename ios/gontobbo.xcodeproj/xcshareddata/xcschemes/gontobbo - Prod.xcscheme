@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "gontobbo - Prod.app"
+               BuildableName = "gontobbo.app"
                BlueprintName = "gontobbo"
                ReferencedContainer = "container:gontobbo.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
       shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
-      buildConfiguration = "DebugProd"
+      buildConfiguration = "ReleaseProd"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "gontobbo - Prod.app"
+            BuildableName = "gontobbo.app"
             BlueprintName = "gontobbo"
             ReferencedContainer = "container:gontobbo.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "gontobbo - Prod.app"
+            BuildableName = "gontobbo.app"
             BlueprintName = "gontobbo"
             ReferencedContainer = "container:gontobbo.xcodeproj">
          </BuildableReference>
@@ -73,6 +73,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "ReleaseProd"
+      customArchiveName = "gontobbo"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

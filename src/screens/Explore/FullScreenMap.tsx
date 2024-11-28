@@ -11,6 +11,7 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { useTranslation } from "react-i18next";
 import { dynamicCSS } from "@/utils/styles";
+import { isIOS } from "@/utils/device";
 
 const { width, height } = Dimensions.get("window");
 
@@ -30,27 +31,36 @@ const FullScreenMap = () => {
         <GradientTitle variant="gradientTitle">{t("Explore.fullScreenMap")}</GradientTitle>
       </Box>
 
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
-        <Marker
-          coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-          title="Hotel Location"
-          pinColor={"purple"} // any color
-          description={"description"}>
-          <RestyleTransparent opacity={0.25}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SELECT_ROOM")}
-              style={styles.markerStyle}
-            />
-          </RestyleTransparent>
-        </Marker>
-      </MapView>
+      {isIOS ? (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}>
+          <Marker
+            coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+            title="Hotel Location"
+            pinColor={"purple"} // any color
+            description={"description"}>
+            <RestyleTransparent opacity={0.25}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SELECT_ROOM")}
+                style={styles.markerStyle}
+              />
+            </RestyleTransparent>
+          </Marker>
+        </MapView>
+      ) : (
+        <RestyleTransparent opacity={0.25}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SELECT_ROOM")}
+            style={styles.markerStyle}
+          />
+        </RestyleTransparent>
+      )}
     </SafeAreaView>
   );
 };

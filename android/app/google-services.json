@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "369835037060",
-    "project_id": "gontobbo-442813",
-    "storage_bucket": "gontobbo-442813.firebasestorage.app"
+    "project_number": "888391547672",
+    "project_id": "gontobbo-fb6d4",
+    "storage_bucket": "gontobbo-fb6d4.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:369835037060:android:fdf63964410a16c92c8dd1",
+        "mobilesdk_app_id": "1:888391547672:android:4af4c95d2307b281e73c6d",
         "android_client_info": {
           "package_name": "io.bitsofts.gontobbo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "369835037060-b85eb6mjjguu7huh9fsdq3ld4j2j1tdn.apps.googleusercontent.com",
+          "client_id": "888391547672-lq7lb9u0ipd02gii3820ceh2qv6fv5db.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCCWtnF-XJpMqCAzxxMzYuHpOblRL0JFUI"
+          "current_key": "AIzaSyCNrlYTPVMrg5r5O42Lz1hMJNRDuCo1jDk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "369835037060-b85eb6mjjguu7huh9fsdq3ld4j2j1tdn.apps.googleusercontent.com",
+              "client_id": "888391547672-lq7lb9u0ipd02gii3820ceh2qv6fv5db.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "369835037060-0e1hi89j38dvsoojhl4ieapg4ekpmdtk.apps.googleusercontent.com",
+              "client_id": "888391547672-tvllepg2qfpmbi8oub67vcvd8112jlpb.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "io.bitsofts.gontobbo"

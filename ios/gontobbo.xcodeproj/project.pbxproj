@@ -24,9 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04503CDB2CF5E8CD00C9DD27 /* gontobboReleaseProd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = gontobboReleaseProd.entitlements; path = gontobbo/gontobboReleaseProd.entitlements; sourceTree = "<group>"; };
 		04B3A4362CDA5B2B00D26F8B /* RNMultiEnv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNMultiEnv.h; sourceTree = "<group>"; };
 		04B3A4372CDA5B2B00D26F8B /* RNMultiEnv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNMultiEnv.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* gontobbo - Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gontobbo - Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* gontobbo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gontobbo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = gontobbo/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = gontobbo/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = gontobbo/Images.xcassets; sourceTree = "<group>"; };
@@ -69,6 +70,7 @@
 		13B07FAE1A68108700A75B9A /* gontobbo */ = {
 			isa = PBXGroup;
 			children = (
+				04503CDB2CF5E8CD00C9DD27 /* gontobboReleaseProd.entitlements */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -131,7 +133,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* gontobbo - Dev.app */,
+				13B07F961A680F5B00A75B9A /* gontobbo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,7 +200,7 @@
 			);
 			name = gontobbo;
 			productName = gontobbo;
-			productReference = 13B07F961A680F5B00A75B9A /* gontobbo - Dev.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* gontobbo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -450,10 +452,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -476,20 +475,22 @@
 					"STAGING=1",
 				);
 				INFOPLIST_FILE = gontobbo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gontobbo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = co.bitsofts.gontobbo.staging;
-				PRODUCT_NAME = "gontobbo - Staging";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -549,10 +550,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -570,20 +568,22 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3553Q9U7ZR;
 				INFOPLIST_FILE = gontobbo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gontobbo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = co.bitsofts.gontobbo;
-				PRODUCT_NAME = "gontobbo - Staging";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -642,10 +642,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -659,24 +656,26 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = gontobbo/gontobbo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = gontobbo/gontobboReleaseProd.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3553Q9U7ZR;
 				INFOPLIST_FILE = gontobbo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gontobbo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = co.bitsofts.gontobbo;
-				PRODUCT_NAME = "gontobbo - Prod";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -743,10 +742,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -769,20 +765,22 @@
 					"PROD=1",
 				);
 				INFOPLIST_FILE = gontobbo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gontobbo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = co.bitsofts.gontobbo;
-				PRODUCT_NAME = "gontobbo - Prod";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -807,20 +805,22 @@
 					"DEV=1",
 				);
 				INFOPLIST_FILE = gontobbo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gontobbo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = co.bitsofts.gontobbo.dev;
-				PRODUCT_NAME = "gontobbo - Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -839,20 +839,22 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3553Q9U7ZR;
 				INFOPLIST_FILE = gontobbo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gontobbo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = co.bitsofts.gontobbo;
-				PRODUCT_NAME = "gontobbo - Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -919,10 +921,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -980,10 +979,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
