@@ -46,7 +46,7 @@ const AddNewTraveller = () => {
           Date Of Birth<Text style={{ color: colors.danger }}>*</Text>
         </Text>
         <TouchableOpacity style={styles.input} onPress={() => setShowDatePicker(true)}>
-          <Text>{dateOfBirth.toLocaleDateString()}</Text>
+          <Text>01/01/2000</Text>
         </TouchableOpacity>
         <Modal visible={showDatePicker} animationType="slide">
           <View style={styles.modalContainer}>
@@ -102,7 +102,7 @@ const AddNewTraveller = () => {
           onChangeText={setTravellerType}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Add Traveller</Text>
       </TouchableOpacity>
     </SafeAreaView>

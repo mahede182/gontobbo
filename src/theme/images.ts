@@ -42,6 +42,8 @@ export const images = {
   flightIcon: require("@/assets/flight.png") as ImageSourcePropType,
   plane: require("@/assets/plane.png") as ImageSourcePropType,
   bin: require("@/assets/bin.png") as ImageSourcePropType,
+  map: require("@/assets/map.png") as ImageSourcePropType,
+  success: require("@/assets/success.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;

@@ -3,6 +3,7 @@ import React from "react";
 import { colors } from "@/theme/colors";
 import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
+import { useNavigation } from "@react-navigation/native";
 
 type Props = {
   gradient?: boolean;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 const PriceSelect = (props: Props) => {
+  const navigation = useNavigation();
   return (
     <Box style={styles.priceSection}>
       <Box style={styles.priceContainer}>
@@ -28,7 +30,9 @@ const PriceSelect = (props: Props) => {
           </>
         )}
       </Box>
-      <TouchableOpacity style={styles.selectRoomButton}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("TRIP_REVIEW_BOOKING")}
+        style={styles.selectRoomButton}>
         <RestyleText style={styles.selectRoomButtonText}>{props.buttonText}</RestyleText>
       </TouchableOpacity>
     </Box>

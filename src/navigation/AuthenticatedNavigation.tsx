@@ -14,6 +14,7 @@ import SwitchFlight from "@/screens/Explore/component/SwitchFlight";
 import TabNavigation, { TabStackParamList } from "./TabNavigation";
 import TripReviewBookingScreen from "@/screens/TripReviewBooking/TripReviewBookingScreen";
 import AddNewTraveller from "@/screens/TripReviewBooking/AddedTraveller";
+import SuccessfulBookingScreen from "@/screens/SuccessfulBooking/SuccessfulBookingScreen";
 
 export type AuthdStackParamList = {
   TAB: TabStackParamList;
@@ -108,6 +109,11 @@ const AuthenticatedNavigation = () => {
       <Stack.Screen options={{ headerShown: false }} name="ADD_TRAVELLER">
         {(props) => {
           return <AddNewTraveller {...props} />;
+        }}
+      </Stack.Screen>
+      <Stack.Screen options={{ headerShown: false }} name="BOOKING_SUCCESS">
+        {(props) => {
+          return <SuccessfulBookingScreen {...props} />;
         }}
       </Stack.Screen>
     </Stack.Navigator>

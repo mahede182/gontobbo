@@ -12,6 +12,7 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  TextInput,
 } from "react-native";
 
 type Props = {};
@@ -92,10 +93,18 @@ const TripReviewBookingScreen = (props: Props) => {
             style={styles.travellerDetailsRow}>
             <Text style={styles.travellerDetailsText}>Add Traveller 1</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.travellerDetailsRow}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("ADD_TRAVELLER");
+            }}
+            style={styles.travellerDetailsRow}>
             <Text style={styles.travellerDetailsText}>Add Traveller 2</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.travellerDetailsRow}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("ADD_TRAVELLER");
+            }}
+            style={styles.travellerDetailsRow}>
             <Text style={styles.travellerDetailsText}>Add Traveller 3</Text>
           </TouchableOpacity>
         </View>
@@ -104,32 +113,34 @@ const TripReviewBookingScreen = (props: Props) => {
           <Text style={styles.contactTitle}>Contact Information</Text>
           <View style={styles.contactRow}>
             <Text style={styles.contactLabel}>Email Address</Text>
-            <Text style={styles.contactPlaceholder}>Email Address</Text>
+            <TextInput placeholder="Email Address" />
           </View>
           <View style={styles.contactRow}>
             <Text style={styles.contactLabel}>Current Address</Text>
-            <Text style={styles.contactPlaceholder}>Current Address</Text>
+            <TextInput placeholder="Current Address" />
           </View>
           <View style={styles.contactRow}>
             <Text style={styles.contactLabel}>Contact Number</Text>
             <View style={styles.contactNumberRow}>
               <Text>+1</Text>
-              <Text style={styles.contactPlaceholder}>Contact No.</Text>
+              <TextInput placeholder="Contact No." />
             </View>
           </View>
-          <View style={styles.stateRow}>
+          {/* <View style={styles.stateRow}>
             <Text style={styles.stateLabel}>Your State</Text>
             <TouchableOpacity style={styles.stateButton}>
               <Text style={styles.stateButtonText}>Edit</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={styles.stateRow}>
             <Text style={styles.stateValue}>USA / Outside USA</Text>
             <Text style={styles.stateCheckbox}>✓</Text>
           </View>
         </View>
 
-        <TouchableOpacity style={styles.bookNowButton}>
+        <TouchableOpacity
+          style={styles.bookNowButton}
+          onPress={() => navigation.navigate("BOOKING_SUCCESS")}>
           <Text style={styles.bookNowButtonText}>Book Now</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -165,7 +176,7 @@ const styles = StyleSheet.create({
   },
   hotelPackage: {
     fontSize: 16,
-    color: colors.neutral400,
+    color: colors.neutral700,
   },
   hotelRating: {
     fontSize: 16,
@@ -173,7 +184,7 @@ const styles = StyleSheet.create({
   },
   hotelLocation: {
     fontSize: 14,
-    color: colors.neutral400,
+    color: colors.neutral700,
   },
   datesContainer: {
     marginBottom: 16,
@@ -203,7 +214,7 @@ const styles = StyleSheet.create({
   },
   packageDuration: {
     fontSize: 16,
-    color: colors.neutral400,
+    color: colors.neutral700,
     marginBottom: 8,
   },
   packageDetails: {
@@ -216,7 +227,7 @@ const styles = StyleSheet.create({
   packageNonRefundable: {
     fontSize: 16,
     fontWeight: "bold",
-    color: colors.neutral400,
+    color: colors.neutral700,
   },
   priceContainer: {
     marginBottom: 16,
@@ -233,7 +244,7 @@ const styles = StyleSheet.create({
   },
   priceLabel: {
     fontSize: 16,
-    color: colors.neutral400,
+    color: colors.neutral700,
   },
   priceValue: {
     fontSize: 16,
@@ -285,7 +296,7 @@ const styles = StyleSheet.create({
   },
   contactLabel: {
     fontSize: 16,
-    color: colors.neutral400,
+    color: colors.neutral700,
   },
   contactPlaceholder: {
     fontSize: 16,
@@ -306,7 +317,7 @@ const styles = StyleSheet.create({
     color: colors.neutral400,
   },
   stateButton: {
-    backgroundColor: colors.neutral600,
+    backgroundColor: colors.neutral400,
     padding: 8,
     borderRadius: 8,
   },

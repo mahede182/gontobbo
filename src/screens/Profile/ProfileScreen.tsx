@@ -21,6 +21,7 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
         <View style={styles.container}>
           <View style={styles.profileContainer}>
             <Image source={{ uri: image }} style={styles.profileImage} />
+            <Image source={require("@/assets/bottomTab/profile.png")} />
             <Text style={styles.name}>{username}</Text>
             <Text style={styles.membershipLevel}>{firstName}</Text>
           </View>

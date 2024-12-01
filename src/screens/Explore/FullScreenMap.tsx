@@ -54,12 +54,11 @@ const FullScreenMap = () => {
           </Marker>
         </MapView>
       ) : (
-        <RestyleTransparent opacity={0.25}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SELECT_ROOM")}
-            style={styles.markerStyle}
-          />
-        </RestyleTransparent>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SELECT_ROOM")}
+          style={styles.markerStyle}>
+          <Image source={images.map} style={styles.markerStyle} />
+        </TouchableOpacity>
       )}
     </SafeAreaView>
   );
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   markerStyle: {
-    width: 250,
+    width: "100%",
     height: 250,
     backgroundColor: colors.danger,
     borderRadius: 10,
