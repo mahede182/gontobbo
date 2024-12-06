@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary700,
   },
   secondaryButton: {
-    backgroundColor: colors.neutral400,
+    backgroundColor: colors.secondary500,
   },
   primaryButtonText: {
     color: colors.white,

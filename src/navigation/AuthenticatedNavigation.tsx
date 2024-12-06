@@ -15,6 +15,9 @@ import TabNavigation, { TabStackParamList } from "./TabNavigation";
 import TripReviewBookingScreen from "@/screens/TripReviewBooking/TripReviewBookingScreen";
 import AddNewTraveller from "@/screens/TripReviewBooking/AddedTraveller";
 import SuccessfulBookingScreen from "@/screens/SuccessfulBooking/SuccessfulBookingScreen";
+import NotificationScreen from "@/screens/Notification/NotificationScreen";
+import MemberCard from "@/screens/Profile/MemberCard";
+import { ProfileNavigation } from "./ProfileNavigation";
 
 export type AuthdStackParamList = {
   TAB: TabStackParamList;
@@ -116,6 +119,16 @@ const AuthenticatedNavigation = () => {
           return <SuccessfulBookingScreen {...props} />;
         }}
       </Stack.Screen>
+      <Stack.Screen options={{ headerShown: false }} name="NOTIFICATION">
+        {(props) => {
+          return <NotificationScreen {...props} />;
+        }}
+      </Stack.Screen>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="PROFILE_CONTAINER"
+        component={ProfileNavigation}
+      />
     </Stack.Navigator>
   );
 };

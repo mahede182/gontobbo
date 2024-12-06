@@ -44,6 +44,10 @@ export const images = {
   bin: require("@/assets/bin.png") as ImageSourcePropType,
   map: require("@/assets/map.png") as ImageSourcePropType,
   success: require("@/assets/success.png") as ImageSourcePropType,
+  rightArrow: require("@/assets/rightArrow.png") as ImageSourcePropType,
+  barCode: require("@/assets/barcode.png") as ImageSourcePropType,
+  applePay: require("@/assets/applePay.png") as ImageSourcePropType,
+  creditCard: require("@/assets/creditCard.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;

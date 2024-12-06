@@ -3,7 +3,7 @@
     <> 2. GoogleServices-Info.plist
 */
 export const googleSignInConfig = {
-  webClientId: process.env.WEB_CLIENT_ID,
+  webClientId: "228779477149-htkbnhk730s7sssrj68stuntmiglhsu7.apps.googleusercontent.com",
   scopes: ["https://www.googleapis.com/auth/drive.readonly"],
   offlineAccess: true,
   forceCodeForRefreshToken: true,

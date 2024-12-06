@@ -1,5 +1,6 @@
 import { useApp } from "@/hooks/useApp";
 import { colors } from "@/theme/colors";
+import { images } from "@/theme/images";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "moti";
 import React from "react";
@@ -20,42 +21,57 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.profileContainer}>
-            <Image source={{ uri: image }} style={styles.profileImage} />
-            <Image source={require("@/assets/bottomTab/profile.png")} />
-            <Text style={styles.name}>{username}</Text>
-            <Text style={styles.membershipLevel}>{firstName}</Text>
+            <Image style={styles.profileImage} source={require("@/assets/bottomTab/profile.png")} />
+            <Text style={styles.name}>{username || "Rakin Afser"}</Text>
+            <Text style={styles.membershipLevel}>{firstName || "r.afser01"}</Text>
           </View>
           <View style={styles.detailsContainer}>
             <View style={styles.detailsRow}>
               <Text style={styles.detailsLabel}>Member N°</Text>
-              <Text style={styles.detailsValue}>{id}</Text>
+              <Text style={styles.detailsValue}>{id || "15432"}</Text>
             </View>
             <View style={styles.detailsRow}>
               <Text style={styles.detailsLabel}>Member Class</Text>
               <Text style={styles.detailsValue}>Gold</Text>
             </View>
-            <View style={styles.detailsRow}>
+            <TouchableOpacity
+              style={styles.detailsRow}
+              onPress={() => {
+                navigation.navigate("PROFILE_CONTAINER", { screen: "MEMBER_CARD" });
+              }}>
               <Text style={styles.detailsLabel}>Membership Card</Text>
-              <Text style={styles.detailsValue}>{">"}</Text>
-            </View>
+              <Image style={styles.detailsIcon} source={images.rightArrow} />
+            </TouchableOpacity>
           </View>
           <View style={styles.sectionsContainer}>
             <Text style={styles.sectionTitle}>PERSONAL DETAILS</Text>
-            <TouchableOpacity style={styles.sectionItem}>
+            <TouchableOpacity
+              style={styles.sectionItem}
+              onPress={() => {
+                navigation.navigate("PROFILE_CONTAINER", { screen: "PERSONAL_INFO" });
+              }}>
               <Text style={styles.sectionItemText}>Personal informations</Text>
-              <Text style={styles.sectionItemArrow}>{">"}</Text>
+              <Image style={styles.detailsIcon} source={images.rightArrow} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sectionItem}>
+            <TouchableOpacity
+              style={styles.sectionItem}
+              onPress={() => {
+                navigation.navigate("PROFILE_CONTAINER", { screen: "PASSPORT_DETAILS" });
+              }}>
               <Text style={styles.sectionItemText}>Passport details</Text>
-              <Text style={styles.sectionItemArrow}>{">"}</Text>
+              <Image style={styles.detailsIcon} source={images.rightArrow} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sectionItem}>
+            <TouchableOpacity
+              style={styles.sectionItem}
+              onPress={() => {
+                navigation.navigate("PROFILE_CONTAINER", { screen: "PAIMENT_METHOD" });
+              }}>
               <Text style={styles.sectionItemText}>Payment methods</Text>
-              <Text style={styles.sectionItemArrow}>{">"}</Text>
+              <Image style={styles.detailsIcon} source={images.rightArrow} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.sectionItem}>
               <Text style={styles.sectionItemText}>Flight preferences</Text>
-              <Text style={styles.sectionItemArrow}>{">"}</Text>
+              <Image style={styles.detailsIcon} source={images.rightArrow} />
             </TouchableOpacity>
           </View>
         </View>
@@ -63,23 +79,23 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
           <Text style={styles.sectionTitle}>GENERAL</Text>
           <TouchableOpacity style={styles.sectionItem}>
             <Text style={styles.sectionItemText}>Flight informations</Text>
-            <Text style={styles.sectionItemArrow}>{">"}</Text>
+            <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.sectionItem}>
             <Text style={styles.sectionItemText}>Travel requirements</Text>
-            <Text style={styles.sectionItemArrow}>{">"}</Text>
+            <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.sectionItem}>
             <Text style={styles.sectionItemText}>Baggages</Text>
-            <Text style={styles.sectionItemArrow}>{">"}</Text>
+            <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.sectionItem}>
             <Text style={styles.sectionItemText}>Contact</Text>
-            <Text style={styles.sectionItemArrow}>{">"}</Text>
+            <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.sectionItem}>
             <Text style={styles.sectionItemText}>Legal</Text>
-            <Text style={styles.sectionItemArrow}>{">"}</Text>
+            <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -102,12 +118,15 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     alignItems: "center",
-    backgroundColor: colors.blue200,
+    backgroundColor: colors.secondary400,
+    padding: 20,
   },
   profileImage: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     borderRadius: 50,
+    backgroundColor: colors.blue100,
+    padding: 12,
   },
   name: {
     fontSize: 20,
@@ -116,33 +135,44 @@ const styles = StyleSheet.create({
   },
   membershipLevel: {
     fontSize: 16,
-    color: colors.neutral400,
+    color: colors.neutral700,
   },
   detailsContainer: {
+    // backgroundColor: "blue",
     marginTop: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   detailsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
+    paddingHorizontal: 10,
   },
   detailsLabel: {
     fontSize: 16,
-    color: colors.neutral400,
+    color: colors.neutral700,
   },
   detailsValue: {
     fontSize: 16,
     fontWeight: "bold",
   },
+  detailsIcon: {
+    height: 16,
+    width: 16,
+    tintColor: colors.primary700,
+  },
   sectionsContainer: {
-    marginTop: 20,
-    paddingHorizontal: 20,
+    marginTop: 10,
+    paddingHorizontal: 15,
+    marginHorizontal: 15,
+    backgroundColor: colors.primary100,
+    paddingVertical: 20,
+    borderRadius: 20,
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: colors.neutral400,
+    color: colors.neutral600,
     marginBottom: 10,
   },
   sectionItem: {
@@ -153,10 +183,6 @@ const styles = StyleSheet.create({
   },
   sectionItemText: {
     fontSize: 16,
-  },
-  sectionItemArrow: {
-    fontSize: 16,
-    color: colors.neutral400,
   },
   logoutButton: {
     backgroundColor: colors.primary700,

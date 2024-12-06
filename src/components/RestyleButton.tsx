@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginHorizontal: 5,
-    width: 14,
-    height: 14,
+    height: 13,
   },
 });

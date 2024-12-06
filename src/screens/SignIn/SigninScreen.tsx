@@ -58,7 +58,13 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
           <RestyleButton
             iconSrc={images.appleIcon}
             label={t("signIn.continueWithApple")}
-            onPress={handleAppleSignIn}
+            onPress={() => {
+              handleAppleSignIn().then((res) => {
+                if (res) {
+                  navigation.navigate("AUTHENTICATED");
+                }
+              });
+            }}
             style={[styles.button, styles.appleButton]}
           />
         )}
@@ -66,13 +72,26 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
         <RestyleButton
           iconSrc={images.fbIcon}
           label={t("signIn.continueWithFacebook")}
-          onPress={handleFacebookSignIn}
+          onPress={() => {
+            handleFacebookSignIn().then((res) => {
+              if (res) {
+                navigation.navigate("AUTHENTICATED");
+              }
+            });
+          }}
           style={[styles.button, styles.facebookButton]}
         />
         <RestyleButton
           iconSrc={images.gmailIcon}
           label={t("signIn.continueWithGmail")}
-          onPress={handleGoogleSignIn}
+          onPress={() => {
+            handleGoogleSignIn().then((res) => {
+              console.log(res,"google response")
+              if (res) {
+                navigation.navigate("AUTHENTICATED");
+              }
+            });
+          }}
           style={[styles.button, styles.gmailButton]}
         />
         {/* ::: or ::: */}

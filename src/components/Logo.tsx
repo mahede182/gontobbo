@@ -16,9 +16,7 @@ const Logo = () => {
     <Box alignItems="center" marginTop="thirty">
       <Image style={styles.logo} source={images.appLogo} />
       {/* TODO: create a new variant of text if found another same size and weight */}
-      <RestyleText style={styles.title}>
-        {t("common.gontobbo")} {env}
-      </RestyleText>
+      <RestyleText style={styles.title}>{t("common.gontobbo")}</RestyleText>
       <RestyleText style={styles.subtitle} textAlign="center">
         {t("common.gontobboSlogan")}
       </RestyleText>

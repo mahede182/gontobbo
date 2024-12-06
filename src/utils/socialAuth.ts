@@ -35,7 +35,7 @@ export const handleGoogleSignIn = async () => {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
-    console.log(userInfo, "user info");
+    return userInfo;
   } catch (error) {
     if (isErrorWithCode(error)) {
       switch (error.code) {

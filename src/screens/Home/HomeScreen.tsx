@@ -6,7 +6,14 @@ import "@/machine/counterMachine";
 
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
-import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Image,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Input } from "@/components/Input";
 import PopularTrip from "./component/PopularTrip";
 import { useTranslation } from "react-i18next";
@@ -54,10 +61,15 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
         <TouchableOpacity onPress={drawerOpen}>
           <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
         </TouchableOpacity>
-        <Image
-          source={images.notifiocationBtn}
-          style={{ height: 48, width: 48, resizeMode: "contain" }}
-        />
+        <Pressable
+          onPress={() => {
+            navigation.navigate("NOTIFICATION");
+          }}>
+          <Image
+            source={images.notifiocationBtn}
+            style={{ height: 48, width: 48, resizeMode: "contain" }}
+          />
+        </Pressable>
       </Box>
       {/* === ai section === */}
       <Box paddingHorizontal="ten">
