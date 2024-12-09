@@ -18,6 +18,8 @@ import SuccessfulBookingScreen from "@/screens/SuccessfulBooking/SuccessfulBooki
 import NotificationScreen from "@/screens/Notification/NotificationScreen";
 import MemberCard from "@/screens/Profile/MemberCard";
 import { ProfileNavigation } from "./ProfileNavigation";
+import { getItem } from "@/utils/storage";
+import React from "react";
 
 export type AuthdStackParamList = {
   TAB: TabStackParamList;
@@ -41,6 +43,7 @@ export type AuthdStackParamList = {
 const Stack = createStackNavigator<AuthdStackParamList>();
 
 const AuthenticatedNavigation = () => {
+
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="HOME_STACK" component={TabNavigation} />

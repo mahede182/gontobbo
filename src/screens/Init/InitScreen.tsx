@@ -11,6 +11,8 @@ import { images as img } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
 import { dynamicCSS } from "@/utils/styles";
 import { useIntroShown } from "@/hooks/useIntroShown";
+import { saveItem } from "@/utils/storage";
+import { INTRO_SHOWN } from "@/constants/config";
 
 const images = [img.initOne, img.initTwo, img.initThree];
 
@@ -27,12 +29,21 @@ const Indicator = ({ currentIndex }) => {
   );
 };
 
-const InitScreen = () => {
+type InitScreenProps = {
+  route: {
+    params: {
+      setAppInitialized: () => Promise<void>;
+    };
+  };
+};
+
+const InitScreen = ({ route }: InitScreenProps) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const flatListRef = React.useRef(null);
-  const { showIntro } = useIntroShown();
+  const showIntro = useIntroShown();
+
 
   const renderItem = ({ item }) => (
     <ImageBackground source={item} style={styles.imageContainer}>
@@ -47,14 +58,14 @@ const InitScreen = () => {
             <RestyleText style={styles.description}>{t("common.uniqueAdvantureAwait")}</RestyleText>
           </RestyleTransparent>
           <TouchableOpacity
-            onPress={() => {
+            onPress={async () => {
               if (currentIndex === images.length - 1) {
-                console.log(showIntro);
+                await saveItem(INTRO_SHOWN, "first_load_done");
                 navigation.navigate("AUTHENTICATING");
               } else if (currentIndex === 1) {
-                flatListRef.current.scrollToIndex({ index: 2, animated: true });
+                flatListRef.current?.scrollToIndex({ index: 2, animated: true });
               } else {
-                flatListRef.current.scrollToIndex({ index: 1, animated: true });
+                flatListRef.current?.scrollToIndex({ index: 1, animated: true });
               }
             }}
             style={[

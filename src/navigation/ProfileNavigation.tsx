@@ -1,3 +1,4 @@
+import FlightPreferencesScreen from "@/screens/Profile/FlightPreferences";
 import MemberCard from "@/screens/Profile/MemberCard";
 import PassportDetailsScreen from "@/screens/Profile/PassportDetails";
 import PaymentMethodScreen from "@/screens/Profile/PaymentDetails";
@@ -26,6 +27,11 @@ export const ProfileNavigation = () => {
       <Stack.Screen options={{ headerShown: false }} name="PAIMENT_METHOD">
         {(props) => {
           return <PaymentMethodScreen {...props} />;
+        }}
+      </Stack.Screen>
+      <Stack.Screen options={{ headerShown: false }} name="FLIGHT_PREFERENCES">
+        {(props) => {
+          return <FlightPreferencesScreen {...props} />;
         }}
       </Stack.Screen>
     </Stack.Navigator>

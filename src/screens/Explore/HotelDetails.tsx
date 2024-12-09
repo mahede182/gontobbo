@@ -13,6 +13,7 @@ import { SafeAreaView } from "moti";
 import { typography } from "@/theme/typography";
 import { dynamicCSS } from "@/utils/styles";
 import { isIOS } from "@/utils/device";
+import { clear, getItem, saveItem } from "@/utils/storage";
 
 const HotelDetails = () => {
   const { t } = useTranslation();
@@ -102,7 +103,17 @@ const HotelDetails = () => {
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={images.back} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("favourite added")}>
+        <TouchableOpacity
+          onPress={async () => {
+            const favourites = await getItem("favourites") || [];
+            const newFavourite = {
+              id: 339,
+              name: "mirpur palace",
+              rating: 7.9,
+            };
+            const updatedFavourites = [...favourites, newFavourite];
+            await saveItem("favourites", updatedFavourites);
+          }}>
           <Image
             tintColor={colors.danger}
             style={styles.headerFavourite}

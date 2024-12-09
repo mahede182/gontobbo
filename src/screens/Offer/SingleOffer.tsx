@@ -3,28 +3,49 @@ import React from "react";
 import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
+import { getItem, saveItem } from "@/utils/storage";
 
-type Props = {};
+type Props = {
+  offer: {
+    id: number;
+    name: string;
+    location: string;
+    image: any;
+    offer1: {
+      title: string;
+      subtitle: string;
+      value: string;
+      discount: string;
+      price: string;
+    };
+    offer2: {
+      title: string;
+      subtitle: string;
+      value: string;
+      discount: string;
+      price: string;
+    };
+  };
+};
 
-const SingleOffer = (props: Props) => {
+const SingleOffer = ({ offer }: Props) => {
   const navigation = useNavigation();
   return (
     <View style={styles.content}>
-      <Image source={images.dummyCard} style={styles.image} />
-      <Text style={styles.header}>Caesars Palace</Text>
-      <Text style={styles.category}>Las Vegas | United States</Text>
+      <Image source={offer.image} style={styles.image} />
+      <Text style={styles.header}>{offer.name}</Text>
+      <Text style={styles.category}>{offer.location}</Text>
       <View style={styles.offerContainer}>
-        <Text style={styles.offerTitle}>Offer #1</Text>
-        <Text style={styles.offerSubtitle}>Valid for December 24</Text>
+        <Text style={styles.offerTitle}>{offer.offer1.title}</Text>
+        <Text style={styles.offerSubtitle}>{offer.offer1.subtitle}</Text>
         <View style={styles.offerDetails}>
-          <Text style={styles.offerValue}>$25 Value</Text>
+          <Text style={styles.offerValue}>{offer.offer1.value}</Text>
         </View>
         <View style={styles.offerDetails}>
-          <Text style={styles.offerDiscount}>75% Off</Text>
-          <Text style={styles.offerPrice}>$10</Text>
+          <Text style={styles.offerDiscount}>{offer.offer1.discount}</Text>
+          <Text style={styles.offerPrice}>{offer.offer1.price}</Text>
         </View>
       </View>
-      {/* Add Offer #2 component here */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -34,8 +55,24 @@ const SingleOffer = (props: Props) => {
           <Text style={styles.primaryButtonText}>Book Now</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("WISHLIST");
+          onPress={async () => {
+            try {
+              const wishlistJson = await getItem("wishlist");
+              const wishlist = wishlistJson ? wishlistJson : [];
+              const isOfferInWishlist = wishlist.some(
+                (item: { itemId: string }) => item.itemId === offer.itemId,
+              );
+
+              if (!isOfferInWishlist) {
+                const updatedWishlist = [...wishlist, offer];
+                await saveItem("wishlist", updatedWishlist);
+                alert("Offer added to wishlist!");
+              } else {
+                alert("Offer is already in your wishlist.");
+              }
+            } catch (error) {
+              console.error("Error handling wishlist:", error);
+            }
           }}
           style={[styles.button, styles.secondaryButton]}>
           <Text style={styles.secondaryButtonText}>Add to Wishlist</Text>

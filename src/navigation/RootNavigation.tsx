@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { clear, getItem, saveItem } from "@/utils/storage";
 import { INTRO_SHOWN } from "@/constants/config";
 import { useIntroShown } from "@/hooks/useIntroShown";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import InitScreen from "@/screens/Init/InitScreen";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -32,33 +34,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation = () => {
   const { send, state } = useApp();
-  const [init, setInit] = useState(true);
+  const [showInit, setShowinit] = useState(true);
+  const [keys, setKeys] = useState<string[]>([]);
+  const [isAppInitialized, setIsAppInitialized] = useState(false);
 
-  useEffect(() => {
-    const fetch = async () => {
-      await clear();
-      const existing = await getItem(INTRO_SHOWN);
-      if (existing) {
-        setInit(false);
-      } else {
-        setInit(true);
-      }
-    };
-    fetch();
-  });
-
-  const isInitializing = init;
-  const isAuthenticating = !isInitializing && state.matches("authenticating");
-  const isAuthenticated = !isInitializing && state.matches("authenticated");
-
-  // switch (false) {
-  //   case isInitializing:
-  //     return "INITIAL_LOAS";
-  //   case isAuthenticating:
-  //     return "AUTHENCATING";
-  //   default:
-  //     return "AUTHENTICATED";
-  // }
+  const showIntro = useIntroShown();
 
   return (
     <NavigationContainer
@@ -66,7 +46,7 @@ const RootNavigation = () => {
         send({ type: "START_APP" });
       }}
       ref={navigationRef}>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={showIntro ? "INITIAL_LOAD" : "AUTHENTICATING"}>
         <Stack.Screen
           options={{ headerShown: false }}
           name="INITIAL_LOAD"

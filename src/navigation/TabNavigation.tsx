@@ -13,6 +13,7 @@ import WishListScreens from "@/screens/Wishlist";
 import ProfileScreen from "@/screens/Profile";
 import DrawerNavigation from "./DrawerNavigation";
 import { isIOS } from "@/utils/device";
+import { getItem } from "@/utils/storage";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -43,6 +44,22 @@ export type TabStackParamList = {
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigation = (props: Props) => {
+  const [wishlistCount, setWishlistCount] = React.useState(0);
+
+  React.useEffect(() => {
+    const fetchWishlistCount = async () => {
+      try {
+        const wishlist = await getItem("wishlist");
+        // const wishlist = wishlistJson ? wishlistJson : [];
+        console.log(wishlist,"wishlist from tab")
+        setWishlistCount(wishlist.length);
+      } catch (error) {
+        console.error("Error fetching wishlist count:", error);
+      }
+    };
+
+    fetchWishlistCount();
+  }, []);
   const { t } = useTranslation();
   return (
     <Tab.Navigator
@@ -138,7 +155,9 @@ const TabNavigation = (props: Props) => {
                     alignItems: "center",
                     justifyContent: "center",
                   }}>
-                  <RestyleText style={{ fontSize: 13, color: colors.white }}>7</RestyleText>
+                  <RestyleText style={{ fontSize: 13, color: colors.white }}>
+                    {wishlistCount}
+                  </RestyleText>
                 </Box>
               ) : null}
 

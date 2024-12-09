@@ -48,6 +48,13 @@ export const images = {
   barCode: require("@/assets/barcode.png") as ImageSourcePropType,
   applePay: require("@/assets/applePay.png") as ImageSourcePropType,
   creditCard: require("@/assets/creditCard.png") as ImageSourcePropType,
+  pInfo: require("@/assets/profile/info.png") as ImageSourcePropType,
+  pDetails: require("@/assets/profile/details.png") as ImageSourcePropType,
+  pMethods: require("@/assets/profile/payment.png") as ImageSourcePropType,
+  pFlight: require("@/assets/profile/flight.png") as ImageSourcePropType,
+  pReq: require("@/assets/profile/req.png") as ImageSourcePropType,
+  pBag: require("@/assets/profile/Baggages.png") as ImageSourcePropType,
+  pLegal: require("@/assets/profile/legal.png") as ImageSourcePropType,
 };
 export type ImagesType = typeof images;
 // export type Image = keyof ImagesType;

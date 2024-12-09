@@ -2,6 +2,7 @@ import HeaderTitle from "@/components/HeaderTitle";
 import { wishlistItems } from "@/data/wishlistItem";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
+import { getItem, saveItem } from "@/utils/storage";
 import { dynamicCSS } from "@/utils/styles";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
@@ -19,18 +20,34 @@ type Props = {};
 
 const WishListScreens: React.FC<Props> = (props): JSX.Element => {
   const navigation = useNavigation();
+  const [wishlist, setWishlist] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const wishlistJson = await getItem("wishlist");
+        setWishlist(wishlistJson || []);
+        // console.log(wishlist, "wishlist");
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+      }
+    };
+
+    fetchWishlist();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderTitle title="Wish list" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          {wishlistItems.map((item) => (
+          {wishlist.map((item) => (
             <View key={item.id} style={styles.itemContainer}>
               <Image source={images.dummyCard} style={styles.image} />
               <View style={styles.detailsContainer}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.location}>{item.location}</Text>
-                <Text style={styles.price}>${item.price.toLocaleString()}</Text>
+                {/* <Text style={styles.price}>${item.price.toLocaleString()}</Text> */}
               </View>
               <View style={dynamicCSS("flexDirection", "column")}>
                 <TouchableOpacity
@@ -41,7 +58,17 @@ const WishListScreens: React.FC<Props> = (props): JSX.Element => {
                   <Text style={styles.bookButtonText}>Book</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => alert("Delete wish list")}
+                  onPress={async () => {
+                    try {
+                      const updatedWishlist = wishlist.filter(
+                        (wishlistItem) => wishlistItem.id !== item.id,
+                      );
+                      setWishlist(updatedWishlist);
+                      await saveItem("wishlist", updatedWishlist);
+                    } catch (error) {
+                      console.error("Error deleting item from wishlist:", error);
+                    }
+                  }}
                   style={styles.deleteButton}>
                   <Image source={images.bin} style={styles.deleteIcon} />
                 </TouchableOpacity>
