@@ -44,7 +44,6 @@ const InitScreen = ({ route }: InitScreenProps) => {
   const flatListRef = React.useRef(null);
   const showIntro = useIntroShown();
 
-
   const renderItem = ({ item }) => (
     <ImageBackground source={item} style={styles.imageContainer}>
       <Box style={styles.darkish}>

@@ -66,7 +66,6 @@ const RootNavigation = () => {
           {(props) => {
             // return state.context.refAuthenticated ? (
             return <AuthenticatedNavigation actorRef={state.context.refAuthenticated} {...props} />;
-
             // ) : null;
           }}
         </Stack.Screen>

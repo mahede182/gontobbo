@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 16,
     textAlign: "center",
-    color: "gray",
+    color: colors.neutral400,
   },
   backToHomeButton: {
     backgroundColor: colors.primary700,

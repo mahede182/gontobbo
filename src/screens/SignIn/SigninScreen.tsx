@@ -86,7 +86,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
           label={t("signIn.continueWithGmail")}
           onPress={() => {
             handleGoogleSignIn().then((res) => {
-              console.log(res,"google response")
+              console.log(res, "google response");
               if (res) {
                 navigation.navigate("AUTHENTICATED");
               }

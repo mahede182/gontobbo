@@ -73,7 +73,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
               //   user: email,
               //   password,
               // });
-              navigation.navigate("AUTHENTICATED")
+              navigation.navigate("AUTHENTICATED");
             }}>
             <RestyleText variant="buttonLabel">{t("signIn.singIn")}</RestyleText>
           </TouchableOpacity>

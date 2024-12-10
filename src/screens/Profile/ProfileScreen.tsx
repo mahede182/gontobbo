@@ -28,13 +28,7 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
       <ScrollView>
         <View style={styles.curvedBackground}>
           <View style={styles.profileContainer}>
-            <View
-              style={{
-                borderColor: colors.neutral400,
-                borderWidth: 2,
-                padding: 5,
-                borderRadius: 100,
-              }}>
+            <View style={styles.imgBorder}>
               <Image
                 style={[styles.profileImage, { borderRadius: styles.profileImage.width / 2 }]}
                 source={image || require("@/assets/bottomTab/profile.png")}
@@ -146,6 +140,12 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: colors.blue100,
     padding: 12,
+  },
+  imgBorder: {
+    borderColor: colors.neutral400,
+    borderWidth: 2,
+    padding: 5,
+    borderRadius: 100,
   },
   name: {
     fontSize: 20,

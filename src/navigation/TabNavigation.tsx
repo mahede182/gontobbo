@@ -14,6 +14,7 @@ import ProfileScreen from "@/screens/Profile";
 import DrawerNavigation from "./DrawerNavigation";
 import { isIOS } from "@/utils/device";
 import { getItem } from "@/utils/storage";
+import { useNavigation } from "@react-navigation/native";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -45,21 +46,22 @@ const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigation = (props: Props) => {
   const [wishlistCount, setWishlistCount] = React.useState(0);
+  const navigation = useNavigation();
 
   React.useEffect(() => {
     const fetchWishlistCount = async () => {
       try {
         const wishlist = await getItem("wishlist");
-        // const wishlist = wishlistJson ? wishlistJson : [];
-        console.log(wishlist,"wishlist from tab")
-        setWishlistCount(wishlist.length);
+        setWishlistCount(wishlist?.length);
       } catch (error) {
         console.error("Error fetching wishlist count:", error);
       }
     };
 
-    fetchWishlistCount();
-  }, []);
+    const unsubscribe = navigation.addListener("focus", fetchWishlistCount);
+
+    return unsubscribe;
+  }, [navigation]);
   const { t } = useTranslation();
   return (
     <Tab.Navigator

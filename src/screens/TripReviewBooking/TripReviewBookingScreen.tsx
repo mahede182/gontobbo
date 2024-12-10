@@ -298,10 +298,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.neutral700,
   },
-  contactPlaceholder: {
-    fontSize: 16,
-    color: colors.neutral400,
-  },
   contactNumberRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -311,19 +307,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 8,
-  },
-  stateLabel: {
-    fontSize: 16,
-    color: colors.neutral400,
-  },
-  stateButton: {
-    backgroundColor: colors.neutral400,
-    padding: 8,
-    borderRadius: 8,
-  },
-  stateButtonText: {
-    fontSize: 16,
-    fontWeight: "bold",
   },
   stateValue: {
     fontSize: 16,

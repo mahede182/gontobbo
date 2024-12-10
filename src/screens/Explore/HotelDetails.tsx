@@ -105,7 +105,7 @@ const HotelDetails = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
-            const favourites = await getItem("favourites") || [];
+            const favourites = (await getItem("favourites")) || [];
             const newFavourite = {
               id: 339,
               name: "mirpur palace",

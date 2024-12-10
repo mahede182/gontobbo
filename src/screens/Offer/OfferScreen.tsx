@@ -9,7 +9,7 @@ import { images } from "@/theme/images";
 const offers = [
   {
     id: 1,
-    itemId: 'offer_1', // this is unique for each
+    itemId: "offer_1", // this is unique for each
     name: "Caesars Palace",
     location: "Las Vegas | United States",
     image: images.dummyCard,
@@ -30,7 +30,7 @@ const offers = [
   },
   {
     id: 2,
-    itemId: 'offer_2', // this is unique for each
+    itemId: "offer_2", // this is unique for each
     name: "The Venetian Resort",
     location: "Las Vegas | United States",
     image: images.dummyTri2,
@@ -51,7 +51,7 @@ const offers = [
   },
   {
     id: 3,
-    itemId: 'offer_3', // this is unique for each
+    itemId: "offer_3", // this is unique for each
     name: "MGM Grand",
     location: "Las Vegas | United States",
     image: images.dummyTrip1,
@@ -72,7 +72,7 @@ const offers = [
   },
   {
     id: 4,
-    itemId: 'offer_4', // this is unique for each
+    itemId: "offer_4", // this is unique for each
     name: "Bellagio",
     location: "Las Vegas | United States",
     image: images.dummyCard,

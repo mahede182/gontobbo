@@ -117,12 +117,6 @@ const styles = StyleSheet.create({
     color: colors.neutral600,
     marginTop: 5,
   },
-  price: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: colors.primary600,
-    marginTop: 5,
-  },
   bookButton: {
     backgroundColor: colors.primary700,
     paddingVertical: 10,
