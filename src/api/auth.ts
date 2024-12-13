@@ -1,6 +1,8 @@
 import axios from "axios";
 import { AUTH_URL } from "@/constants/urls";
 import { TUser } from "@/@types/auth.type";
+import { getItem, saveItem } from "@/utils/storage";
+import { STORAGE_KEYS } from "@/@types/storage.type";
 
 export const signIn = async (user: string, password: string): Promise<TUser> => {
   const response = await axios.post(`${AUTH_URL}/login`, {
@@ -24,4 +26,13 @@ export const getUser = async (accessToken: string): Promise<TUser> => {
   } catch (error) {
     throw error;
   }
+};
+
+export const saveUser = async (user: TUser) => {
+  await saveItem(STORAGE_KEYS.USER, user);
+};
+
+export const getUserAsync = async () => {
+  const user = await getItem(STORAGE_KEYS.USER);
+  return user;
 };

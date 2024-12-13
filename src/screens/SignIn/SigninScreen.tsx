@@ -62,6 +62,8 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
             onPress={() => {
               handleAppleSignIn().then((res) => {
                 if (res) {
+                  console.log(res, "res apple login");
+                  saveUser(JSON.stringify(res));
                   navigation.navigate("AUTHENTICATED");
                 }
               });

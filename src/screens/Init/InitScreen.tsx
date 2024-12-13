@@ -59,7 +59,6 @@ const InitScreen = ({ route }: InitScreenProps) => {
           <TouchableOpacity
             onPress={async () => {
               if (currentIndex === images.length - 1) {
-                await saveItem(INTRO_SHOWN, "first_load_done");
                 navigation.navigate("AUTHENTICATING");
               } else if (currentIndex === 1) {
                 flatListRef.current?.scrollToIndex({ index: 2, animated: true });
@@ -157,5 +156,5 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
 });
-
 export default InitScreen;
+

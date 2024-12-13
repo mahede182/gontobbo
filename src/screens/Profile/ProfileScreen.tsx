@@ -7,9 +7,16 @@ import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
 import { getUserAsync } from "@/api/auth";
-import { use } from "i18next";
 import { clear } from "@/utils/storage";
-
+import { SocialUser } from "@/@types/auth.type";
+import {
+  getAuthProvider,
+  getDisplayName,
+  getEmail,
+  getProfilePhoto,
+  getUserId,
+} from "@/utils/helper";
+import * as AppleAuthentication from "expo-apple-authentication";
 type Props = {
   label: "Profile" | "None";
 };
@@ -18,17 +25,23 @@ const _adjustedTop = -80;
 
 const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
   const { state: appState } = useApp();
-  const user = appState?.context?.user || {};
-  const { username, firstName, id, image } = user;
   const navigation = useNavigation();
-  const [userData, setUserData] = React.useState<TUser | null>(null);
+  const [userData, setUserData] = React.useState<SocialUser | null>(null);
 
   React.useEffect(() => {
-    getUserAsync().then((res) => {
-      setUserData(res);
-    });
-    
-    console.log(userData, "userData");
+    const fetchUserData = async () => {
+      try {
+        const res = await getUserAsync();
+        if (res) {
+          const parsedData = JSON.parse(res) as SocialUser;
+          setUserData(parsedData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   const handleNavigate = (screen: string) => {
@@ -43,21 +56,25 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
             <View style={styles.imgBorder}>
               <Image
                 style={[styles.profileImage, { borderRadius: styles.profileImage.width / 2 }]}
-                source={userData?.user?.photo || require("@/assets/bottomTab/profile.png")}
+                source={
+                  getProfilePhoto(userData)
+                    ? { uri: getProfilePhoto(userData)! }
+                    : require("@/assets/bottomTab/profile.png")
+                }
               />
             </View>
-            <Text style={styles.name}>{userData?.username || "Rakin Afser"}</Text>
-            <Text style={styles.membershipLevel}>{firstName || "r.afser01"}</Text>
+            <Text style={styles.name}>{getDisplayName(userData)}</Text>
+            <Text style={styles.membershipLevel}>{getEmail(userData)}</Text>
           </View>
         </View>
         <View style={styles.detailsContainer}>
           <View style={styles.detailsRow}>
-            <Text style={styles.detailsLabel}>Member N</Text>
-            <Text style={styles.detailsValue}>{id || "15438"}</Text>
+            <Text style={styles.detailsLabel}>User ID</Text>
+            <Text style={styles.detailsValue}>{getUserId(userData, 16)}</Text>
           </View>
           <View style={styles.detailsRow}>
-            <Text style={styles.detailsLabel}>Member Class</Text>
-            <Text style={styles.detailsValue}>Gold</Text>
+            <Text style={styles.detailsLabel}>Sign in Provider</Text>
+            <Text style={styles.detailsValue}>{getAuthProvider(userData)}</Text>
           </View>
           <TouchableOpacity
             style={[styles.detailsRow, { borderBottomWidth: 0 }]}
@@ -129,7 +146,8 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
           style={styles.logoutButton}
           onPress={() => {
             clear();
-            navigation.navigate("AUTHENTICATING")}}>
+            navigation.navigate("AUTHENTICATING");
+          }}>
           <Text style={styles.logoutButtonText}>Log out</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -263,6 +281,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logoutButton: {
+    top: _adjustedTop + 20,
     backgroundColor: colors.primary700,
     paddingVertical: 10,
     paddingHorizontal: 20,

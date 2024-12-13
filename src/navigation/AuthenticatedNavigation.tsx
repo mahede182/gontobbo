@@ -42,7 +42,7 @@ export type AuthdStackParamList = {
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createStackNavigator<AuthdStackParamList>();
 
-const AuthenticatedNavigation = () => {
+const AuthenticatedNavigation = ({ actorRef }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="HOME_STACK" component={TabNavigation} />
