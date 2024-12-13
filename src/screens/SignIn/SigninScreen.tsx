@@ -24,6 +24,7 @@ import {
 import Background from "@/components/Background";
 import { useApp } from "@/hooks/useApp";
 import { saveItem } from "@/utils/storage";
+import { saveUser } from "@/api/auth";
 
 type Props = {};
 // <> No one beat you
@@ -86,8 +87,8 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
           label={t("signIn.continueWithGmail")}
           onPress={() => {
             handleGoogleSignIn().then((res) => {
-              console.log(res, "google response");
               if (res) {
+                saveUser(JSON.stringify(res));
                 navigation.navigate("AUTHENTICATED");
               }
             });

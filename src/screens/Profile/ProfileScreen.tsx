@@ -6,6 +6,9 @@ import { useApp } from "@/hooks/useApp";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
+import { getUserAsync } from "@/api/auth";
+import { use } from "i18next";
+import { clear } from "@/utils/storage";
 
 type Props = {
   label: "Profile" | "None";
@@ -18,6 +21,15 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
   const user = appState?.context?.user || {};
   const { username, firstName, id, image } = user;
   const navigation = useNavigation();
+  const [userData, setUserData] = React.useState<TUser | null>(null);
+
+  React.useEffect(() => {
+    getUserAsync().then((res) => {
+      setUserData(res);
+    });
+    
+    console.log(userData, "userData");
+  }, []);
 
   const handleNavigate = (screen: string) => {
     navigation.navigate("PROFILE_CONTAINER", { screen });
@@ -31,10 +43,10 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
             <View style={styles.imgBorder}>
               <Image
                 style={[styles.profileImage, { borderRadius: styles.profileImage.width / 2 }]}
-                source={image || require("@/assets/bottomTab/profile.png")}
+                source={userData?.user?.photo || require("@/assets/bottomTab/profile.png")}
               />
             </View>
-            <Text style={styles.name}>{username || "Rakin Afser"}</Text>
+            <Text style={styles.name}>{userData?.username || "Rakin Afser"}</Text>
             <Text style={styles.membershipLevel}>{firstName || "r.afser01"}</Text>
           </View>
         </View>
@@ -47,7 +59,9 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
             <Text style={styles.detailsLabel}>Member Class</Text>
             <Text style={styles.detailsValue}>Gold</Text>
           </View>
-          <TouchableOpacity style={styles.detailsRow} onPress={() => handleNavigate("MEMBER_CARD")}>
+          <TouchableOpacity
+            style={[styles.detailsRow, { borderBottomWidth: 0 }]}
+            onPress={() => handleNavigate("MEMBER_CARD")}>
             <Text style={styles.detailsLabel}>Member Card</Text>
             <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
@@ -55,21 +69,21 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
         <View style={styles.sectionsContainer}>
           <Text style={styles.sectionTitle}>Personal Details</Text>
           <TouchableOpacity
-            style={styles.sectionItem}
+            style={[styles.sectionItem, styles.borderBottom]}
             onPress={() => handleNavigate("PERSONAL_INFO")}>
             <Image style={styles.sectionItemIcon} source={images.pInfo} />
             <Text style={styles.sectionItemText}>Personal Informations</Text>
             <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.sectionItem}
+            style={[styles.sectionItem, styles.borderBottom]}
             onPress={() => handleNavigate("PASSPORT_DETAILS")}>
             <Image style={styles.sectionItemIcon} source={images.pDetails} />
             <Text style={styles.sectionItemText}>Personal Details</Text>
             <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.sectionItem}
+            style={[styles.sectionItem, styles.borderBottom]}
             onPress={() => handleNavigate("PAIMENT_METHOD")}>
             <Image style={styles.sectionItemIcon} source={images.pMethods} />
             <Text style={styles.sectionItemText}>Payment Methods</Text>
@@ -84,22 +98,28 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
           </TouchableOpacity>
 
           <Text style={styles.sectionTitle}>General</Text>
-          <TouchableOpacity style={styles.sectionItem}>
+          <TouchableOpacity
+            style={[styles.sectionItem, styles.borderBottom]}
+            onPress={() => handleNavigate("FLIGHT_INFORMATION")}>
             <Image style={styles.sectionItemIcon} source={images.pFlight} />
             <Text style={styles.sectionItemText}>Flight Informations</Text>
             <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.sectionItem}>
+          <TouchableOpacity
+            style={[styles.sectionItem, styles.borderBottom]}
+            onPress={() => handleNavigate("TRAVEL_REQUIREMENT")}>
             <Image style={styles.sectionItemIcon} source={images.pReq} />
             <Text style={styles.sectionItemText}>Travel Requirements</Text>
             <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.sectionItem}>
+          <TouchableOpacity
+            style={[styles.sectionItem, styles.borderBottom]}
+            onPress={() => handleNavigate("BAGGAGES")}>
             <Image style={styles.sectionItemIcon} source={images.pBag} />
             <Text style={styles.sectionItemText}>Baggages</Text>
             <Image style={styles.detailsIcon} source={images.rightArrow} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.sectionItem}>
+          <TouchableOpacity style={styles.sectionItem} onPress={() => handleNavigate("LEGAL")}>
             <Image style={styles.sectionItemIcon} source={images.pLegal} />
             <Text style={styles.sectionItemText}>Legal</Text>
             <Image style={styles.detailsIcon} source={images.rightArrow} />
@@ -107,7 +127,9 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
         </View>
         <TouchableOpacity
           style={styles.logoutButton}
-          onPress={() => navigation.navigate("AUTHENTICATING")}>
+          onPress={() => {
+            clear();
+            navigation.navigate("AUTHENTICATING")}}>
           <Text style={styles.logoutButtonText}>Log out</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -224,6 +246,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
     paddingVertical: 10,
+  },
+  borderBottom: {
     borderBottomWidth: 1,
     borderBottomColor: colors.neutral300,
   },
