@@ -136,7 +136,7 @@ Continue...
 
 ## Production Builds
 
-## Android Production Build
+__Android Production Build__
 
 1. Open Android Studio
 2. Build -> Generate Signed Bundle
@@ -145,7 +145,7 @@ Continue...
 5. Create new internal testing release in Google Play
 6. Add this build and rollout to internal testing group
 
-### IOS Production Build
+__IOS Production Build__
 
 1. Open xCode
 2. Select Gather scheme
@@ -204,6 +204,10 @@ For create a screen, layout or reusable component we need to follow the next str
 
 ![carbon (3)](https://user-images.githubusercontent.com/19823989/140749679-1c28da42-9155-4e5e-8ced-fe3163705fde.png)
 
+# PUSH NOTIFICATION Configuration for production and staging
+
+Changes required in following files:
+
 ## Contributing
 
 We welcome contributions! Here are the steps:
@@ -216,6 +220,4 @@ We welcome contributions! Here are the steps:
 
 For major changes, open an issue first to discuss.
 
-# PUSH NOTIFICATION Configuration for production and staging
 
-Changes required in following files:
