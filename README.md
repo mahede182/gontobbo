@@ -113,6 +113,91 @@ yarn start
 
 Note: Use OTP in command line for verification code
 
+## Docker Setup
+
+Docker provides a consistent development environment with all dependencies pre-configured.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) installed
+- [Docker Compose](https://docs.docker.com/compose/install/) installed
+
+### Build and Run with Docker
+
+#### Development Environment
+
+```bash
+# Build the Docker image
+docker-compose build
+
+# Start the development server
+docker-compose up
+
+# Or run in detached mode
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+```
+
+#### Staging Environment
+
+```bash
+# Start staging environment
+docker-compose --profile staging up app-staging
+
+# Or in detached mode
+docker-compose --profile staging up -d app-staging
+```
+
+### Access the Application
+
+- **Metro Bundler**: http://localhost:8081
+- **Expo DevTools**: http://localhost:19000
+
+For staging:
+
+- **Metro Bundler**: http://localhost:8082
+- **Expo DevTools**: http://localhost:19003
+
+### Stop Docker Containers
+
+```bash
+# Stop all running containers
+docker-compose down
+
+# Stop and remove volumes
+docker-compose down -v
+```
+
+### Docker Troubleshooting
+
+**Issue: Port already in use**
+
+```bash
+# Check what's using the port
+lsof -i :8081
+
+# Stop the process or use different ports in docker-compose.yml
+```
+
+**Issue: Changes not reflecting**
+
+```bash
+# Restart Metro bundler with clean cache
+docker-compose exec app yarn start:clean
+```
+
+**Issue: Need to rebuild after dependency changes**
+
+```bash
+# Rebuild the Docker image
+docker-compose build --no-cache
+
+# Restart containers
+docker-compose up
+```
+
 ## Internal / Staging Testing
 
 Continue...
@@ -136,7 +221,7 @@ Continue...
 
 ## Production Builds
 
-__Android Production Build__
+**Android Production Build**
 
 1. Open Android Studio
 2. Build -> Generate Signed Bundle
@@ -145,7 +230,7 @@ __Android Production Build__
 5. Create new internal testing release in Google Play
 6. Add this build and rollout to internal testing group
 
-__IOS Production Build__
+**IOS Production Build**
 
 1. Open xCode
 2. Select Gather scheme
@@ -219,5 +304,3 @@ We welcome contributions! Here are the steps:
 5. Submit a pull request with a clear description.
 
 For major changes, open an issue first to discuss.
-
-

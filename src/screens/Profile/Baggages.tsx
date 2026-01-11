@@ -131,4 +131,4 @@ const BaggagesScreen = () => {
   );
 };
 
-export default BaggagesScreen; 
+export default BaggagesScreen;
