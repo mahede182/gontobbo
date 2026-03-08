@@ -3,10 +3,15 @@
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
+    "dev:mobile": "yarn workspace @gontobbo/mobile dev",
+    "dev:backend": "yarn workspace @gontobbo/backend dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "clean": "turbo run clean",
+    "android": "yarn workspace @gontobbo/mobile android",
+    "ios": "yarn workspace @gontobbo/mobile ios",
+    "format": "yarn workspace @gontobbo/mobile format",
     "prepare": "husky"
   },
   "workspaces": [
