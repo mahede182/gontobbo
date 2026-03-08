@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   extends: ["expo", "prettier"],
   // <> Use the `react-native` plugin to enable rules specific to React Native. l[:25 - :29] react-native/*
   plugins: ["prettier", "react", "react-native"],
@@ -28,11 +29,20 @@ module.exports = {
     "react-native/no-inline-styles": 2,
     "react-native/no-color-literals": 2,
     "react-native/no-single-element-style-arrays": 2,
-    // "react-native/no-raw-text": 1,
   },
   settings: {
     react: {
       version: "detect",
+    },
+    "import/resolver": {
+      typescript: {
+        project: [
+          "./apps/mobile/tsconfig.json",
+          "./apps/backend/tsconfig.json",
+          "./packages/shared/tsconfig.json",
+        ],
+        noWarnOnMultipleProjects: true,
+      },
     },
   },
   overrides: [
@@ -40,6 +50,7 @@ module.exports = {
       files: ["*.ts", "*.tsx", "*.d.ts"],
       parserOptions: {
         project: "./tsconfig.json",
+        tsconfigRootDir: __dirname,
       },
     },
   ],

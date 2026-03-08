@@ -1,12 +1,25 @@
 {
-  "extends": "expo/tsconfig.base",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"],
-      "@components": ["./src/components/"]
-    }
-  }
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "allowJs": true
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "apps/**/*.js",
+    "packages/**/*.ts",
+    "packages/**/*.tsx"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/coverage",
+    "**/.expo",
+    "**/android",
+    "**/ios"
+  ]
 }
