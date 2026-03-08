@@ -1,10 +1,76 @@
-# OSX
-#
+# ========================
+# OS
+# ========================
 .DS_Store
+Thumbs.db
+# ========================
+# Turborepo Monorepo
+# ========================
+.turbo
+*.tsbuildinfo
 
-# Xcode
-#
+# ========================
+# Yarn 4
+# ========================
+.yarn/cache
+.yarn/install-state.gz
+.pnp
+.pnp.js
+.pnp.*
+
+# ========================
+# Dependencies
+# ========================
+node_modules/
+
+# ========================
+# Build Outputs
+# ========================
+dist/
 build/
+web-build/
+
+# ========================
+# Environment Variables
+# ========================
+.env
+.env.local
+.env.*.local
+.env.dev
+.env.staging
+.env.production
+
+# ========================
+# IDE
+# ========================
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ========================
+# Logs
+# ========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ========================
+# React Native / Metro
+# ========================
+*.jsbundle
+.metro-health-check*
+
+# ========================
+# Expo
+# ========================
+.expo/
+.expo-shared/
+
+# ========================
+# Xcode
+# ========================
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -13,88 +79,53 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata
+xcuserdata/
 *.xccheckout
 *.moved-aside
-DerivedData
+DerivedData/
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
+project.xcworkspace/
 ios/.xcode.env.local
 
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
+# ========================
+# Android / Gradle
+# ========================
+.gradle/
 local.properties
 *.iml
 *.hprof
 .cxx/
 *.keystore
 !debug.keystore
+keystore_pass
 
-# Node
-#
-node_modules/
-npm-debug.log
-yarn-error.log
+# ========================
+# CocoaPods
+# ========================
+**/ios/Pods/
 
+# ========================
 # Fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
-
+# ========================
 **/fastlane/report.xml
 **/fastlane/Preview.html
 **/fastlane/screenshots
 **/fastlane/test_output
 
-# Bundle artifacts
-*.jsbundle
-
-# CocoaPods
-/ios/Pods/
-
-# Expo
-.expo/
-.expo-shared/
-dist/
-web-build/
-
-# Environment Variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.dev
-.env.staging
-.env.production
-
+# ========================
 # Testing
+# ========================
 coverage/
-*.log
 
-# Misc
-.vscode/
-*.orig.*
-*.swp
-*.swo
-*.log
-*.lock
-
-# Temporary files created by Metro to check the health of the file watcher
-.metro-health-check*
-
-# Google Services
+# ========================
+# Google Services (sensitive)
+# ========================
 google-services.json
 GoogleService-Info.plist
 
-# Keystore files
-*.keystore
-keystore_pass
-my-release-key.keystore
+# ========================
+# Misc
+# ========================
+*.orig.*
