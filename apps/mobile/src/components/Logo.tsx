@@ -1,15 +1,13 @@
 import React from "react";
-import { Image, NativeModules, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Box, RestyleText } from "../theme";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
-import { isIOS } from "@/utils/device";
 
 const Logo = () => {
-  const env = isIOS ? NativeModules.RNMultiEnv.env : "";
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   return (

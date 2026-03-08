@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "npx react-native start",
     "start": "npx react-native start",
+    "prebuild": "npx expo prebuild",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "test": "jest",
-    "lint": "eslint .",
-    "format": "prettier . --write && eslint . --fix",
+    "lint": "cd ../.. && npx eslint apps/mobile/",
+    "format": "cd ../.. && prettier apps/mobile/ --write && npx eslint apps/mobile/ --fix",
     "clean": "rm -rf node_modules/.cache"
   },
   "jest": {

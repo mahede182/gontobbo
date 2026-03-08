@@ -13,10 +13,6 @@ PODS:
     - ExpoModulesCore
   - Expo (51.0.39):
     - ExpoModulesCore
-  - ExpoAdapterFBSDKNext (13.4.3):
-    - ExpoModulesCore
-    - FBSDKCoreKit
-    - React-Core
   - ExpoAdapterGoogleSignIn (12.2.1):
     - ExpoModulesCore
     - GoogleSignIn (~> 7.1)
@@ -64,21 +60,7 @@ PODS:
     - ExpoModulesCore
   - ExpoWebBrowser (13.0.3):
     - ExpoModulesCore
-  - FBAEMKit (18.0.3):
-    - FBSDKCoreKit_Basics (= 18.0.3)
   - FBLazyVector (0.74.3)
-  - FBSDKCoreKit (18.0.3):
-    - FBAEMKit (= 18.0.3)
-    - FBSDKCoreKit_Basics (= 18.0.3)
-  - FBSDKCoreKit_Basics (18.0.3)
-  - FBSDKGamingServicesKit (18.0.3):
-    - FBSDKCoreKit (= 18.0.3)
-    - FBSDKCoreKit_Basics (= 18.0.3)
-    - FBSDKShareKit (= 18.0.3)
-  - FBSDKLoginKit (18.0.3):
-    - FBSDKCoreKit (= 18.0.3)
-  - FBSDKShareKit (18.0.3):
-    - FBSDKCoreKit (= 18.0.3)
   - fmt (9.1.0)
   - glog (0.3.5)
   - GoogleSignIn (7.1.0):
@@ -1024,21 +1006,6 @@ PODS:
     - react-native-config/App (= 1.6.1)
   - react-native-config/App (1.6.1):
     - React-Core
-  - react-native-fbsdk-next (13.4.3):
-    - React-Core
-    - react-native-fbsdk-next/Core (= 13.4.3)
-    - react-native-fbsdk-next/Login (= 13.4.3)
-    - react-native-fbsdk-next/Share (= 13.4.3)
-  - react-native-fbsdk-next/Core (13.4.3):
-    - FBSDKCoreKit (~> 18.0)
-    - React-Core
-  - react-native-fbsdk-next/Login (13.4.3):
-    - FBSDKLoginKit (~> 18.0)
-    - React-Core
-  - react-native-fbsdk-next/Share (13.4.3):
-    - FBSDKGamingServicesKit (~> 18.0)
-    - FBSDKShareKit (~> 18.0)
-    - React-Core
   - react-native-maps (1.14.0):
     - React-Core
   - react-native-safe-area-context (4.10.1):
@@ -1352,7 +1319,6 @@ DEPENDENCIES:
   - EXApplication (from `../../../node_modules/expo-application/ios`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
   - Expo (from `../../../node_modules/expo`)
-  - ExpoAdapterFBSDKNext (from `../../../node_modules/react-native-fbsdk-next/ios`)
   - "ExpoAdapterGoogleSignIn (from `../../../node_modules/@react-native-google-signin/google-signin/expo/ios`)"
   - ExpoAppleAuthentication (from `../../../node_modules/expo-apple-authentication/ios`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
@@ -1396,7 +1362,6 @@ DEPENDENCIES:
   - React-logger (from `../../../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../../../node_modules/react-native/ReactCommon`)
   - react-native-config (from `../../../node_modules/react-native-config`)
-  - react-native-fbsdk-next (from `../../../node_modules/react-native-fbsdk-next`)
   - react-native-maps (from `../../../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../../../node_modules/react-native/ReactCommon`)
@@ -1433,12 +1398,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
-    - FBAEMKit
-    - FBSDKCoreKit
-    - FBSDKCoreKit_Basics
-    - FBSDKGamingServicesKit
-    - FBSDKLoginKit
-    - FBSDKShareKit
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
@@ -1455,8 +1414,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-constants/ios"
   Expo:
     :path: "../../../node_modules/expo"
-  ExpoAdapterFBSDKNext:
-    :path: "../../../node_modules/react-native-fbsdk-next/ios"
   ExpoAdapterGoogleSignIn:
     :path: "../../../node_modules/@react-native-google-signin/google-signin/expo/ios"
   ExpoAppleAuthentication:
@@ -1540,8 +1497,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon"
   react-native-config:
     :path: "../../../node_modules/react-native-config"
-  react-native-fbsdk-next:
-    :path: "../../../node_modules/react-native-fbsdk-next"
   react-native-maps:
     :path: "../../../node_modules/react-native-maps"
   react-native-safe-area-context:
@@ -1614,7 +1569,6 @@ SPEC CHECKSUMS:
   EXApplication: c08200c34daca7af7fd76ac4b9d606077410e8ad
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
   Expo: 8c995afb875c15bf8439af0b20bcb9ed8f90d0bd
-  ExpoAdapterFBSDKNext: a4d77dd1866b7f64386b11c2d7ae79b6fa28fccc
   ExpoAdapterGoogleSignIn: 20e6be8bff6e951607ace66e6d3d11b30f2e9e3a
   ExpoAppleAuthentication: 265219fa0ba1110872079f55f56686b9737b0065
   ExpoAsset: 323700f291684f110fb55f0d4022a3362ea9f875
@@ -1627,13 +1581,7 @@ SPEC CHECKSUMS:
   ExpoModulesCore: 831ece8311a489418746925820bbffdda587d6f4
   ExpoRandom: 099ddce39b39ffb984b45118d031e8713e962a50
   ExpoWebBrowser: 7595ccac6938eb65b076385fd23d035db9ecdc8e
-  FBAEMKit: 2a6b529993713c185b02bc36f8c91129bf78dfb0
   FBLazyVector: 7e977dd099937dc5458851233141583abba49ff2
-  FBSDKCoreKit: 65d7f7a7d6fcc3aa6eb6e093ec737a4184fc6049
-  FBSDKCoreKit_Basics: 7bc9d8fde8f70985fba2ed7c1d07e319f969a991
-  FBSDKGamingServicesKit: fbf065fa50428f30d05417009d6c7ef76352110a
-  FBSDKLoginKit: 66d20fcb7afcafc0c420477662f96845cd1a5179
-  FBSDKShareKit: 837e908192dd6dc8f34aea673e62bb9570f75a99
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
@@ -1665,7 +1613,6 @@ SPEC CHECKSUMS:
   React-logger: fa92ba4d3a5d39ac450f59be2a3cec7b099f0304
   React-Mapbuffer: 9f68550e7c6839d01411ac8896aea5c868eff63a
   react-native-config: 97ffff0aec29e12269f4dd2d41c6669c0056c7aa
-  react-native-fbsdk-next: 4fa40d3b1df411ed9bc3cca899572b41f58a4dae
   react-native-maps: cbf2f03bfeebfd7ec45966b066db13a075fd2af3
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
   React-nativeconfig: fa5de9d8f4dbd5917358f8ad3ad1e08762f01dcb

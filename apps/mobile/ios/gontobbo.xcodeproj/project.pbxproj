@@ -3,23 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00773F6BFC6543CE81756FFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB55533C7F6A4415A822F85B /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2572DDE10AF24D85878A74F8 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C92AEBC31F4EECB5FB1F33 /* Poppins-Regular.ttf */; };
-		36549B68E11D4276B49247CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FDF9ED8B378475EBDAD629A /* Poppins-Bold.ttf */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		57BB135154A44486B94B1F52 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A1427EB726B415B9DE17660 /* Poppins-Light.ttf */; };
-		6FFFCEF949FC0D597880C2C5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = DA79B868BAA32DBCC217F900 /* PrivacyInfo.xcprivacy */; };
+		45CF7EFBADCF6B4B62F0DA05 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E05299DA03226699CFCB3036 /* PrivacyInfo.xcprivacy */; };
+		6CC6B28B60174CD093C4B41E /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD3F6963D8424F69A3D35022 /* Poppins-Light.ttf */; };
+		6D392902DA9142D491D76465 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28568DE3868F4685AE3F3E84 /* GoogleService-Info.plist */; };
+		8701EC96DB82483AB7D5B129 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFEA28D5005F46EE966969D3 /* Poppins-Regular.ttf */; };
 		96905EF65AED1B983A6B3ABC /* libPods-gontobbo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-gontobbo.a */; };
+		A8F18114A00143CB8B4B6B03 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36EB555004542BF9780C90E /* noop-file.swift */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C83B78054C5A4F5D8AFB8762 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468E16B4560D4D54A3AEE5D8 /* noop-file.swift */; };
+		CE448CFA0C4241C69AEC46B7 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C844AE1E9BC4E00857689DF /* Poppins-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,19 +29,19 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = gontobbo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = gontobbo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = gontobbo/main.m; sourceTree = "<group>"; };
-		1FDF9ED8B378475EBDAD629A /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
-		468E16B4560D4D54A3AEE5D8 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "gontobbo/noop-file.swift"; sourceTree = "<group>"; };
+		28568DE3868F4685AE3F3E84 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "gontobbo/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		516E3894FAB64C1997F99C98 /* gontobbo-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "gontobbo-Bridging-Header.h"; path = "gontobbo/gontobbo-Bridging-Header.h"; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-gontobbo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-gontobbo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C2E3173556A471DD304B334 /* Pods-gontobbo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gontobbo.debug.xcconfig"; path = "Target Support Files/Pods-gontobbo/Pods-gontobbo.debug.xcconfig"; sourceTree = "<group>"; };
-		71C92AEBC31F4EECB5FB1F33 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
-		7A1427EB726B415B9DE17660 /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-gontobbo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gontobbo.release.xcconfig"; path = "Target Support Files/Pods-gontobbo/Pods-gontobbo.release.xcconfig"; sourceTree = "<group>"; };
+		9C844AE1E9BC4E00857689DF /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = gontobbo/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B72472FE30C3441B80580D7A /* gontobbo-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "gontobbo-Bridging-Header.h"; path = "gontobbo/gontobbo-Bridging-Header.h"; sourceTree = "<group>"; };
+		AFEA28D5005F46EE966969D3 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		CB55533C7F6A4415A822F85B /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "gontobbo/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		DA79B868BAA32DBCC217F900 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = gontobbo/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		CD3F6963D8424F69A3D35022 /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
+		E05299DA03226699CFCB3036 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = gontobbo/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F36EB555004542BF9780C90E /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "gontobbo/noop-file.swift"; sourceTree = "<group>"; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-gontobbo/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,10 +67,10 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				CB55533C7F6A4415A822F85B /* GoogleService-Info.plist */,
-				468E16B4560D4D54A3AEE5D8 /* noop-file.swift */,
-				B72472FE30C3441B80580D7A /* gontobbo-Bridging-Header.h */,
-				DA79B868BAA32DBCC217F900 /* PrivacyInfo.xcprivacy */,
+				28568DE3868F4685AE3F3E84 /* GoogleService-Info.plist */,
+				F36EB555004542BF9780C90E /* noop-file.swift */,
+				516E3894FAB64C1997F99C98 /* gontobbo-Bridging-Header.h */,
+				E05299DA03226699CFCB3036 /* PrivacyInfo.xcprivacy */,
 			);
 			name = gontobbo;
 			sourceTree = "<group>";
@@ -100,7 +100,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
-				D41F2A653702418093CF8F6B /* Resources */,
+				F3C242FDCE194CA99FED85FC /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -132,17 +132,6 @@
 			path = gontobbo/Supporting;
 			sourceTree = "<group>";
 		};
-		D41F2A653702418093CF8F6B /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				71C92AEBC31F4EECB5FB1F33 /* Poppins-Regular.ttf */,
-				7A1427EB726B415B9DE17660 /* Poppins-Light.ttf */,
-				1FDF9ED8B378475EBDAD629A /* Poppins-Bold.ttf */,
-			);
-			name = Resources;
-			path = "";
-			sourceTree = "<group>";
-		};
 		D65327D7A22EEC0BE12398D9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +149,16 @@
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
+		F3C242FDCE194CA99FED85FC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AFEA28D5005F46EE966969D3 /* Poppins-Regular.ttf */,
+				CD3F6963D8424F69A3D35022 /* Poppins-Light.ttf */,
+				9C844AE1E9BC4E00857689DF /* Poppins-Bold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -168,13 +167,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "gontobbo" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				F43BBA669A73AE3100334DA8 /* [Expo] Configure project */,
+				3FD286F4ABDFEDA87AEF61BB /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				35AA6E27424817CC96A9EA08 /* [CP] Embed Pods Frameworks */,
+				0388DA74D4D84B3CBAFFE79F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -224,11 +223,11 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				00773F6BFC6543CE81756FFE /* GoogleService-Info.plist in Resources */,
-				2572DDE10AF24D85878A74F8 /* Poppins-Regular.ttf in Resources */,
-				57BB135154A44486B94B1F52 /* Poppins-Light.ttf in Resources */,
-				36549B68E11D4276B49247CD /* Poppins-Bold.ttf in Resources */,
-				6FFFCEF949FC0D597880C2C5 /* PrivacyInfo.xcprivacy in Resources */,
+				6D392902DA9142D491D76465 /* GoogleService-Info.plist in Resources */,
+				8701EC96DB82483AB7D5B129 /* Poppins-Regular.ttf in Resources */,
+				6CC6B28B60174CD093C4B41E /* Poppins-Light.ttf in Resources */,
+				CE448CFA0C4241C69AEC46B7 /* Poppins-Bold.ttf in Resources */,
+				45CF7EFBADCF6B4B62F0DA05 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +248,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
+		};
+		0388DA74D4D84B3CBAFFE79F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-gontobbo/Pods-gontobbo-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gontobbo/Pods-gontobbo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -272,35 +289,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		35AA6E27424817CC96A9EA08 /* [CP] Embed Pods Frameworks */ = {
+		3FD286F4ABDFEDA87AEF61BB /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-gontobbo/Pods-gontobbo-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBAEMKit/FBAEMKit.framework/FBAEMKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework/FBSDKCoreKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit_Basics/FBSDKCoreKit_Basics.framework/FBSDKCoreKit_Basics",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKGamingServicesKit/FBSDKGamingServicesKit.framework/FBSDKGamingServicesKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework/FBSDKLoginKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKShareKit/FBSDKShareKit.framework/FBSDKShareKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBAEMKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit_Basics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKGamingServicesKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gontobbo/Pods-gontobbo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-gontobbo/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -338,25 +344,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gontobbo/Pods-gontobbo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F43BBA669A73AE3100334DA8 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-gontobbo/expo-configure-project.sh\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -367,7 +354,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				C83B78054C5A4F5D8AFB8762 /* noop-file.swift in Sources */,
+				A8F18114A00143CB8B4B6B03 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +369,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = gontobbo/gontobbo.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 99A6V3PG79;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -389,7 +377,10 @@
 				);
 				INFOPLIST_FILE = gontobbo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -398,7 +389,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
-				PRODUCT_NAME = "gontobbo";
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -415,9 +406,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = gontobbo/gontobbo.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 99A6V3PG79;
 				INFOPLIST_FILE = gontobbo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -426,7 +421,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitsofts.gontobbo;
-				PRODUCT_NAME = "gontobbo";
+				PRODUCT_NAME = gontobbo;
 				SWIFT_OBJC_BRIDGING_HEADER = "gontobbo/gontobbo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -486,7 +481,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD = "";
 				LDPLUSPLUS = "";
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -545,7 +543,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD = "";
 				LDPLUSPLUS = "";
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = (
@@ -569,7 +570,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "gontobbo" */ = {
 			isa = XCConfigurationList;
@@ -578,7 +579,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
