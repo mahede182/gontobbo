@@ -1,77 +1,54 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
-import { getItem, saveItem } from "@/utils/storage";
+import { Offer } from "@/api/offers";
+import { addToWishlist } from "@/api/wishlist";
 
 type Props = {
-  offer: {
-    id: number;
-    name: string;
-    location: string;
-    image: any;
-    offer1: {
-      title: string;
-      subtitle: string;
-      value: string;
-      discount: string;
-      price: string;
-    };
-    offer2: {
-      title: string;
-      subtitle: string;
-      value: string;
-      discount: string;
-      price: string;
-    };
-  };
+  offer: Offer;
 };
 
 const SingleOffer = ({ offer }: Props) => {
   const navigation = useNavigation();
   return (
     <View style={styles.content}>
-      <Image source={offer.image} style={styles.image} />
+      <Image source={offer.image ? { uri: offer.image } : images.dummyCard} style={styles.image} />
       <Text style={styles.header}>{offer.name}</Text>
       <Text style={styles.category}>{offer.location}</Text>
       <View style={styles.offerContainer}>
-        <Text style={styles.offerTitle}>{offer.offer1.title}</Text>
-        <Text style={styles.offerSubtitle}>{offer.offer1.subtitle}</Text>
+        <Text style={styles.offerTitle}>{offer.tier1Title}</Text>
+        <Text style={styles.offerSubtitle}>{offer.tier1Subtitle}</Text>
         <View style={styles.offerDetails}>
-          <Text style={styles.offerValue}>{offer.offer1.value}</Text>
+          <Text style={styles.offerValue}>{offer.tier1Value}</Text>
         </View>
         <View style={styles.offerDetails}>
-          <Text style={styles.offerDiscount}>{offer.offer1.discount}</Text>
-          <Text style={styles.offerPrice}>{offer.offer1.price}</Text>
+          <Text style={styles.offerDiscount}>{offer.tier1Discount}% Off</Text>
+          <Text style={styles.offerPrice}>${offer.tier1Price}</Text>
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("TRIP_REVIEW_BOOKING");
-          }}
-          style={[styles.button, styles.primaryButton]}>
-          <Text style={styles.primaryButtonText}>Book Now</Text>
-        </TouchableOpacity>
+        {offer.hotelId && (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("HOTEL_DETAIL", { hotelId: offer.hotelId });
+            }}
+            style={[styles.button, styles.primaryButton]}>
+            <Text style={styles.primaryButtonText}>Book Now</Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           onPress={async () => {
             try {
-              const wishlistJson = await getItem("wishlist");
-              const wishlist = wishlistJson ? wishlistJson : [];
-              const isOfferInWishlist = wishlist.some(
-                (item: { itemId: string }) => item.itemId === offer.itemId,
-              );
-
-              if (!isOfferInWishlist) {
-                const updatedWishlist = [...wishlist, offer];
-                await saveItem("wishlist", updatedWishlist);
-                alert("Offer added to wishlist!");
-              } else {
-                alert("Offer is already in your wishlist.");
-              }
+              await addToWishlist({
+                offerId: offer.id,
+                type: "HOTEL",
+                name: offer.name,
+              });
+              Alert.alert("Success", "Offer added to wishlist!");
             } catch (error) {
-              console.error("Error handling wishlist:", error);
+              Alert.alert("Info", "Offer may already be in your wishlist.");
             }
           }}
           style={[styles.button, styles.secondaryButton]}>

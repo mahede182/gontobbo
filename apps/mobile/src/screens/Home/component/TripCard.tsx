@@ -3,85 +3,68 @@ import React from "react";
 import { Image, Pressable, StyleSheet } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
-import { useDummyLoading } from "@/hooks/useDummyLoading";
-import { Skeleton } from "moti/skeleton";
 import { useNavigation } from "@react-navigation/native";
-import { MotiPressable } from "moti/interactions";
 
 interface TripCardProps {
+  id: string;
   image: string;
   title: string;
   duration: string;
   feature: string;
   peopleJoined: number;
-  avatars: string[];
 }
 
 const TripCard: React.FC<TripCardProps> = ({
+  id,
   image,
   title,
   duration,
   feature,
   peopleJoined,
-  avatars,
 }) => {
-  const { isLoading } = useDummyLoading();
   const navigation = useNavigation();
   return (
-    <Skeleton show={isLoading} colorMode="light" radius="square" height={100} width={"100%"}>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("SEARCH_RESULT_DETAILS");
-        }}
-        style={({ pressed }) => [
-          {
-            opacity: pressed ? 0.5 : 1,
-            transform: [{ scale: pressed ? 0.95 : 1 }],
-          },
-        ]}>
-        <Box
-          flexDirection="row"
-          marginBottom="large"
-          backgroundColor="neutral100"
-          borderRadius={10}>
-          <Image source={image} style={styles.image} />
+    <Pressable
+      onPress={() => {
+        navigation.navigate("SEARCH_RESULT_DETAILS", { tripId: id });
+      }}
+      style={({ pressed }) => [
+        {
+          opacity: pressed ? 0.5 : 1,
+          transform: [{ scale: pressed ? 0.95 : 1 }],
+        },
+      ]}>
+      <Box flexDirection="row" marginBottom="large" backgroundColor="neutral100" borderRadius={10}>
+        <Image
+          source={image ? { uri: image } : require("@/assets/hotel_image_1.png")}
+          style={styles.image}
+        />
 
-          <Box
-            width="60%"
-            paddingVertical="five"
-            paddingHorizontal="medium"
-            alignItems="flex-start"
-            justifyContent="space-between">
-            <RestyleText variant="subtitle" marginBottom="ten" paddingHorizontal="two">
-              {title}
+        <Box
+          width="60%"
+          paddingVertical="five"
+          paddingHorizontal="medium"
+          alignItems="flex-start"
+          justifyContent="space-between">
+          <RestyleText variant="subtitle" marginBottom="ten" paddingHorizontal="two">
+            {title}
+          </RestyleText>
+          <Box flexDirection="row" alignItems="center" marginBottom="small">
+            <RestyleText variant="caption" color="gray" marginRight="tiny">
+              {duration}
             </RestyleText>
-            <Box flexDirection="row" alignItems="center" marginBottom="small">
-              <RestyleText variant="caption" color="gray" marginRight="tiny">
-                {duration}
-              </RestyleText>
-              <RestyleText variant="caption" color="gray">
-                {feature}
-              </RestyleText>
-            </Box>
-            <Box flexDirection="row" alignItems="center">
-              <Box flexDirection="row" marginRight="small">
-                {avatars.slice(0, 4).map((avatar, index) => (
-                  <Image
-                    key={index}
-                    source={avatar}
-                    // eslint-disable-next-line react-native/no-inline-styles
-                    style={[styles.avatar, { marginLeft: index > 0 ? -10 : 0 }]}
-                  />
-                ))}
-              </Box>
-              <RestyleText variant="caption" color="gray">
-                {peopleJoined}+ People Joined
-              </RestyleText>
-            </Box>
+            <RestyleText variant="caption" color="gray">
+              {feature}
+            </RestyleText>
+          </Box>
+          <Box flexDirection="row" alignItems="center">
+            <RestyleText variant="caption" color="gray">
+              {peopleJoined}+ People Joined
+            </RestyleText>
           </Box>
         </Box>
-      </Pressable>
-    </Skeleton>
+      </Box>
+    </Pressable>
   );
 };
 
@@ -90,13 +73,6 @@ const styles = StyleSheet.create({
     width: "40%",
     height: 100,
     borderRadius: 8,
-  },
-  avatar: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: colors.white100,
   },
 });
 

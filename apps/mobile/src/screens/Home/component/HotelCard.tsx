@@ -3,18 +3,22 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Box, RestyleText as Text } from "@/theme";
 
-import { HotelCardProps } from "@/data/hotelData";
-import { Skeleton } from "moti/skeleton";
-import { useDummyLoading } from "@/hooks/useDummyLoading";
 import { MotiView } from "moti";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
 
-const HotelCard: React.FC<HotelCardProps> = React.memo(({ image, name, location, rating }) => {
-  const { isLoading } = useDummyLoading(true, 5000);
+interface HotelCardProps {
+  id: string;
+  image: string;
+  name: string;
+  location: string;
+  rating: number;
+}
+
+const HotelCard: React.FC<HotelCardProps> = React.memo(({ id, image, name, location, rating }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS")}>
+    <TouchableOpacity onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS", { hotelId: id })}>
       <Box
         width={160}
         marginRight="medium"
@@ -22,9 +26,10 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(({ image, name, location,
         borderRadius={10}
         overflow="hidden">
         <Box position="relative">
-          <Skeleton show={isLoading} colorMode="light" radius="square" height={150} width={"100%"}>
-            <Image source={image} style={styles.image} />
-          </Skeleton>
+          <Image
+            source={image ? { uri: image } : require("@/assets/hotel_image_1.png")}
+            style={styles.image}
+          />
           <MotiView
             style={styles.likeContainer}
             from={{ scale: 1 }}

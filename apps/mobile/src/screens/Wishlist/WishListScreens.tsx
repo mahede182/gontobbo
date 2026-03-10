@@ -1,12 +1,13 @@
 import HeaderTitle from "@/components/HeaderTitle";
-import { wishlistItems } from "@/data/wishlistItem";
+import { getWishlist, removeFromWishlist, WishlistItem } from "@/api/wishlist";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
-import { getItem, saveItem } from "@/utils/storage";
 import { dynamicCSS } from "@/utils/styles";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
+  ActivityIndicator,
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -20,61 +21,79 @@ type Props = {};
 
 const WishListScreens: React.FC<Props> = (props): JSX.Element => {
   const navigation = useNavigation();
-  const [wishlist, setWishlist] = React.useState<any[]>([]);
+  const [wishlist, setWishlist] = React.useState<WishlistItem[]>([]);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const wishlistJson = await getItem("wishlist");
-        setWishlist(wishlistJson || []);
-        // console.log(wishlist, "wishlist");
+        const data = await getWishlist();
+        setWishlist(data);
       } catch (error) {
         console.error("Error fetching wishlist:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchWishlist();
   }, []);
 
+  const handleRemove = async (id: string) => {
+    try {
+      setWishlist((prev) => prev.filter((item) => item.id !== id));
+      await removeFromWishlist(id);
+    } catch (error) {
+      Alert.alert("Error", "Failed to remove item from wishlist");
+      const data = await getWishlist();
+      setWishlist(data);
+    }
+  };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color={colors.primary700} />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderTitle title="Wish list" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          {wishlist.map((item) => (
-            <View key={item.id} style={styles.itemContainer}>
-              <Image source={images.dummyCard} style={styles.image} />
-              <View style={styles.detailsContainer}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.location}>{item.location}</Text>
-                {/* <Text style={styles.price}>${item.price.toLocaleString()}</Text> */}
+          {wishlist.map((item) => {
+            const imageUrl = item.hotel?.images?.[0];
+            return (
+              <View key={item.id} style={styles.itemContainer}>
+                <Image
+                  source={imageUrl ? { uri: imageUrl } : images.dummyCard}
+                  style={styles.image}
+                />
+                <View style={styles.detailsContainer}>
+                  <Text style={styles.name}>{item.hotel?.name ?? item.name}</Text>
+                  <Text style={styles.location}>{item.hotel?.location ?? ""}</Text>
+                </View>
+                <View style={dynamicCSS("flexDirection", "column")}>
+                  {item.hotelId && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("HOTEL_DETAIL", { hotelId: item.hotelId });
+                      }}
+                      style={styles.bookButton}>
+                      <Text style={styles.bookButtonText}>Book</Text>
+                    </TouchableOpacity>
+                  )}
+                  <TouchableOpacity
+                    onPress={() => handleRemove(item.id)}
+                    style={styles.deleteButton}>
+                    <Image source={images.bin} style={styles.deleteIcon} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={dynamicCSS("flexDirection", "column")}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate("TRIP_REVIEW_BOOKING");
-                  }}
-                  style={styles.bookButton}>
-                  <Text style={styles.bookButtonText}>Book</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={async () => {
-                    try {
-                      const updatedWishlist = wishlist.filter(
-                        (wishlistItem) => wishlistItem.id !== item.id,
-                      );
-                      setWishlist(updatedWishlist);
-                      await saveItem("wishlist", updatedWishlist);
-                    } catch (error) {
-                      console.error("Error deleting item from wishlist:", error);
-                    }
-                  }}
-                  style={styles.deleteButton}>
-                  <Image source={images.bin} style={styles.deleteIcon} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
       </ScrollView>
     </SafeAreaView>

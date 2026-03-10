@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from "react";
 import { Box } from "@/theme";
-import { getUser } from "@/utils/axios";
-import "@/machine/counterMachine";
+import { getUserAsync } from "@/api/auth";
 
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
@@ -18,7 +17,7 @@ import { Input } from "@/components/Input";
 import PopularTrip from "./component/PopularTrip";
 import { useTranslation } from "react-i18next";
 import Tag from "./component/Tag";
-import { tagData } from "@/data/tagData";
+import { getTags, Tag as TagType } from "@/api/tags";
 import FeaturedHotels from "./component/FeaturedHotels";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
@@ -36,18 +35,24 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [tags, setTags] = useState<TagType[]>([]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { state: appState } = useApp();
 
   useEffect(() => {
-    getUser().then((response) => {
-      const data = response.data.data;
-      setName(`${data?.first_name} ${data?.last_name}`);
-      setEmail(data?.email);
-      setImageUrl(data?.avatar);
+    getUserAsync().then((user) => {
+      if (user) {
+        const parsed = typeof user === "string" ? JSON.parse(user) : user;
+        setName(`${parsed.firstName ?? ""} ${parsed.lastName ?? ""}`.trim());
+        setEmail(parsed.email ?? "");
+        setImageUrl(parsed.avatar ?? "");
+      }
     });
-  }, [name, email, imageUrl]);
+    getTags()
+      .then(setTags)
+      .catch(() => {});
+  }, []);
 
   const drawerOpen = () => {
     navigation.navigate("DRAWER");
@@ -87,9 +92,13 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
           style={(dynamicCSS("paddingVertical", 10), dynamicCSS("paddingHorizontal", 10))}
           showsHorizontalScrollIndicator={false}
           horizontal>
-          {/* Map over tagData and render Tag component */}
-          {tagData.map((tag, index) => (
-            <Tag key={index} id={tag.id} icon={tag.icon} label={tag.label} />
+          {tags.map((tag) => (
+            <Tag
+              key={tag.id}
+              id={tag.id}
+              icon={tag.icon ? { uri: tag.icon } : images.menuBtn}
+              label={tag.label}
+            />
           ))}
         </ScrollView>
       </Box>

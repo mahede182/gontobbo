@@ -2,7 +2,7 @@ import HeaderTitle from "@/components/HeaderTitle";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import { dynamicCSS } from "@/utils/styles";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
 import {
   View,
@@ -13,74 +13,90 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
+import { getTripDetail, Trip } from "@/api/trips";
 
 type Props = {};
 
 const TripReviewBookingScreen = (props: Props) => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { tripId } = (route.params as { tripId?: string }) || {};
+  const [trip, setTrip] = React.useState<Trip | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchTrip = async () => {
+      try {
+        if (tripId) {
+          const data = await getTripDetail(tripId);
+          setTrip(data);
+        }
+      } catch (error) {
+        console.error("Error fetching trip:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTrip();
+  }, [tripId]);
+
+  if (loading) {
+    return (
+      <SafeAreaView
+        style={[dynamicCSS("flex", 1), { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color={colors.primary700} />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={dynamicCSS("flex", 1)}>
       <HeaderTitle title="Review Booking" />
       <ScrollView style={styles.container}>
         <View style={styles.hotelContainer}>
-          <Image source={images.dummyCard} style={styles.hotelImage} />
+          <Image
+            source={trip?.image ? { uri: trip.image } : images.dummyCard}
+            style={styles.hotelImage}
+          />
           <View style={styles.hotelDetails}>
-            <Text style={styles.hotelName}>Buckingham Palace, London</Text>
+            <Text style={styles.hotelName}>{trip?.title ?? "Trip"}</Text>
             <Text style={styles.hotelPackage}>Tour Package</Text>
             <Text style={styles.hotelRating}>★★★★★</Text>
-            <Text style={styles.hotelLocation}>
-              Heathrow Airport Limited, The Compass Centre, Nelson Road, Hounslow, Middlesex, TW6
-              2GW
-            </Text>
+            <Text style={styles.hotelLocation}>{trip?.destination ?? ""}</Text>
           </View>
         </View>
 
         <View style={styles.datesContainer}>
-          <Text style={styles.checkInDate}>10 Nov, 2025, 2:00 PM</Text>
-          <Text style={styles.checkOutDate}>15 Nov, 2025, 12:00 PM</Text>
+          <Text style={styles.checkInDate}>Duration: {trip?.duration ?? "N/A"}</Text>
           <Text style={styles.guestsCount}>2 Adults + 1 Children</Text>
         </View>
 
         <View style={styles.packageContainer}>
-          <Text style={styles.packageTitle}>5 Days 4 Nights Trip Package</Text>
-          <Text style={styles.packageDuration}>Duration: 5 days</Text>
+          <Text style={styles.packageTitle}>{trip?.title ?? "Trip Package"}</Text>
+          <Text style={styles.packageDuration}>Duration: {trip?.duration ?? "N/A"}</Text>
           <View style={styles.packageDetails}>
-            <Text style={styles.packageDetail}>• Breakfast (Non-Refundable)</Text>
-            <Text style={styles.packageDetail}>• Free Parking</Text>
-            <Text style={styles.packageDetail}>• Free WiFi</Text>
-            <Text style={styles.packageDetail}>• Free Breakfast</Text>
-            <Text style={styles.packageDetail}>• Flight Included</Text>
+            {trip?.packageDetails?.map((detail) => (
+              <Text key={detail.id} style={styles.packageDetail}>
+                • {detail.detail}
+              </Text>
+            ))}
           </View>
-          <Text style={styles.packageNonRefundable}>Non-Refundable</Text>
-          <Text style={styles.packageNonRefundable}>Refund is not applicable for this booking</Text>
+          <Text style={styles.packageNonRefundable}>
+            {trip?.isRefundable ? "Refundable" : "Non-Refundable"}
+          </Text>
         </View>
 
         <View style={styles.priceContainer}>
           <Text style={styles.priceTitle}>Price</Text>
           <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>5 Days 4 Nights Trip Package</Text>
-            <Text style={styles.priceValue}>$475</Text>
-          </View>
-          <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>Total Discount</Text>
-            <Text style={styles.priceValue}>$0</Text>
-          </View>
-          <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>Price after Discount</Text>
-            <Text style={styles.priceValue}>$475</Text>
-          </View>
-          <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>Flight Fee</Text>
-            <Text style={styles.priceValue}>$1400</Text>
-          </View>
-          <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>Taxes & Service Fee</Text>
-            <Text style={styles.priceValue}>$5</Text>
+            <Text style={styles.priceLabel}>{trip?.title ?? "Trip Package"}</Text>
+            <Text style={styles.priceValue}>${trip?.price ?? 0}</Text>
           </View>
           <View style={styles.totalPriceRow}>
             <Text style={styles.totalPriceLabel}>Total Amount to be Paid</Text>
-            <Text style={styles.totalPriceValue}>$1,880</Text>
+            <Text style={styles.totalPriceValue}>${trip?.price ?? 0}</Text>
           </View>
         </View>
 

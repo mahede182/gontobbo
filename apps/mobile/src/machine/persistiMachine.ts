@@ -1,6 +1,6 @@
 import { assign, setup, fromPromise, ActorRefFrom } from "xstate";
-import { getItem } from "../utils/storage";
-import { TOKEN } from "../constants/config";
+import { getTokens } from "../utils/storage";
+import { getMe } from "../api/auth";
 
 export type PersistMachineActor = ActorRefFrom<typeof persistMachine>;
 
@@ -12,16 +12,12 @@ export const persistMachine = setup({
     },
   },
   actors: {
-    persisting: fromPromise(() => {
-      return new Promise((resolve, reject) => {
-        getItem(TOKEN)
-          .then((r) => {
-            return resolve(r);
-          })
-          .catch((error) => {
-            return reject(error);
-          }); // token should be saved in auth
-      });
+    persisting: fromPromise(async () => {
+      const tokens = await getTokens();
+      if (!tokens?.accessToken) throw new Error("No token");
+      // Validate the token is still good
+      const user = await getMe();
+      return user;
     }),
     load_initial_data: fromPromise(() => {
       return new Promise((resolve) => {

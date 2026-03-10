@@ -1,38 +1,97 @@
-import axios from "axios";
-import { AUTH_URL } from "@/constants/urls";
-import { TUser } from "@/@types/auth.type";
-import { getItem, saveItem } from "@/utils/storage";
+import api from "./client";
+import { AuthResult, BackendUser, ApiResponse } from "@/@types/auth.type";
+import { saveTokens, saveItem, getItem, getTokens } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/@types/storage.type";
 
-export const signIn = async (user: string, password: string): Promise<TUser> => {
-  const response = await axios.post(`${AUTH_URL}/login`, {
-    username: user,
-    password: password,
-    expiresInMins: 30,
+// ─── Register ───────────────────────────────────────────────────────────────
+
+export const register = async (
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+) => {
+  const { data } = await api.post<AuthResult>("/auth/register", {
+    email,
+    password,
+    firstName,
+    lastName,
   });
-  return { status: "success", user: response.data };
+  await saveTokens(data.data.accessToken, data.data.refreshToken);
+  await saveItem(STORAGE_KEYS.USER, data.data.user);
+  return data.data;
 };
 
-export const getUser = async (accessToken: string): Promise<TUser> => {
-  try {
-    const response = await axios.get(`${AUTH_URL}/me`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
+// ─── Login ──────────────────────────────────────────────────────────────────
 
-    return response.data;
-  } catch (error) {
-    throw error;
+export const login = async (email: string, password: string) => {
+  const { data } = await api.post<AuthResult>("/auth/login", { email, password });
+  await saveTokens(data.data.accessToken, data.data.refreshToken);
+  await saveItem(STORAGE_KEYS.USER, data.data.user);
+  return data.data;
+};
+
+// ─── Google Login ───────────────────────────────────────────────────────────
+
+export const googleLogin = async (idToken: string) => {
+  const { data } = await api.post<AuthResult>("/auth/google", { idToken });
+  await saveTokens(data.data.accessToken, data.data.refreshToken);
+  await saveItem(STORAGE_KEYS.USER, data.data.user);
+  return data.data;
+};
+
+// ─── Apple Login ────────────────────────────────────────────────────────────
+
+export const appleLogin = async (params: {
+  identityToken: string;
+  user?: string;
+  email?: string | null;
+  fullName?: { givenName?: string | null; familyName?: string | null };
+}) => {
+  const { data } = await api.post<AuthResult>("/auth/apple", params);
+  await saveTokens(data.data.accessToken, data.data.refreshToken);
+  await saveItem(STORAGE_KEYS.USER, data.data.user);
+  return data.data;
+};
+
+// ─── Get Current User ───────────────────────────────────────────────────────
+
+export const getMe = async () => {
+  const { data } = await api.get<ApiResponse<BackendUser>>("/auth/me");
+  return data.data;
+};
+
+// ─── Logout ─────────────────────────────────────────────────────────────────
+
+export const logout = async () => {
+  const tokens = await getTokens();
+  try {
+    await api.post("/auth/logout", { refreshToken: tokens?.refreshToken });
+  } catch {
+    // Logout even if server call fails
   }
 };
 
-export const saveUser = async (user: TUser) => {
+// ─── OTP ────────────────────────────────────────────────────────────────────
+
+export const sendOtp = async (email: string) => {
+  const { data } = await api.post<ApiResponse<{ message: string }>>("/auth/send-otp", { email });
+  return data.data;
+};
+
+export const verifyOtp = async (email: string, otp: string) => {
+  const { data } = await api.post<AuthResult>("/auth/verify-otp", { email, otp });
+  await saveTokens(data.data.accessToken, data.data.refreshToken);
+  await saveItem(STORAGE_KEYS.USER, data.data.user);
+  return data.data;
+};
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+export const saveUser = async (user: unknown) => {
   await saveItem(STORAGE_KEYS.USER, user);
 };
 
 export const getUserAsync = async () => {
-  const user = await getItem(STORAGE_KEYS.USER);
-  return user;
+  return await getItem(STORAGE_KEYS.USER);
 };

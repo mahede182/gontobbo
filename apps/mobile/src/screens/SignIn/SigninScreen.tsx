@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import Logo from "@/components/Logo";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -15,33 +15,61 @@ import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { isIOS } from "@/utils/device";
 
-import {
-  // handleAppleSignIn,
-  handleGoogleSignIn,
-  handleAppleSignIn,
-} from "@/utils/socialAuth";
+import { handleGoogleSignIn, handleAppleSignIn } from "@/utils/socialAuth";
 import Background from "@/components/Background";
-import { useApp } from "@/hooks/useApp";
-import { saveItem } from "@/utils/storage";
-import { saveUser } from "@/api/auth";
+import { googleLogin, appleLogin } from "@/api/auth";
 
 type Props = {};
-// <> No one beat you
-/**
- * <> no one beat you
- * @param hello
- *
- */
 
 const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { images } = useTheme<Theme>();
-  const { state: appState, send } = useApp();
-  const { rooms } = appState.context;
+  const [loading, setLoading] = useState(false);
 
-  const updateRoom = async () => {
-    await saveItem("ROOM", rooms);
+  const onGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+      const res = await handleGoogleSignIn();
+      if (!res) return;
+      // Support both old and new Google Sign-In SDK shapes
+      const idToken = res.data?.idToken ?? res.idToken;
+      if (!idToken) {
+        Alert.alert("Error", "Google sign-in did not return an ID token");
+        return;
+      }
+      await googleLogin(idToken);
+      navigation.navigate("AUTHENTICATED");
+    } catch (error: any) {
+      Alert.alert("Sign-In Failed", error?.response?.data?.message ?? error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onAppleSignIn = async () => {
+    try {
+      setLoading(true);
+      const res = await handleAppleSignIn();
+      if (!res) return;
+      if (!res.identityToken) {
+        Alert.alert("Error", "Apple sign-in did not return an identity token");
+        return;
+      }
+      await appleLogin({
+        identityToken: res.identityToken,
+        user: res.user,
+        email: res.email,
+        fullName: res.fullName
+          ? { givenName: res.fullName.givenName, familyName: res.fullName.familyName }
+          : undefined,
+      });
+      navigation.navigate("AUTHENTICATED");
+    } catch (error: any) {
+      Alert.alert("Sign-In Failed", error?.response?.data?.message ?? error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,31 +86,18 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
           <RestyleButton
             iconSrc={images.appleIcon}
             label={t("signIn.continueWithApple")}
-            onPress={() => {
-              handleAppleSignIn().then((res) => {
-                if (res) {
-                  console.log(res, "res apple login");
-                  saveUser(JSON.stringify(res));
-                  navigation.navigate("AUTHENTICATED");
-                }
-              });
-            }}
+            onPress={onAppleSignIn}
             style={[styles.button, styles.appleButton]}
+            disabled={loading}
           />
         )}
 
         <RestyleButton
           iconSrc={images.gmailIcon}
           label={t("signIn.continueWithGmail")}
-          onPress={() => {
-            handleGoogleSignIn().then((res) => {
-              if (res) {
-                saveUser(JSON.stringify(res));
-                navigation.navigate("AUTHENTICATED");
-              }
-            });
-          }}
+          onPress={onGoogleSignIn}
           style={[styles.button, styles.gmailButton]}
+          disabled={loading}
         />
         {/* ::: or ::: */}
         <Box style={styles.divider}>

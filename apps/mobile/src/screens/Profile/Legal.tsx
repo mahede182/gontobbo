@@ -27,7 +27,6 @@ const LegalItemCard = ({ item, onPress }: { item: LegalDocument; onPress: () => 
         padding="medium"
         marginVertical="tiny"
         backgroundColor="white"
-        borderRadius="medium"
         shadowColor="neutral700"
         shadowOpacity={0.1}
         shadowOffset={{ width: 0, height: 2 }}

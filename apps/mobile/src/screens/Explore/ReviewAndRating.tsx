@@ -1,54 +1,51 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "@/theme/colors";
 import Icon from "@expo/vector-icons/FontAwesome";
 import { Box, RestyleText } from "@/theme";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import GradientTitle from "@/components/GradientTitle";
-import { images } from "@/theme/images";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
 import { dynamicCSS } from "@/utils/styles";
+import { getHotelReviews, HotelReview } from "@/api/hotels";
 
 const ReviewsAndRatings = () => {
   const { t } = useTranslation();
-  const reviews = [
-    {
-      name: "David Moore",
-      date: "Sep 20, 2024",
-      review:
-        "Exceptional service and luxurious rooms. The staff went above and beyond to make our stay memorable. The resort is truly a gem.",
-      rating: 5,
-      avatar: images.avatar1,
-    },
-    {
-      name: "Christopher Wilson",
-      date: "Jul 6, 2024",
-      review:
-        "Beautiful location with stunning ocean views. The rooms were clean and comfortable. Though the hotel is the restaurant was a bit pricey.",
-      rating: 4,
-      avatar: images.avatar2,
-    },
-    {
-      name: "Joshua Anderson",
-      date: "Jun 28, 2023",
-      review:
-        "A cozy and peaceful getaway in the mountains. Great hiking trails nearby. The only downside was the limited dining options.",
-      rating: 5,
-      avatar: images.avatar1,
-    },
-    {
-      name: "Dis Nolan",
-      date: "Jul 6, 2024",
-      review:
-        "Beautiful location with stunning ocean views. The rooms were clean and comfortable. Though the hotel is the restaurant was a bit pricey.",
-      rating: 4,
-      avatar: images.avatar2,
-    },
-  ];
-
   const navigation = useNavigation();
+  const route = useRoute();
+  const { hotelId } = (route.params as { hotelId: string }) || {};
+  const [reviews, setReviews] = React.useState<HotelReview[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [averageRating, setAverageRating] = React.useState(0);
+
+  React.useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const data = await getHotelReviews(hotelId);
+        setReviews(data);
+        if (data.length > 0) {
+          const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length;
+          setAverageRating(Math.round(avg * 10) / 10);
+        }
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (hotelId) fetchReviews();
+    else setLoading(false);
+  }, [hotelId]);
+
+  if (loading) {
+    return (
+      <Box flex={1} justifyContent="center" alignItems="center">
+        <ActivityIndicator size="large" color={colors.primary700} />
+      </Box>
+    );
+  }
 
   return (
     <ScrollView style={dynamicCSS("backgroundColor", colors.white)}>
@@ -71,7 +68,7 @@ const ReviewsAndRatings = () => {
       <Box style={styles.ratingContainer}>
         <Box flexDirection={"row"} style={styles.ratingBackground}>
           <Icon name="star" color={colors.linearEnd} style={dynamicCSS("marginHorizontal", 5)} />
-          <RestyleText style={styles.ratingValue}>4.5</RestyleText>
+          <RestyleText style={styles.ratingValue}>{averageRating || "N/A"}</RestyleText>
         </Box>
         <Box>
           <RestyleText style={styles.ratingTitle}>{t("Explore.veryGood")}</RestyleText>
@@ -82,19 +79,34 @@ const ReviewsAndRatings = () => {
       </Box>
       <Box style={styles.reviewsContainer}>
         <RestyleText style={styles.reviewsTitle}>{t("Explore.guestReviews")}</RestyleText>
-        {reviews.map((review, index) => (
-          <Box key={index} style={styles.reviewCard}>
+        {reviews.map((review) => (
+          <Box key={review.id} style={styles.reviewCard}>
             <Box style={styles.reviewHeader}>
-              <Image source={review.avatar} style={styles.avatar} />
+              <Image
+                source={
+                  review.user?.avatar
+                    ? { uri: review.user.avatar }
+                    : require("@/assets/bottomTab/profile.png")
+                }
+                style={styles.avatar}
+              />
               <Box>
-                <RestyleText style={styles.reviewName}>{review.name}</RestyleText>
-                <RestyleText style={styles.reviewDate}>{review.date}</RestyleText>
+                <RestyleText style={styles.reviewName}>
+                  {review.user?.firstName} {review.user?.lastName}
+                </RestyleText>
+                <RestyleText style={styles.reviewDate}>
+                  {new Date(review.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </RestyleText>
               </Box>
             </Box>
-            <RestyleText style={styles.reviewText}>{review.review}</RestyleText>
+            <RestyleText style={styles.reviewText}>{review.text}</RestyleText>
             <Box style={styles.reviewRating}>
               {Array(review.rating)
-                .fill()
+                .fill(null)
                 .map((_, i) => (
                   <Icon key={i} name="star" size={16} color={colors.linearEnd} />
                 ))}

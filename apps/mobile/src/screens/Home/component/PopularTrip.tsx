@@ -1,14 +1,22 @@
-import React from "react";
-import { ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, ScrollView } from "react-native";
 import { Box } from "@/theme";
 import { useTranslation } from "react-i18next";
 import TripCard from "./TripCard";
-import { popularTrip } from "@/data/popularTripData";
+import { getPopularTrips, Trip } from "@/api/trips";
 import GradientTitle from "@/components/GradientTitle";
 import { dynamicCSS } from "@/utils/styles";
 
 const PopularTrip: React.FC = () => {
   const { t } = useTranslation();
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getPopularTrips()
+      .then(setTrips)
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <Box marginTop="twenty">
@@ -17,19 +25,23 @@ const PopularTrip: React.FC = () => {
         variant="gradientTitle">
         {t("Home.popularTrip")}
       </GradientTitle>
-      <ScrollView style={dynamicCSS("paddingHorizontal", 20)}>
-        {popularTrip.map((trip, index) => (
-          <TripCard
-            key={index}
-            image={trip.image}
-            title={trip.title}
-            duration={trip.duration}
-            feature={trip.feature}
-            peopleJoined={trip.peopleJoined}
-            avatars={trip.avatars}
-          />
-        ))}
-      </ScrollView>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <ScrollView style={dynamicCSS("paddingHorizontal", 20)}>
+          {trips.map((trip) => (
+            <TripCard
+              key={trip.id}
+              id={trip.id}
+              image={trip.image}
+              title={trip.title}
+              duration={trip.duration}
+              feature={trip.feature}
+              peopleJoined={trip.peopleJoined}
+            />
+          ))}
+        </ScrollView>
+      )}
     </Box>
   );
 };

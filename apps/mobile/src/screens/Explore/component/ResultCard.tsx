@@ -6,19 +6,23 @@ import { useNavigation } from "@react-navigation/native";
 import { colors } from "@/theme/colors";
 
 interface ResultCardProps {
+  id: string;
   name: string;
   location: string;
   price: number;
-  imageSource: any;
+  imageUrl?: string;
 }
 
-const ResultCard: React.FC<ResultCardProps> = ({ name, location, price, imageSource }) => {
+const ResultCard: React.FC<ResultCardProps> = ({ id, name, location, price, imageUrl }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS")}
+      onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS", { hotelId: id })}
       style={styles.container}>
-      <Image source={imageSource} style={styles.image} />
+      <Image
+        source={imageUrl ? { uri: imageUrl } : require("@/assets/hotel_image_1.png")}
+        style={styles.image}
+      />
       <Box style={styles.detailsContainer}>
         <Box style={styles.titleContainer}>
           <RestyleText style={styles.name}>{name}</RestyleText>
@@ -26,7 +30,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ name, location, price, imageSou
         </Box>
         <Box style={styles.subtitleContainer}>
           <RestyleText style={styles.location}>{location}</RestyleText>
-          <GradientTitle style={styles.perNight}>Per Night for 2 Rooms</GradientTitle>
+          <GradientTitle style={styles.perNight}>Per Night</GradientTitle>
         </Box>
       </Box>
     </TouchableOpacity>

@@ -1,7 +1,6 @@
 import { ActorRefFrom, setup, sendParent, fromPromise } from "xstate";
 
-// import { AuthenticatingParamList } from "../types/navigation";
-import { signIn } from "@/api/auth";
+import { login } from "@/api/auth";
 
 export type AuthenticatingMachineActor = ActorRefFrom<typeof authenticatingMachine>;
 
@@ -23,7 +22,7 @@ export const authenticatingMachine = setup({
   actors: {
     signIn: fromPromise(async ({ input }) => {
       const { user, password } = input;
-      const result = await signIn(user, password);
+      const result = await login(user, password);
       return result;
     }),
   },

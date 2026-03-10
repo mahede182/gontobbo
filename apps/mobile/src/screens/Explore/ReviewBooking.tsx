@@ -2,6 +2,8 @@
 // ReviewBooking.tsx
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
   Image,
   StyleSheet,
   ScrollView,
@@ -19,23 +21,51 @@ import { Input } from "@/components/Input";
 import { Box, RestyleText } from "@/theme";
 import PriceSelect from "./component/PriceSelect";
 import { Divider } from "./component/Divider";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import GradientTitle from "@/components/GradientTitle";
 import { FontAwesome } from "@expo/vector-icons";
 import Dropdown from "@/components/Dropdown";
 import { stateData } from "@/data/stateData";
 import HeaderTitle from "@/components/HeaderTitle";
+import { getHotelDetail, HotelDetail, Room } from "@/api/hotels";
+import { createBooking } from "@/api/bookings";
 
 const ReviewBooking = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { hotelId, roomId } = (route.params as { hotelId: string; roomId?: string }) || {};
+
+  const [hotel, setHotel] = useState<HotelDetail | null>(null);
+  const [room, setRoom] = useState<Room | null>(null);
+  const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getHotelDetail(hotelId);
+        setHotel(data);
+        if (roomId && data.rooms) {
+          const found = data.rooms.find((r: Room) => r.id === roomId);
+          setRoom(found ?? data.rooms[0] ?? null);
+        } else if (data.rooms?.length) {
+          setRoom(data.rooms[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching booking data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (hotelId) fetchData();
+    else setLoading(false);
+  }, [hotelId, roomId]);
+
   const handleAddGuest = () => {
-    // Handle adding a new guest here
     setIsModalVisible(false);
     setTitle("");
     setFirstName("");
@@ -45,6 +75,36 @@ const ReviewBooking = () => {
     setIsEditVisible(false);
   };
 
+  const handleBookNow = async () => {
+    try {
+      await createBooking({
+        type: "HOTEL",
+        hotelId,
+        roomId: room?.id ?? "",
+        checkIn: new Date().toISOString(),
+        checkOut: new Date(Date.now() + 86400000).toISOString(),
+        adults: 2,
+        rooms: 1,
+      });
+      Alert.alert("Success", "Booking created successfully!");
+    } catch (error) {
+      Alert.alert("Error", "Failed to create booking. Please try again.");
+    }
+  };
+
+  const stars = hotel?.starRating
+    ? "★".repeat(hotel.starRating) + "☆".repeat(5 - hotel.starRating)
+    : "";
+
+  if (loading) {
+    return (
+      <SafeAreaView
+        style={[styles.mainContainer, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color={colors.primary700} />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <HeaderTitle title="Review Booking" />
@@ -52,11 +112,18 @@ const ReviewBooking = () => {
         {/* Header Section */}
         <Box style={styles.section}>
           <Box style={styles.header}>
-            <Image source={require("@/assets/hotel_image_1.png")} style={styles.hotelImage} />
+            <Image
+              source={
+                hotel?.images?.[0]
+                  ? { uri: hotel.images[0] }
+                  : require("@/assets/hotel_image_1.png")
+              }
+              style={styles.hotelImage}
+            />
             <Box style={styles.hotelInfo}>
-              <RestyleText style={styles.hotelName}>Caesars Palace</RestyleText>
-              <RestyleText style={styles.hotelRating}>★★★★☆</RestyleText>
-              <RestyleText style={styles.hotelLocation}>9 W 42nd St, Medtown, New York</RestyleText>
+              <RestyleText style={styles.hotelName}>{hotel?.name ?? "Hotel"}</RestyleText>
+              <RestyleText style={styles.hotelRating}>{stars}</RestyleText>
+              <RestyleText style={styles.hotelLocation}>{hotel?.location ?? ""}</RestyleText>
             </Box>
           </Box>
           <Divider />
@@ -84,14 +151,17 @@ const ReviewBooking = () => {
         {/* Room Details Section */}
         <Box style={styles.section}>
           <Box style={styles.roomDetails}>
-            <RestyleText style={styles.roomTitle}>2x Standard Room</RestyleText>
-            <RestyleText style={styles.roomDescription}>Room for 4 Persons</RestyleText>
+            <RestyleText style={styles.roomTitle}>{room?.name ?? "Standard Room"}</RestyleText>
+            <RestyleText style={styles.roomDescription}>
+              Room for {room?.maxGuests ?? 2} Persons
+            </RestyleText>
             <Box style={styles.tagContainer}>
-              <Tag tag="Breakfast" />
-              <Tag tag="Non-Refundable" />
-              <Tag tag="Free Self Parking" />
-              <Tag tag="Free Wifi" />
-              <Tag tag="Free Breakfast" />
+              {room?.amenities?.map((a: string, i: number) => <Tag key={i} tag={a} />) ?? (
+                <>
+                  <Tag tag="Free Wifi" />
+                  <Tag tag="Breakfast" />
+                </>
+              )}
             </Box>
             <Divider />
             <RestyleText style={styles.roomNotes}>Non-Refundable</RestyleText>
@@ -182,6 +252,7 @@ const ReviewBooking = () => {
             title="Book Now"
             style={styles.bookNowButton}
             textStyle={styles.bookNowButtonText}
+            onPress={handleBookNow}
           />
           <TouchableOpacity
             style={{ alignItems: "flex-end" }}
@@ -191,11 +262,11 @@ const ReviewBooking = () => {
         </Box>
       </ScrollView>
       <PriceSelect
-        price={450}
+        price={room?.price ?? 0}
         gradient
         type="booking"
         buttonText="Book Now"
-        priceSub="+$45 taxes & services fees, Per Night for 1 Rooms"
+        priceSub={`Per Night for 1 Room`}
       />
 
       {/* Add Guest Modal */}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { Alert, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -8,10 +8,8 @@ import { colors } from "@/theme/colors";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import Background from "@/components/Background";
-// import { useApp } from "@/hooks/useApp";
-// import { NAuthenticatedMachine } from "@/machine/commonMachine";
-// import { useMachine } from "@xstate/react";
 import { dynamicCSS } from "@/utils/styles";
+import { login } from "@/api/auth";
 
 type Props = {};
 
@@ -19,15 +17,26 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
-  // const { state: appState } = useApp();
 
-  // const [state, send] = useMachine(NAuthenticatedMachine);
-
-  // const user = state?.context?.userData;
-  // const accessToken = state?.context?.accessToken;
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please enter email and password");
+      return;
+    }
+    try {
+      setLoading(true);
+      await login(email, password);
+      navigation.navigate("AUTHENTICATED");
+    } catch (error: any) {
+      Alert.alert("Login Failed", error?.response?.data?.message ?? error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Background>
@@ -51,7 +60,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
             <TextInput
               style={styles.passwordInput}
               value={password}
-              onChangeText={(newText) => setPassword(newText.toLowerCase())}
+              onChangeText={(newText) => setPassword(newText)}
               secureTextEntry={!showPassword}
               placeholder="*****"
             />
@@ -65,17 +74,12 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
           </Box>
 
           <TouchableOpacity
-            style={styles.signInButton}
-            onPress={() => {
-              // props.onSignInPress(email, password);
-              // send({
-              //   type: "LOGIN",
-              //   user: email,
-              //   password,
-              // });
-              navigation.navigate("AUTHENTICATED");
-            }}>
-            <RestyleText variant="buttonLabel">{t("signIn.singIn")}</RestyleText>
+            style={[styles.signInButton, loading && { opacity: 0.6 }]}
+            onPress={handleLogin}
+            disabled={loading}>
+            <RestyleText variant="buttonLabel">
+              {loading ? t("common.loading") : t("signIn.singIn")}
+            </RestyleText>
           </TouchableOpacity>
         </Box>
         <Box style={styles.signUpContainer}>

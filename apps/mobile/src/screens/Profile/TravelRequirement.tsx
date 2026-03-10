@@ -40,7 +40,6 @@ const DocumentItem = ({ document }: { document: TravelDocument }) => {
       padding="medium"
       marginVertical="tiny"
       backgroundColor="white"
-      borderRadius="medium"
       shadowColor="neutral700"
       shadowOpacity={0.1}
       shadowOffset={{ width: 0, height: 2 }}
@@ -63,7 +62,6 @@ const DocumentItem = ({ document }: { document: TravelDocument }) => {
         backgroundColor={getStatusColor(document.status)}
         paddingHorizontal="small"
         paddingVertical="tiny"
-        borderRadius="small"
         marginLeft="small"
         minWidth={90}
         alignItems="center">

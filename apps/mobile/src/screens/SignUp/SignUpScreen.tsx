@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
-import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { Alert, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import HeaderTitle from "@/components/HeaderTitle";
@@ -11,10 +11,13 @@ import { Theme } from "@/@types/theme.type";
 import { validateEmail, validatePassword } from "@/utils/helper";
 import Background from "@/components/Background";
 import { View } from "moti";
+import { register } from "@/api/auth";
 
 type Props = {};
 
 const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,6 +25,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -31,12 +35,35 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
   const isValidPassword = validatePassword(password);
   // Function to check if all input fields are filled
   const areAllFieldsFilled = () => {
-    return isValidEmail && isValidPassword && confirmPassword.length > 0 && phoneNumber.length > 0;
+    return (
+      firstName.length > 0 &&
+      lastName.length > 0 &&
+      isValidEmail &&
+      isValidPassword &&
+      confirmPassword.length > 0 &&
+      phoneNumber.length > 0
+    );
   };
   // Update the button enabled state whenever the input fields change
   React.useEffect(() => {
     setIsButtonEnabled(areAllFieldsFilled());
-  }, [email, password, confirmPassword, phoneNumber]);
+  }, [firstName, lastName, email, password, confirmPassword, phoneNumber]);
+
+  const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+    try {
+      setLoading(true);
+      await register(email, password, firstName, lastName);
+      navigation.navigate("OTP", { email });
+    } catch (error: any) {
+      Alert.alert("Sign Up Failed", error?.response?.data?.message ?? error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Background>
@@ -48,6 +75,28 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
         />
 
         <Box style={styles.formContainer}>
+          <Box style={styles.inputGroup}>
+            <RestyleText variant="inputTitle">{t("signIn.firstName")}</RestyleText>
+            <TextInput
+              style={styles.input}
+              placeholder="First Name"
+              value={firstName}
+              onChangeText={setFirstName}
+              blurOnSubmit
+            />
+          </Box>
+
+          <Box style={styles.inputGroup}>
+            <RestyleText variant="inputTitle">{t("signIn.lastName")}</RestyleText>
+            <TextInput
+              style={styles.input}
+              placeholder="Last Name"
+              value={lastName}
+              onChangeText={setLastName}
+              blurOnSubmit
+            />
+          </Box>
+
           <Box style={styles.inputGroup}>
             <RestyleText variant="inputTitle">{t("signIn.emailAddress")}</RestyleText>
             <TextInput
@@ -121,10 +170,11 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
           </Box>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("OTP")}
-            style={styles.signUpButton(isButtonEnabled)}>
-            <RestyleText style={styles.signUpButtonText(isButtonEnabled)}>
-              {t("signIn.signUp")}
+            onPress={handleSignUp}
+            disabled={!isButtonEnabled || loading}
+            style={styles.signUpButton(isButtonEnabled && !loading)}>
+            <RestyleText style={styles.signUpButtonText(isButtonEnabled && !loading)}>
+              {loading ? t("common.loading") : t("signIn.signUp")}
             </RestyleText>
           </TouchableOpacity>
         </Box>

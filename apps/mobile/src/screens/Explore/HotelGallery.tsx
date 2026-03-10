@@ -7,49 +7,75 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import Room1 from "@/assets/Explore/room1.png";
-import Room2 from "@/assets/Explore/room2.png";
-import Room3 from "@/assets/Explore/room3.png";
-import Room4 from "@/assets/Explore/room4.png";
 import { colors } from "@/theme/colors";
 import { Box } from "@/theme";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "moti";
+import { getHotelGallery, HotelGallery as HotelGalleryType } from "@/api/hotels";
 
 const { width } = Dimensions.get("window");
 
+type GalleryTab = { label: string; images: string[] };
+
 const HotelGallery = () => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState("Washroom");
-
-  const washroomImages = [Room1, Room2, Room3, Room4, Room2, Room3];
-  const entranceImages = [Room1, Room2, Room3, Room4];
-  const commonAreaImages = [Room1, Room2, Room3, Room4];
-
   const navigation = useNavigation();
-  const { images } = useTheme<Theme>();
+  const route = useRoute();
+  const { hotelId } = (route.params as { hotelId: string }) || {};
+  const { images: themeImages } = useTheme<Theme>();
 
-  const renderImages = (images) => (
-    <FlatList
-      data={images}
-      keyExtractor={(item, index) => index.toString()}
-      numColumns={2}
-      renderItem={({ item }) => <Image source={item} style={styles.image} />}
-    />
-  );
+  const [tabs, setTabs] = useState<GalleryTab[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("");
+
+  React.useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const data = await getHotelGallery(hotelId);
+        const builtTabs: GalleryTab[] = [];
+        if (data.hotelImages?.length) {
+          builtTabs.push({ label: "Hotel", images: data.hotelImages });
+        }
+        data.roomImages?.forEach((room) => {
+          if (room.images?.length) {
+            builtTabs.push({ label: room.roomName, images: room.images });
+          }
+        });
+        setTabs(builtTabs);
+        if (builtTabs.length > 0) setActiveTab(builtTabs[0].label);
+      } catch (error) {
+        console.error("Error fetching gallery:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (hotelId) fetchGallery();
+    else setLoading(false);
+  }, [hotelId]);
+
+  const activeImages = tabs.find((t) => t.label === activeTab)?.images ?? [];
+
+  if (loading) {
+    return (
+      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color={colors.primary700} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <Box style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Image source={images.back} />
+          <Image source={themeImages.back} />
         </TouchableOpacity>
         <GradientTitle style={styles.gradientTitle}>{t("Explore.photosAndVideos")}</GradientTitle>
         <TouchableOpacity>
@@ -57,35 +83,27 @@ const HotelGallery = () => {
         </TouchableOpacity>
       </Box>
 
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tab, activeTab === "Washroom" && styles.activeTab]}
-          onPress={() => setActiveTab("Washroom")}>
-          <Text style={[styles.tabText, activeTab === "Washroom" && styles.activeTabText]}>
-            {t("Explore.washroom")}
-          </Text>
-        </TouchableOpacity>
+      {tabs.length > 0 && (
+        <View style={styles.tabContainer}>
+          {tabs.map((tab) => (
+            <TouchableOpacity
+              key={tab.label}
+              style={[styles.tab, activeTab === tab.label && styles.activeTab]}
+              onPress={() => setActiveTab(tab.label)}>
+              <Text style={[styles.tabText, activeTab === tab.label && styles.activeTabText]}>
+                {tab.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
 
-        <TouchableOpacity
-          style={[styles.tab, activeTab === "Entrance" && styles.activeTab]}
-          onPress={() => setActiveTab("Entrance")}>
-          <Text style={[styles.tabText, activeTab === "Entrance" && styles.activeTabText]}>
-            {t("Explore.entrance")}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.tab, activeTab === "Common Area" && styles.activeTab]}
-          onPress={() => setActiveTab("Common Area")}>
-          <Text style={[styles.tabText, activeTab === "Common Area" && styles.activeTabText]}>
-            {t("Explore.commonArea")}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {activeTab === "Washroom" && renderImages(washroomImages)}
-      {activeTab === "Entrance" && renderImages(entranceImages)}
-      {activeTab === "Common Area" && renderImages(commonAreaImages)}
+      <FlatList
+        data={activeImages}
+        keyExtractor={(item, index) => `${activeTab}-${index}`}
+        numColumns={2}
+        renderItem={({ item }) => <Image source={{ uri: item }} style={styles.image} />}
+      />
     </SafeAreaView>
   );
 };

@@ -1,15 +1,50 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import { ActivityIndicator, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { colors } from "@/theme/colors";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { getHotelAmenities, Amenity } from "@/api/hotels";
 
 const Amenities = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { hotelId } = (route.params as { hotelId: string }) || {};
   const { t } = useTranslation();
+  const [amenities, setAmenities] = React.useState<Amenity[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchAmenities = async () => {
+      try {
+        const data = await getHotelAmenities(hotelId);
+        setAmenities(data);
+      } catch (error) {
+        console.error("Error fetching amenities:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (hotelId) fetchAmenities();
+    else setLoading(false);
+  }, [hotelId]);
+
+  const grouped = amenities.reduce<Record<string, Amenity[]>>((acc, item) => {
+    const cat = "Amenities";
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(item);
+    return acc;
+  }, {});
+
+  if (loading) {
+    return (
+      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color={colors.primary700} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,81 +56,19 @@ const Amenities = () => {
         <GradientTitle style={styles.headerText}>{t("Explore.amenities")}</GradientTitle>
       </Box>
 
-      <Box style={styles.section}>
-        {/* === Highligted Amenities === */}
-        <RestyleText style={styles.sectionTitle}>{t("Explore.highlightedAmenities")}</RestyleText>
-        <Box style={styles.amenityRow}>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>{t("Explore.gym")}</RestyleText>
+      {Object.entries(grouped).map(([category, items]) => (
+        <Box key={category} style={styles.section}>
+          <RestyleText style={styles.sectionTitle}>{category}</RestyleText>
+          <Box style={styles.amenityRow}>
+            {items.map((item) => (
+              <Box key={item.id} style={styles.amenityButton}>
+                <RestyleText style={styles.amenityButtonText}>{item.name}</RestyleText>
+              </Box>
+            ))}
           </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.businessCentre")}
-            </RestyleText>
-          </Box>
+          <Box style={styles.separator} />
         </Box>
-        <Box style={styles.separator} />
-      </Box>
-      {/* === Basic Facilities === */}
-      <Box style={styles.section}>
-        <RestyleText style={styles.sectionTitle}>{t("Explore.basicFacilities")}</RestyleText>
-        <Box style={styles.amenityRow}>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.laundryService")}
-            </RestyleText>
-          </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>{t("Explore.elevator")}</RestyleText>
-          </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.ironingService")}
-            </RestyleText>
-          </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>{t("Explore.newspaper")}</RestyleText>
-          </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>{t("Explore.freeParking")}</RestyleText>
-          </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>{t("Explore.paidParking")}</RestyleText>
-          </Box>
-        </Box>
-        <Box style={styles.separator} />
-      </Box>
-      {/* === Transfer === */}
-      <Box style={styles.section}>
-        <RestyleText style={styles.sectionTitle}>{t("Explore.transfers")}</RestyleText>
-        <Box style={styles.amenityRow}>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.airportTransfers")}
-            </RestyleText>
-          </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.shuttleService")}
-            </RestyleText>
-          </Box>
-        </Box>
-        <Box style={styles.separator} />
-      </Box>
-
-      <Box style={styles.section}>
-        <RestyleText style={styles.sectionTitle}>{t("Explore.paymentServices")}</RestyleText>
-        <Box style={styles.amenityRow}>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>{t("Explore.atm")}</RestyleText>
-          </Box>
-          <Box style={styles.amenityButton}>
-            <RestyleText style={styles.amenityButtonText}>
-              {t("Explore.currencyExchange")}
-            </RestyleText>
-          </Box>
-        </Box>
-      </Box>
+      ))}
     </SafeAreaView>
   );
 };

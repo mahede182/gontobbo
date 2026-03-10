@@ -16,6 +16,7 @@ export const enTranslations = {
     discoveryTheWorld: "Discover the World with",
     oneJourneyAt: "One Journey at a Time.",
     uniqueAdvantureAwait: "Unique adventures await, memories.",
+    loading: "Loading...",
   },
   signIn: {
     sign: "Sign",
@@ -39,6 +40,8 @@ export const enTranslations = {
     findMore: " Find out more",
     password: "Password",
     dontHaveAnAccount: "Don't have an account? ",
+    firstName: "First Name",
+    lastName: "Last Name",
   },
   heartBeats: {
     heartBeat: "Heartbeat",

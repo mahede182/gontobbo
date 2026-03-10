@@ -2,7 +2,7 @@ import React from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Box } from "@/theme";
 import { images } from "@/theme/images";
-import { tagData } from "@/data/tagData";
+import { getTags, Tag as TagType } from "@/api/tags";
 import Tag from "../Home/component/Tag";
 import SearchForm from "./component/SearchForm";
 import { colors } from "@/theme/colors";
@@ -13,6 +13,20 @@ interface Props {}
 
 const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
   const navigation = useNavigation();
+  const [tags, setTags] = React.useState<TagType[]>([]);
+
+  React.useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const data = await getTags();
+        setTags(data);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+    fetchTags();
+  }, []);
+
   const drawerOpen = () => {
     navigation.navigate("DRAWER");
     navigation.dispatch(DrawerActions.openDrawer());
@@ -33,9 +47,13 @@ const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
           style={dynamicCSS("padding", 10)}
           showsHorizontalScrollIndicator={false}
           horizontal>
-          {/* Map over tagData and render Tag component */}
-          {tagData.map((tag, index) => (
-            <Tag key={index} icon={tag.icon} label={tag.label} active={tag.active} />
+          {tags.map((tag) => (
+            <Tag
+              key={tag.id}
+              id={tag.id}
+              icon={tag.icon ? { uri: tag.icon } : images.menuBtn}
+              label={tag.label}
+            />
           ))}
         </ScrollView>
       </Box>
