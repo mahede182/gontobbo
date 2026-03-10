@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet } from "react-native";
 import { Box } from "@/theme";
 import { useTranslation } from "react-i18next";
 import TripCard from "./TripCard";
 import { getPopularTrips, Trip } from "@/api/trips";
 import GradientTitle from "@/components/GradientTitle";
-import { dynamicCSS } from "@/utils/styles";
+import { typography } from "@/theme/typography";
 
 const PopularTrip: React.FC = () => {
   const { t } = useTranslation();
@@ -18,32 +18,46 @@ const PopularTrip: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const renderItem: ListRenderItem<Trip> = useCallback(
+    ({ item }) => (
+      <TripCard
+        id={item.id}
+        image={item.image}
+        title={item.title}
+        duration={item.duration}
+        feature={item.feature}
+        peopleJoined={item.peopleJoined}
+      />
+    ),
+    [],
+  );
+
+  const keyExtractor = useCallback((item: Trip) => item.id, []);
+
   return (
-    <Box marginTop="twenty">
-      <GradientTitle
-        style={(dynamicCSS("marginVertical", 10), dynamicCSS("paddingHorizontal", 15))}
-        variant="gradientTitle">
-        {t("Home.popularTrip")}
-      </GradientTitle>
+    <Box paddingHorizontal="medium" marginTop="twenty">
+      <GradientTitle style={styles.title}>{t("Home.popularTrip")}</GradientTitle>
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <ScrollView style={dynamicCSS("paddingHorizontal", 20)}>
-          {trips.map((trip) => (
-            <TripCard
-              key={trip.id}
-              id={trip.id}
-              image={trip.image}
-              title={trip.title}
-              duration={trip.duration}
-              feature={trip.feature}
-              peopleJoined={trip.peopleJoined}
-            />
-          ))}
-        </ScrollView>
+        <FlatList
+          data={trips}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          scrollEnabled={false}
+          showsVerticalScrollIndicator={false}
+        />
       )}
     </Box>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontFamily: typography.poppinsSemibold,
+    fontSize: 20,
+    marginBottom: 10,
+  },
+});
 
 export default PopularTrip;

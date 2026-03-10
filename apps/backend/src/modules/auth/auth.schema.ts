@@ -6,6 +6,7 @@ export const registerSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   username: z.string().min(3, "Username must be at least 3 characters").optional(),
+  phone: z.string().optional(),
 });
 
 export const loginSchema = z.object({
@@ -34,19 +35,8 @@ export const refreshTokenSchema = z.object({
   refreshToken: z.string().min(1, "Refresh token is required"),
 });
 
-export const sendOtpSchema = z.object({
-  email: z.string().email("Invalid email address"),
-});
-
-export const verifyOtpSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  otp: z.string().length(6, "OTP must be 6 digits"),
-});
-
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type GoogleAuthInput = z.infer<typeof googleAuthSchema>;
 export type AppleAuthInput = z.infer<typeof appleAuthSchema>;
 export type RefreshTokenInput = z.infer<typeof refreshTokenSchema>;
-export type SendOtpInput = z.infer<typeof sendOtpSchema>;
-export type VerifyOtpInput = z.infer<typeof verifyOtpSchema>;

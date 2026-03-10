@@ -9,7 +9,7 @@ import type { RegisterInput, GoogleAuthInput, AppleAuthInput } from "./auth.sche
 const googleClient = new OAuth2Client(env.GOOGLE_CLIENT_ID);
 
 function sanitizeUser(user: Record<string, unknown>) {
-  const { password, ...rest } = user;
+  const { password, googleId, appleId, isActive, ...rest } = user;
   return rest;
 }
 
@@ -39,6 +39,7 @@ export async function register(input: RegisterInput) {
       firstName: input.firstName,
       lastName: input.lastName,
       username: input.username,
+      phone: input.phone,
       memberNumber: `GON-${Date.now().toString(36).toUpperCase()}`,
     },
   });
@@ -279,66 +280,4 @@ export async function logout(userId: string, refreshToken?: string) {
     // Delete all refresh tokens for user
     await prisma.refreshToken.deleteMany({ where: { userId } });
   }
-}
-
-// ─── OTP ────────────────────────────────────────────────────────────────────
-
-export async function sendOtp(email: string) {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) {
-    throw AppError.notFound("No account found with this email");
-  }
-
-  const code = Math.floor(100000 + Math.random() * 900000).toString();
-  const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
-
-  await prisma.otp.create({
-    data: { email, code, expiresAt },
-  });
-
-  // TODO: Integrate email service (SendGrid, SES, etc.)
-  console.log(`📧 OTP for ${email}: ${code}`);
-
-  return { message: "OTP sent successfully" };
-}
-
-export async function verifyOtp(email: string, otp: string) {
-  const record = await prisma.otp.findFirst({
-    where: {
-      email,
-      code: otp,
-      used: false,
-      expiresAt: { gte: new Date() },
-    },
-    orderBy: { createdAt: "desc" },
-  });
-
-  if (!record) {
-    throw AppError.badRequest("Invalid or expired OTP");
-  }
-
-  await prisma.otp.update({
-    where: { id: record.id },
-    data: { used: true },
-  });
-
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) {
-    throw AppError.notFound("User not found");
-  }
-
-  const tokens = generateTokens(user.id, user.role);
-
-  await prisma.refreshToken.create({
-    data: {
-      token: tokens.refreshToken,
-      userId: user.id,
-      expiresAt: getRefreshTokenExpiry(),
-    },
-  });
-
-  return {
-    user: sanitizeUser(user as unknown as Record<string, unknown>),
-    ...tokens,
-  };
 }

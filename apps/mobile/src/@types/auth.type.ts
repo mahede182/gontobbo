@@ -12,9 +12,6 @@ export type User = {
   memberNumber: string | null;
   memberClass: "BRONZE" | "SILVER" | "GOLD" | "PLATINUM";
   role: "USER" | "ADMIN";
-  googleId: string | null;
-  appleId: string | null;
-  isActive: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -46,18 +43,6 @@ export type AuthResult = ApiResponse<{
   accessToken: string;
   refreshToken: string;
 }>;
-
-export type TUser = {
-  accessToken: string;
-  email: string;
-  firstName: string;
-  gender: string;
-  id: number;
-  image: string;
-  lastName: string;
-  refreshToken: string;
-  username: string;
-};
 
 export interface GoogleUser {
   user: {
@@ -91,9 +76,3 @@ export interface AppleUser {
 }
 
 export type SocialUser = GoogleUser | AppleUser;
-
-export interface AuthResponse {
-  status: "success" | "error";
-  user: TUser | null;
-  message?: string;
-}

@@ -11,9 +11,11 @@ import Background from "@/components/Background";
 import { dynamicCSS } from "@/utils/styles";
 import { login } from "@/api/auth";
 
-type Props = {};
+type Props = {
+  onLoginPress?: (user: string, password: string) => void;
+};
 
-const EmailSignin: React.FC<Props> = (props): JSX.Element => {
+const EmailLogin: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -41,11 +43,11 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
   return (
     <Background>
       <Box>
-        <HeaderTitle title={t("signIn.signInWithEmail")} />
+        <HeaderTitle title={t("login.loginWithEmail")} />
 
         <Box style={styles.formContainer}>
           <RestyleText variant="inputTitle" style={dynamicCSS("marginBottom", 5)}>
-            {t("signIn.emailAddress")}
+            {t("login.emailAddress")}
           </RestyleText>
           <TextInput
             style={styles.input}
@@ -55,7 +57,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
             placeholder="gontobbo@gmail.co"
           />
 
-          <RestyleText variant="inputTitle">{t("signIn.password")}</RestyleText>
+          <RestyleText variant="inputTitle">{t("login.password")}</RestyleText>
           <Box style={styles.passwordContainer}>
             <TextInput
               style={styles.passwordInput}
@@ -74,18 +76,18 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
           </Box>
 
           <TouchableOpacity
-            style={[styles.signInButton, loading && { opacity: 0.6 }]}
+            style={[styles.loginButton, loading && { opacity: 0.6 }]}
             onPress={handleLogin}
             disabled={loading}>
             <RestyleText variant="buttonLabel">
-              {loading ? t("common.loading") : t("signIn.singIn")}
+              {loading ? t("common.loading") : t("login.login")}
             </RestyleText>
           </TouchableOpacity>
         </Box>
-        <Box style={styles.signUpContainer}>
-          <RestyleText style={styles.signUpText}>{t("signIn.dontHaveAnAccount")}</RestyleText>
-          <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
-            <RestyleText style={styles.signUpLink}>{t("signIn.signUp")}</RestyleText>
+        <Box style={styles.registerContainer}>
+          <RestyleText style={styles.registerText}>{t("login.dontHaveAnAccount")}</RestyleText>
+          <TouchableOpacity onPress={() => navigation.navigate("REGISTER")}>
+            <RestyleText style={styles.registerLink}>{t("login.register")}</RestyleText>
           </TouchableOpacity>
         </Box>
       </Box>
@@ -93,7 +95,7 @@ const EmailSignin: React.FC<Props> = (props): JSX.Element => {
   );
 };
 
-export default EmailSignin;
+export default EmailLogin;
 const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: colors.neutral50,
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
   },
-  signInButton: {
+  loginButton: {
     backgroundColor: colors.primary700,
     borderRadius: 8,
     padding: 12,
@@ -132,15 +134,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  signUpContainer: {
+  registerContainer: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 16,
   },
-  signUpText: {
+  registerText: {
     color: colors.neutral600,
   },
-  signUpLink: {
+  registerLink: {
     color: colors.primary700,
   },
   showPasswordIcon: {

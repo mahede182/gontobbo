@@ -14,8 +14,10 @@ import {
   SafeAreaView,
   TextInput,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { getTripDetail, Trip } from "@/api/trips";
+import { createBooking } from "@/api/bookings";
 
 type Props = {};
 
@@ -25,6 +27,10 @@ const TripReviewBookingScreen = (props: Props) => {
   const { tripId } = (route.params as { tripId?: string }) || {};
   const [trip, setTrip] = React.useState<Trip | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [booking, setBooking] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [contactNumber, setContactNumber] = React.useState("");
 
   React.useEffect(() => {
     const fetchTrip = async () => {
@@ -129,17 +135,21 @@ const TripReviewBookingScreen = (props: Props) => {
           <Text style={styles.contactTitle}>Contact Information</Text>
           <View style={styles.contactRow}>
             <Text style={styles.contactLabel}>Email Address</Text>
-            <TextInput placeholder="Email Address" />
+            <TextInput placeholder="Email Address" value={email} onChangeText={setEmail} />
           </View>
           <View style={styles.contactRow}>
             <Text style={styles.contactLabel}>Current Address</Text>
-            <TextInput placeholder="Current Address" />
+            <TextInput placeholder="Current Address" value={address} onChangeText={setAddress} />
           </View>
           <View style={styles.contactRow}>
             <Text style={styles.contactLabel}>Contact Number</Text>
             <View style={styles.contactNumberRow}>
               <Text>+1</Text>
-              <TextInput placeholder="Contact No." />
+              <TextInput
+                placeholder="Contact No."
+                value={contactNumber}
+                onChangeText={setContactNumber}
+              />
             </View>
           </View>
           {/* <View style={styles.stateRow}>
@@ -155,9 +165,33 @@ const TripReviewBookingScreen = (props: Props) => {
         </View>
 
         <TouchableOpacity
-          style={styles.bookNowButton}
-          onPress={() => navigation.navigate("BOOKING_SUCCESS")}>
-          <Text style={styles.bookNowButtonText}>Book Now</Text>
+          style={[styles.bookNowButton, booking && { opacity: 0.6 }]}
+          disabled={booking}
+          onPress={async () => {
+            if (!tripId || !trip) return;
+            try {
+              setBooking(true);
+              await createBooking({
+                type: "TRIP",
+                tripId,
+                checkIn: new Date().toISOString(),
+                checkOut: new Date(
+                  Date.now() + (trip.duration ? parseInt(trip.duration) : 1) * 86400000,
+                ).toISOString(),
+                adults: 2,
+                children: 1,
+                guestEmail: email || undefined,
+                guestAddress: address || undefined,
+                guestPhone: contactNumber || undefined,
+              });
+              navigation.navigate("BOOKING_SUCCESS");
+            } catch (error) {
+              Alert.alert("Error", "Failed to create booking. Please try again.");
+            } finally {
+              setBooking(false);
+            }
+          }}>
+          <Text style={styles.bookNowButtonText}>{booking ? "Booking..." : "Book Now"}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

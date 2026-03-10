@@ -1,8 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import EmailSignin from "@/screens/SignIn/EmailSignin";
-import SignUpScreen from "@/screens/SignUp";
-import SignIn from "@/screens/SignIn";
-import OtpScreen from "@/screens/Otp/OtpScreen";
+import EmailLogin from "@/screens/Login/EmailLogin";
+import RegisterScreen from "@/screens/Register";
+import LoginScreen from "@/screens/Login/LoginScreen";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -16,9 +15,9 @@ import OtpScreen from "@/screens/Otp/OtpScreen";
  */
 
 export type AuthStackParamList = {
-  SIGN_IN: undefined;
-  EMAIL_SIGN_IN: undefined;
-  SIGN_UP: undefined;
+  LOGIN: undefined;
+  EMAIL_LOGIN: undefined;
+  REGISTER: undefined;
 };
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -27,38 +26,40 @@ const Stack = createStackNavigator<AuthStackParamList>();
 const AuthenticatingNavigation = ({ actorRef }) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="SIGN_IN">
+      <Stack.Screen options={{ headerShown: false }} name="LOGIN">
         {(props) => {
           return (
-            <SignIn
-              onSignInPress={(user, password) => {
-                actorRef.send({ type: "SIGN_IN", user, password });
+            <LoginScreen
+              onLoginPress={(user, password) => {
+                actorRef.send({ type: "LOGIN", user, password });
               }}
               {...props}
             />
           );
         }}
       </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="EMAIL_SIGN_IN">
+      <Stack.Screen options={{ headerShown: false }} name="EMAIL_LOGIN">
         {(props) => {
           return (
-            <EmailSignin
-              onSignInPress={(user, password) => {
-                actorRef.send({ type: "SIGN_IN", user, password });
+            <EmailLogin
+              onLoginPress={(user, password) => {
+                actorRef.send({ type: "LOGIN", user, password });
               }}
               {...props}
             />
           );
         }}
       </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="SIGN_UP">
+      <Stack.Screen options={{ headerShown: false }} name="REGISTER">
         {(props) => {
-          return <SignUpScreen {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="OTP">
-        {(props) => {
-          return <OtpScreen {...props} />;
+          return (
+            <RegisterScreen
+              onRegisterSuccess={() => {
+                actorRef.send({ type: "LOGIN" });
+              }}
+              {...props}
+            />
+          );
         }}
       </Stack.Screen>
     </Stack.Navigator>

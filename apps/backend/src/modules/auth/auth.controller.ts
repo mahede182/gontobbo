@@ -65,21 +65,3 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
     next(error);
   }
 }
-
-export async function sendOtp(req: Request, res: Response, next: NextFunction) {
-  try {
-    const result = await authService.sendOtp(req.body.email);
-    successResponse(res, { data: result });
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function verifyOtp(req: Request, res: Response, next: NextFunction) {
-  try {
-    const result = await authService.verifyOtp(req.body.email, req.body.otp);
-    successResponse(res, { data: result, message: "OTP verified successfully" });
-  } catch (error) {
-    next(error);
-  }
-}

@@ -15,13 +15,15 @@ import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { isIOS } from "@/utils/device";
 
-import { handleGoogleSignIn, handleAppleSignIn } from "@/utils/socialAuth";
+import { handleGoogleLogin, handleAppleLogin } from "@/utils/socialAuth";
 import Background from "@/components/Background";
 import { googleLogin, appleLogin } from "@/api/auth";
 
-type Props = {};
+type Props = {
+  onLoginPress?: (user: string, password: string) => void;
+};
 
-const SigninScreen: React.FC<Props> = (props): JSX.Element => {
+const LoginScreen: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { images } = useTheme<Theme>();
@@ -30,7 +32,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const onGoogleSignIn = async () => {
     try {
       setLoading(true);
-      const res = await handleGoogleSignIn();
+      const res = await handleGoogleLogin();
       if (!res) return;
       // Support both old and new Google Sign-In SDK shapes
       const idToken = res.data?.idToken ?? res.idToken;
@@ -41,7 +43,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
       await googleLogin(idToken);
       navigation.navigate("AUTHENTICATED");
     } catch (error: any) {
-      Alert.alert("Sign-In Failed", error?.response?.data?.message ?? error.message);
+      Alert.alert("Login Failed", error?.response?.data?.message ?? error.message);
     } finally {
       setLoading(false);
     }
@@ -50,7 +52,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
   const onAppleSignIn = async () => {
     try {
       setLoading(true);
-      const res = await handleAppleSignIn();
+      const res = await handleAppleLogin();
       if (!res) return;
       if (!res.identityToken) {
         Alert.alert("Error", "Apple sign-in did not return an identity token");
@@ -66,7 +68,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
       });
       navigation.navigate("AUTHENTICATED");
     } catch (error: any) {
-      Alert.alert("Sign-In Failed", error?.response?.data?.message ?? error.message);
+      Alert.alert("Login Failed", error?.response?.data?.message ?? error.message);
     } finally {
       setLoading(false);
     }
@@ -80,12 +82,12 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
 
       <Logo />
 
-      {/* ::: Social Sign in button container ::: */}
+      {/* ::: Social Login button container ::: */}
       <Box>
         {isIOS && (
           <RestyleButton
             iconSrc={images.appleIcon}
-            label={t("signIn.continueWithApple")}
+            label={t("login.continueWithApple")}
             onPress={onAppleSignIn}
             style={[styles.button, styles.appleButton]}
             disabled={loading}
@@ -94,7 +96,7 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
 
         <RestyleButton
           iconSrc={images.gmailIcon}
-          label={t("signIn.continueWithGmail")}
+          label={t("login.continueWithGmail")}
           onPress={onGoogleSignIn}
           style={[styles.button, styles.gmailButton]}
           disabled={loading}
@@ -108,35 +110,35 @@ const SigninScreen: React.FC<Props> = (props): JSX.Element => {
 
         <RestyleButton
           iconSrc={images.emailIcon}
-          label={t("signIn.signInWithEmail")}
-          onPress={() => navigation.navigate("EMAIL_SIGN_IN")}
+          label={t("login.loginWithEmail")}
+          onPress={() => navigation.navigate("EMAIL_LOGIN")}
           style={[styles.button, styles.emailButton]}
         />
         <Box style={styles.linkContainer}>
           {/* TODO: split code and create a reusable component button */}
-          <TouchableOpacity onPress={() => navigation.navigate("SIGN_UP")}>
-            <RestyleText style={styles.linkRestyleText}>{t("signIn.signUpWithEmail")}</RestyleText>
+          <TouchableOpacity onPress={() => navigation.navigate("REGISTER")}>
+            <RestyleText style={styles.linkRestyleText}>{t("login.registerWithEmail")}</RestyleText>
           </TouchableOpacity>
           {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("AUTHENTICATED");
             }}>
-            <RestyleText style={styles.linkRestyleText}>{t("signIn.continueAsGuest")}</RestyleText>
+            <RestyleText style={styles.linkRestyleText}>{t("login.continueAsGuest")}</RestyleText>
           </TouchableOpacity>
         </Box>
       </Box>
       <Box style={styles.footer}>
         <RestyleText style={styles.footerRestyleText}>
-          {t("signIn.termsAndConditions")}
-          <RestyleText style={styles.footerLink}> {t("signIn.findMore")}</RestyleText>
+          {t("login.termsAndConditions")}
+          <RestyleText style={styles.footerLink}> {t("login.findMore")}</RestyleText>
         </RestyleText>
       </Box>
     </Background>
   );
 };
 
-export default SigninScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   button: {

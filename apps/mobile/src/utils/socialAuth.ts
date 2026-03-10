@@ -8,7 +8,7 @@ import {
 } from "@react-native-google-signin/google-signin";
 import { googleSignInConfig } from "@/config/google";
 
-export const handleGoogleSignIn = async () => {
+export const handleGoogleLogin = async () => {
   GoogleSignin.configure(googleSignInConfig);
   try {
     await GoogleSignin.hasPlayServices();
@@ -21,7 +21,7 @@ export const handleGoogleSignIn = async () => {
           console.log("No Saved Credential Found");
           break;
         case statusCodes.SIGN_IN_CANCELLED:
-          console.log("Sign in cancel");
+          console.log("Login cancelled");
           break;
         case statusCodes.ONE_TAP_START_FAILED:
           console.log("One Tap Failed");
@@ -39,7 +39,7 @@ export const handleGoogleSignIn = async () => {
 };
 
 // FIXME: apple pay auth not work. split the code @/utils/socialAuth
-export const handleAppleSignIn = async () => {
+export const handleAppleLogin = async () => {
   try {
     const credential = await AppleAuthentication.signInAsync({
       requestedScopes: [
@@ -52,10 +52,10 @@ export const handleAppleSignIn = async () => {
     console.log(error);
     if (error.code === "ERR_REQUEST_CANCELED") {
       // User canceled the sign-in flow
-      console.log("Apple Sign-In Canceled");
+      console.log("Apple Login Canceled");
     } else {
       // Handle other errors
-      console.error("Apple Sign-In Error:", error);
+      console.error("Apple Login Error:", error);
       Alert.alert("Error", error.message);
     }
   }

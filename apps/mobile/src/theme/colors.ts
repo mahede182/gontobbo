@@ -37,6 +37,8 @@ export const colors = {
   neutral600: "#4B4B4B",
   neutral700: "#1F1F1F",
 
+  gray: "#8E8E8E",
+
   dropdownBg: "#f0f0f0",
   dropdownBorder: "#cccccc",
 

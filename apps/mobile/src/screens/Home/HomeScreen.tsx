@@ -24,7 +24,6 @@ import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { useApp } from "@/hooks/useApp";
-import { dynamicCSS } from "@/utils/styles";
 
 type Props = {};
 
@@ -60,38 +59,48 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      {/* === drawer button === */}
-      <Box flexDirection="row" justifyContent="space-between" alignItems="center">
-        <TouchableOpacity onPress={drawerOpen}>
-          <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
-        </TouchableOpacity>
-        <Pressable
-          onPress={() => {
-            navigation.navigate("NOTIFICATION");
-          }}>
-          <Image
-            source={images.notifiocationBtn}
-            style={{ height: 48, width: 48, resizeMode: "contain" }}
-          />
-        </Pressable>
-      </Box>
-      {/* === ai section === */}
-      <Box paddingHorizontal="ten">
-        <Box flexDirection="row" alignItems="center" justifyContent="flex-start" marginBottom="ten">
-          <Image source={images.magicAiBtn} style={{ height: 16, width: 16, marginRight: 10 }} />
-          <GradientTitle style={{ fontFamily: typography.poppinsRegular, fontSize: 13 }}>
-            {t("Home.askAi")}
-          </GradientTitle>
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        {/* === Header === */}
+        <Box
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          paddingHorizontal="medium">
+          <TouchableOpacity onPress={drawerOpen}>
+            <Image
+              source={images.menuBtn}
+              style={{ height: 48, width: 48, resizeMode: "contain" }}
+            />
+          </TouchableOpacity>
+          <Pressable onPress={() => navigation.navigate("NOTIFICATION")}>
+            <Image
+              source={images.notifiocationBtn}
+              style={{ height: 48, width: 48, resizeMode: "contain" }}
+            />
+          </Pressable>
         </Box>
-        <Input placeholder={t("Home.askMeAnything")} />
-      </Box>
-      {/* === Tag === */}
-      <Box>
+
+        {/* === AI Section === */}
+        <Box paddingHorizontal="medium" marginTop="small">
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
+            marginBottom="ten">
+            <Image source={images.magicAiBtn} style={{ height: 16, width: 16, marginRight: 10 }} />
+            <GradientTitle style={{ fontFamily: typography.poppinsRegular, fontSize: 13 }}>
+              {t("Home.askAi")}
+            </GradientTitle>
+          </Box>
+          <Input placeholder={t("Home.askMeAnything")} />
+        </Box>
+
+        {/* === Tags === */}
         <ScrollView
-          style={(dynamicCSS("paddingVertical", 10), dynamicCSS("paddingHorizontal", 10))}
+          horizontal
           showsHorizontalScrollIndicator={false}
-          horizontal>
+          contentContainerStyle={styles.tagList}>
           {tags.map((tag) => (
             <Tag
               key={tag.id}
@@ -101,11 +110,13 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
             />
           ))}
         </ScrollView>
-      </Box>
-      {/* === Hotel card section === */}
-      <FeaturedHotels />
-      {/* === trip card === */}
-      <PopularTrip />
+
+        {/* === Featured Hotels === */}
+        <FeaturedHotels />
+
+        {/* === Popular Trips === */}
+        <PopularTrip />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -113,8 +124,15 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    ...StyleSheet.absoluteFillObject,
+  container: {
+    flex: 1,
     backgroundColor: colors.neutral100,
+  },
+  scrollContent: {
+    paddingBottom: 100,
+  },
+  tagList: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
 });

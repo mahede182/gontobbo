@@ -8,7 +8,7 @@ export const appMachine = setup({
     events: {} as
       | { type: "START_APP" }
       | {
-          type: "SIGN_IN";
+          type: "LOGIN";
           user: any | null;
         },
     context: {} as {
@@ -64,7 +64,7 @@ export const appMachine = setup({
     authenticating: {
       entry: ["setRefAuthenticating"],
       on: {
-        SIGN_IN: {
+        LOGIN: {
           actions: [
             {
               type: "setUserInfo",

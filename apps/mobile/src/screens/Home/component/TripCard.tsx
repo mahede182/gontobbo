@@ -1,9 +1,11 @@
 // src/screens/Home/component/TripCard.tsx
 import React from "react";
-import { Image, Pressable, StyleSheet } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
+import { typography } from "@/theme/typography";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 interface TripCardProps {
   id: string;
@@ -14,65 +16,116 @@ interface TripCardProps {
   peopleJoined: number;
 }
 
-const TripCard: React.FC<TripCardProps> = ({
-  id,
-  image,
-  title,
-  duration,
-  feature,
-  peopleJoined,
-}) => {
-  const navigation = useNavigation();
-  return (
-    <Pressable
-      onPress={() => {
-        navigation.navigate("SEARCH_RESULT_DETAILS", { tripId: id });
-      }}
-      style={({ pressed }) => [
-        {
-          opacity: pressed ? 0.5 : 1,
-          transform: [{ scale: pressed ? 0.95 : 1 }],
-        },
-      ]}>
-      <Box flexDirection="row" marginBottom="large" backgroundColor="neutral100" borderRadius={10}>
+const AVATAR_PLACEHOLDER = [colors.secondary400, colors.primary400, colors.blue400, colors.warning];
+
+const TripCard: React.FC<TripCardProps> = React.memo(
+  ({ id, image, title, duration, feature, peopleJoined }) => {
+    const navigation = useNavigation();
+    return (
+      <Pressable
+        onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS", { tripId: id })}
+        style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}>
         <Image
           source={image ? { uri: image } : require("@/assets/hotel_image_1.png")}
           style={styles.image}
         />
-
-        <Box
-          width="60%"
-          paddingVertical="five"
-          paddingHorizontal="medium"
-          alignItems="flex-start"
-          justifyContent="space-between">
-          <RestyleText variant="subtitle" marginBottom="ten" paddingHorizontal="two">
+        <Box style={styles.content}>
+          <RestyleText style={styles.title} numberOfLines={2}>
             {title}
           </RestyleText>
-          <Box flexDirection="row" alignItems="center" marginBottom="small">
-            <RestyleText variant="caption" color="gray" marginRight="tiny">
+          <Box style={styles.metaRow}>
+            <Ionicons name="sunny-outline" size={14} color={colors.gray} />
+            <RestyleText style={styles.metaText} numberOfLines={1}>
               {duration}
             </RestyleText>
-            <RestyleText variant="caption" color="gray">
+            <Ionicons name="airplane-outline" size={14} color={colors.gray} />
+            <RestyleText style={styles.metaText} numberOfLines={1}>
               {feature}
             </RestyleText>
           </Box>
-          <Box flexDirection="row" alignItems="center">
-            <RestyleText variant="caption" color="gray">
-              {peopleJoined}+ People Joined
-            </RestyleText>
+          <Box style={styles.joinedRow}>
+            <Box style={styles.avatarStack}>
+              {AVATAR_PLACEHOLDER.map((bg, i) => (
+                <View key={i} style={[styles.avatar, { backgroundColor: bg, left: i * 16 }]} />
+              ))}
+            </Box>
+            <RestyleText style={styles.joinedText}>{peopleJoined}+ People Joined</RestyleText>
           </Box>
         </Box>
-      </Box>
-    </Pressable>
-  );
-};
+      </Pressable>
+    );
+  },
+);
+
+TripCard.displayName = "TripCard";
 
 const styles = StyleSheet.create({
+  card: {
+    flexDirection: "row",
+    backgroundColor: colors.white,
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: "hidden",
+    shadowColor: colors.black,
+    shadowOpacity: 0.06,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  cardPressed: {
+    opacity: 0.85,
+    transform: [{ scale: 0.98 }],
+  },
   image: {
-    width: "40%",
-    height: 100,
-    borderRadius: 8,
+    width: "38%",
+    height: 140,
+  },
+  content: {
+    flex: 1,
+    padding: 12,
+    justifyContent: "space-between",
+  },
+  title: {
+    fontFamily: typography.poppinsSemibold,
+    fontSize: 16,
+    color: colors.neutral700,
+    lineHeight: 22,
+  },
+  metaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginTop: 4,
+  },
+  metaText: {
+    fontFamily: typography.poppinsRegular,
+    fontSize: 12,
+    color: colors.gray,
+    marginRight: 8,
+  },
+  joinedRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  avatarStack: {
+    flexDirection: "row",
+    width: 16 * 3 + 24, // 3 overlaps + last full
+    height: 24,
+    marginRight: 8,
+  },
+  avatar: {
+    position: "absolute",
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: colors.white,
+  },
+  joinedText: {
+    fontFamily: typography.poppinsRegular,
+    fontSize: 12,
+    color: colors.gray,
   },
 });
 

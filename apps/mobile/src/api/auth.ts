@@ -1,6 +1,6 @@
 import api from "./client";
-import { AuthResult, BackendUser, ApiResponse } from "@/@types/auth.type";
-import { saveTokens, saveItem, getItem, getTokens } from "@/utils/storage";
+import { AuthResult, User, ApiResponse } from "@/@types/auth.type";
+import { saveTokens, saveItem, getItem, getTokens, clearTokens } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/@types/storage.type";
 
 // ─── Register ───────────────────────────────────────────────────────────────
@@ -10,12 +10,14 @@ export const register = async (
   password: string,
   firstName: string,
   lastName: string,
+  phone?: string,
 ) => {
   const { data } = await api.post<AuthResult>("/auth/register", {
     email,
     password,
     firstName,
     lastName,
+    phone,
   });
   await saveTokens(data.data.accessToken, data.data.refreshToken);
   await saveItem(STORAGE_KEYS.USER, data.data.user);
@@ -57,7 +59,7 @@ export const appleLogin = async (params: {
 // ─── Get Current User ───────────────────────────────────────────────────────
 
 export const getMe = async () => {
-  const { data } = await api.get<ApiResponse<BackendUser>>("/auth/me");
+  const { data } = await api.get<ApiResponse<User>>("/auth/me");
   return data.data;
 };
 
@@ -70,20 +72,7 @@ export const logout = async () => {
   } catch {
     // Logout even if server call fails
   }
-};
-
-// ─── OTP ────────────────────────────────────────────────────────────────────
-
-export const sendOtp = async (email: string) => {
-  const { data } = await api.post<ApiResponse<{ message: string }>>("/auth/send-otp", { email });
-  return data.data;
-};
-
-export const verifyOtp = async (email: string, otp: string) => {
-  const { data } = await api.post<AuthResult>("/auth/verify-otp", { email, otp });
-  await saveTokens(data.data.accessToken, data.data.refreshToken);
-  await saveItem(STORAGE_KEYS.USER, data.data.user);
-  return data.data;
+  await clearTokens();
 };
 
 // ─── Helpers ────────────────────────────────────────────────────────────────

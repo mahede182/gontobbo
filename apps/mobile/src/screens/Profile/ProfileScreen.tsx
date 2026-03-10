@@ -17,7 +17,7 @@ import { WIDTH } from "@/utils/device";
 import { logout } from "@/api/auth";
 import { getProfile } from "@/api/users";
 import { clear } from "@/utils/storage";
-import { BackendUser } from "@/@types/auth.type";
+import { User } from "@/@types/auth.type";
 type Props = {
   label: "Profile" | "None";
 };
@@ -27,7 +27,7 @@ const _adjustedTop = -80;
 const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
   const { state: appState } = useApp();
   const navigation = useNavigation();
-  const [userData, setUserData] = React.useState<BackendUser | null>(null);
+  const [userData, setUserData] = React.useState<User | null>(null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {

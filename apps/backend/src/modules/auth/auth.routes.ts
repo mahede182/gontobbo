@@ -8,8 +8,6 @@ import {
   googleAuthSchema,
   appleAuthSchema,
   refreshTokenSchema,
-  sendOtpSchema,
-  verifyOtpSchema,
 } from "./auth.schema";
 
 const router = Router();
@@ -156,46 +154,5 @@ router.get("/me", authenticate, authController.getMe);
  *       200: { description: Logged out }
  */
 router.post("/logout", authenticate, authController.logout);
-
-/**
- * @swagger
- * /auth/send-otp:
- *   post:
- *     tags: [Auth]
- *     summary: Send OTP to email
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [email]
- *             properties:
- *               email: { type: string, format: email }
- *     responses:
- *       200: { description: OTP sent }
- */
-router.post("/send-otp", validate(sendOtpSchema), authController.sendOtp);
-
-/**
- * @swagger
- * /auth/verify-otp:
- *   post:
- *     tags: [Auth]
- *     summary: Verify OTP
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [email, otp]
- *             properties:
- *               email: { type: string, format: email }
- *               otp: { type: string }
- *     responses:
- *       200: { description: OTP verified }
- */
-router.post("/verify-otp", validate(verifyOtpSchema), authController.verifyOtp);
 
 export default router;

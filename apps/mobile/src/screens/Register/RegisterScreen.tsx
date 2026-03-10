@@ -13,9 +13,11 @@ import Background from "@/components/Background";
 import { View } from "moti";
 import { register } from "@/api/auth";
 
-type Props = {};
+type Props = {
+  onRegisterSuccess?: () => void;
+};
 
-const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
+const RegisterScreen: React.FC<Props> = ({ onRegisterSuccess }): JSX.Element => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +29,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
 
@@ -49,15 +51,19 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
     setIsButtonEnabled(areAllFieldsFilled());
   }, [firstName, lastName, email, password, confirmPassword, phoneNumber]);
 
-  const handleSignUp = async () => {
+  const handleRegister = async () => {
     if (password !== confirmPassword) {
       Alert.alert("Error", "Passwords do not match");
       return;
     }
     try {
       setLoading(true);
-      await register(email, password, firstName, lastName);
-      navigation.navigate("OTP", { email });
+      await register(email, password, firstName, lastName, phoneNumber);
+      if (onRegisterSuccess) {
+        onRegisterSuccess();
+      } else {
+        navigation.navigate("AUTHENTICATED");
+      }
     } catch (error: any) {
       Alert.alert("Sign Up Failed", error?.response?.data?.message ?? error.message);
     } finally {
@@ -68,17 +74,13 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
   return (
     <Background>
       <View>
-        <HeaderTitle
-          title={`${t("signIn.sign")} ${t("signIn.up")} ${t("signIn.withEmail")}`}
-          showBackButton
-          onBackPress={() => navigation.goBack()}
-        />
+        <HeaderTitle title={`${t("register.register")} ${t("login.withEmail")}`} />
 
-        <Box style={styles.formContainer}>
-          <Box style={styles.inputGroup}>
-            <RestyleText variant="inputTitle">{t("signIn.firstName")}</RestyleText>
+        <Box style={styles.formContainer as any}>
+          <Box style={styles.inputGroup as any}>
+            <RestyleText variant="inputTitle">{t("login.firstName")}</RestyleText>
             <TextInput
-              style={styles.input}
+              style={styles.input as any}
               placeholder="First Name"
               value={firstName}
               onChangeText={setFirstName}
@@ -86,10 +88,10 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
             />
           </Box>
 
-          <Box style={styles.inputGroup}>
-            <RestyleText variant="inputTitle">{t("signIn.lastName")}</RestyleText>
+          <Box style={styles.inputGroup as any}>
+            <RestyleText variant="inputTitle">{t("login.lastName")}</RestyleText>
             <TextInput
-              style={styles.input}
+              style={styles.input as any}
               placeholder="Last Name"
               value={lastName}
               onChangeText={setLastName}
@@ -97,11 +99,11 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
             />
           </Box>
 
-          <Box style={styles.inputGroup}>
-            <RestyleText variant="inputTitle">{t("signIn.emailAddress")}</RestyleText>
+          <Box style={styles.inputGroup as any}>
+            <RestyleText variant="inputTitle">{t("login.emailAddress")}</RestyleText>
             <TextInput
               style={[
-                styles.input,
+                styles.input as any,
                 { borderColor: isValidEmail ? colors.neutral300 : colors.danger },
               ]}
               placeholder="Email Address"
@@ -112,17 +114,17 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
             />
           </Box>
 
-          <Box style={styles.inputGroup}>
-            <RestyleText variant="inputTitle">{t("signIn.enterPassword")}</RestyleText>
+          <Box style={styles.inputGroup as any}>
+            <RestyleText variant="inputTitle">{t("login.enterPassword")}</RestyleText>
             <Box
               style={[
-                styles.passwordContainer,
+                styles.passwordContainer as any,
                 {
                   borderColor: isValidPassword ? colors.neutral300 : colors.danger,
                 },
               ]}>
               <TextInput
-                style={styles.passwordInput}
+                style={styles.passwordInput as any}
                 placeholder="Enter Password"
                 value={password}
                 onChangeText={setPassword}
@@ -131,18 +133,18 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                 <Image
                   source={images.showPassword}
-                  style={styles.showPasswordIcon}
+                  style={styles.showPasswordIcon as any}
                   tintColor={showPassword ? colors.success : colors.neutral600}
                 />
               </TouchableOpacity>
             </Box>
           </Box>
 
-          <Box style={styles.inputGroup}>
-            <RestyleText variant="inputTitle">{t("signIn.confirmPassword")}</RestyleText>
-            <Box style={styles.passwordContainer}>
+          <Box style={styles.inputGroup as any}>
+            <RestyleText variant="inputTitle">{t("login.confirmPassword")}</RestyleText>
+            <Box style={styles.passwordContainer as any}>
               <TextInput
-                style={styles.passwordInput}
+                style={styles.passwordInput as any}
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
@@ -151,17 +153,17 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
               <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
                 <Image
                   source={images.showPassword}
-                  style={styles.showPasswordIcon}
+                  style={styles.showPasswordIcon as any}
                   tintColor={showConfirmPassword ? colors.success : colors.neutral600}
                 />
               </TouchableOpacity>
             </Box>
           </Box>
 
-          <Box style={styles.inputGroup}>
-            <RestyleText variant="inputTitle">{t("signIn.phoneNumber")}</RestyleText>
+          <Box style={styles.inputGroup as any}>
+            <RestyleText variant="inputTitle">{t("login.phoneNumber")}</RestyleText>
             <TextInput
-              style={styles.input}
+              style={styles.input as any}
               placeholder="Phone Number"
               value={phoneNumber}
               onChangeText={setPhoneNumber}
@@ -170,20 +172,29 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
           </Box>
 
           <TouchableOpacity
-            onPress={handleSignUp}
+            onPress={handleRegister}
             disabled={!isButtonEnabled || loading}
-            style={styles.signUpButton(isButtonEnabled && !loading)}>
-            <RestyleText style={styles.signUpButtonText(isButtonEnabled && !loading)}>
-              {loading ? t("common.loading") : t("signIn.signUp")}
+            style={[
+              styles.signUpButton,
+              {
+                backgroundColor: isButtonEnabled && !loading ? colors.primary700 : colors.white100,
+              },
+            ]}>
+            <RestyleText
+              style={[
+                styles.signUpButtonText,
+                { color: isButtonEnabled && !loading ? colors.white100 : colors.primary700 },
+              ]}>
+              {loading ? t("common.loading") : t("register.register")}
             </RestyleText>
           </TouchableOpacity>
         </Box>
 
-        <Box style={styles.signInContainer}>
-          <RestyleText style={styles.signInText}>{t("signIn.haveAnAccount")}</RestyleText>
-          <TouchableOpacity onPress={() => navigation.navigate("EMAIL_SIGN_IN")}>
-            <RestyleText variant="inputTitle" style={styles.signInLink}>
-              {t("signIn.singIn")}
+        <Box style={styles.signInContainer as any}>
+          <RestyleText style={styles.signInText as any}>{t("login.haveAnAccount")}</RestyleText>
+          <TouchableOpacity onPress={() => navigation.navigate("EMAIL_LOGIN")}>
+            <RestyleText variant="inputTitle" style={styles.signInLink as any}>
+              {t("login.login")}
             </RestyleText>
           </TouchableOpacity>
         </Box>
@@ -192,7 +203,7 @@ const SignUpScreen: React.FC<Props> = (props): JSX.Element => {
   );
 };
 
-export default SignUpScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   formContainer: {
@@ -226,18 +237,16 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
   },
-  signUpButton: (isButtonEnabled) => ({
-    backgroundColor: isButtonEnabled ? colors.primary700 : colors.white100,
+  signUpButton: {
     borderRadius: 8,
     padding: 12,
     marginBottom: 5,
     alignItems: "center",
-  }),
-  signUpButtonText: (isButtonEnabled) => ({
-    color: isButtonEnabled ? colors.white100 : colors.primary700,
+  },
+  signUpButtonText: {
     fontSize: 18,
     fontWeight: "600",
-  }),
+  },
   signInContainer: {
     flexDirection: "row",
     justifyContent: "center",

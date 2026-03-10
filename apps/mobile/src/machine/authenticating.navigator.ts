@@ -7,20 +7,20 @@ export type AuthenticatingMachineActor = ActorRefFrom<typeof authenticatingMachi
 export const authenticatingMachine = setup({
   types: {
     events: {} as
-      | { type: "SIGN_IN" }
+      | { type: "LOGIN" }
       | { type: "NAVIGATE"; screen: keyof AuthenticatingParamList }
       | { type: "STOP" },
   },
   actions: {
-    sendParentSignIn: sendParent((_, { user }) => {
+    sendParentLogin: sendParent((_, { user }) => {
       return {
-        type: "SIGN_IN",
+        type: "LOGIN",
         user,
       };
     }),
   },
   actors: {
-    signIn: fromPromise(async ({ input }) => {
+    login: fromPromise(async ({ input }) => {
       const { user, password } = input;
       const result = await login(user, password);
       return result;
@@ -33,22 +33,22 @@ export const authenticatingMachine = setup({
   states: {
     idle: {
       on: {
-        SIGN_IN: {
-          target: "signingIn",
+        LOGIN: {
+          target: "loggingIn",
         },
       },
     },
-    signingIn: {
+    loggingIn: {
       invoke: {
-        src: "signIn",
+        src: "login",
         input: ({ event }) => {
-          const { user, password } = event.type === "SIGN_IN" ? event : {};
+          const { user, password } = event.type === "LOGIN" ? event : {};
           return { user, password };
         },
         onDone: {
           actions: [
             {
-              type: "sendParentSignIn",
+              type: "sendParentLogin",
               params: ({ event }) => {
                 return event.output;
               },

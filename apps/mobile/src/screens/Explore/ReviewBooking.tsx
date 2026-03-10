@@ -33,16 +33,34 @@ import { createBooking } from "@/api/bookings";
 const ReviewBooking = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { hotelId, roomId } = (route.params as { hotelId: string; roomId?: string }) || {};
+  const { hotelId, roomId, checkIn, checkOut, adults, rooms } =
+    (route.params as {
+      hotelId: string;
+      roomId?: string;
+      checkIn?: string;
+      checkOut?: string;
+      adults?: number;
+      rooms?: number;
+    }) || {};
 
   const [hotel, setHotel] = useState<HotelDetail | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
+  const [booking, setBooking] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
+  const [bookingFor, setBookingFor] = useState<"MYSELF" | "SOMEONE_ELSE">("MYSELF");
   const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [guestState, setGuestState] = useState("");
+
+  // Default dates: today + tomorrow if not passed
+  const checkInDate = checkIn || new Date().toISOString();
+  const checkOutDate = checkOut || new Date(Date.now() + 86400000).toISOString();
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -77,18 +95,29 @@ const ReviewBooking = () => {
 
   const handleBookNow = async () => {
     try {
+      setBooking(true);
       await createBooking({
         type: "HOTEL",
         hotelId,
-        roomId: room?.id ?? "",
-        checkIn: new Date().toISOString(),
-        checkOut: new Date(Date.now() + 86400000).toISOString(),
-        adults: 2,
-        rooms: 1,
+        roomId: room?.id,
+        checkIn: checkInDate,
+        checkOut: checkOutDate,
+        adults: adults ?? 2,
+        rooms: rooms ?? 1,
+        bookingFor,
+        guestTitle: title || undefined,
+        guestFirstName: firstName || undefined,
+        guestLastName: lastName || undefined,
+        guestEmail: email || undefined,
+        guestPhone: phone || undefined,
+        guestAddress: address || undefined,
+        guestState: guestState || undefined,
       });
-      Alert.alert("Success", "Booking created successfully!");
+      navigation.navigate("BOOKING_SUCCESS");
     } catch (error) {
       Alert.alert("Error", "Failed to create booking. Please try again.");
+    } finally {
+      setBooking(false);
     }
   };
 
@@ -133,17 +162,33 @@ const ReviewBooking = () => {
             <Box alignItems={"center"} flexDirection={"row"} justifyContent={"space-between"}>
               <Box>
                 <RestyleText style={styles.sectionTitle}>Check In</RestyleText>
-                <RestyleText style={styles.sectionValue}>01 Nov 2023, Sun</RestyleText>
+                <RestyleText style={styles.sectionValue}>
+                  {new Date(checkInDate).toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    weekday: "short",
+                  })}
+                </RestyleText>
               </Box>
               <Box>
                 <RestyleText style={styles.sectionTitle}>Check Out</RestyleText>
-                <RestyleText style={styles.sectionValue}>15 Nov 2023, Tue</RestyleText>
+                <RestyleText style={styles.sectionValue}>
+                  {new Date(checkOutDate).toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    weekday: "short",
+                  })}
+                </RestyleText>
               </Box>
             </Box>
             <Divider />
             <Box>
               <RestyleText style={styles.sectionTitle}>Guests & Room</RestyleText>
-              <RestyleText style={styles.sectionValue}>2 Adults + 2 Rooms</RestyleText>
+              <RestyleText style={styles.sectionValue}>
+                {adults ?? 2} Adults + {rooms ?? 1} Rooms
+              </RestyleText>
             </Box>
           </Box>
         </Box>
@@ -201,22 +246,61 @@ const ReviewBooking = () => {
             <Box style={styles.guestTypeContainer}>
               <Button
                 title="Myself"
-                style={styles.guestTypeButton}
-                textStyle={styles.guestTypeButtonText}
+                style={[
+                  styles.guestTypeButton,
+                  bookingFor === "MYSELF" && { backgroundColor: colors.primary700 },
+                ]}
+                textStyle={[
+                  styles.guestTypeButtonText,
+                  bookingFor === "MYSELF" && { color: colors.white100 },
+                ]}
+                onPress={() => setBookingFor("MYSELF")}
               />
               <Button
                 title="Someone Else"
-                style={styles.guestTypeButton}
-                textStyle={styles.guestTypeButtonText}
+                style={[
+                  styles.guestTypeButton,
+                  bookingFor === "SOMEONE_ELSE" && { backgroundColor: colors.primary700 },
+                ]}
+                textStyle={[
+                  styles.guestTypeButtonText,
+                  bookingFor === "SOMEONE_ELSE" && { color: colors.white100 },
+                ]}
+                onPress={() => setBookingFor("SOMEONE_ELSE")}
               />
             </Box>
 
-            <Input label="Title" placeholder="Mr." />
-            <Input label="First Name" placeholder="First Name" />
-            <Input label="Last Name" placeholder="Last Name" />
-            <Input label="Email Address" placeholder="Email Address" />
-            <Input label="Current Address" placeholder="Current Address" />
-            <Input label="Contact Number" placeholder="Contact No." />
+            <Input label="Title" placeholder="Mr." value={title} onChangeText={setTitle} />
+            <Input
+              label="First Name"
+              placeholder="First Name"
+              value={firstName}
+              onChangeText={setFirstName}
+            />
+            <Input
+              label="Last Name"
+              placeholder="Last Name"
+              value={lastName}
+              onChangeText={setLastName}
+            />
+            <Input
+              label="Email Address"
+              placeholder="Email Address"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <Input
+              label="Current Address"
+              placeholder="Current Address"
+              value={address}
+              onChangeText={setAddress}
+            />
+            <Input
+              label="Contact Number"
+              placeholder="Contact No."
+              value={phone}
+              onChangeText={setPhone}
+            />
 
             <TouchableOpacity style={styles.addGuestButton} onPress={() => setIsModalVisible(true)}>
               <RestyleText
