@@ -1,6 +1,6 @@
 import { apiSlice } from "../slices/apiSlice";
 import type { MemberCard, ApiResponse } from "@/@types/api.type";
-import type { User } from "@/@types/auth.type";
+import type { User, Passport, FlightPreference, Baggage } from "@/@types/auth.type";
 import {
   USERS_ME,
   USERS_MEMBER_CARD,
@@ -45,6 +45,12 @@ export const usersApi = apiSlice.injectEndpoints({
       providesTags: ["Users"],
     }),
 
+    getPassport: builder.query<Passport, void>({
+      query: () => USERS_PASSPORT,
+      transformResponse: (response: ApiResponse<Passport>) => response.data,
+      providesTags: ["Users"],
+    }),
+
     updatePassport: builder.mutation<
       any,
       {
@@ -61,6 +67,12 @@ export const usersApi = apiSlice.injectEndpoints({
         body,
       }),
       invalidatesTags: ["Users"],
+    }),
+
+    getFlightPreferences: builder.query<FlightPreference, void>({
+      query: () => USERS_FLIGHT_PREFERENCES,
+      transformResponse: (response: ApiResponse<FlightPreference>) => response.data,
+      providesTags: ["Users"],
     }),
 
     updateFlightPreferences: builder.mutation<
@@ -80,8 +92,9 @@ export const usersApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Users"],
     }),
 
-    getBaggage: builder.query<any, void>({
+    getBaggage: builder.query<Baggage[], void>({
       query: () => USERS_BAGGAGE,
+      transformResponse: (response: ApiResponse<Baggage[]>) => response.data,
       providesTags: ["Users"],
     }),
 
@@ -112,7 +125,9 @@ export const {
   useGetProfileQuery,
   useUpdateProfileMutation,
   useGetMemberCardQuery,
+  useGetPassportQuery,
   useUpdatePassportMutation,
+  useGetFlightPreferencesQuery,
   useUpdateFlightPreferencesMutation,
   useGetBaggageQuery,
   useUpdateBaggageMutation,

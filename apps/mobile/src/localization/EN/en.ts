@@ -17,6 +17,7 @@ export const enTranslations = {
     oneJourneyAt: "One Journey at a Time.",
     uniqueAdvantureAwait: "Unique adventures await, memories.",
     loading: "Loading...",
+    bookings: "Bookings",
   },
   login: {
     continueWithApple: "Continue with Apple",
@@ -195,5 +196,23 @@ export const enTranslations = {
     //extra
     fullScreenMap: "Full Screen Map",
     travelDatesAndGuests: "Travel Dates & Guests",
+  },
+  Profile: {
+    title: "Profile",
+    personalDetails: "Personal Details",
+    personalInfo: "Personal Informations",
+    passportDetails: "Personal Details",
+    paymentMethods: "Payment Methods",
+    flightPreferences: "Flight Preferences",
+    general: "General",
+    flightInformation: "Flight Informations",
+    travelRequirement: "Travel Requirements",
+    baggages: "Baggages",
+    legal: "Legal",
+    logout: "Log out",
+    language: "Language",
+    memberCard: "Member Card",
+    signInProvider: "Sign in Provider",
+    wishList: "Wish List",
   },
 };

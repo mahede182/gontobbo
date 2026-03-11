@@ -8,7 +8,6 @@ import { typography } from "@/theme/typography";
 import { useTranslation } from "react-i18next";
 import OfferScreen from "@/screens/Offer";
 import TravelScreens from "@/screens/Explore";
-import WishListScreens from "@/screens/Wishlist";
 import ProfileScreen from "@/screens/Profile";
 import DrawerNavigation from "./DrawerNavigation";
 import { isIOS } from "@/utils/device";
@@ -16,24 +15,25 @@ import { getItem } from "@/utils/storage";
 import { useNavigation } from "@react-navigation/native";
 import { TabStackParamList } from "@/@types/navigation.type";
 import { dynamicCss } from "@/utils/styles";
+import BookingsScreens from "@/screens/Bookings";
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigation = () => {
-  const [wishlistCount, setWishlistCount] = React.useState(0);
+  const [bookingsCount, setBookingsCount] = React.useState(0);
   const navigation = useNavigation();
 
   React.useEffect(() => {
-    const fetchWishlistCount = async () => {
+    const fetchBookingsCount = async () => {
       try {
-        const wishlist = await getItem("wishlist");
-        setWishlistCount(wishlist?.length);
+        const bookings = await getItem("bookings");
+        setBookingsCount(bookings?.length);
       } catch (error) {
-        console.error("Error fetching wishlist count:", error);
+        console.error("Error fetching bookings count:", error);
       }
     };
 
-    const unsubscribe = navigation.addListener("focus", fetchWishlistCount);
+    const unsubscribe = navigation.addListener("focus", fetchBookingsCount);
 
     return unsubscribe;
   }, [navigation]);
@@ -144,7 +144,7 @@ const TabNavigation = () => {
         }}
         component={OfferScreen}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="WISHLIST"
         options={{
           title: "",
@@ -192,6 +192,55 @@ const TabNavigation = () => {
           ),
         }}
         component={WishListScreens}
+      /> */}
+      <Tab.Screen
+        name="BOOKINGS"
+        options={{
+          title: "",
+          tabBarIcon: ({ focused }) => (
+            <Box alignItems={"center"} justifyContent={"center"}>
+              {true ? (
+                <Box
+                  style={{
+                    position: "absolute",
+                    backgroundColor: colors.danger,
+                    bottom: 0,
+                    top: isIOS ? "undefined" : -10,
+                    right: 5,
+                    zIndex: 999,
+                    height: 16,
+                    width: 16,
+                    borderRadius: 20,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}>
+                  <RestyleText style={{ fontSize: 13, color: colors.white }}>
+                    {bookingsCount}
+                  </RestyleText>
+                </Box>
+              ) : null}
+
+              <Image
+                source={focused ? images.bookingActive : images.booking}
+                tintColor={focused ? colors.tabSelected : colors.tabUnselected}
+                style={{ height: 18, width: 22 }}
+              />
+              <RestyleText
+                style={[
+                  styles.title,
+                  dynamicCss(
+                    "fontFamily",
+                    focused ? typography.poppinsMedium : typography.poppinsRegular,
+                  ),
+                  dynamicCss("fontWeight", focused ? "600" : "400"),
+                  dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
+                ]}>
+                {t("common.bookings")}
+              </RestyleText>
+            </Box>
+          ),
+        }}
+        component={BookingsScreens}
       />
       <Tab.Screen
         name="PROFILE"

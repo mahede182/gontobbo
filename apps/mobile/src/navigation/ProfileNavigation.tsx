@@ -9,12 +9,14 @@ import BaggagesScreen from "@/screens/Profile/Baggages";
 import LegalScreen from "@/screens/Profile/Legal";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ProfileStackParamList } from "@/@types/navigation.type";
+import WishList from "@/screens/Profile/WishList";
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 export const ProfileNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="MEMBER_CARD" component={MemberCard} />
+      <Stack.Screen options={{ headerShown: false }} name="WISH_LIST" component={WishList} />
       <Stack.Screen
         options={{ headerShown: false }}
         name="PERSONAL_INFO"

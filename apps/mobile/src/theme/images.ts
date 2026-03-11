@@ -11,6 +11,8 @@ export const images = {
   offerActive: require("@/assets/bottomTab/offerActive.png") as ImageSourcePropType,
   wishlist: require("@/assets/bottomTab/wishlist.png") as ImageSourcePropType,
   wishlistActive: require("@/assets/bottomTab/wishlistActive.png") as ImageSourcePropType,
+  booking: require("@/assets/bottomTab/booking.png") as ImageSourcePropType,
+  bookingActive: require("@/assets/bottomTab/booking.png") as ImageSourcePropType,
   profile: require("@/assets/bottomTab/profile.png") as ImageSourcePropType,
   profileActive: require("@/assets/bottomTab/profileActive.png") as ImageSourcePropType,
   appleIcon: require("@/assets/login/appleIcon.png") as ImageSourcePropType,

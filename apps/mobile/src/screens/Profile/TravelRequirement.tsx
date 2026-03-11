@@ -1,77 +1,11 @@
-import React from "react";
-import { createBox } from "@shopify/restyle";
-import type { Theme } from "@/@types/theme.type";
-import { Box, RestyleText } from "@/theme";
-import HeaderTitle from "@/components/HeaderTitle";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "moti";
+import { colors } from "@/theme/colors";
 
-const Container = createBox<Theme>();
-
-type TravelDocument = {
-  id: string;
-  type: "passport" | "visa" | "insurance" | "vaccination";
-  name: string;
-  expiryDate?: Date;
-  isRequired: boolean;
-  description: string;
-  status: "valid" | "expired" | "missing" | "not_required";
-};
-
-const DocumentItem = ({ document }: { document: TravelDocument }) => {
-  const getStatusColor = (status: TravelDocument["status"]) => {
-    switch (status) {
-      case "valid":
-        return "success";
-      case "expired":
-        return "danger";
-      case "missing":
-        return "secondary500";
-      default:
-        return "neutral600";
-    }
-  };
-
-  return (
-    <Container
-      flexDirection="row"
-      justifyContent="space-between"
-      alignItems="flex-start"
-      padding="medium"
-      marginVertical="tiny"
-      backgroundColor="white"
-      shadowColor="neutral700"
-      shadowOpacity={0.1}
-      shadowOffset={{ width: 0, height: 2 }}
-      shadowRadius={4}
-      elevation={2}>
-      <Box flex={1}>
-        <RestyleText variant="searchHotelTitle" marginBottom="tiny">
-          {document.name}
-        </RestyleText>
-        <RestyleText variant="caption" color="neutral600" marginBottom="tiny">
-          {document.description}
-        </RestyleText>
-        {document.expiryDate && (
-          <RestyleText variant="caption" color="neutral600">
-            Expires: {document.expiryDate.toLocaleDateString()}
-          </RestyleText>
-        )}
-      </Box>
-      <Box
-        backgroundColor={getStatusColor(document.status)}
-        paddingHorizontal="small"
-        paddingVertical="tiny"
-        marginLeft="small"
-        minWidth={90}
-        alignItems="center">
-        <RestyleText variant="caption" style={{ textTransform: "uppercase", color: "white" }}>
-          {document.status.replace("_", " ")}
-        </RestyleText>
-      </Box>
-    </Container>
-  );
-};
+import React from "react";
+import HeaderTitle from "@/components/HeaderTitle";
+import { Box } from "@/theme";
+import DocumentItem, { TravelDocument } from "./components/DocumentItem";
 
 const TravelRequirementScreen = () => {
   const [documents] = React.useState<TravelDocument[]>([
@@ -112,19 +46,32 @@ const TravelRequirementScreen = () => {
   ]);
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
-      <Container flex={1} backgroundColor="neutral50">
+    <SafeAreaView style={styles.container}>
+      <Box flex={1} backgroundColor="white100">
         <HeaderTitle title="Travel Requirements" />
-        <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}>
           <Box paddingVertical="medium">
-            {documents.map((doc) => (
-              <DocumentItem key={doc.id} document={doc} />
+            {documents.map((doc, index) => (
+              <DocumentItem key={doc.id} document={doc} index={index} />
             ))}
           </Box>
         </ScrollView>
-      </Container>
+      </Box>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.white100,
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+  },
+});
 
 export default TravelRequirementScreen;

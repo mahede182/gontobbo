@@ -1,58 +1,10 @@
 import React from "react";
-import { createBox } from "@shopify/restyle";
-import type { Theme } from "@/@types/theme.type";
+import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, MotiView } from "moti";
 import { Box, RestyleText } from "@/theme";
 import HeaderTitle from "@/components/HeaderTitle";
-import { ScrollView, TouchableOpacity, StyleSheet } from "react-native";
-import { SafeAreaView } from "moti";
-import { Ionicons } from "@expo/vector-icons";
-import { AppLogger } from "@/utils/applogger";
-
-const logger = new AppLogger("LegalScreen");
-
-const Container = createBox<Theme>();
-
-type LegalDocument = {
-  id: string;
-  title: string;
-  description: string;
-  lastUpdated: string;
-  type: "policy" | "terms" | "guidelines" | "licenses";
-};
-
-const LegalItemCard = ({ item, onPress }: { item: LegalDocument; onPress: () => void }) => {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Container
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        padding="medium"
-        marginVertical="tiny"
-        backgroundColor="white"
-        shadowColor="neutral700"
-        shadowOpacity={0.1}
-        shadowOffset={{ width: 0, height: 2 }}
-        shadowRadius={4}
-        elevation={2}>
-        <Box flex={1}>
-          <RestyleText variant="searchHotelTitle" marginBottom="tiny">
-            {item.title}
-          </RestyleText>
-          <RestyleText variant="caption" color="neutral600" marginBottom="tiny">
-            {item.description}
-          </RestyleText>
-          <RestyleText variant="caption" color="neutral600">
-            Last Updated: {item.lastUpdated}
-          </RestyleText>
-        </Box>
-        <Box marginLeft="small">
-          <Ionicons name="chevron-forward" size={24} color="#4B4B4B" />
-        </Box>
-      </Container>
-    </TouchableOpacity>
-  );
-};
+import { colors } from "@/theme/colors";
+import LegalItemCard, { LegalDocument } from "./components/LegalItemCard";
 
 const LegalScreen = () => {
   const [legalDocuments] = React.useState<LegalDocument[]>([
@@ -95,25 +47,41 @@ const LegalScreen = () => {
 
   const handleDocumentPress = (documentId: string) => {
     // Handle document press - navigate to document detail screen
-    AppLogger.log("Document pressed:", documentId);
+    console.log("Document pressed:", documentId);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Container flex={1} backgroundColor="neutral50">
+      <Box flex={1} backgroundColor="white100">
         <HeaderTitle title="Legal Information" />
-        <ScrollView style={styles.scrollView}>
-          <Box paddingVertical="medium">
-            {legalDocuments.map((item) => (
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}>
+          <Box marginTop="medium">
+            {legalDocuments.map((item, index) => (
               <LegalItemCard
                 key={item.id}
                 item={item}
+                index={index}
                 onPress={() => handleDocumentPress(item.id)}
               />
             ))}
           </Box>
+
+          <MotiView
+            from={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 600 }}
+            style={styles.footer}>
+            <RestyleText variant="caption" color="neutral500" textAlign="center">
+              Version 1.0.0 (Build 124)
+            </RestyleText>
+            <RestyleText variant="caption" color="neutral500" textAlign="center" marginTop="tiny">
+              © 2026 Gontobbo. All rights reserved.
+            </RestyleText>
+          </MotiView>
         </ScrollView>
-      </Container>
+      </Box>
     </SafeAreaView>
   );
 };
@@ -121,10 +89,15 @@ const LegalScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    backgroundColor: colors.white100,
   },
-  scrollView: {
-    paddingHorizontal: 16,
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+  },
+  footer: {
+    marginTop: 40,
+    paddingBottom: 20,
   },
 });
 

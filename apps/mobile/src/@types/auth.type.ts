@@ -17,6 +17,41 @@ export type User = {
   socialType?: "GOOGLE" | "APPLE" | "FACEBOOK" | "NONE";
   createdAt: string;
   updatedAt: string;
+  passport?: Passport;
+  flightPreference?: FlightPreference;
+  baggages?: Baggage[];
+};
+
+export type Passport = {
+  id: string;
+  userId: string;
+  passportNumber: string;
+  nationality: string;
+  dateOfBirth: string;
+  dateOfIssue: string;
+  dateOfExpiry: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type FlightPreference = {
+  id: string;
+  userId: string;
+  isFlexibleDates: boolean;
+  isNonStopFlights: boolean;
+  isEarlyDeparture: boolean;
+  isLateDeparture: boolean;
+};
+
+export type Baggage = {
+  id: string;
+  userId: string;
+  type: "CABIN" | "CHECKED" | "SPECIAL";
+  name: string;
+  description: string | null;
+  weight: string;
+  dimensions: string | null;
+  status: "INCLUDED" | "EXTRA_FEE" | "NOT_ALLOWED";
 };
 
 export type AuthTokens = {
