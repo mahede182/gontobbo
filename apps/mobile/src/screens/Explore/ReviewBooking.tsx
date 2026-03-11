@@ -238,7 +238,9 @@ const ReviewBooking = () => {
                 title="Myself"
                 style={[
                   styles.guestTypeButton,
-                  bookingFor === "MYSELF" && { backgroundColor: colors.primary700 },
+                  bookingFor === "MYSELF" && {
+                    backgroundColor: colors.primary700,
+                  },
                 ]}
                 textStyle={[
                   styles.guestTypeButtonText,
@@ -250,7 +252,9 @@ const ReviewBooking = () => {
                 title="Someone Else"
                 style={[
                   styles.guestTypeButton,
-                  bookingFor === "SOMEONE_ELSE" && { backgroundColor: colors.primary700 },
+                  bookingFor === "SOMEONE_ELSE" && {
+                    backgroundColor: colors.primary700,
+                  },
                 ]}
                 textStyle={[
                   styles.guestTypeButtonText,

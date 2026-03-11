@@ -248,7 +248,10 @@ const HotelDetails = () => {
                   longitudeDelta: 0.0421,
                 }}>
                 <Marker
-                  coordinate={{ latitude: hotel.latitude, longitude: hotel.longitude }}
+                  coordinate={{
+                    latitude: hotel.latitude,
+                    longitude: hotel.longitude,
+                  }}
                   title={hotel.name}
                 />
               </MapView>

@@ -1,17 +1,18 @@
 import { apiSlice } from "../slices/apiSlice";
 import type { RecentSearches, ApiResponse } from "@/@types/api.type";
+import { SEARCHES_RECENT } from "@/constants/urls";
 
 export const searchesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRecentSearches: builder.query<RecentSearches, void>({
-      query: () => "/searches/recent",
+      query: () => SEARCHES_RECENT,
       transformResponse: (response: ApiResponse<RecentSearches>) => response.data,
       providesTags: ["Searches"],
     }),
 
     addRecentSearch: builder.mutation<{ id: string }, { type: "HOTEL" | "FLIGHT"; query: string }>({
       query: (body) => ({
-        url: "/searches/recent",
+        url: SEARCHES_RECENT,
         method: "POST",
         body,
       }),
@@ -21,7 +22,7 @@ export const searchesApi = apiSlice.injectEndpoints({
 
     clearRecentSearches: builder.mutation<void, void>({
       query: () => ({
-        url: "/searches/recent",
+        url: SEARCHES_RECENT,
         method: "DELETE",
       }),
       invalidatesTags: ["Searches"],

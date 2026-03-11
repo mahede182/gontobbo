@@ -57,30 +57,6 @@ export const isAppleUser = (userData: SocialUser | null): userData is AppleUser 
 };
 
 /**
- * Gets the display name from user data
- * @param userData - The user data
- * @returns formatted display name or default value
- */
-export const getDisplayName = (userData: SocialUser | null): string => {
-  if (!userData) return "Guest User";
-
-  if (isGoogleUser(userData)) {
-    return userData.user.name;
-  } else if (isAppleUser(userData)) {
-    console.log(userData, "userData apple login");
-    const { givenName, familyName } = userData.fullName;
-    if (givenName && familyName) {
-      return `${givenName} ${familyName}`;
-    } else if (givenName) {
-      return givenName;
-    } else if (familyName) {
-      return familyName;
-    }
-  }
-  return "Guest User";
-};
-
-/**
  * Gets the email from user data
  * @param userData - The user data
  * @returns email or default value
@@ -144,4 +120,13 @@ export const getProfilePhoto = (userData: SocialUser | null): string | null => {
 export const getAuthProvider = (userData: SocialUser | null): string => {
   if (!userData) return "None";
   return isGoogleUser(userData) ? "Google" : "Apple";
+};
+
+/**
+ * Encodes a URI component.
+ * @param {string | number} val - The value to encode.
+ * @returns {string} - The encoded URI component.
+ */
+export const encdUri = (val: string | number): string => {
+  return encodeURIComponent(val.toString());
 };

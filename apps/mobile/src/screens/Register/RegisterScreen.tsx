@@ -61,7 +61,13 @@ const RegisterScreen: React.FC = (): JSX.Element => {
       return;
     }
     try {
-      await registerMutation({ email, password, firstName, lastName, phone: phoneNumber }).unwrap();
+      await registerMutation({
+        email,
+        password,
+        firstName,
+        lastName,
+        phone: phoneNumber,
+      }).unwrap();
     } catch (error: any) {
       Alert.alert("Sign Up Failed", error?.data?.message ?? error?.message ?? "An error occurred");
     }
@@ -105,7 +111,9 @@ const RegisterScreen: React.FC = (): JSX.Element => {
                 <TextInput
                   style={[
                     styles.input as any,
-                    { borderColor: isValidEmail ? colors.neutral300 : colors.danger },
+                    {
+                      borderColor: isValidEmail ? colors.neutral300 : colors.danger,
+                    },
                   ]}
                   placeholder="Email Address"
                   value={email}
@@ -195,7 +203,9 @@ const RegisterScreen: React.FC = (): JSX.Element => {
               <RestyleText
                 style={[
                   styles.signUpButtonText,
-                  { color: isButtonEnabled && !loading ? colors.white100 : colors.primary700 },
+                  {
+                    color: isButtonEnabled && !loading ? colors.white100 : colors.primary700,
+                  },
                 ]}>
                 {loading ? t("common.loading") : t("register.register")}
               </RestyleText>

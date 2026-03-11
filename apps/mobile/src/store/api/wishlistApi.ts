@@ -1,12 +1,13 @@
 import { apiSlice } from "../slices/apiSlice";
 import type { WishlistItem, ApiResponse } from "@/@types/api.type";
+import { WISHLIST, WISHLIST_ITEM } from "@/constants/urls";
 
 export type { WishlistItem };
 
 export const wishlistApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getWishlist: builder.query<WishlistItem[], void>({
-      query: () => "/wishlist",
+      query: () => WISHLIST,
       transformResponse: (response: ApiResponse<WishlistItem[]>) => response.data,
       providesTags: ["Wishlist"],
     }),
@@ -22,7 +23,7 @@ export const wishlistApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/wishlist",
+        url: WISHLIST,
         method: "POST",
         body,
       }),
@@ -32,7 +33,7 @@ export const wishlistApi = apiSlice.injectEndpoints({
 
     removeFromWishlist: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/ wishlist / ${encodeURIComponent(id)} `,
+        url: WISHLIST_ITEM(id),
         method: "DELETE",
       }),
       invalidatesTags: ["Wishlist"],

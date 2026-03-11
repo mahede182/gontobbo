@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -16,6 +15,7 @@ import { isIOS } from "@/utils/device";
 import { getItem } from "@/utils/storage";
 import { useNavigation } from "@react-navigation/native";
 import { TabStackParamList } from "@/@types/navigation.type";
+import { dynamicCss } from "@/utils/styles";
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
@@ -71,7 +71,18 @@ const TabNavigation = () => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={styles.imgStyle}
               />
-              <RestyleText style={styles.title(focused)}>{t("common.home")}</RestyleText>
+              <RestyleText
+                style={[
+                  styles.title,
+                  dynamicCss(
+                    "fontFamily",
+                    focused ? typography.poppinsMedium : typography.poppinsRegular,
+                  ),
+                  dynamicCss("fontWeight", focused ? "600" : "400"),
+                  dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
+                ]}>
+                {t("common.home")}
+              </RestyleText>
             </Box>
           ),
         }}
@@ -88,7 +99,18 @@ const TabNavigation = () => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={{ height: 18, width: 22 }}
               />
-              <RestyleText style={styles.title(focused)}>{t("common.explore")}</RestyleText>
+              <RestyleText
+                style={[
+                  styles.title,
+                  dynamicCss(
+                    "fontFamily",
+                    focused ? typography.poppinsMedium : typography.poppinsRegular,
+                  ),
+                  dynamicCss("fontWeight", focused ? "600" : "400"),
+                  dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
+                ]}>
+                {t("common.explore")}
+              </RestyleText>
             </Box>
           ),
         }}
@@ -105,7 +127,18 @@ const TabNavigation = () => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={styles.imgStyle}
               />
-              <RestyleText style={styles.title(focused)}>{t("common.offers")}</RestyleText>
+              <RestyleText
+                style={[
+                  styles.title,
+                  dynamicCss(
+                    "fontFamily",
+                    focused ? typography.poppinsMedium : typography.poppinsRegular,
+                  ),
+                  dynamicCss("fontWeight", focused ? "600" : "400"),
+                  dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
+                ]}>
+                {t("common.offers")}
+              </RestyleText>
             </Box>
           ),
         }}
@@ -143,7 +176,18 @@ const TabNavigation = () => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={{ height: 18, width: 22 }}
               />
-              <RestyleText style={styles.title(focused)}>{t("common.wishlist")}</RestyleText>
+              <RestyleText
+                style={[
+                  styles.title,
+                  dynamicCss(
+                    "fontFamily",
+                    focused ? typography.poppinsMedium : typography.poppinsRegular,
+                  ),
+                  dynamicCss("fontWeight", focused ? "600" : "400"),
+                  dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
+                ]}>
+                {t("common.wishlist")}
+              </RestyleText>
             </Box>
           ),
         }}
@@ -160,7 +204,18 @@ const TabNavigation = () => {
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={styles.imgStyle}
               />
-              <RestyleText style={styles.title(focused)}>{t("common.profile")}</RestyleText>
+              <RestyleText
+                style={[
+                  styles.title,
+                  dynamicCss(
+                    "fontFamily",
+                    focused ? typography.poppinsMedium : typography.poppinsRegular,
+                  ),
+                  dynamicCss("fontWeight", focused ? "600" : "400"),
+                  dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
+                ]}>
+                {t("common.profile")}
+              </RestyleText>
             </Box>
           ),
         }}
@@ -173,12 +228,9 @@ const TabNavigation = () => {
 export default TabNavigation;
 
 const styles = StyleSheet.create({
-  title: (focused: boolean) => ({
+  title: {
     marginTop: 3,
-    fontFamily: focused ? typography.poppinsMedium : typography.poppinsRegular,
     fontSize: 12,
-    fontWeight: focused ? "600" : "400",
-    color: focused ? colors.tabSelected : colors.tabUnselected,
-  }),
+  },
   imgStyle: { height: 18, width: 18 },
 });

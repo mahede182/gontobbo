@@ -35,7 +35,7 @@ export type AuthdStackParamList = {
 export type TabStackParamList = {
   HOME: undefined;
   EXPLORE: undefined;
-  OFFER: undefined;
+  OFFERS: undefined;
   WISHLIST: undefined;
   PROFILE: undefined;
   DRAWER: undefined;

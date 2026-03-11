@@ -65,7 +65,9 @@ const WishListScreens: React.FC<Props> = (props): JSX.Element => {
                   {item.hotelId && (
                     <TouchableOpacity
                       onPress={() => {
-                        (navigation as any).navigate("HOTEL_DETAIL", { hotelId: item.hotelId });
+                        (navigation as any).navigate("HOTEL_DETAIL", {
+                          hotelId: item.hotelId,
+                        });
                       }}
                       style={styles.bookButton}>
                       <Text style={styles.bookButtonText}>Book</Text>

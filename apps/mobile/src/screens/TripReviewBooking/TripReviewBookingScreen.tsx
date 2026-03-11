@@ -19,10 +19,10 @@ import {
 import { useGetTripDetailQuery, type Trip } from "@/store/api/tripsApi";
 import { useCreateBookingMutation } from "@/store/api/bookingsApi";
 
-type Props = {};
-
 import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
 import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
+
+type Props = {};
 
 const TripReviewBookingScreen = (props: Props) => {
   const navigation = useNavigation<any>();

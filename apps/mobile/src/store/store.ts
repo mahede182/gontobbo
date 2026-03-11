@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./slices/apiSlice";
 import authReducer from "./slices/authSlice";
 import appReducer from "./slices/appSlice";
+import reactotron from "../config/ReactotronConfig";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,8 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(apiSlice.middleware),
+  enhancers: (getDefaultEnhancers) =>
+    getDefaultEnhancers().concat(__DEV__ ? [reactotron.createEnhancer!()] : []),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

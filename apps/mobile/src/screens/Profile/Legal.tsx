@@ -6,6 +6,9 @@ import HeaderTitle from "@/components/HeaderTitle";
 import { ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import { SafeAreaView } from "moti";
 import { Ionicons } from "@expo/vector-icons";
+import { AppLogger } from "@/utils/applogger";
+
+const logger = new AppLogger("LegalScreen");
 
 const Container = createBox<Theme>();
 
@@ -92,7 +95,7 @@ const LegalScreen = () => {
 
   const handleDocumentPress = (documentId: string) => {
     // Handle document press - navigate to document detail screen
-    console.log("Document pressed:", documentId);
+    AppLogger.log("Document pressed:", documentId);
   };
 
   return (

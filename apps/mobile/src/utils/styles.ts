@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from "react-native";
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
 
 export const utilityStyles = StyleSheet.create({
   center: {
@@ -21,8 +21,11 @@ export const dynamicSpace = (value: number) => {
   });
 };
 
-type StylePropKey = keyof ViewStyle;
+type AllStyles = ViewStyle & TextStyle & ImageStyle;
+type StylePropKey = keyof AllStyles;
 
-export function dynamicCSS<K extends StylePropKey>(key: K, value: ViewStyle[K]) {
-  return { [key]: value };
+export function dynamicCss<K extends StylePropKey>(key: K, value: AllStyles[K]) {
+  return { [key]: value } as any;
 }
+
+export const dynamicCSS = dynamicCss;

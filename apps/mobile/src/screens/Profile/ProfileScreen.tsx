@@ -18,13 +18,10 @@ import { useLogoutMutation } from "@/store/api/authApi";
 import { useGetProfileQuery } from "@/store/api/usersApi";
 import { clearTokens, getTokens } from "@/utils/storage";
 import { User } from "@/@types/auth.type";
-type Props = {
-  label: "Profile" | "None";
-};
 
 const _adjustedTop = -80;
 
-const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
+const ProfileScreen: React.FC = (): JSX.Element => {
   const { user, logout } = useAuth();
   const navigation = useNavigation();
   const { data: userData, isLoading: loading } = useGetProfileQuery();

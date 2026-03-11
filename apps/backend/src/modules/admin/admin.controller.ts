@@ -173,7 +173,10 @@ export async function updateTrip(req: Request, res: Response, next: NextFunction
 export async function broadcastNotification(req: Request, res: Response, next: NextFunction) {
   try {
     const result = await adminService.broadcastNotification(req.body);
-    successResponse(res, { data: result, message: `Notification sent to ${result.sent} users` });
+    successResponse(res, {
+      data: result,
+      message: `Notification sent to ${result.sent} users`,
+    });
   } catch (error) {
     next(error);
   }

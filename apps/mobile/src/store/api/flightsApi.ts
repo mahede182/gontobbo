@@ -1,5 +1,6 @@
 import { apiSlice } from "../slices/apiSlice";
 import type { Flight, FlightSearchParams, ApiResponse, PaginatedResponse } from "@/@types/api.type";
+import { FLIGHTS, FLIGHT_DETAIL } from "@/constants/urls";
 
 export const flightsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -20,14 +21,14 @@ export const flightsApi = apiSlice.injectEndpoints({
       } | void
     >({
       query: (params) => ({
-        url: "/flights",
+        url: FLIGHTS,
         params: params || undefined,
       }),
       providesTags: ["Flights"],
     }),
 
     getFlightDetail: builder.query<Flight, string>({
-      query: (id) => `/flights/${encodeURIComponent(id)}`,
+      query: (id) => FLIGHT_DETAIL(id),
       transformResponse: (response: ApiResponse<Flight>) => response.data,
       providesTags: (_result, _error, id) => [{ type: "Flights", id }],
     }),

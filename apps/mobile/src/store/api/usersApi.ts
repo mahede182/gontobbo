@@ -1,11 +1,18 @@
 import { apiSlice } from "../slices/apiSlice";
 import type { MemberCard, ApiResponse } from "@/@types/api.type";
 import type { User } from "@/@types/auth.type";
+import {
+  USERS_ME,
+  USERS_MEMBER_CARD,
+  USERS_PASSPORT,
+  USERS_FLIGHT_PREFERENCES,
+  USERS_BAGGAGE,
+} from "@/constants/urls";
 
 export const usersApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProfile: builder.query<User, void>({
-      query: () => "/users/me",
+      query: () => USERS_ME,
       transformResponse: (response: ApiResponse<User>) => response.data,
       providesTags: ["Users"],
     }),
@@ -24,7 +31,7 @@ export const usersApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/users/me",
+        url: USERS_ME,
         method: "PUT",
         body,
       }),
@@ -33,7 +40,7 @@ export const usersApi = apiSlice.injectEndpoints({
     }),
 
     getMemberCard: builder.query<MemberCard, void>({
-      query: () => "/users/me/member-card",
+      query: () => USERS_MEMBER_CARD,
       transformResponse: (response: ApiResponse<MemberCard>) => response.data,
       providesTags: ["Users"],
     }),
@@ -49,7 +56,7 @@ export const usersApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/users/me/passport",
+        url: USERS_PASSPORT,
         method: "PUT",
         body,
       }),
@@ -66,7 +73,7 @@ export const usersApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/users/me/flight-preferences",
+        url: USERS_FLIGHT_PREFERENCES,
         method: "PUT",
         body,
       }),
@@ -74,7 +81,7 @@ export const usersApi = apiSlice.injectEndpoints({
     }),
 
     getBaggage: builder.query<any, void>({
-      query: () => "/users/me/baggage",
+      query: () => USERS_BAGGAGE,
       providesTags: ["Users"],
     }),
 
@@ -90,7 +97,7 @@ export const usersApi = apiSlice.injectEndpoints({
       }[]
     >({
       query: (body) => ({
-        url: "/users/me/baggage",
+        url: USERS_BAGGAGE,
         method: "PUT",
         body,
       }),

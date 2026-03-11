@@ -5,12 +5,13 @@ import type {
   ApiResponse,
   PaginatedResponse,
 } from "@/@types/api.type";
+import { BOOKINGS, BOOKING_DETAIL, BOOKING_CANCEL, BOOKING_TRAVELLERS } from "@/constants/urls";
 
 export const bookingsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createBooking: builder.mutation<Booking, CreateBookingParams>({
       query: (body) => ({
-        url: "/bookings",
+        url: BOOKINGS,
         method: "POST",
         body,
       }),
@@ -28,21 +29,21 @@ export const bookingsApi = apiSlice.injectEndpoints({
       } | void
     >({
       query: (params) => ({
-        url: "/bookings",
+        url: BOOKINGS,
         params: params || undefined,
       }),
       providesTags: ["Bookings"],
     }),
 
     getBookingDetail: builder.query<Booking, string>({
-      query: (id) => `/bookings/${encodeURIComponent(id)}`,
+      query: (id) => BOOKING_DETAIL(id),
       transformResponse: (response: ApiResponse<Booking>) => response.data,
       providesTags: (_result, _error, id) => [{ type: "Bookings", id }],
     }),
 
     cancelBooking: builder.mutation<Booking, string>({
       query: (id) => ({
-        url: `/bookings/${encodeURIComponent(id)}/cancel`,
+        url: BOOKING_CANCEL(id),
         method: "PATCH",
       }),
       transformResponse: (response: ApiResponse<Booking>) => response.data,
@@ -65,7 +66,7 @@ export const bookingsApi = apiSlice.injectEndpoints({
       }
     >({
       query: ({ bookingId, traveller }) => ({
-        url: `/bookings/${encodeURIComponent(bookingId)}/travellers`,
+        url: BOOKING_TRAVELLERS(bookingId),
         method: "POST",
         body: traveller,
       }),

@@ -5,13 +5,13 @@ import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { OtpInput } from "react-native-otp-entry";
 import { useNavigation, useRoute } from "@react-navigation/native";
+
+import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
+import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
 // TODO: Add OTP endpoints to authApi when backend supports them
 // import { verifyOtp, sendOtp } from "@/api/auth";
 
 type Props = {};
-
-import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
-import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
 
 const OtpScreen = (props: Props) => {
   const navigation = useNavigation();

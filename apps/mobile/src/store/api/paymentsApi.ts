@@ -1,10 +1,11 @@
 import { apiSlice } from "../slices/apiSlice";
 import type { PaymentMethod, ApiResponse } from "@/@types/api.type";
+import { PAYMENTS_METHODS, PAYMENT_METHOD_DETAIL } from "@/constants/urls";
 
 export const paymentsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPaymentMethods: builder.query<PaymentMethod[], void>({
-      query: () => "/payments/methods",
+      query: () => PAYMENTS_METHODS,
       transformResponse: (response: ApiResponse<PaymentMethod[]>) => response.data,
       providesTags: ["Payments"],
     }),
@@ -19,7 +20,7 @@ export const paymentsApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/payments/methods",
+        url: PAYMENTS_METHODS,
         method: "POST",
         body,
       }),
@@ -29,7 +30,7 @@ export const paymentsApi = apiSlice.injectEndpoints({
 
     removePaymentMethod: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/payments/methods/${encodeURIComponent(id)}`,
+        url: PAYMENT_METHOD_DETAIL(id),
         method: "DELETE",
       }),
       invalidatesTags: ["Payments"],

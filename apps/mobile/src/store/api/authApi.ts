@@ -3,6 +3,7 @@ import type { User, AuthTokens } from "@/@types/auth.type";
 import { saveTokens, saveItem, clearTokens } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/@types/storage.type";
 import { setCredentials, clearCredentials } from "../slices/authSlice";
+import { LOGIN, REGISTER, GOOGLE_LOGIN, APPLE_LOGIN, GET_ME, LOGOUT } from "@/constants/urls";
 
 interface AuthData {
   user: User;
@@ -25,7 +26,7 @@ export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<AuthData, { email: string; password: string }>({
       query: (body) => ({
-        url: "/auth/login",
+        url: LOGIN,
         method: "POST",
         body,
       }),
@@ -49,7 +50,7 @@ export const authApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/auth/register",
+        url: REGISTER,
         method: "POST",
         body,
       }),
@@ -64,7 +65,7 @@ export const authApi = apiSlice.injectEndpoints({
 
     googleLogin: builder.mutation<AuthData, { idToken: string }>({
       query: (body) => ({
-        url: "/auth/google",
+        url: GOOGLE_LOGIN,
         method: "POST",
         body,
       }),
@@ -87,7 +88,7 @@ export const authApi = apiSlice.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/auth/apple",
+        url: APPLE_LOGIN,
         method: "POST",
         body,
       }),
@@ -101,14 +102,14 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 
     getMe: builder.query<User, void>({
-      query: () => "/auth/me",
+      query: () => GET_ME,
       transformResponse: (response: ApiResponse<User>) => response.data,
       providesTags: ["Auth"],
     }),
 
     logout: builder.mutation<void, { refreshToken?: string }>({
       query: (body) => ({
-        url: "/auth/logout",
+        url: LOGOUT,
         method: "POST",
         body,
       }),

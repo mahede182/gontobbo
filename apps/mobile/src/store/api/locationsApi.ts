@@ -1,11 +1,12 @@
 import { apiSlice } from "../slices/apiSlice";
 import type { Location, ApiResponse } from "@/@types/api.type";
+import { LOCATIONS, LOCATIONS_POPULAR } from "@/constants/urls";
 
 export const locationsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     searchLocations: builder.query<Location[], string | void>({
       query: (q) => ({
-        url: "/locations",
+        url: LOCATIONS,
         params: q ? { q } : undefined,
       }),
       transformResponse: (response: ApiResponse<Location[]>) => response.data,
@@ -13,7 +14,7 @@ export const locationsApi = apiSlice.injectEndpoints({
     }),
 
     getPopularLocations: builder.query<Location[], void>({
-      query: () => "/locations/popular",
+      query: () => LOCATIONS_POPULAR,
       transformResponse: (response: ApiResponse<Location[]>) => response.data,
       providesTags: ["Locations"],
     }),

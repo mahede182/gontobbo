@@ -10,45 +10,54 @@ import type {
   ApiResponse,
   PaginatedResponse,
 } from "@/@types/api.type";
+import {
+  HOTELS,
+  HOTELS_FEATURED,
+  HOTEL_DETAIL,
+  HOTEL_ROOMS,
+  HOTEL_GALLERY,
+  HOTEL_AMENITIES,
+  HOTEL_REVIEWS,
+} from "@/constants/urls";
 
 export type { Hotel, Room };
 
 export const hotelsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getFeaturedHotels: builder.query<Hotel[], void>({
-      query: () => "/hotels/featured",
+      query: () => HOTELS_FEATURED,
       transformResponse: (response: ApiResponse<Hotel[]>) => response.data,
       providesTags: ["Hotels"],
     }),
 
     searchHotels: builder.query<PaginatedResponse<Hotel>, SearchParams>({
       query: (params) => ({
-        url: "/hotels",
+        url: HOTELS,
         params,
       }),
       providesTags: ["Hotels"],
     }),
 
     getHotelDetail: builder.query<HotelDetail, string>({
-      query: (id) => `/hotels/${encodeURIComponent(id)}`,
+      query: (id) => HOTEL_DETAIL(id),
       transformResponse: (response: ApiResponse<HotelDetail>) => response.data,
       providesTags: (_result, _error, id) => [{ type: "Hotels", id }],
     }),
 
     getHotelRooms: builder.query<Room[], string>({
-      query: (hotelId) => `/hotels/${encodeURIComponent(hotelId)}/rooms`,
+      query: (hotelId) => HOTEL_ROOMS(hotelId),
       transformResponse: (response: ApiResponse<Room[]>) => response.data,
       providesTags: (_result, _error, hotelId) => [{ type: "Hotels", id: `${hotelId}-rooms` }],
     }),
 
     getHotelGallery: builder.query<HotelGallery, string>({
-      query: (hotelId) => `/hotels/${encodeURIComponent(hotelId)}/gallery`,
+      query: (hotelId) => HOTEL_GALLERY(hotelId),
       transformResponse: (response: ApiResponse<HotelGallery>) => response.data,
       providesTags: (_result, _error, hotelId) => [{ type: "Hotels", id: `${hotelId}-gallery` }],
     }),
 
     getHotelAmenities: builder.query<Amenity[], string>({
-      query: (hotelId) => `/hotels/${encodeURIComponent(hotelId)}/amenities`,
+      query: (hotelId) => HOTEL_AMENITIES(hotelId),
       transformResponse: (response: ApiResponse<Amenity[]>) => response.data,
       providesTags: (_result, _error, hotelId) => [{ type: "Hotels", id: `${hotelId}-amenities` }],
     }),
@@ -58,7 +67,7 @@ export const hotelsApi = apiSlice.injectEndpoints({
       { hotelId: string; page?: number; limit?: number }
     >({
       query: ({ hotelId, page = 1, limit = 10 }) => ({
-        url: `/hotels/${encodeURIComponent(hotelId)}/reviews`,
+        url: HOTEL_REVIEWS(hotelId),
         params: { page, limit },
       }),
       providesTags: (_result, _error, { hotelId }) => [{ type: "Reviews", id: hotelId }],
