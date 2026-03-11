@@ -16,7 +16,7 @@ import { images } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
 import { useLogoutMutation } from "@/store/api/authApi";
 import { useGetProfileQuery } from "@/store/api/usersApi";
-import { clear, getTokens } from "@/utils/storage";
+import { clearTokens, getTokens } from "@/utils/storage";
 import { User } from "@/@types/auth.type";
 type Props = {
   label: "Profile" | "None";
@@ -25,7 +25,7 @@ type Props = {
 const _adjustedTop = -80;
 
 const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigation = useNavigation();
   const { data: userData, isLoading: loading } = useGetProfileQuery();
   const [logoutMutation] = useLogoutMutation();
@@ -156,8 +156,13 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
           style={styles.logoutButton}
           onPress={async () => {
             const tokens = await getTokens();
-            await logoutMutation({ refreshToken: tokens?.refreshToken });
-            await clear();
+            try {
+              await logoutMutation({ refreshToken: tokens?.refreshToken });
+            } catch (error) {
+              console.error("Logout mutation failed", error);
+            }
+            await clearTokens();
+            logout();
           }}>
           <Text style={styles.logoutButtonText}>Log out</Text>
         </TouchableOpacity>

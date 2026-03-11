@@ -1,13 +1,20 @@
 import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppDispatch } from "@/store/hooks";
 import { setCredentials, clearCredentials } from "@/store/slices/authSlice";
+import { setFirstLaunch } from "@/store/slices/appSlice";
 import { getTokens } from "@/utils/storage";
+import { APP_INITIALIZED } from "@/constants/config";
+// import { INTRO_SHOWN } from "@/constants/config";
 
 export const useHydrate = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const hydrate = async () => {
+      const introFlag = await AsyncStorage.getItem(APP_INITIALIZED);
+      dispatch(setFirstLaunch(introFlag === null));
+
       try {
         const tokens = await getTokens();
         if (tokens?.accessToken) {

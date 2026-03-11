@@ -48,12 +48,3 @@ export const getTokens = async (): Promise<{
 export const clearTokens = async () => {
   await AsyncStorage.removeItem(TOKEN_KEY);
 };
-
-/**
- * Burn it all to the ground.
- */
-export async function clear(): Promise<void> {
-  try {
-    await AsyncStorage.clear();
-  } catch {}
-}

@@ -37,7 +37,9 @@ const RestyleButton: React.FC<Props> = ({ label, onPress, iconSrc, loading = fal
       <BaseButton onPress={onPress} {...props}>
         <Box style={styles.buttonContainer}>
           {iconSrc && <Image source={iconSrc} style={styles.icon} />}
-          <RestyleText variant="buttonLabel">{label}</RestyleText>
+          <RestyleText variant="buttonLabel" style={styles.text}>
+            {label}
+          </RestyleText>
         </Box>
       </BaseButton>
     </Skeleton>
@@ -53,7 +55,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   icon: {
-    marginHorizontal: 5,
-    height: 13,
+    // height: 13,
+    padding: 5,
+  },
+  text: {
+    marginLeft: 5,
   },
 });
