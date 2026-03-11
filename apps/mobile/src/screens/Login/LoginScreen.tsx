@@ -21,11 +21,7 @@ import { useGoogleLoginMutation, useAppleLoginMutation } from "@/store/api/authA
 import { useAppDispatch } from "@/store/hooks";
 import { setGuestMode } from "@/store/slices/authSlice";
 
-type Props = {
-  onLoginPress?: (user: string, password: string) => void;
-};
-
-const LoginScreen: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
+const LoginScreen: React.FC = (): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const dispatch = useAppDispatch();

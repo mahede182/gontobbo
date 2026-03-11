@@ -11,11 +11,10 @@ import Background from "@/components/Background";
 import { dynamicCSS } from "@/utils/styles";
 import { useLoginMutation } from "@/store/api/authApi";
 
-type Props = {
-  onLoginPress?: (user: string, password: string) => void;
-};
+import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
+import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
 
-const EmailLogin: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
+const EmailLogin: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +22,8 @@ const EmailLogin: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   const [login, { isLoading: loading }] = useLoginMutation();
+
+  useKeyboardAnimation();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -37,62 +38,70 @@ const EmailLogin: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
   };
 
   return (
-    <Background>
-      <Box>
-        <HeaderTitle title={t("login.loginWithEmail")} />
+    <>
+      <Background>
+        <KeyboardAwareScrollView bottomOffset={62} contentContainerStyle={styles.scrollContainer}>
+          <Box>
+            <HeaderTitle title={t("login.loginWithEmail")} />
 
-        <Box style={styles.formContainer}>
-          <RestyleText variant="inputTitle" style={dynamicCSS("marginBottom", 5)}>
-            {t("login.emailAddress")}
-          </RestyleText>
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={(newText) => setEmail(newText.toLowerCase())}
-            keyboardType="email-address"
-            placeholder="gontobbo@gmail.co"
-          />
-
-          <RestyleText variant="inputTitle">{t("login.password")}</RestyleText>
-          <Box style={styles.passwordContainer}>
-            <TextInput
-              style={styles.passwordInput}
-              value={password}
-              onChangeText={(newText) => setPassword(newText)}
-              secureTextEntry={!showPassword}
-              placeholder="*****"
-            />
-            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              <Image
-                source={images.showPassword}
-                style={styles.showPasswordIcon}
-                tintColor={showPassword ? colors.success : colors.neutral600}
+            <Box style={styles.formContainer}>
+              <RestyleText variant="inputTitle" style={dynamicCSS("marginBottom", 5)}>
+                {t("login.emailAddress")}
+              </RestyleText>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={(newText) => setEmail(newText.toLowerCase())}
+                keyboardType="email-address"
+                placeholder="gontobbo@gmail.co"
               />
-            </TouchableOpacity>
-          </Box>
 
-          <TouchableOpacity
-            style={[styles.loginButton, loading && { opacity: 0.6 }]}
-            onPress={handleLogin}
-            disabled={loading}>
-            <RestyleText variant="buttonLabel">
-              {loading ? t("common.loading") : t("login.login")}
-            </RestyleText>
-          </TouchableOpacity>
-        </Box>
-        <Box style={styles.registerContainer}>
-          <RestyleText style={styles.registerText}>{t("login.dontHaveAnAccount")}</RestyleText>
-          <TouchableOpacity onPress={() => (navigation as any).navigate("REGISTER")}>
-            <RestyleText style={styles.registerLink}>{t("login.register")}</RestyleText>
-          </TouchableOpacity>
-        </Box>
-      </Box>
-    </Background>
+              <RestyleText variant="inputTitle">{t("login.password")}</RestyleText>
+              <Box style={styles.passwordContainer}>
+                <TextInput
+                  style={styles.passwordInput}
+                  value={password}
+                  onChangeText={(newText) => setPassword(newText)}
+                  secureTextEntry={!showPassword}
+                  placeholder="*****"
+                />
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                  <Image
+                    source={images.showPassword}
+                    style={styles.showPasswordIcon}
+                    tintColor={showPassword ? colors.success : colors.neutral600}
+                  />
+                </TouchableOpacity>
+              </Box>
+
+              <TouchableOpacity
+                style={[styles.loginButton, loading && { opacity: 0.6 }]}
+                onPress={handleLogin}
+                disabled={loading}>
+                <RestyleText variant="buttonLabel">
+                  {loading ? t("common.loading") : t("login.login")}
+                </RestyleText>
+              </TouchableOpacity>
+            </Box>
+            <Box style={styles.registerContainer}>
+              <RestyleText style={styles.registerText}>{t("login.dontHaveAnAccount")}</RestyleText>
+              <TouchableOpacity onPress={() => (navigation as any).navigate("REGISTER")}>
+                <RestyleText style={styles.registerLink}>{t("login.register")}</RestyleText>
+              </TouchableOpacity>
+            </Box>
+          </Box>
+        </KeyboardAwareScrollView>
+      </Background>
+      <KeyboardToolbar />
+    </>
   );
 };
 
 export default EmailLogin;
 const styles = StyleSheet.create({
+  scrollContainer: {
+    paddingBottom: 20,
+  },
   formContainer: {
     backgroundColor: colors.neutral50,
     marginHorizontal: 10,

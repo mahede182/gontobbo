@@ -10,11 +10,16 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 type Props = {};
 
+import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
+import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
+
 const OtpScreen = (props: Props) => {
   const navigation = useNavigation();
   const route = useRoute();
   const email = (route.params as any)?.email ?? "";
   const [loading, setLoading] = useState(false);
+
+  useKeyboardAnimation();
 
   const handleVerifyOtp = async (otp: string) => {
     try {
@@ -39,27 +44,38 @@ const OtpScreen = (props: Props) => {
   };
 
   return (
-    <Box
-      flex={1}
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor={"white"}
-      marginHorizontal={"forty"}>
-      <RestyleText style={styles.title}></RestyleText>
-      <OtpInput
-        numberOfDigits={6}
-        focusColor="green"
-        focusStickBlinkingDuration={500}
-        disabled={loading}
-        onFilled={handleVerifyOtp}
-        textInputProps={{
-          accessibilityLabel: "One-Time Password",
-        }}
-      />
-      <TouchableOpacity style={styles.resendButton} onPress={handleResendCode}>
-        <RestyleText style={styles.resendButtonText}>Resend Code</RestyleText>
-      </TouchableOpacity>
-    </Box>
+    <>
+      <KeyboardAwareScrollView
+        bottomOffset={62}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}>
+        <Box
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor={"white"}
+          marginHorizontal={"forty"}>
+          <RestyleText style={styles.title}></RestyleText>
+          <OtpInput
+            numberOfDigits={6}
+            focusColor="green"
+            focusStickBlinkingDuration={500}
+            disabled={loading}
+            onFilled={handleVerifyOtp}
+            textInputProps={{
+              accessibilityLabel: "One-Time Password",
+            }}
+          />
+          <TouchableOpacity style={styles.resendButton} onPress={handleResendCode}>
+            <RestyleText style={styles.resendButtonText}>Resend Code</RestyleText>
+          </TouchableOpacity>
+        </Box>
+      </KeyboardAwareScrollView>
+      <KeyboardToolbar />
+    </>
   );
 };
 

@@ -21,6 +21,9 @@ import { useCreateBookingMutation } from "@/store/api/bookingsApi";
 
 type Props = {};
 
+import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
+import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
+
 const TripReviewBookingScreen = (props: Props) => {
   const navigation = useNavigation<any>();
   const route = useRoute();
@@ -36,6 +39,8 @@ const TripReviewBookingScreen = (props: Props) => {
   const [address, setAddress] = React.useState("");
   const [contactNumber, setContactNumber] = React.useState("");
 
+  useKeyboardAnimation();
+
   if (isLoading) {
     return (
       <SafeAreaView
@@ -46,140 +51,144 @@ const TripReviewBookingScreen = (props: Props) => {
   }
 
   return (
-    <SafeAreaView style={dynamicCSS("flex", 1)}>
-      <HeaderTitle title="Review Booking" />
-      <ScrollView style={styles.container}>
-        <View style={styles.hotelContainer}>
-          <Image
-            source={trip?.image ? { uri: trip.image } : images.dummyCard}
-            style={styles.hotelImage}
-          />
-          <View style={styles.hotelDetails}>
-            <Text style={styles.hotelName}>{trip?.title ?? "Trip"}</Text>
-            <Text style={styles.hotelPackage}>Tour Package</Text>
-            <Text style={styles.hotelRating}>★★★★★</Text>
-            <Text style={styles.hotelLocation}>{trip?.destination ?? ""}</Text>
-          </View>
-        </View>
-
-        <View style={styles.datesContainer}>
-          <Text style={styles.checkInDate}>Duration: {trip?.duration ?? "N/A"}</Text>
-          <Text style={styles.guestsCount}>2 Adults + 1 Children</Text>
-        </View>
-
-        <View style={styles.packageContainer}>
-          <Text style={styles.packageTitle}>{trip?.title ?? "Trip Package"}</Text>
-          <Text style={styles.packageDuration}>Duration: {trip?.duration ?? "N/A"}</Text>
-          <View style={styles.packageDetails}>
-            {trip?.packageDetails?.map((detail) => (
-              <Text key={detail.id} style={styles.packageDetail}>
-                • {detail.detail}
-              </Text>
-            ))}
-          </View>
-          <Text style={styles.packageNonRefundable}>
-            {trip?.isRefundable ? "Refundable" : "Non-Refundable"}
-          </Text>
-        </View>
-
-        <View style={styles.priceContainer}>
-          <Text style={styles.priceTitle}>Price</Text>
-          <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>{trip?.title ?? "Trip Package"}</Text>
-            <Text style={styles.priceValue}>${trip?.price ?? 0}</Text>
-          </View>
-          <View style={styles.totalPriceRow}>
-            <Text style={styles.totalPriceLabel}>Total Amount to be Paid</Text>
-            <Text style={styles.totalPriceValue}>${trip?.price ?? 0}</Text>
-          </View>
-        </View>
-
-        <View style={styles.travellerDetailsContainer}>
-          <Text style={styles.travellerDetailsTitle}>Traveller Details</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("ADD_TRAVELLER");
-            }}
-            style={styles.travellerDetailsRow}>
-            <Text style={styles.travellerDetailsText}>Add Traveller 1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("ADD_TRAVELLER");
-            }}
-            style={styles.travellerDetailsRow}>
-            <Text style={styles.travellerDetailsText}>Add Traveller 2</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("ADD_TRAVELLER");
-            }}
-            style={styles.travellerDetailsRow}>
-            <Text style={styles.travellerDetailsText}>Add Traveller 3</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.contactContainer}>
-          <Text style={styles.contactTitle}>Contact Information</Text>
-          <View style={styles.contactRow}>
-            <Text style={styles.contactLabel}>Email Address</Text>
-            <TextInput placeholder="Email Address" value={email} onChangeText={setEmail} />
-          </View>
-          <View style={styles.contactRow}>
-            <Text style={styles.contactLabel}>Current Address</Text>
-            <TextInput placeholder="Current Address" value={address} onChangeText={setAddress} />
-          </View>
-          <View style={styles.contactRow}>
-            <Text style={styles.contactLabel}>Contact Number</Text>
-            <View style={styles.contactNumberRow}>
-              <Text>+1</Text>
-              <TextInput
-                placeholder="Contact No."
-                value={contactNumber}
-                onChangeText={setContactNumber}
-              />
+    <>
+      <SafeAreaView style={dynamicCSS("flex", 1)}>
+        <HeaderTitle title="Review Booking" />
+        <KeyboardAwareScrollView bottomOffset={62} style={styles.container}>
+          <View style={styles.hotelContainer}>
+            <Image
+              source={trip?.image ? { uri: trip.image } : images.dummyCard}
+              style={styles.hotelImage}
+            />
+            <View style={styles.hotelDetails}>
+              <Text style={styles.hotelName}>{trip?.title ?? "Trip"}</Text>
+              <Text style={styles.hotelPackage}>Tour Package</Text>
+              <Text style={styles.hotelRating}>★★★★★</Text>
+              <Text style={styles.hotelLocation}>{trip?.destination ?? ""}</Text>
             </View>
           </View>
-          {/* <View style={styles.stateRow}>
-            <Text style={styles.stateLabel}>Your State</Text>
-            <TouchableOpacity style={styles.stateButton}>
-              <Text style={styles.stateButtonText}>Edit</Text>
-            </TouchableOpacity>
-          </View> */}
-          <View style={styles.stateRow}>
-            <Text style={styles.stateValue}>USA / Outside USA</Text>
-            <Text style={styles.stateCheckbox}>✓</Text>
-          </View>
-        </View>
 
-        <TouchableOpacity
-          style={[styles.bookNowButton, isBooking && { opacity: 0.6 }]}
-          disabled={isBooking}
-          onPress={async () => {
-            if (!tripId || !trip) return;
-            try {
-              await createBooking({
-                type: "TRIP",
-                tripId,
-                checkIn: new Date().toISOString(),
-                checkOut: new Date(
-                  Date.now() + (trip.duration ? parseInt(trip.duration) : 1) * 86400000,
-                ).toISOString(),
-                adults: 2,
-                children: 1,
-                guestEmail: email || undefined,
-                guestAddress: address || undefined,
-                guestPhone: contactNumber || undefined,
-              }).unwrap();
-              navigation.navigate("BOOKING_SUCCESS");
-            } catch (error) {
-              Alert.alert("Error", "Failed to create booking. Please try again.");
-            }
-          }}>
-          <Text style={styles.bookNowButtonText}>{isBooking ? "Booking..." : "Book Now"}</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+          <View style={styles.datesContainer}>
+            <Text style={styles.checkInDate}>Duration: {trip?.duration ?? "N/A"}</Text>
+            <Text style={styles.guestsCount}>2 Adults + 1 Children</Text>
+          </View>
+
+          <View style={styles.packageContainer}>
+            <Text style={styles.packageTitle}>{trip?.title ?? "Trip Package"}</Text>
+            <Text style={styles.packageDuration}>Duration: {trip?.duration ?? "N/A"}</Text>
+            <View style={styles.packageDetails}>
+              {trip?.packageDetails?.map((detail) => (
+                <Text key={detail.id} style={styles.packageDetail}>
+                  • {detail.detail}
+                </Text>
+              ))}
+            </View>
+            <Text style={styles.packageNonRefundable}>
+              {trip?.isRefundable ? "Refundable" : "Non-Refundable"}
+            </Text>
+          </View>
+
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceTitle}>Price</Text>
+            <View style={styles.priceRow}>
+              <Text style={styles.priceLabel}>{trip?.title ?? "Trip Package"}</Text>
+              <Text style={styles.priceValue}>${trip?.price ?? 0}</Text>
+            </View>
+            <View style={styles.totalPriceRow}>
+              <Text style={styles.totalPriceLabel}>Total Amount to be Paid</Text>
+              <Text style={styles.totalPriceValue}>${trip?.price ?? 0}</Text>
+            </View>
+          </View>
+
+          <View style={styles.travellerDetailsContainer}>
+            <Text style={styles.travellerDetailsTitle}>Traveller Details</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ADD_TRAVELLER");
+              }}
+              style={styles.travellerDetailsRow}>
+              <Text style={styles.travellerDetailsText}>Add Traveller 1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ADD_TRAVELLER");
+              }}
+              style={styles.travellerDetailsRow}>
+              <Text style={styles.travellerDetailsText}>Add Traveller 2</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ADD_TRAVELLER");
+              }}
+              style={styles.travellerDetailsRow}>
+              <Text style={styles.travellerDetailsText}>Add Traveller 3</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.contactContainer}>
+            <Text style={styles.contactTitle}>Contact Information</Text>
+            <View style={styles.contactRow}>
+              <Text style={styles.contactLabel}>Email Address</Text>
+              <TextInput placeholder="Email Address" value={email} onChangeText={setEmail} />
+            </View>
+            <View style={styles.contactRow}>
+              <Text style={styles.contactLabel}>Current Address</Text>
+              <TextInput placeholder="Current Address" value={address} onChangeText={setAddress} />
+            </View>
+            <View style={styles.contactRow}>
+              <Text style={styles.contactLabel}>Contact Number</Text>
+              <View style={styles.contactNumberRow}>
+                <Text>+1</Text>
+                <TextInput
+                  placeholder="Contact No."
+                  value={contactNumber}
+                  onChangeText={setContactNumber}
+                />
+              </View>
+            </View>
+            {/* <View style={styles.stateRow}>
+              <Text style={styles.stateLabel}>Your State</Text>
+              <TouchableOpacity style={styles.stateButton}>
+                <Text style={styles.stateButtonText}>Edit</Text>
+              </TouchableOpacity>
+            </View> */}
+            <View style={styles.stateRow}>
+              <Text style={styles.stateValue}>USA / Outside USA</Text>
+              <Text style={styles.stateCheckbox}>✓</Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={[styles.bookNowButton, isBooking && { opacity: 0.6 }]}
+            disabled={isBooking}
+            onPress={async () => {
+              if (!tripId || !trip) return;
+              try {
+                await createBooking({
+                  type: "TRIP",
+                  tripId,
+                  checkIn: new Date().toISOString(),
+                  checkOut: new Date(
+                    Date.now() + (trip.duration ? parseInt(trip.duration) : 1) * 86400000,
+                  ).toISOString(),
+                  adults: 2,
+                  children: 1,
+                  guestEmail: email || undefined,
+                  guestAddress: address || undefined,
+                  guestPhone: contactNumber || undefined,
+                }).unwrap();
+                navigation.navigate("BOOKING_SUCCESS");
+              } catch (error) {
+                Alert.alert("Error", "Failed to create booking. Please try again.");
+              }
+            }}>
+            <Text style={styles.bookNowButtonText}>{isBooking ? "Booking..." : "Book Now"}</Text>
+          </TouchableOpacity>
+          <View style={dynamicCSS("height", 30)} />
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+      <KeyboardToolbar />
+    </>
   );
 };
 

@@ -13,6 +13,9 @@ import {
   SafeAreaView,
 } from "react-native";
 
+import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
+import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
+
 const AddNewTraveller = () => {
   const [fullName, setFullName] = useState("");
   // const [dateOfBirth, setDateOfBirth] = useState(new Date());
@@ -23,96 +26,109 @@ const AddNewTraveller = () => {
   const [travellerType, setTravellerType] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  useKeyboardAnimation();
+
   // const handleDateChange = (date) => {
   //   setShowDatePicker(false);
   //   setDateOfBirth(date);
   // };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <HeaderTitle title="Add New Traveller" />
-      <View style={styles.innerContainer}>
-        <Text style={styles.subheader}>Traveller 1</Text>
-        <Text style={styles.title}>
-          Full Name<Text style={{ color: colors.danger }}>*</Text>
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your full name"
-          value={fullName}
-          onChangeText={setFullName}
-        />
-        <Text style={styles.title}>
-          Date Of Birth<Text style={{ color: colors.danger }}>*</Text>
-        </Text>
-        <TouchableOpacity style={styles.input} onPress={() => setShowDatePicker(true)}>
-          <Text>01/01/2000</Text>
-        </TouchableOpacity>
-        <Modal visible={showDatePicker} animationType="slide">
-          <View style={styles.modalContainer}>
-            {/* <DatePickerIOS date={dateOfBirth} mode="date" onDateChange={handleDateChange} /> */}
-            <TouchableOpacity style={styles.modalButton} onPress={() => setShowDatePicker(false)}>
-              <Text style={styles.modalButtonText}>Done</Text>
+    <>
+      <SafeAreaView style={styles.container}>
+        <HeaderTitle title="Add New Traveller" />
+        <KeyboardAwareScrollView bottomOffset={62} contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.innerContainer}>
+            <Text style={styles.subheader}>Traveller 1</Text>
+            <Text style={styles.title}>
+              Full Name<Text style={{ color: colors.danger }}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your full name"
+              value={fullName}
+              onChangeText={setFullName}
+            />
+            <Text style={styles.title}>
+              Date Of Birth<Text style={{ color: colors.danger }}>*</Text>
+            </Text>
+            <TouchableOpacity style={styles.input} onPress={() => setShowDatePicker(true)}>
+              <Text>01/01/2000</Text>
             </TouchableOpacity>
+            <Modal visible={showDatePicker} animationType="slide">
+              <View style={styles.modalContainer}>
+                {/* <DatePickerIOS date={dateOfBirth} mode="date" onDateChange={handleDateChange} /> */}
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => setShowDatePicker(false)}>
+                  <Text style={styles.modalButtonText}>Done</Text>
+                </TouchableOpacity>
+              </View>
+            </Modal>
+            <Text style={styles.title}>
+              Gender<Text style={{ color: colors.danger }}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Gender*"
+              value={gender}
+              onChangeText={setGender}
+            />
+            <Text style={styles.title}>
+              Nationality<Text style={{ color: colors.danger }}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Nationality*"
+              value={nationality}
+              onChangeText={setNationality}
+            />
+            <Text style={styles.title}>
+              Passport Number<Text style={{ color: colors.danger }}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="---------------"
+              value={passportNumber}
+              onChangeText={setPassportNumber}
+            />
+            <Text style={styles.title}>
+              Passport Issuing Country<Text style={{ color: colors.danger }}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Passport Issuing Country*"
+              value={passportIssuingCountry}
+              onChangeText={setPassportIssuingCountry}
+            />
+            <Text style={styles.title}>
+              Traveller Type<Text style={{ color: colors.danger }}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Traveller Type*"
+              value={travellerType}
+              onChangeText={setTravellerType}
+            />
           </View>
-        </Modal>
-        <Text style={styles.title}>
-          Gender<Text style={{ color: colors.danger }}>*</Text>
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Gender*"
-          value={gender}
-          onChangeText={setGender}
-        />
-        <Text style={styles.title}>
-          Nationality<Text style={{ color: colors.danger }}>*</Text>
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Nationality*"
-          value={nationality}
-          onChangeText={setNationality}
-        />
-        <Text style={styles.title}>
-          Passport Number<Text style={{ color: colors.danger }}>*</Text>
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="---------------"
-          value={passportNumber}
-          onChangeText={setPassportNumber}
-        />
-        <Text style={styles.title}>
-          Passport Issuing Country<Text style={{ color: colors.danger }}>*</Text>
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Passport Issuing Country*"
-          value={passportIssuingCountry}
-          onChangeText={setPassportIssuingCountry}
-        />
-        <Text style={styles.title}>
-          Traveller Type<Text style={{ color: colors.danger }}>*</Text>
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Traveller Type*"
-          value={travellerType}
-          onChangeText={setTravellerType}
-        />
-      </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Add Traveller</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Add Traveller</Text>
+          </TouchableOpacity>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+      <KeyboardToolbar />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 20,
+    marginHorizontal: 0,
+  },
+  scrollContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   innerContainer: {
     flex: 1,
