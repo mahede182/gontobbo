@@ -20,7 +20,7 @@ const PassportDetailsScreen: React.FC = () => {
       <HeaderTitle title="Passport Details" />
       <View style={styles.container}>
         <View style={styles.cardContainer}>
-          <Image source={images.passport} style={styles.logo} />
+          <Image source={require("@/assets/bottomTab/profile.png")} style={styles.logo} />
           <View style={styles.memberDetails}>
             <Text style={styles.name}>{passportDetails.fullName}</Text>
             <View style={styles.detailsRow}>

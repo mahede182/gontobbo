@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -9,16 +9,15 @@ import {
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 
-import { searchHotels, Hotel } from "@/api/hotels";
+import { useSearchHotelsQuery } from "@/store/api/hotelsApi";
 import ResultCard from "./component/ResultCard";
 import Dropdown from "@/components/Dropdown";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-const SearchResult = ({ navigation }) => {
+const SearchResult = () => {
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const params = (route.params as any) ?? {};
-  const [hotels, setHotels] = useState<Hotel[]>([]);
-  const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<string>("");
 
   const location = params.location ?? "";
@@ -31,26 +30,25 @@ const SearchResult = ({ navigation }) => {
     .filter(Boolean)
     .join(", ");
 
-  useEffect(() => {
-    const fetchParams: any = {};
-    if (params.location) fetchParams.location = params.location;
-    if (params.checkIn) fetchParams.checkIn = params.checkIn;
-    if (params.checkOut) fetchParams.checkOut = params.checkOut;
-    if (params.guests) fetchParams.guests = params.guests;
-    if (params.rooms) fetchParams.rooms = params.rooms;
+  const searchParams = useMemo(() => {
+    const p: any = {};
+    if (params.location) p.location = params.location;
+    if (params.checkIn) p.checkIn = params.checkIn;
+    if (params.checkOut) p.checkOut = params.checkOut;
+    if (params.guests) p.guests = params.guests;
+    if (params.rooms) p.rooms = params.rooms;
     if (sortBy === "price") {
-      fetchParams.sortBy = "price";
-      fetchParams.sortOrder = "asc";
+      p.sortBy = "price";
+      p.sortOrder = "asc";
     } else if (sortBy === "A-Z") {
-      fetchParams.sortBy = "name";
-      fetchParams.sortOrder = "asc";
+      p.sortBy = "name";
+      p.sortOrder = "asc";
     }
-
-    setLoading(true);
-    searchHotels(fetchParams)
-      .then((res) => setHotels(res.data))
-      .finally(() => setLoading(false));
+    return p;
   }, [params.location, params.checkIn, params.checkOut, params.guests, params.rooms, sortBy]);
+
+  const { data, isLoading } = useSearchHotelsQuery(searchParams);
+  const hotels = (data as any)?.data ?? data ?? [];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,10 +71,10 @@ const SearchResult = ({ navigation }) => {
               { label: "A-Z", value: "A-Z" },
               { label: "Price low - high", value: "price" },
             ]}
-            onSelect={(item: any) => setSortBy(item.value)}
           />
         </Box>
         <Box alignItems={"center"} justifyContent={"center"}>
+          {/* TODO: Use react native rating bar */}
           <Dropdown
             label="Star Rating"
             data={[
@@ -87,7 +85,7 @@ const SearchResult = ({ navigation }) => {
           />
         </Box>
       </Box>
-      {loading ? (
+      {isLoading ? (
         <ActivityIndicator style={{ marginTop: 20 }} />
       ) : (
         <FlatList

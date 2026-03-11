@@ -14,17 +14,11 @@ export const handleGoogleLogin = async () => {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
     return userInfo;
-  } catch (error) {
+  } catch (error: any) {
     if (isErrorWithCode(error)) {
       switch (error.code) {
-        case statusCodes.NO_SAVED_CREDENTIAL_FOUND:
-          console.log("No Saved Credential Found");
-          break;
         case statusCodes.SIGN_IN_CANCELLED:
           console.log("Login cancelled");
-          break;
-        case statusCodes.ONE_TAP_START_FAILED:
-          console.log("One Tap Failed");
           break;
         case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
           console.log("PLAY_SERVICES_NOT_AVAILABLE");
@@ -48,7 +42,7 @@ export const handleAppleLogin = async () => {
       ],
     });
     return credential;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     if (error.code === "ERR_REQUEST_CANCELED") {
       // User canceled the sign-in flow

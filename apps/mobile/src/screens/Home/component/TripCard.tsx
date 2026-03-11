@@ -1,4 +1,3 @@
-// src/screens/Home/component/TripCard.tsx
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { Box, RestyleText } from "@/theme";
@@ -23,7 +22,7 @@ const TripCard: React.FC<TripCardProps> = React.memo(
     const navigation = useNavigation();
     return (
       <Pressable
-        onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS", { tripId: id })}
+        onPress={() => (navigation as any).navigate("SEARCH_RESULT_DETAILS", { tripId: id })}
         style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}>
         <Image
           source={image ? { uri: image } : require("@/assets/hotel_image_1.png")}

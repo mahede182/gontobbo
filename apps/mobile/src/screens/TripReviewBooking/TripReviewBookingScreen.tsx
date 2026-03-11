@@ -16,39 +16,27 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
-import { getTripDetail, Trip } from "@/api/trips";
-import { createBooking } from "@/api/bookings";
+import { useGetTripDetailQuery, type Trip } from "@/store/api/tripsApi";
+import { useCreateBookingMutation } from "@/store/api/bookingsApi";
 
 type Props = {};
 
 const TripReviewBookingScreen = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const { tripId } = (route.params as { tripId?: string }) || {};
-  const [trip, setTrip] = React.useState<Trip | null>(null);
-  const [loading, setLoading] = React.useState(true);
-  const [booking, setBooking] = React.useState(false);
+
+  const { data: trip, isLoading } = useGetTripDetailQuery(tripId || "", {
+    skip: !tripId,
+  });
+
+  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
+
   const [email, setEmail] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [contactNumber, setContactNumber] = React.useState("");
 
-  React.useEffect(() => {
-    const fetchTrip = async () => {
-      try {
-        if (tripId) {
-          const data = await getTripDetail(tripId);
-          setTrip(data);
-        }
-      } catch (error) {
-        console.error("Error fetching trip:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTrip();
-  }, [tripId]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <SafeAreaView
         style={[dynamicCSS("flex", 1), { justifyContent: "center", alignItems: "center" }]}>
@@ -165,12 +153,11 @@ const TripReviewBookingScreen = (props: Props) => {
         </View>
 
         <TouchableOpacity
-          style={[styles.bookNowButton, booking && { opacity: 0.6 }]}
-          disabled={booking}
+          style={[styles.bookNowButton, isBooking && { opacity: 0.6 }]}
+          disabled={isBooking}
           onPress={async () => {
             if (!tripId || !trip) return;
             try {
-              setBooking(true);
               await createBooking({
                 type: "TRIP",
                 tripId,
@@ -183,15 +170,13 @@ const TripReviewBookingScreen = (props: Props) => {
                 guestEmail: email || undefined,
                 guestAddress: address || undefined,
                 guestPhone: contactNumber || undefined,
-              });
+              }).unwrap();
               navigation.navigate("BOOKING_SUCCESS");
             } catch (error) {
               Alert.alert("Error", "Failed to create booking. Please try again.");
-            } finally {
-              setBooking(false);
             }
           }}>
-          <Text style={styles.bookNowButtonText}>{booking ? "Booking..." : "Book Now"}</Text>
+          <Text style={styles.bookNowButtonText}>{isBooking ? "Booking..." : "Book Now"}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

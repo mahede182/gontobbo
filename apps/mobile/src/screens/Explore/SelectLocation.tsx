@@ -23,7 +23,7 @@ const LocationSelect = () => {
     "Barcelona",
   ];
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <View style={styles.locationItem}>
       <Image
         style={dynamicCSS("marginRight", 5)}
@@ -56,7 +56,7 @@ const LocationSelect = () => {
             <Icon name="arrow-back" size={24} color={colors.black100} />
           </TouchableOpacity>
         </Box>
-        <GradientTitle variant="gradientTitle">Location Select</GradientTitle>
+        <GradientTitle>Location Select</GradientTitle>
         {/* <RestyleText variant="h2">Location Select</RestyleText> */}
       </Box>
 

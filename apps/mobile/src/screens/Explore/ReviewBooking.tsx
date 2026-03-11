@@ -27,11 +27,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import Dropdown from "@/components/Dropdown";
 import { stateData } from "@/data/stateData";
 import HeaderTitle from "@/components/HeaderTitle";
-import { getHotelDetail, HotelDetail, Room } from "@/api/hotels";
-import { createBooking } from "@/api/bookings";
+import { useGetHotelDetailQuery, type Room } from "@/store/api/hotelsApi";
+import { useCreateBookingMutation } from "@/store/api/bookingsApi";
 
 const ReviewBooking = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const { hotelId, roomId, checkIn, checkOut, adults, rooms } =
     (route.params as {
@@ -43,10 +43,22 @@ const ReviewBooking = () => {
       rooms?: number;
     }) || {};
 
-  const [hotel, setHotel] = useState<HotelDetail | null>(null);
-  const [room, setRoom] = useState<Room | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [booking, setBooking] = useState(false);
+  const { data: hotel, isLoading } = useGetHotelDetailQuery(hotelId, {
+    skip: !hotelId,
+  });
+
+  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
+
+  // Derive room from hotel data
+  const room: Room | null = React.useMemo(() => {
+    if (!hotel?.rooms?.length) return null;
+    if (roomId) {
+      const found = hotel.rooms.find((r: Room) => r.id === roomId);
+      return found ?? hotel.rooms[0] ?? null;
+    }
+    return hotel.rooms[0];
+  }, [hotel, roomId]);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [bookingFor, setBookingFor] = useState<"MYSELF" | "SOMEONE_ELSE">("MYSELF");
@@ -56,32 +68,10 @@ const ReviewBooking = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [guestState, setGuestState] = useState("");
 
   // Default dates: today + tomorrow if not passed
   const checkInDate = checkIn || new Date().toISOString();
   const checkOutDate = checkOut || new Date(Date.now() + 86400000).toISOString();
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getHotelDetail(hotelId);
-        setHotel(data);
-        if (roomId && data.rooms) {
-          const found = data.rooms.find((r: Room) => r.id === roomId);
-          setRoom(found ?? data.rooms[0] ?? null);
-        } else if (data.rooms?.length) {
-          setRoom(data.rooms[0]);
-        }
-      } catch (error) {
-        console.error("Error fetching booking data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (hotelId) fetchData();
-    else setLoading(false);
-  }, [hotelId, roomId]);
 
   const handleAddGuest = () => {
     setIsModalVisible(false);
@@ -93,9 +83,12 @@ const ReviewBooking = () => {
     setIsEditVisible(false);
   };
 
+  const ContactDetailsForm: React.FC<any> = ({ onSave }) => {
+    return null;
+  };
+
   const handleBookNow = async () => {
     try {
-      setBooking(true);
       await createBooking({
         type: "HOTEL",
         hotelId,
@@ -111,13 +104,10 @@ const ReviewBooking = () => {
         guestEmail: email || undefined,
         guestPhone: phone || undefined,
         guestAddress: address || undefined,
-        guestState: guestState || undefined,
-      });
+      }).unwrap();
       navigation.navigate("BOOKING_SUCCESS");
     } catch (error) {
       Alert.alert("Error", "Failed to create booking. Please try again.");
-    } finally {
-      setBooking(false);
     }
   };
 
@@ -125,7 +115,7 @@ const ReviewBooking = () => {
     ? "★".repeat(hotel.starRating) + "☆".repeat(5 - hotel.starRating)
     : "";
 
-  if (loading) {
+  if (isLoading) {
     return (
       <SafeAreaView
         style={[styles.mainContainer, { justifyContent: "center", alignItems: "center" }]}>
@@ -305,7 +295,7 @@ const ReviewBooking = () => {
             <TouchableOpacity style={styles.addGuestButton} onPress={() => setIsModalVisible(true)}>
               <RestyleText
                 style={{
-                  color: colors.linearStart,
+                  color: colors.primary700,
                   fontSize: 16,
                   fontWeight: "600",
                 }}>
@@ -333,10 +323,11 @@ const ReviewBooking = () => {
 
           {/* Book Now Button */}
           <Button
-            title="Book Now"
+            title={isBooking ? "Booking..." : "Book Now"}
             style={styles.bookNowButton}
             textStyle={styles.bookNowButtonText}
             onPress={handleBookNow}
+            disabled={isBooking}
           />
           <TouchableOpacity
             style={{ alignItems: "flex-end" }}
@@ -492,7 +483,7 @@ const styles = StyleSheet.create({
   hotelRating: {
     fontFamily: typography.poppinsRegular,
     fontSize: 14,
-    color: colors.yellow,
+    color: colors.warning,
   },
   hotelLocation: {
     fontFamily: typography.poppinsRegular,
@@ -558,7 +549,7 @@ const styles = StyleSheet.create({
   guestTypeButton: {
     flex: 1,
     marginHorizontal: 4,
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.neutral300,
     borderRadius: 8,
     paddingVertical: 8,
   },
@@ -580,11 +571,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   stateButton: {
-    // Changed from colors.lightGray to colors.neutral100
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
+  stateButtonText: {},
   stateLabel: {
     fontFamily: typography.poppinsRegular,
     fontSize: 14,

@@ -8,56 +8,45 @@ import TravelRequirementScreen from "@/screens/Profile/TravelRequirement";
 import BaggagesScreen from "@/screens/Profile/Baggages";
 import LegalScreen from "@/screens/Profile/Legal";
 import { createStackNavigator } from "@react-navigation/stack";
+import { ProfileStackParamList } from "@/@types/navigation.type";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<ProfileStackParamList>();
 export const ProfileNavigation = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="MEMBER_CARD">
-        {(props) => {
-          return <MemberCard {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="PERSONAL_INFO">
-        {(props) => {
-          return <PersonalInformationScreen {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="PASSPORT_DETAILS">
-        {(props) => {
-          return <PassportDetailsScreen {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="PAIMENT_METHOD">
-        {(props) => {
-          return <PaymentMethodScreen {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="FLIGHT_PREFERENCES">
-        {(props) => {
-          return <FlightPreferencesScreen {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="FLIGHT_INFORMATION">
-        {(props) => {
-          return <FlightInformation {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="TRAVEL_REQUIREMENT">
-        {(props) => {
-          return <TravelRequirementScreen {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="BAGGAGES">
-        {(props) => {
-          return <BaggagesScreen {...props} />;
-        }}
-      </Stack.Screen>
-      <Stack.Screen options={{ headerShown: false }} name="LEGAL">
-        {(props) => {
-          return <LegalScreen {...props} />;
-        }}
-      </Stack.Screen>
+      <Stack.Screen options={{ headerShown: false }} name="MEMBER_CARD" component={MemberCard} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="PERSONAL_INFO"
+        component={PersonalInformationScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="PASSPORT_DETAILS"
+        component={PassportDetailsScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="PAIMENT_METHOD"
+        component={PaymentMethodScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="FLIGHT_PREFERENCES"
+        component={FlightPreferencesScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="FLIGHT_INFORMATION"
+        component={FlightInformation}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="TRAVEL_REQUIREMENT"
+        component={TravelRequirementScreen}
+      />
+      <Stack.Screen options={{ headerShown: false }} name="BAGGAGES" component={BaggagesScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="LEGAL" component={LegalScreen} />
     </Stack.Navigator>
   );
 };

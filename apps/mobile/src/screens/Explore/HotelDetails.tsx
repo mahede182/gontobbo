@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, RestyleText } from "@/theme";
 import {
   ActivityIndicator,
@@ -19,24 +19,20 @@ import { SafeAreaView } from "moti";
 import { typography } from "@/theme/typography";
 import { dynamicCSS } from "@/utils/styles";
 import { isIOS } from "@/utils/device";
-import { getHotelDetail, HotelDetail } from "@/api/hotels";
-import { addToWishlist } from "@/api/wishlist";
+import { useGetHotelDetailQuery } from "@/store/api/hotelsApi";
+import { useAddToWishlistMutation } from "@/store/api/wishlistApi";
 
 const HotelDetails = () => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const hotelId = (route.params as any)?.hotelId;
-  const [hotel, setHotel] = useState<HotelDetail | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (hotelId) {
-      getHotelDetail(hotelId)
-        .then(setHotel)
-        .finally(() => setLoading(false));
-    }
-  }, [hotelId]);
+  const { data: hotel, isLoading } = useGetHotelDetailQuery(hotelId, {
+    skip: !hotelId,
+  });
+
+  const [addToWishlist] = useAddToWishlistMutation();
 
   const photos = hotel?.images?.slice(0, 3) ?? [];
 
@@ -77,7 +73,7 @@ const HotelDetails = () => {
     );
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
         <ActivityIndicator size="large" />
@@ -94,7 +90,7 @@ const HotelDetails = () => {
   }
 
   const startingPrice = hotel.rooms?.[0]?.price ?? 0;
-  const amenityNames = hotel.amenities?.slice(0, 3).map((a) => a.name) ?? [];
+  const amenityNames = hotel.amenities?.slice(0, 3).map((a: any) => a.name) ?? [];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -110,7 +106,7 @@ const HotelDetails = () => {
                 type: "HOTEL",
                 name: hotel.name,
                 rating: hotel.rating,
-              });
+              }).unwrap();
             } catch {}
           }}>
           <Image
@@ -141,7 +137,7 @@ const HotelDetails = () => {
           <RestyleText style={styles.rating}>
             {Array(Math.floor(hotel.starRating))
               .fill(null)
-              .map((_, i) => (
+              .map((_: any, i: number) => (
                 <Icon key={i} name="star" size={16} color={colors.linearEnd} />
               ))}
           </RestyleText>
@@ -177,9 +173,9 @@ const HotelDetails = () => {
             style={styles.section}>
             <RestyleText style={styles.sectionTitle}>{t("Explore.amenities")}</RestyleText>
             <Box style={styles.amenitiesContainer}>
-              {amenityNames.map((amenity, index) => (
+              {amenityNames.map((amenity: string, index: number) => (
                 <Box key={index} style={styles.amenityContainer}>
-                  <Icon name="dumbbell" size={16} color={colors.green} />
+                  <Icon name="dumbbell" size={16} color={colors.neutral600} />
                   <RestyleText style={styles.amenity}>{amenity}</RestyleText>
                 </Box>
               ))}
@@ -201,7 +197,7 @@ const HotelDetails = () => {
           marginVertical={"ten"}
           style={styles.section}>
           <RestyleText style={styles.sectionTitle}>{t("Explore.reviewsAndRating")}</RestyleText>
-          {(hotel.reviews ?? []).map((review) => (
+          {(hotel.reviews ?? []).map((review: any) => (
             <Box key={review.id} style={styles.reviewContainer}>
               <Box style={styles.reviewHeader}>
                 {review.user?.avatar ? (
@@ -217,8 +213,8 @@ const HotelDetails = () => {
               <Box style={styles.reviewRating}>
                 {Array(review.rating)
                   .fill(null)
-                  .map((_, i) => (
-                    <Icon key={i} name="star" size={16} color={colors.yellow} />
+                  .map((_: any, i: number) => (
+                    <Icon key={i} name="star" size={16} color={colors.linearEnd} />
                   ))}
               </Box>
             </Box>
@@ -265,7 +261,7 @@ const HotelDetails = () => {
           buttonText={t("Explore.selectRoom")}
           price={startingPrice}
           gradient
-          priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t("Explore.perNightForRoom")}`}
+          priceSub={`+$45 ${t("Explore.taxesAndFees" as any)}, ${t("Explore.perNightForOneRoom")}`}
         />
       </ScrollView>
     </SafeAreaView>

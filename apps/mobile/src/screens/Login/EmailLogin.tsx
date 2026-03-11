@@ -9,7 +9,7 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import Background from "@/components/Background";
 import { dynamicCSS } from "@/utils/styles";
-import { login } from "@/api/auth";
+import { useLoginMutation } from "@/store/api/authApi";
 
 type Props = {
   onLoginPress?: (user: string, password: string) => void;
@@ -19,10 +19,10 @@ const EmailLogin: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
+  const [login, { isLoading: loading }] = useLoginMutation();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -30,13 +30,9 @@ const EmailLogin: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
       return;
     }
     try {
-      setLoading(true);
-      await login(email, password);
-      navigation.navigate("AUTHENTICATED");
+      await login({ email, password }).unwrap();
     } catch (error: any) {
-      Alert.alert("Login Failed", error?.response?.data?.message ?? error.message);
-    } finally {
-      setLoading(false);
+      Alert.alert("Login Failed", error?.data?.message ?? error?.message ?? "An error occurred");
     }
   };
 
@@ -86,7 +82,7 @@ const EmailLogin: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
         </Box>
         <Box style={styles.registerContainer}>
           <RestyleText style={styles.registerText}>{t("login.dontHaveAnAccount")}</RestyleText>
-          <TouchableOpacity onPress={() => navigation.navigate("REGISTER")}>
+          <TouchableOpacity onPress={() => (navigation as any).navigate("REGISTER")}>
             <RestyleText style={styles.registerLink}>{t("login.register")}</RestyleText>
           </TouchableOpacity>
         </Box>

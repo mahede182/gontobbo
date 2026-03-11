@@ -1,8 +1,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Box, RestyleText } from "@/theme";
-import { counterMachine } from "@/machine/counterMachine";
-import { useMachine } from "@xstate/react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@/theme/colors";
@@ -12,28 +10,15 @@ type Props = {};
 const FavouriteScreen: React.FC<Props> = (): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const [state, send] = useMachine(counterMachine);
+
   return (
     <View style={styles.container}>
-      <RestyleText fontSize={21} onPress={() => navigation.navigate("TAB")}>
+      <RestyleText fontSize={21} onPress={() => (navigation as any).navigate("TAB")}>
         Home
       </RestyleText>
       <Box alignItems="center" justifyContent="center" style={styles.subContainer}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => send({ type: "INC" })}>
-          <RestyleText fontSize={21}> + {t("common.increment")}</RestyleText>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => send({ type: "DEC" })}>
-          <RestyleText fontSize={21}> - {t("common.decrement")} </RestyleText>
-        </TouchableOpacity>
-
-        <RestyleText fontSize={21} onPress={() => send({ type: "SET", value: 10 })}>
-          {t("common.reset")}
-        </RestyleText>
-        <RestyleText fontSize={32} marginTop="xxl">
-          {state.context.count}
-        </RestyleText>
+        <RestyleText fontSize={21}>{t("common.favourites" as any) ?? "Favourites"}</RestyleText>
       </Box>
-      <Box height={200} width={200} />
     </View>
   );
 };
@@ -46,10 +31,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   subContainer: { width: "100%", backgroundColor: colors.white },
-  buttonContainer: {
-    padding: 10,
-    borderRadius: 5,
-    borderColor: colors.black,
-    borderWidth: 2,
-  },
 });

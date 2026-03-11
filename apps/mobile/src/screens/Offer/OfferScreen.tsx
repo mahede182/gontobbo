@@ -4,28 +4,13 @@ import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import SingleOffer from "./SingleOffer";
 import HeaderTitle from "@/components/HeaderTitle";
 import { dynamicCSS } from "@/utils/styles";
-import { getOffers, Offer } from "@/api/offers";
+import { useGetOffersQuery, type Offer } from "@/store/api/offersApi";
 import { colors } from "@/theme/colors";
 
 const OfferScreen: React.FC = (): JSX.Element => {
-  const [offers, setOffers] = React.useState<Offer[]>([]);
-  const [loading, setLoading] = React.useState(true);
+  const { data: offers = [], isLoading } = useGetOffersQuery();
 
-  React.useEffect(() => {
-    const fetchOffers = async () => {
-      try {
-        const data = await getOffers();
-        setOffers(data);
-      } catch (error) {
-        console.error("Error fetching offers:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchOffers();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <SafeAreaView
         style={[dynamicCSS("flex", 1), { justifyContent: "center", alignItems: "center" }]}>
@@ -38,7 +23,7 @@ const OfferScreen: React.FC = (): JSX.Element => {
     <SafeAreaView style={dynamicCSS("flex", 1)}>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
         <HeaderTitle title="Offer" />
-        {offers.map((offer) => (
+        {offers.map((offer: Offer) => (
           <SingleOffer key={offer.id} offer={offer} />
         ))}
       </ScrollView>

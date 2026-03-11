@@ -18,7 +18,8 @@ interface HotelCardProps {
 const HotelCard: React.FC<HotelCardProps> = React.memo(({ id, image, name, location, rating }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS", { hotelId: id })}>
+    <TouchableOpacity
+      onPress={() => (navigation as any).navigate("SEARCH_RESULT_DETAILS", { hotelId: id })}>
       <Box
         width={160}
         marginRight="medium"
@@ -64,7 +65,7 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(({ id, image, name, locat
           </Text>
           <Box flexDirection="row" alignItems="center" marginTop="tiny">
             <Ionicons name="location-outline" size={14} color="#666" />
-            <Text variant="caption" color="textSecondary" marginLeft="xxs" numberOfLines={1}>
+            <Text variant="caption" color="neutral600" marginLeft="small" numberOfLines={1}>
               {location}
             </Text>
           </Box>

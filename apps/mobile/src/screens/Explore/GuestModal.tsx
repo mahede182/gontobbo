@@ -6,14 +6,27 @@ import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { View, Text, TouchableOpacity, Modal, Animated, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
-import { useApp } from "@/hooks/useApp";
 
-const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
+type GuestModalProps = {
+  isVisible: boolean;
+  onClose: (guests: { rooms: number; adults: number; children: number }) => void;
+  initialRooms?: number;
+  initialAdults?: number;
+  initialChildren?: number;
+};
+
+const GuestModal: React.FC<GuestModalProps> = ({
+  isVisible,
+  onClose,
+  initialRooms = 1,
+  initialAdults = 2,
+  initialChildren = 0,
+}) => {
   const { t } = useTranslation();
   const [modalAnimation] = useState(new Animated.Value(0));
-
-  const { state, send } = useApp();
-  const { rooms, adults, children } = state.context;
+  const [rooms, setRooms] = useState(initialRooms);
+  const [adults, setAdults] = useState(initialAdults);
+  const [children, setChildren] = useState(initialChildren);
 
   const openModal = () => {
     Animated.timing(modalAnimation, {
@@ -28,17 +41,7 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => onClose());
-  };
-
-  const handleAdultsChange = (type) => {
-    // setAdults(Math.max(adults + value, 1));
-    send({ type });
-  };
-
-  const handleChildrenChange = (type) => {
-    send({ type });
-    // setChildren(Math.max(children + value, 0));
+    }).start(() => onClose({ rooms, adults, children }));
   };
 
   React.useEffect(() => {
@@ -55,8 +58,13 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
   });
 
   return (
-    <Modal visible={isVisible} transparent animationType="slide" onRequestClose={onClose}>
-      <Animated.View style={styles.animatedViewContainer(modalTranslateY)}>
+    <Modal
+      visible={isVisible}
+      transparent
+      animationType="slide"
+      onRequestClose={() => onClose({ rooms, adults, children })}>
+      <Animated.View
+        style={[styles.animatedViewContainer, { transform: [{ translateY: modalTranslateY }] }]}>
         <View
           style={{
             backgroundColor: colors.white100,
@@ -71,13 +79,12 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
               alignItems: "center",
               marginBottom: 16,
             }}>
-            <TouchableOpacity onPress={onClose}>
+            <TouchableOpacity onPress={() => onClose({ rooms, adults, children })}>
               <Text style={{ marginRight: 10, fontSize: 16, color: colors.black100 }}>X</Text>
             </TouchableOpacity>
-            <GradientTitle variant="gradientTitle">
-              {t("Explore.selectRoomsAndGuests")}
-            </GradientTitle>
+            <GradientTitle>{t("Explore.selectRoomsAndGuests")}</GradientTitle>
           </View>
+          {/* Rooms */}
           <View
             style={{
               flexDirection: "row",
@@ -90,7 +97,7 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity
-                onPress={() => send({ type: "DECREMENT_ROOMS" })}
+                onPress={() => setRooms((r) => Math.max(r - 1, 1))}
                 disabled={rooms === 1}>
                 <Text
                   style={{
@@ -101,11 +108,12 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{rooms}</Text>
-              <TouchableOpacity onPress={() => send({ type: "INCREMENT_ROOMS" })}>
+              <TouchableOpacity onPress={() => setRooms((r) => r + 1)}>
                 <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
+          {/* Adults */}
           <View
             style={{
               flexDirection: "row",
@@ -118,7 +126,7 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity
-                onPress={() => handleAdultsChange("DECREMENT_ADULTS")}
+                onPress={() => setAdults((a) => Math.max(a - 1, 1))}
                 disabled={adults === 1}>
                 <Text
                   style={{
@@ -129,11 +137,12 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{adults}</Text>
-              <TouchableOpacity onPress={() => handleAdultsChange("INCREMENT_ADULTS")}>
+              <TouchableOpacity onPress={() => setAdults((a) => a + 1)}>
                 <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
+          {/* Children */}
           <View
             style={{
               flexDirection: "row",
@@ -145,7 +154,7 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity
-                onPress={() => handleChildrenChange("DECREMENT_CHILDREN")}
+                onPress={() => setChildren((c) => Math.max(c - 1, 0))}
                 disabled={children === 0}>
                 <Text
                   style={{
@@ -156,7 +165,7 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
                 </Text>
               </TouchableOpacity>
               <Text style={{ fontSize: 16, marginHorizontal: 8 }}>{children}</Text>
-              <TouchableOpacity onPress={() => handleChildrenChange("INCREMENT_CHILDREN")}>
+              <TouchableOpacity onPress={() => setChildren((c) => c + 1)}>
                 <Text style={{ fontSize: 24, color: colors.black100 }}>+</Text>
               </TouchableOpacity>
             </View>
@@ -168,7 +177,7 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
               borderRadius: 8,
               marginVertical: 16,
             }}
-            onPress={onClose}>
+            onPress={() => onClose({ rooms, adults, children })}>
             <Text
               style={{
                 fontFamily: typography.poppinsBold,
@@ -188,10 +197,9 @@ const GuestModal: React.FC = ({ isVisible, onClose }): JSX.Element => {
 export default GuestModal;
 
 const styles = StyleSheet.create({
-  animatedViewContainer: (modalTranslateY) => ({
+  animatedViewContainer: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "flex-end",
-    transform: [{ translateY: modalTranslateY }],
-  }),
+  },
 });

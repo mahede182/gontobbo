@@ -19,7 +19,7 @@ const SuccessfulBookingScreen = () => {
       </Text>
       <TouchableOpacity
         style={styles.backToHomeButton}
-        onPress={() => navigation.navigate("HOME_STACK")}>
+        onPress={() => navigation.navigate("HOME_STACK" as never)}>
         <Text style={styles.backToHomeButtonText}>Back to Home</Text>
       </TouchableOpacity>
     </View>

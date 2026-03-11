@@ -1,5 +1,9 @@
 import HeaderTitle from "@/components/HeaderTitle";
-import { getWishlist, removeFromWishlist, WishlistItem } from "@/api/wishlist";
+import {
+  useGetWishlistQuery,
+  useRemoveFromWishlistMutation,
+  type WishlistItem,
+} from "@/store/api/wishlistApi";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import { dynamicCSS } from "@/utils/styles";
@@ -21,32 +25,14 @@ type Props = {};
 
 const WishListScreens: React.FC<Props> = (props): JSX.Element => {
   const navigation = useNavigation();
-  const [wishlist, setWishlist] = React.useState<WishlistItem[]>([]);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        const data = await getWishlist();
-        setWishlist(data);
-      } catch (error) {
-        console.error("Error fetching wishlist:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWishlist();
-  }, []);
+  const { data: wishlist = [], isLoading: loading } = useGetWishlistQuery();
+  const [removeFromWishlistMutation] = useRemoveFromWishlistMutation();
 
   const handleRemove = async (id: string) => {
     try {
-      setWishlist((prev) => prev.filter((item) => item.id !== id));
-      await removeFromWishlist(id);
+      await removeFromWishlistMutation(id).unwrap();
     } catch (error) {
       Alert.alert("Error", "Failed to remove item from wishlist");
-      const data = await getWishlist();
-      setWishlist(data);
     }
   };
 
@@ -79,7 +65,7 @@ const WishListScreens: React.FC<Props> = (props): JSX.Element => {
                   {item.hotelId && (
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate("HOTEL_DETAIL", { hotelId: item.hotelId });
+                        (navigation as any).navigate("HOTEL_DETAIL", { hotelId: item.hotelId });
                       }}
                       style={styles.bookButton}>
                       <Text style={styles.bookButtonText}>Book</Text>

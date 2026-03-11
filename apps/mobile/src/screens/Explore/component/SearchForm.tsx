@@ -10,19 +10,26 @@ import { useNavigation } from "@react-navigation/native";
 import GuestModal from "../GuestModal";
 import { colors } from "@/theme/colors";
 import SelectFlight from "./SelectFlight";
-// import { searchHotel } from "@/machine/searchService";
 
 const SearchForm = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [rooms, setRooms] = useState(1);
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
 
   const openModal = () => {
     setIsModalVisible(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (guests: { rooms: number; adults: number; children: number }) => {
+    setRooms(guests.rooms);
+    setAdults(guests.adults);
+    setChildren(guests.children);
     setIsModalVisible(false);
   };
+
   return (
     <Box
       alignSelf={"center"}
@@ -51,16 +58,26 @@ const SearchForm = () => {
           }}
         />
       </Box>
-      <GuestInput onPress={openModal} />
+      <GuestInput rooms={rooms} adults={adults} children={children} onPress={openModal} />
       <SelectFlight
         onPress={openModal}
         title="Select Flights"
         subTitle="Choose with or Without Flight"
       />
-      <GuestModal isVisible={isModalVisible} onClose={closeModal} />
+      <GuestModal
+        isVisible={isModalVisible}
+        onClose={closeModal}
+        initialRooms={rooms}
+        initialAdults={adults}
+        initialChildren={children}
+      />
       <SearchButton
         onPress={() => {
-          navigation.navigate("SEARCH_RESULT");
+          navigation.navigate("SEARCH_RESULT", {
+            rooms,
+            guests: adults + children,
+            location: "New York", // hardcoded default from above for now
+          });
         }}
       />
     </Box>

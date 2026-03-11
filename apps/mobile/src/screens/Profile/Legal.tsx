@@ -1,6 +1,6 @@
 import React from "react";
 import { createBox } from "@shopify/restyle";
-import { Theme } from "@/theme";
+import type { Theme } from "@/@types/theme.type";
 import { Box, RestyleText } from "@/theme";
 import HeaderTitle from "@/components/HeaderTitle";
 import { ScrollView, TouchableOpacity, StyleSheet } from "react-native";

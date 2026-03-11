@@ -1,6 +1,6 @@
 import React from "react";
 import { createBox } from "@shopify/restyle";
-import { Theme } from "@/theme";
+import type { Theme } from "@/@types/theme.type";
 import { Box, RestyleText } from "@/theme";
 import HeaderTitle from "@/components/HeaderTitle";
 import { ScrollView } from "react-native";
@@ -109,6 +109,7 @@ const BaggagesScreen = () => {
       type: "special",
       name: "Dangerous Items",
       description: "Flammable materials, weapons",
+      weight: "N/A",
       status: "not_allowed",
     },
   ]);

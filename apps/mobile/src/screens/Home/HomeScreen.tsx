@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box } from "@/theme";
-import { getUserAsync } from "@/api/auth";
 
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
@@ -17,13 +16,13 @@ import { Input } from "@/components/Input";
 import PopularTrip from "./component/PopularTrip";
 import { useTranslation } from "react-i18next";
 import Tag from "./component/Tag";
-import { getTags, Tag as TagType } from "@/api/tags";
+import { useGetTagsQuery, type Tag as TagType } from "@/store/api/tagsApi";
 import FeaturedHotels from "./component/FeaturedHotels";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useApp } from "@/hooks/useApp";
+import { useAppSelector } from "@/store/hooks";
 
 type Props = {};
 
@@ -31,30 +30,11 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [tags, setTags] = useState<TagType[]>([]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { state: appState } = useApp();
-
-  useEffect(() => {
-    getUserAsync().then((user) => {
-      if (user) {
-        const parsed = typeof user === "string" ? JSON.parse(user) : user;
-        setName(`${parsed.firstName ?? ""} ${parsed.lastName ?? ""}`.trim());
-        setEmail(parsed.email ?? "");
-        setImageUrl(parsed.avatar ?? "");
-      }
-    });
-    getTags()
-      .then(setTags)
-      .catch(() => {});
-  }, []);
+  const { user } = useAppSelector((state) => state.auth);
+  const { data: tags = [] } = useGetTagsQuery();
 
   const drawerOpen = () => {
-    navigation.navigate("DRAWER");
+    (navigation as any).navigate("DRAWER");
     navigation.dispatch(DrawerActions.openDrawer());
   };
 
@@ -73,7 +53,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
               style={{ height: 48, width: 48, resizeMode: "contain" }}
             />
           </TouchableOpacity>
-          <Pressable onPress={() => navigation.navigate("NOTIFICATION")}>
+          <Pressable onPress={() => (navigation as any).navigate("NOTIFICATION")}>
             <Image
               source={images.notifiocationBtn}
               style={{ height: 48, width: 48, resizeMode: "contain" }}

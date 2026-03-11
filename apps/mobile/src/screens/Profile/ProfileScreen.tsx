@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "moti";
 import { useNavigation } from "@react-navigation/native";
-import { useApp } from "@/hooks/useApp";
+import { useAuth } from "@/hooks/useAuth";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import { WIDTH } from "@/utils/device";
-import { logout } from "@/api/auth";
-import { getProfile } from "@/api/users";
-import { clear } from "@/utils/storage";
+import { useLogoutMutation } from "@/store/api/authApi";
+import { useGetProfileQuery } from "@/store/api/usersApi";
+import { clear, getTokens } from "@/utils/storage";
 import { User } from "@/@types/auth.type";
 type Props = {
   label: "Profile" | "None";
@@ -25,28 +25,13 @@ type Props = {
 const _adjustedTop = -80;
 
 const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
-  const { state: appState } = useApp();
+  const { user } = useAuth();
   const navigation = useNavigation();
-  const [userData, setUserData] = React.useState<User | null>(null);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const profile = await getProfile();
-        setUserData(profile);
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const { data: userData, isLoading: loading } = useGetProfileQuery();
+  const [logoutMutation] = useLogoutMutation();
 
   const handleNavigate = (screen: string) => {
-    navigation.navigate("PROFILE_CONTAINER", { screen });
+    (navigation as any).navigate("PROFILE_CONTAINER", { screen });
   };
 
   const displayName = userData
@@ -58,7 +43,12 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
       ? `${userData.id.slice(0, 16)}...`
       : userData.id
     : "N/A";
-  const provider = userData?.googleId ? "Google" : userData?.appleId ? "Apple" : "Email";
+  const provider =
+    userData?.socialType === "GOOGLE"
+      ? "Google"
+      : userData?.socialType === "APPLE"
+        ? "Apple"
+        : "Email";
 
   if (loading) {
     return (
@@ -165,9 +155,9 @@ const ProfileScreen: React.FC<Props> = ({ label = "Profile" }): JSX.Element => {
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={async () => {
-            await logout();
+            const tokens = await getTokens();
+            await logoutMutation({ refreshToken: tokens?.refreshToken });
             await clear();
-            navigation.navigate("AUTHENTICATING");
           }}>
           <Text style={styles.logoutButtonText}>Log out</Text>
         </TouchableOpacity>

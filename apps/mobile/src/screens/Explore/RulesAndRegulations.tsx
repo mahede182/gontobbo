@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontFamily: typography.poppinsSemiBold,
+    fontFamily: typography.poppinsSemibold,
     fontSize: 20,
     color: colors.black100,
     marginBottom: 8,

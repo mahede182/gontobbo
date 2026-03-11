@@ -2,7 +2,7 @@ import React from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Box } from "@/theme";
 import { images } from "@/theme/images";
-import { getTags, Tag as TagType } from "@/api/tags";
+import { useGetTagsQuery, type Tag as TagType } from "@/store/api/tagsApi";
 import Tag from "../Home/component/Tag";
 import SearchForm from "./component/SearchForm";
 import { colors } from "@/theme/colors";
@@ -12,20 +12,8 @@ import { dynamicCSS } from "@/utils/styles";
 interface Props {}
 
 const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
-  const navigation = useNavigation();
-  const [tags, setTags] = React.useState<TagType[]>([]);
-
-  React.useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const data = await getTags();
-        setTags(data);
-      } catch (error) {
-        console.error("Error fetching tags:", error);
-      }
-    };
-    fetchTags();
-  }, []);
+  const navigation = useNavigation<any>();
+  const { data: tags = [] } = useGetTagsQuery();
 
   const drawerOpen = () => {
     navigation.navigate("DRAWER");
@@ -50,7 +38,7 @@ const ExploreScreens: React.FC<Props> = (props): JSX.Element => {
           {tags.map((tag) => (
             <Tag
               key={tag.id}
-              id={tag.id}
+              id={String(tag.id)}
               icon={tag.icon ? { uri: tag.icon } : images.menuBtn}
               label={tag.label}
             />

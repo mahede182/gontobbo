@@ -1,22 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet } from "react-native";
 import { Box } from "@/theme";
 import { useTranslation } from "react-i18next";
 import TripCard from "./TripCard";
-import { getPopularTrips, Trip } from "@/api/trips";
+import { useGetPopularTripsQuery, type Trip } from "@/store/api/tripsApi";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
 
 const PopularTrip: React.FC = () => {
   const { t } = useTranslation();
-  const [trips, setTrips] = useState<Trip[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getPopularTrips()
-      .then(setTrips)
-      .finally(() => setLoading(false));
-  }, []);
+  const { data: trips = [], isLoading } = useGetPopularTripsQuery();
 
   const renderItem: ListRenderItem<Trip> = useCallback(
     ({ item }) => (
@@ -37,7 +30,7 @@ const PopularTrip: React.FC = () => {
   return (
     <Box paddingHorizontal="medium" marginTop="twenty">
       <GradientTitle style={styles.title}>{t("Home.popularTrip")}</GradientTitle>
-      {loading ? (
+      {isLoading ? (
         <ActivityIndicator />
       ) : (
         <FlatList

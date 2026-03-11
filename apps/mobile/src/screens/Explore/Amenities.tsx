@@ -6,30 +6,17 @@ import Icon from "@expo/vector-icons/MaterialIcons";
 import { colors } from "@/theme/colors";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { getHotelAmenities, Amenity } from "@/api/hotels";
+import { useGetHotelAmenitiesQuery, type Amenity } from "@/store/api/hotelsApi";
 
 const Amenities = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { hotelId } = (route.params as { hotelId: string }) || {};
   const { t } = useTranslation();
-  const [amenities, setAmenities] = React.useState<Amenity[]>([]);
-  const [loading, setLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    const fetchAmenities = async () => {
-      try {
-        const data = await getHotelAmenities(hotelId);
-        setAmenities(data);
-      } catch (error) {
-        console.error("Error fetching amenities:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (hotelId) fetchAmenities();
-    else setLoading(false);
-  }, [hotelId]);
+  const { data: amenities = [], isLoading } = useGetHotelAmenitiesQuery(hotelId, {
+    skip: !hotelId,
+  });
 
   const grouped = amenities.reduce<Record<string, Amenity[]>>((acc, item) => {
     const cat = "Amenities";
@@ -38,7 +25,7 @@ const Amenities = () => {
     return acc;
   }, {});
 
-  if (loading) {
+  if (isLoading) {
     return (
       <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
         <ActivityIndicator size="large" color={colors.primary700} />

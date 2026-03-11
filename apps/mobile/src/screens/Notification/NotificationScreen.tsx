@@ -10,30 +10,22 @@ import {
 import { SafeAreaView } from "moti";
 import HeaderTitle from "@/components/HeaderTitle";
 import { colors } from "@/theme/colors";
-import { getNotifications, markAsRead, markAllAsRead, Notification } from "@/api/notifications";
+import {
+  useGetNotificationsQuery,
+  useMarkAsReadMutation,
+  useMarkAllAsReadMutation,
+  type Notification,
+} from "@/store/api/notificationsApi";
 
 const NotificationScreen: React.FC = () => {
-  const [notifications, setNotifications] = React.useState<Notification[]>([]);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const res = await getNotifications();
-        setNotifications(res.data.notifications);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchNotifications();
-  }, []);
+  const { data: notifData, isLoading: loading } = useGetNotificationsQuery();
+  const notifications = (notifData?.data as any)?.notifications ?? [];
+  const [markAsReadMutation] = useMarkAsReadMutation();
+  const [markAllAsReadMutation] = useMarkAllAsReadMutation();
 
   const handleMarkAsRead = async (id: string) => {
     try {
-      await markAsRead(id);
-      setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)));
+      await markAsReadMutation(id).unwrap();
     } catch (error) {
       console.error("Error marking notification as read:", error);
     }
@@ -41,8 +33,7 @@ const NotificationScreen: React.FC = () => {
 
   const handleMarkAllAsRead = async () => {
     try {
-      await markAllAsRead();
-      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+      await markAllAsReadMutation().unwrap();
     } catch (error) {
       console.error("Error marking all as read:", error);
     }
@@ -79,7 +70,7 @@ const NotificationScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <HeaderTitle title="Notification" />
-      {notifications.some((n) => !n.isRead) && (
+      {notifications.some((n: any) => !n.isRead) && (
         <TouchableOpacity onPress={handleMarkAllAsRead} style={styles.markAllButton}>
           <Text style={styles.markAllText}>Mark all as read</Text>
         </TouchableOpacity>

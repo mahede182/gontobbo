@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  View,
   Image,
   FlatList,
   StyleSheet,
@@ -19,7 +18,7 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "moti";
-import { getHotelGallery, HotelGallery as HotelGalleryType } from "@/api/hotels";
+import { useGetHotelGalleryQuery } from "@/store/api/hotelsApi";
 
 const { width } = Dimensions.get("window");
 
@@ -32,38 +31,37 @@ const HotelGallery = () => {
   const { hotelId } = (route.params as { hotelId: string }) || {};
   const { images: themeImages } = useTheme<Theme>();
 
-  const [tabs, setTabs] = useState<GalleryTab[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: galleryData, isLoading } = useGetHotelGalleryQuery(hotelId, {
+    skip: !hotelId,
+  });
+
   const [activeTab, setActiveTab] = useState("");
 
-  React.useEffect(() => {
-    const fetchGallery = async () => {
-      try {
-        const data = await getHotelGallery(hotelId);
-        const builtTabs: GalleryTab[] = [];
-        if (data.hotelImages?.length) {
-          builtTabs.push({ label: "Hotel", images: data.hotelImages });
-        }
-        data.roomImages?.forEach((room) => {
-          if (room.images?.length) {
-            builtTabs.push({ label: room.roomName, images: room.images });
-          }
-        });
-        setTabs(builtTabs);
-        if (builtTabs.length > 0) setActiveTab(builtTabs[0].label);
-      } catch (error) {
-        console.error("Error fetching gallery:", error);
-      } finally {
-        setLoading(false);
+  // Build tabs from gallery data
+  const tabs: GalleryTab[] = React.useMemo(() => {
+    if (!galleryData) return [];
+    const builtTabs: GalleryTab[] = [];
+    if (galleryData.hotelImages?.length) {
+      builtTabs.push({ label: "Hotel", images: galleryData.hotelImages });
+    }
+    galleryData.roomImages?.forEach((room: any) => {
+      if (room.images?.length) {
+        builtTabs.push({ label: room.roomName, images: room.images });
       }
-    };
-    if (hotelId) fetchGallery();
-    else setLoading(false);
-  }, [hotelId]);
+    });
+    return builtTabs;
+  }, [galleryData]);
+
+  // Set initial active tab when tabs first load
+  useEffect(() => {
+    if (tabs.length > 0 && !activeTab) {
+      setActiveTab(tabs[0].label);
+    }
+  }, [tabs, activeTab]);
 
   const activeImages = tabs.find((t) => t.label === activeTab)?.images ?? [];
 
-  if (loading) {
+  if (isLoading) {
     return (
       <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
         <ActivityIndicator size="large" color={colors.primary700} />
@@ -84,7 +82,7 @@ const HotelGallery = () => {
       </Box>
 
       {tabs.length > 0 && (
-        <View style={styles.tabContainer}>
+        <Box style={styles.tabContainer}>
           {tabs.map((tab) => (
             <TouchableOpacity
               key={tab.label}
@@ -95,7 +93,7 @@ const HotelGallery = () => {
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </Box>
       )}
 
       <FlatList

@@ -12,6 +12,9 @@ export type User = {
   memberNumber: string | null;
   memberClass: "BRONZE" | "SILVER" | "GOLD" | "PLATINUM";
   role: "USER" | "ADMIN";
+  googleId?: string | null;
+  appleId?: string | null;
+  socialType?: "GOOGLE" | "APPLE" | "FACEBOOK" | "NONE";
   createdAt: string;
   updatedAt: string;
 };

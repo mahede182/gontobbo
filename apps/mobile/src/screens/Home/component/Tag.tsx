@@ -1,32 +1,29 @@
-// src/screens/Home/component/Tag.tsx
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
-import { useMachine } from "@xstate/react";
-import { tagMachine } from "@/machine/tagMachine";
 
 type Props = {
-  id: number;
+  id: string | number;
   icon: any;
   label: string;
 };
 
 const Tag = ({ icon, label, id }: Props) => {
-  const [state, send] = useMachine(tagMachine);
+  const [active, setActive] = useState(false);
 
   const handlePress = () => {
-    send({ type: "TOGGLE", id });
+    setActive((prev) => !prev);
   };
-
-  const { active } = state.context;
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <Box style={styles.container(active)}>
+      <Box style={[styles.containerBase, { backgroundColor: active ? colors.blue800 : "#fff" }]}>
         <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
-        <RestyleText style={styles.label(active)}>{label}</RestyleText>
+        <RestyleText style={[styles.labelBase, { color: active ? "#fff" : "#000" }]}>
+          {label}
+        </RestyleText>
       </Box>
     </TouchableOpacity>
   );
@@ -35,25 +32,23 @@ const Tag = ({ icon, label, id }: Props) => {
 export default Tag;
 
 const styles = StyleSheet.create({
-  container: (active: boolean) => ({
+  containerBase: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: active ? colors.blue800 : "#fff",
     borderWidth: 1,
     borderColor: colors.neutral300,
     borderRadius: 20,
     paddingHorizontal: 12,
     paddingVertical: 10,
     marginRight: 10,
-  }),
+  },
   icon: {
     width: 20,
     height: 20,
     marginRight: 8,
   },
-  label: (active: boolean) => ({
+  labelBase: {
     fontFamily: typography.poppinsMedium,
     fontSize: 16,
-    color: active ? "#fff" : "#000",
-  }),
+  },
 });

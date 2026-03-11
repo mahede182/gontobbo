@@ -15,36 +15,11 @@ import DrawerNavigation from "./DrawerNavigation";
 import { isIOS } from "@/utils/device";
 import { getItem } from "@/utils/storage";
 import { useNavigation } from "@react-navigation/native";
-
-/**
- * This type allows TypeScript to know what routes are defined in this navigator
- * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through `undefined`.
- *
- * For more information, see this documentation:
- *   https://reactnavigation.org/docs/params/
- *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
- */
-
-export type TabStackParamList = {
-  HOME: undefined;
-  EXPLORE: undefined;
-  OFFER: undefined;
-  WISHLIST: undefined;
-  PROFILE: undefined;
-  DRAWER: undefined;
-};
-/**
- * Helper for automatically generating navigation prop types for each route.
- *
- * * More info: https://reactnavigation.org/docs/tab-based-navigation
- * More info: https://reactnavigation.org/docs/typescript/#organizing-types
- */
+import { TabStackParamList } from "@/@types/navigation.type";
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
-const TabNavigation = (props: Props) => {
+const TabNavigation = () => {
   const [wishlistCount, setWishlistCount] = React.useState(0);
   const navigation = useNavigation();
 

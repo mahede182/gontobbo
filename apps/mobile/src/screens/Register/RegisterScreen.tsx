@@ -11,7 +11,7 @@ import { Theme } from "@/@types/theme.type";
 import { validateEmail, validatePassword } from "@/utils/helper";
 import Background from "@/components/Background";
 import { View } from "moti";
-import { register } from "@/api/auth";
+import { useRegisterMutation } from "@/store/api/authApi";
 
 type Props = {
   onRegisterSuccess?: () => void;
@@ -27,7 +27,8 @@ const RegisterScreen: React.FC<Props> = ({ onRegisterSuccess }): JSX.Element => 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  const [registerMutation, { isLoading: loading }] = useRegisterMutation();
 
   const navigation = useNavigation<any>();
   const { t } = useTranslation();
@@ -57,17 +58,13 @@ const RegisterScreen: React.FC<Props> = ({ onRegisterSuccess }): JSX.Element => 
       return;
     }
     try {
-      setLoading(true);
-      await register(email, password, firstName, lastName, phoneNumber);
+      await registerMutation({ email, password, firstName, lastName, phone: phoneNumber }).unwrap();
+      // Auth state is set via onQueryStarted in authApi
       if (onRegisterSuccess) {
         onRegisterSuccess();
-      } else {
-        navigation.navigate("AUTHENTICATED");
       }
     } catch (error: any) {
-      Alert.alert("Sign Up Failed", error?.response?.data?.message ?? error.message);
-    } finally {
-      setLoading(false);
+      Alert.alert("Sign Up Failed", error?.data?.message ?? error?.message ?? "An error occurred");
     }
   };
 

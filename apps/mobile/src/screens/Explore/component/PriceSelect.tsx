@@ -9,12 +9,12 @@ type Props = {
   gradient?: boolean;
   type?: "select" | "booking";
   price: number;
-  priceSub: "string";
-  buttonText: "string";
+  priceSub: string;
+  buttonText: string;
 };
 
 const PriceSelect = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   return (
     <Box style={styles.priceSection}>
       <Box style={styles.priceContainer}>

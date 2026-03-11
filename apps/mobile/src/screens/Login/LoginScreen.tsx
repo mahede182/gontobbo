@@ -17,7 +17,9 @@ import { isIOS } from "@/utils/device";
 
 import { handleGoogleLogin, handleAppleLogin } from "@/utils/socialAuth";
 import Background from "@/components/Background";
-import { googleLogin, appleLogin } from "@/api/auth";
+import { useGoogleLoginMutation, useAppleLoginMutation } from "@/store/api/authApi";
+import { useAppDispatch } from "@/store/hooks";
+import { setGuestMode } from "@/store/slices/authSlice";
 
 type Props = {
   onLoginPress?: (user: string, password: string) => void;
@@ -25,9 +27,12 @@ type Props = {
 
 const LoginScreen: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
   const { images } = useTheme<Theme>();
   const [loading, setLoading] = useState(false);
+  const [googleLoginMutation] = useGoogleLoginMutation();
+  const [appleLoginMutation] = useAppleLoginMutation();
 
   const onGoogleSignIn = async () => {
     try {
@@ -35,15 +40,15 @@ const LoginScreen: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
       const res = await handleGoogleLogin();
       if (!res) return;
       // Support both old and new Google Sign-In SDK shapes
-      const idToken = res.data?.idToken ?? res.idToken;
+      const idToken = (res as any).data?.idToken ?? (res as any).idToken;
       if (!idToken) {
         Alert.alert("Error", "Google sign-in did not return an ID token");
         return;
       }
-      await googleLogin(idToken);
-      navigation.navigate("AUTHENTICATED");
+      await googleLoginMutation({ idToken }).unwrap();
+      // Auth state is set via onQueryStarted in authApi
     } catch (error: any) {
-      Alert.alert("Login Failed", error?.response?.data?.message ?? error.message);
+      Alert.alert("Login Failed", error?.data?.message ?? error?.message ?? "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -58,17 +63,17 @@ const LoginScreen: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
         Alert.alert("Error", "Apple sign-in did not return an identity token");
         return;
       }
-      await appleLogin({
+      await appleLoginMutation({
         identityToken: res.identityToken,
         user: res.user,
         email: res.email,
         fullName: res.fullName
           ? { givenName: res.fullName.givenName, familyName: res.fullName.familyName }
           : undefined,
-      });
-      navigation.navigate("AUTHENTICATED");
+      }).unwrap();
+      // Auth state is set via onQueryStarted in authApi
     } catch (error: any) {
-      Alert.alert("Login Failed", error?.response?.data?.message ?? error.message);
+      Alert.alert("Login Failed", error?.data?.message ?? error?.message ?? "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -122,7 +127,7 @@ const LoginScreen: React.FC<Props> = ({ onLoginPress }): JSX.Element => {
           {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("AUTHENTICATED");
+              dispatch(setGuestMode());
             }}>
             <RestyleText style={styles.linkRestyleText}>{t("login.continueAsGuest")}</RestyleText>
           </TouchableOpacity>

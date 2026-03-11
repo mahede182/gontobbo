@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box, RestyleText } from "@/theme";
 import {
   ActivityIndicator,
@@ -15,25 +15,19 @@ import { typography } from "@/theme/typography";
 import Tag from "./component/Tag";
 import PriceSelect from "./component/PriceSelect";
 import { Divider } from "./component/Divider";
-import { getHotelRooms, Room } from "@/api/hotels";
+import { useGetHotelRoomsQuery, type Room } from "@/store/api/hotelsApi";
 
 const SelectRoom = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const hotelId = (route.params as any)?.hotelId;
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
 
-  useEffect(() => {
-    if (hotelId) {
-      getHotelRooms(hotelId)
-        .then(setRooms)
-        .finally(() => setLoading(false));
-    }
-  }, [hotelId]);
+  const { data: rooms = [], isLoading } = useGetHotelRoomsQuery(hotelId, {
+    skip: !hotelId,
+  });
 
-  if (loading) {
+  if (isLoading) {
     return (
       <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
         <ActivityIndicator size="large" />
@@ -57,7 +51,7 @@ const SelectRoom = () => {
     <SafeAreaView style={styles.container}>
       <HeaderTitle title="Select Room" />
       <ScrollView showsHorizontalScrollIndicator>
-        {rooms.map((room) => {
+        {rooms.map((room: Room) => {
           const roomImages = room.images?.slice(0, 3) ?? [];
           return (
             <Box key={room.id}>

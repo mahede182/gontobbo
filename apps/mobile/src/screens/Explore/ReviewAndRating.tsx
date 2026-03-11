@@ -9,37 +9,26 @@ import GradientTitle from "@/components/GradientTitle";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
 import { dynamicCSS } from "@/utils/styles";
-import { getHotelReviews, HotelReview } from "@/api/hotels";
+import { useGetHotelReviewsQuery } from "@/store/api/hotelsApi";
 
 const ReviewsAndRatings = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const route = useRoute();
   const { hotelId } = (route.params as { hotelId: string }) || {};
-  const [reviews, setReviews] = React.useState<HotelReview[]>([]);
-  const [loading, setLoading] = React.useState(true);
-  const [averageRating, setAverageRating] = React.useState(0);
 
-  React.useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const data = await getHotelReviews(hotelId);
-        setReviews(data);
-        if (data.length > 0) {
-          const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length;
-          setAverageRating(Math.round(avg * 10) / 10);
-        }
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (hotelId) fetchReviews();
-    else setLoading(false);
-  }, [hotelId]);
+  const { data: response, isLoading } = useGetHotelReviewsQuery({ hotelId }, { skip: !hotelId });
 
-  if (loading) {
+  const reviews = response?.data ?? [];
+
+  const averageRating =
+    reviews.length > 0
+      ? Math.round(
+          (reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length) * 10,
+        ) / 10
+      : 0;
+
+  if (isLoading) {
     return (
       <Box flex={1} justifyContent="center" alignItems="center">
         <ActivityIndicator size="large" color={colors.primary700} />
@@ -62,7 +51,7 @@ const ReviewsAndRatings = () => {
             <Icon name="arrow-left" size={24} color={colors.black100} />
           </TouchableOpacity>
         </Box>
-        <GradientTitle variant="gradientTitle">{t("Explore.reviewsAndRating")}</GradientTitle>
+        <GradientTitle>{t("Explore.reviewsAndRating")}</GradientTitle>
       </Box>
 
       <Box style={styles.ratingContainer}>
@@ -79,7 +68,7 @@ const ReviewsAndRatings = () => {
       </Box>
       <Box style={styles.reviewsContainer}>
         <RestyleText style={styles.reviewsTitle}>{t("Explore.guestReviews")}</RestyleText>
-        {reviews.map((review) => (
+        {reviews.map((review: any) => (
           <Box key={review.id} style={styles.reviewCard}>
             <Box style={styles.reviewHeader}>
               <Image
@@ -107,7 +96,7 @@ const ReviewsAndRatings = () => {
             <Box style={styles.reviewRating}>
               {Array(review.rating)
                 .fill(null)
-                .map((_, i) => (
+                .map((_: any, i: number) => (
                   <Icon key={i} name="star" size={16} color={colors.linearEnd} />
                 ))}
             </Box>

@@ -16,7 +16,7 @@ import { INTRO_SHOWN } from "@/constants/config";
 
 const images = [img.initOne, img.initTwo, img.initThree];
 
-const Indicator = ({ currentIndex }) => {
+const Indicator = ({ currentIndex }: { currentIndex: number }) => {
   return (
     <View style={styles.indicatorContainer}>
       {images.map((_, index) => (
@@ -41,10 +41,10 @@ const InitScreen = ({ route }: InitScreenProps) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const flatListRef = React.useRef(null);
+  const flatListRef = React.useRef<FlatList>(null);
   const showIntro = useIntroShown();
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <ImageBackground source={item} style={styles.imageContainer}>
       <Box style={styles.darkish}>
         <Box style={styles.formContainer}>
@@ -59,7 +59,7 @@ const InitScreen = ({ route }: InitScreenProps) => {
           <TouchableOpacity
             onPress={async () => {
               if (currentIndex === images.length - 1) {
-                navigation.navigate("AUTHENTICATING");
+                (navigation as any).navigate("AUTHENTICATING");
               } else if (currentIndex === 1) {
                 flatListRef.current?.scrollToIndex({ index: 2, animated: true });
               } else {

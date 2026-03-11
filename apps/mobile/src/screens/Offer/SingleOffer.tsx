@@ -3,15 +3,16 @@ import React from "react";
 import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
-import { Offer } from "@/api/offers";
-import { addToWishlist } from "@/api/wishlist";
+import { type Offer } from "@/store/api/offersApi";
+import { useAddToWishlistMutation } from "@/store/api/wishlistApi";
 
 type Props = {
   offer: Offer;
 };
 
 const SingleOffer = ({ offer }: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
+  const [addToWishlist] = useAddToWishlistMutation();
   return (
     <View style={styles.content}>
       <Image source={offer.image ? { uri: offer.image } : images.dummyCard} style={styles.image} />
