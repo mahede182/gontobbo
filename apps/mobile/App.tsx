@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import { store } from "@/store/store";
 
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import Toast from "react-native-toast-message";
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>;
@@ -33,6 +34,7 @@ export default function App(props: AppProps) {
           <RestyleProvider theme={theme}>
             <I18nextProvider i18n={i18next}>
               <RootNavigation />
+              <Toast />
             </I18nextProvider>
           </RestyleProvider>
         </GestureHandlerRootView>

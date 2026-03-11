@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, RestyleText } from "@/theme";
 import { MotiView } from "moti";
+import { FLIGHT_SERVICES } from "@/constants/flight";
 
 const FlightServicesCard = () => {
   return (
@@ -13,14 +14,7 @@ const FlightServicesCard = () => {
           Flight Services
         </RestyleText>
         <Box flexDirection="row" flexWrap="wrap">
-          {[
-            "Meals Included",
-            "WiFi Available",
-            "Entertainment",
-            "Power Outlets",
-            "Baggage Included",
-            "Seat Selection",
-          ].map((service, index) => (
+          {FLIGHT_SERVICES.map((service: string, index: number) => (
             <Box
               key={index}
               backgroundColor="primary50"

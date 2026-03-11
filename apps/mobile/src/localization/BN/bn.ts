@@ -74,5 +74,7 @@ export const bnTranslations = {
     memberCard: "মেম্বার কার্ড",
     signInProvider: "সাইন ইন প্রদানকারী",
     wishList: "উইশ লিস্ট",
+    wishlistEmpty: "উইশ লিস্ট খালি!",
+    tapTheHeartButtonToStartSaving: "হার্ট বাটন ট্যাপ করে সংরক্ষণ করতে শুরু করুন",
   },
 };

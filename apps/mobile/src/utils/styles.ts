@@ -1,3 +1,5 @@
+import { Baggage } from "@/@types/auth.type";
+import { colors } from "@/theme/colors";
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
 
 export const utilityStyles = StyleSheet.create({
@@ -19,6 +21,25 @@ export const dynamicSpace = (value: number) => {
     fontSize: { fontSize: value },
     paddingRight: { paddingRight: value },
   });
+};
+
+export const getStatusColor = (status: Baggage["status"]): keyof typeof colors => {
+  switch (status) {
+    case "INCLUDED":
+      return "success";
+    case "EXTRA_FEE":
+      return "warning";
+    case "NOT_ALLOWED":
+      return "danger";
+    case "VALID":
+      return "success";
+    case "EXPIRED":
+      return "danger";
+    case "MISSING":
+      return "secondary500";
+    default:
+      return "neutral600";
+  }
 };
 
 type AllStyles = ViewStyle & TextStyle & ImageStyle;

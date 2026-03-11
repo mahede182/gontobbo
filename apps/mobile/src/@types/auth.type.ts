@@ -46,12 +46,14 @@ export type FlightPreference = {
 export type Baggage = {
   id: string;
   userId: string;
-  type: "CABIN" | "CHECKED" | "SPECIAL";
+  type: "CABIN" | "CHECKED" | "SPECIAL" | "PASSPORT" | "VISA" | "INSURANCE" | "VACCINATION";
   name: string;
   description: string | null;
   weight: string;
   dimensions: string | null;
-  status: "INCLUDED" | "EXTRA_FEE" | "NOT_ALLOWED";
+  status: "INCLUDED" | "EXTRA_FEE" | "NOT_ALLOWED" | "VALID" | "EXPIRED" | "MISSING";
+  expiryDate?: Date;
+  isRequired: boolean;
 };
 
 export type AuthTokens = {

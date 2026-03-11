@@ -4,18 +4,7 @@ import { MotiView } from "moti";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { Ionicons } from "@expo/vector-icons";
-
-export type PaymentMethod = {
-  id: number;
-  name: string;
-  icon: any;
-  type: string;
-};
-
-interface PaymentMethodItemProps {
-  item: PaymentMethod;
-  index: number;
-}
+import { PaymentMethodItemProps } from "@/@types/profile.type";
 
 const PaymentMethodItem: React.FC<PaymentMethodItemProps> = ({ item, index }) => {
   return (

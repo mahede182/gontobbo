@@ -6,13 +6,7 @@ import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { images } from "@/theme/images";
 import { WishlistItem } from "@/store/api/wishlistApi";
-
-interface WishlistItemCardProps {
-  item: WishlistItem;
-  index: number;
-  onRemove: (id: string) => void;
-  onBookNow: (item: WishlistItem) => void;
-}
+import { WishlistItemCardProps } from "@/@types/profile.type";
 
 const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
   item,

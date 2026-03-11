@@ -4,12 +4,7 @@ import { MotiView } from "moti";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
-
-interface PreferenceItemProps {
-  item: { key: string; label: string; value: boolean };
-  index: number;
-  onToggle: (key: string, value: boolean) => void;
-}
+import { PreferenceItemProps } from "@/@types/profile.type";
 
 const PreferenceItem: React.FC<PreferenceItemProps> = ({ item, index, onToggle }) => {
   return (

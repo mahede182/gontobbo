@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState } from "react";
-import { Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import Logo from "@/components/Logo";
 import { useTranslation } from "react-i18next";
 import { Box, RestyleText } from "@/theme";
@@ -20,6 +20,7 @@ import Background from "@/components/Background";
 import { useGoogleLoginMutation, useAppleLoginMutation } from "@/store/api/authApi";
 import { useAppDispatch } from "@/store/hooks";
 import { setGuestMode } from "@/store/slices/authSlice";
+import { showToast } from "@/utils/toast";
 
 const LoginScreen: React.FC = (): JSX.Element => {
   const { t } = useTranslation();
@@ -38,13 +39,21 @@ const LoginScreen: React.FC = (): JSX.Element => {
       // Support both old and new Google Sign-In SDK shapes
       const idToken = (res as any).data?.idToken ?? (res as any).idToken;
       if (!idToken) {
-        Alert.alert("Error", "Google sign-in did not return an ID token");
+        showToast({
+          type: "error",
+          title: "Error",
+          message: "Google sign-in did not return an ID token",
+        });
         return;
       }
       await googleLoginMutation({ idToken }).unwrap();
       // Auth state is set via onQueryStarted in authApi
     } catch (error: any) {
-      Alert.alert("Login Failed", error?.data?.message ?? error?.message ?? "An error occurred");
+      showToast({
+        type: "error",
+        title: "Login Failed",
+        message: error?.data?.message ?? error?.message ?? "An error occurred",
+      });
     } finally {
       setLoading(false);
     }
@@ -56,7 +65,11 @@ const LoginScreen: React.FC = (): JSX.Element => {
       const res = await handleAppleLogin();
       if (!res) return;
       if (!res.identityToken) {
-        Alert.alert("Error", "Apple sign-in did not return an identity token");
+        showToast({
+          type: "error",
+          title: "Error",
+          message: "Apple sign-in did not return an identity token",
+        });
         return;
       }
       await appleLoginMutation({
@@ -69,7 +82,11 @@ const LoginScreen: React.FC = (): JSX.Element => {
       }).unwrap();
       // Auth state is set via onQueryStarted in authApi
     } catch (error: any) {
-      Alert.alert("Login Failed", error?.data?.message ?? error?.message ?? "An error occurred");
+      showToast({
+        type: "error",
+        title: "Login Failed",
+        message: error?.data?.message ?? error?.message ?? "An error occurred",
+      });
     } finally {
       setLoading(false);
     }

@@ -22,6 +22,7 @@ import { SafeAreaView, MotiView } from "moti";
 import WishlistItemCard from "./components/WishlistItemCard";
 import EmptyWishlist from "./components/EmptyWishlist";
 import { typography } from "@/theme/typography";
+import { useTranslation } from "react-i18next";
 
 type Props = {};
 
@@ -29,6 +30,7 @@ const WishList: React.FC<Props> = (): JSX.Element => {
   const navigation = useNavigation();
   const { data: wishlist = [], isLoading: loading } = useGetWishlistQuery();
   const [removeFromWishlistMutation] = useRemoveFromWishlistMutation();
+  const { t } = useTranslation();
 
   const handleRemove = async (id: string) => {
     try {
@@ -58,16 +60,16 @@ const WishList: React.FC<Props> = (): JSX.Element => {
         fontFamily={typography.poppinsSemibold}
         color="black"
         style={styles.emptyTitle}>
-        My Wishlist is Empty!
+        {t("Profile.wishlistEmpty")}
       </RestyleText>
       <RestyleText variant="caption" color="neutral500" style={styles.emptySubtitle}>
-        Tab heart button to start saving{"\n"}your favorite items.
+        {t("Profile.tapTheHeartButtonToStartSaving")}
       </RestyleText>
       <TouchableOpacity
         style={styles.exploreButton}
         onPress={() => (navigation as any).navigate("Explore")}>
         <RestyleText variant="buttonLabel" fontFamily={typography.poppinsSemibold} color="white">
-          Explore
+          {t("common.explore")}
         </RestyleText>
       </TouchableOpacity>
     </MotiView>

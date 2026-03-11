@@ -1,10 +1,11 @@
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
 import { type Offer } from "@/store/api/offersApi";
 import { useAddToWishlistMutation } from "@/store/api/wishlistApi";
+import { showToast } from "@/utils/toast";
 
 type Props = {
   offer: Offer;
@@ -47,9 +48,17 @@ const SingleOffer = ({ offer }: Props) => {
                 type: "HOTEL",
                 name: offer.name,
               });
-              Alert.alert("Success", "Offer added to wishlist!");
+              showToast({
+                type: "success",
+                title: "Success",
+                message: "Offer added to wishlist!",
+              });
             } catch (error) {
-              Alert.alert("Info", "Offer may already be in your wishlist.");
+              showToast({
+                type: "info",
+                title: "Info",
+                message: "Offer may already be in your wishlist.",
+              });
             }
           }}
           style={[styles.button, styles.secondaryButton]}>

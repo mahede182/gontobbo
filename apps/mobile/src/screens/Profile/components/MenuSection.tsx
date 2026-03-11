@@ -2,12 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { MotiView } from "moti";
 import { colors } from "@/theme/colors";
-
-interface MenuSectionProps {
-  title: string;
-  children: React.ReactNode;
-  delay?: number;
-}
+import { MenuSectionProps } from "@/@types/profile.type";
 
 const MenuSection: React.FC<MenuSectionProps> = ({ title, children, delay = 700 }) => {
   return (

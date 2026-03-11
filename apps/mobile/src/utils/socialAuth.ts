@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { Alert, Platform } from "react-native";
+import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import {
   GoogleSignin,
@@ -7,6 +7,7 @@ import {
   isErrorWithCode,
 } from "@react-native-google-signin/google-signin";
 import { googleSignInConfig } from "@/config/google";
+import { showToast } from "@/utils/toast";
 
 export const handleGoogleLogin = async () => {
   GoogleSignin.configure(googleSignInConfig);
@@ -50,7 +51,11 @@ export const handleAppleLogin = async () => {
     } else {
       // Handle other errors
       console.error("Apple Login Error:", error);
-      Alert.alert("Error", error.message);
+      showToast({
+        type: "error",
+        title: "Error",
+        message: error.message,
+      });
     }
   }
 };

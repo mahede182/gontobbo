@@ -6,6 +6,7 @@ import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { Ionicons } from "@expo/vector-icons";
 import { Baggage } from "@/@types/auth.type";
+import { getStatusColor } from "@/utils/styles";
 
 interface BaggageItemCardProps {
   item: Baggage;
@@ -13,19 +14,6 @@ interface BaggageItemCardProps {
 }
 
 const BaggageItemCard: React.FC<BaggageItemCardProps> = ({ item, index }) => {
-  const getStatusColor = (status: Baggage["status"]): keyof typeof colors => {
-    switch (status) {
-      case "INCLUDED":
-        return "success";
-      case "EXTRA_FEE":
-        return "warning";
-      case "NOT_ALLOWED":
-        return "danger";
-      default:
-        return "neutral600";
-    }
-  };
-
   return (
     <MotiView
       from={{ opacity: 0, translateY: 15 }}

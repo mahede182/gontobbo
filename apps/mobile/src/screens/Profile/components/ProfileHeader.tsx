@@ -2,12 +2,7 @@ import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import { MotiView, MotiText } from "moti";
 import { colors } from "@/theme/colors";
-
-interface ProfileHeaderProps {
-  userData: any;
-  displayName: string;
-  email: string;
-}
+import { ProfileHeaderProps } from "@/@types/profile.type";
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userData, displayName, email }) => {
   return (

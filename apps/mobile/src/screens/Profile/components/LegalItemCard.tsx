@@ -5,20 +5,7 @@ import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { Ionicons } from "@expo/vector-icons";
-
-export type LegalDocument = {
-  id: string;
-  title: string;
-  description: string;
-  lastUpdated: string;
-  type: "policy" | "terms" | "guidelines" | "licenses";
-};
-
-interface LegalItemCardProps {
-  item: LegalDocument;
-  index: number;
-  onPress: () => void;
-}
+import { LegalItemCardProps } from "@/@types/profile.type";
 
 const LegalItemCard: React.FC<LegalItemCardProps> = ({ item, index, onPress }) => {
   return (

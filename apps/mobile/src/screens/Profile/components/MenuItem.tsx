@@ -2,16 +2,7 @@ import React from "react";
 import { TouchableOpacity, Image, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
-
-interface MenuItemProps {
-  label: string;
-  icon?: any;
-  onPress: () => void;
-  showArrow?: boolean;
-  value?: string;
-  valueStyle?: ViewStyle | TextStyle;
-  containerStyle?: ViewStyle;
-}
+import { MenuItemProps } from "@/@types/profile.type";
 
 const MenuItem: React.FC<MenuItemProps> = ({
   label,

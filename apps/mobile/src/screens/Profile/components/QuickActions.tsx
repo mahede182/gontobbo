@@ -4,11 +4,7 @@ import { MotiView } from "moti";
 import { useTranslation } from "react-i18next";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
-
-interface QuickActionsProps {
-  provider: string;
-  onNavigate: (screen: string) => void;
-}
+import { QuickActionsProps } from "@/@types/profile.type";
 
 const QuickActions: React.FC<QuickActionsProps> = ({ provider, onNavigate }) => {
   const { t } = useTranslation();

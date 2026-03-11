@@ -214,5 +214,7 @@ export const enTranslations = {
     memberCard: "Member Card",
     signInProvider: "Sign in Provider",
     wishList: "Wish List",
+    wishlistEmpty: "Wishlist is empty!",
+    tapTheHeartButtonToStartSaving: "Tap the heart button to start saving",
   },
 };

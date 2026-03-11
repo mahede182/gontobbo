@@ -4,15 +4,11 @@ import { MotiView } from "moti";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
+import { PersonalInfoCardProps } from "@/@types/profile.type";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.9;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
-
-interface PersonalInfoCardProps {
-  userData: any;
-  personalInfo: Array<{ label: string; value: string; icon: string }>;
-}
 
 const PersonalInfoCard: React.FC<PersonalInfoCardProps> = ({ userData, personalInfo }) => {
   return (
