@@ -11,8 +11,8 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native";
-import { MotiView, AnimatePresence } from "moti";
+import { useRoute } from "@react-navigation/native";
+import { MotiView } from "moti";
 import { LinearGradient } from "expo-linear-gradient";
 import HeaderTitle from "@/components/HeaderTitle";
 import { colors } from "@/theme/colors";
@@ -20,36 +20,10 @@ import { fontSizes } from "@/theme/fontSizes";
 import { typography } from "@/theme/typography";
 import { useSendChatMessageMutation } from "@/store/api/chatApi";
 import Icon from "@expo/vector-icons/Ionicons";
-
-// Interface for local message format
-interface Message {
-  id: string;
-  text: string;
-  sender: "user" | "ai";
-  createdAt: Date;
-}
-
-const AI_USER_NAME = "Gontobbo AI";
-
-const TypingIndicator = () => (
-  <MotiView
-    from={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ loop: true, type: "timing", duration: 600 }}
-    style={styles.typingIndicator}>
-    <View style={styles.dot} />
-    <MotiView
-      animate={{ opacity: [0.3, 1, 0.3] }}
-      transition={{ loop: true, duration: 600, delay: 100 }}
-      style={styles.dot}
-    />
-    <MotiView
-      animate={{ opacity: [0.3, 1, 0.3] }}
-      transition={{ loop: true, duration: 600, delay: 200 }}
-      style={styles.dot}
-    />
-  </MotiView>
-);
+import { KeyboardStickyView } from "react-native-keyboard-controller";
+import { TypingIndicator } from "@/components/Typing";
+import { Message } from "@/@types/api.type";
+import { MessageItem } from "@/components/Message";
 
 const ChatScreen: React.FC = (): JSX.Element => {
   const route = useRoute<any>();
@@ -60,7 +34,6 @@ const ChatScreen: React.FC = (): JSX.Element => {
   const flatListRef = useRef<FlatList>(null);
   const hasProcessedInitial = useRef(false);
 
-  // Welcome message
   useEffect(() => {
     setMessages([
       {
@@ -95,7 +68,6 @@ const ChatScreen: React.FC = (): JSX.Element => {
       setInputText("");
 
       try {
-        // Build history from messages
         const history = messages
           .filter((m) => m.id !== "welcome")
           .map((m) => ({
@@ -128,63 +100,20 @@ const ChatScreen: React.FC = (): JSX.Element => {
     [messages, sendChat],
   );
 
-  const renderMessageItem = ({ item, index }: { item: Message; index: number }) => {
-    const isUser = item.sender === "user";
-    return (
-      <MotiView
-        from={{ opacity: 0, translateX: isUser ? 50 : -50 }}
-        animate={{ opacity: 1, translateX: 0 }}
-        transition={{ type: "spring", damping: 15 }}
-        style={[
-          styles.messageWrapper,
-          isUser ? styles.userMessageWrapper : styles.aiMessageWrapper,
-        ]}>
-        {!isUser && (
-          <View style={styles.aiAvatar}>
-            <Icon name="planet" size={16} color={colors.white} />
-          </View>
-        )}
-        <View style={styles.messageContent}>
-          {isUser ? (
-            <LinearGradient
-              colors={[colors.blue800, colors.blue600]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={[styles.bubble, styles.userBubble]}>
-              <Text style={[styles.messageText, styles.userText]}>{item.text}</Text>
-            </LinearGradient>
-          ) : (
-            <View style={[styles.bubble, styles.aiBubble]}>
-              <Text style={[styles.messageText, styles.aiText]}>{item.text}</Text>
-            </View>
-          )}
-          <Text style={[styles.timeText, isUser ? { textAlign: "right" } : { textAlign: "left" }]}>
-            {item.createdAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-          </Text>
-        </View>
-      </MotiView>
-    );
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <HeaderTitle title="Chat" />
-
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}>
-        <FlatList
-          ref={flatListRef}
-          data={messages}
-          keyExtractor={(item) => item.id}
-          renderItem={renderMessageItem}
-          contentContainerStyle={styles.listContent}
-          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          onLayout={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          showsVerticalScrollIndicator={false}
-        />
-
+      <FlatList
+        ref={flatListRef}
+        data={messages}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item, index }) => <MessageItem item={item} index={index} />}
+        contentContainerStyle={styles.listContent}
+        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+        onLayout={() => flatListRef.current?.scrollToEnd({ animated: true })}
+        showsVerticalScrollIndicator={false}
+      />
+      <KeyboardStickyView offset={{ closed: 0, opened: 40 }}>
         {isLoading && (
           <View style={styles.loadingContainer}>
             <TypingIndicator />
@@ -209,7 +138,7 @@ const ChatScreen: React.FC = (): JSX.Element => {
             <Icon name="send" size={20} color={colors.white} />
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardStickyView>
     </SafeAreaView>
   );
 };
@@ -220,9 +149,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.neutral100,
-  },
-  flex: {
-    flex: 1,
   },
   listContent: {
     paddingHorizontal: 16,
@@ -298,6 +224,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.neutral200,
     paddingBottom: Platform.OS === "ios" ? 30 : 12,
+    marginBottom: 60,
   },
   input: {
     flex: 1,
@@ -309,7 +236,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingHorizontal: 20,
     paddingVertical: 12,
-    marginBottom: 100,
+    // marginBottom: 100,
     // maxHeight: 120,
     // marginRight: 10,
   },
@@ -318,7 +245,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    marginBottom: 100,
+    // marginBottom: 100,
     justifyContent: "center",
     alignItems: "center",
     shadowColor: colors.blue800,
@@ -343,16 +270,5 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.sm,
     color: colors.neutral500,
     marginLeft: 10,
-  },
-  typingIndicator: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: colors.blue800,
-    marginHorizontal: 2,
   },
 });

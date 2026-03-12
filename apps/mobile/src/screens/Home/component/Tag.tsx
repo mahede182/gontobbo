@@ -14,11 +14,12 @@ type Props = {
 };
 
 const Tag = ({ icon, label, active = false, onPress }: Props) => (
-  <TouchableOpacity onPress={() => onPress?.(label)} activeOpacity={0.8}>
-    <Box style={[styles.container, active && styles.activeContainer]}>
-      <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
-      <RestyleText style={[styles.label, active && styles.activeLabel]}>{label}</RestyleText>
-    </Box>
+  <TouchableOpacity
+    style={[styles.container, active && styles.activeContainer]}
+    onPress={() => onPress?.(label)}
+    activeOpacity={0.8}>
+    <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
+    <RestyleText style={[styles.label, active && styles.activeLabel]}>{label}</RestyleText>
   </TouchableOpacity>
 );
 

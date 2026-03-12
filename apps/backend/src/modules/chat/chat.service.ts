@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { GeminiClient, GeminiContent, GeminiRole } from "../../utils/gemini";
+import { GeminiClient, GeminiContent, GeminiRole } from "../../config/gemini";
 
 const prisma = new PrismaClient();
 
@@ -11,7 +11,6 @@ async function buildVectorContext(query: string): Promise<string> {
     const queryEmbedding = await GeminiClient.embedContent(query);
     const vectorStr = `[${queryEmbedding.join(",")}]`;
 
-    // Semantic search for Hotels
     const hotels: any[] = await prisma.$queryRaw`
       SELECT name, location, rating, "starRating", description
       FROM "hotels"
@@ -19,7 +18,6 @@ async function buildVectorContext(query: string): Promise<string> {
       LIMIT 3
     `;
 
-    // Semantic search for Trips
     const trips: any[] = await prisma.$queryRaw`
       SELECT title, destination, duration, price, feature
       FROM "trips"
@@ -27,7 +25,6 @@ async function buildVectorContext(query: string): Promise<string> {
       LIMIT 3
     `;
 
-    // Semantic search for Flights
     const flights: any[] = await prisma.$queryRaw`
       SELECT airline, "departureAirport", "arrivalAirport", price, route
       FROM "flights"
@@ -63,7 +60,6 @@ async function buildVectorContext(query: string): Promise<string> {
     return contextParts.join("\n");
   } catch (error) {
     console.error("Vector Search Error:", error);
-    // Fallback to simple context if vector search fails (e.g. no embeddings yet)
     return "No specific data found for this query.";
   }
 }

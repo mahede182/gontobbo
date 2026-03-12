@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 import HotelCard from "./HotelCard";
 import { useGetFeaturedHotelsQuery, type Hotel } from "@/store/api/hotelsApi";
 import GradientTitle from "@/components/GradientTitle";
-import { dynamicCSS } from "@/utils/styles";
+import { typography } from "@/theme/typography";
+import { fontSizes } from "@/theme/fontSizes";
+import { spacing } from "@/theme/spacing";
 
 const FeaturedHotels: React.FC = () => {
   const { t } = useTranslation();
@@ -28,9 +30,7 @@ const FeaturedHotels: React.FC = () => {
 
   return (
     <Box paddingHorizontal="medium" marginTop="ten">
-      <GradientTitle style={dynamicCSS("marginBottom", 10)}>
-        {t("Home.featureHotels" as any)}
-      </GradientTitle>
+      <GradientTitle style={styles.title}>{t("Home.featureHotels" as any)}</GradientTitle>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
@@ -47,10 +47,15 @@ const FeaturedHotels: React.FC = () => {
   );
 };
 
+export default FeaturedHotels;
+
 const styles = StyleSheet.create({
   listContainer: {
     paddingRight: 32,
   },
+  title: {
+    fontFamily: typography.poppinsSemibold,
+    fontSize: fontSizes.lg,
+    marginBottom: spacing.five,
+  },
 });
-
-export default FeaturedHotels;

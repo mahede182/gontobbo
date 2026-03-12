@@ -66,15 +66,21 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         {/* ::: My Trip ::: */}
         <Box style={styles.group}>
           <GradientTitle style={dynamicCSS("marginBottom", 5)}>My Trip</GradientTitle>
-          <TouchableOpacity style={styles.drawerItemContainer}>
+          <TouchableOpacity
+            style={styles.drawerItemContainer}
+            onPress={() => navigation.navigate("BOOKINGS")}>
             <Image source={images.myBookingIcon} style={styles.iconStyle} />
             <RestyleText>My Booking</RestyleText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItemContainer}>
+          <TouchableOpacity
+            style={styles.drawerItemContainer}
+            onPress={() => navigation.navigate("WISH_LIST")}>
             <Image source={images.savedIcon} style={styles.iconStyle} />
             <RestyleText>Saved</RestyleText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItemContainer}>
+          <TouchableOpacity
+            style={styles.drawerItemContainer}
+            onPress={() => navigation.navigate("REFER")}>
             <Image source={images.referIcon} style={styles.iconStyle} />
             <RestyleText>Refer</RestyleText>
           </TouchableOpacity>

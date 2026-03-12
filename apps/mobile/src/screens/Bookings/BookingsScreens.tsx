@@ -9,8 +9,6 @@ import BookingCard from "./components/BookingCard";
 import BookingFilterTabs, { type BookingTypeFilter } from "./components/BookingFilterTabs";
 import BookingEmptyState from "./components/BookingEmptyState";
 
-// ─── Screen ───────────────────────────────────────────────────────────────────
-
 const BookingsScreens: React.FC = (): JSX.Element => {
   const navigation = useNavigation<any>();
   const [activeFilter, setActiveFilter] = useState<BookingTypeFilter>("ALL");
@@ -21,9 +19,7 @@ const BookingsScreens: React.FC = (): JSX.Element => {
   const { data: response, isLoading, isFetching } = useGetBookingsQuery(queryParams);
   const bookings = response?.data ?? [];
 
-  const handleCardPress = useCallback((booking: Booking) => {
-    // Navigate to detail when wired up
-  }, []);
+  const handleCardPress = useCallback((booking: Booking) => {}, []);
 
   const renderItem = useCallback(
     ({ item }: { item: Booking }) => <BookingCard booking={item} onPress={handleCardPress} />,
@@ -34,7 +30,6 @@ const BookingsScreens: React.FC = (): JSX.Element => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <HeaderTitle title="Bookings" />
         {(isLoading || isFetching) && (
@@ -42,13 +37,10 @@ const BookingsScreens: React.FC = (): JSX.Element => {
         )}
       </View>
 
-      {/* Filter Tabs */}
       <BookingFilterTabs active={activeFilter} onChange={setActiveFilter} />
 
-      {/* Divider under tabs */}
       <View style={styles.tabDivider} />
 
-      {/* Content */}
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary700} />
@@ -69,8 +61,6 @@ const BookingsScreens: React.FC = (): JSX.Element => {
 };
 
 export default BookingsScreens;
-
-// ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
   container: {

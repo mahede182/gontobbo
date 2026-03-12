@@ -5,25 +5,10 @@ import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import type { Booking } from "@/@types/api.type";
 import BookingStatusBadge from "./BookingStatusBadge";
+import { getImageUri, formatDate } from "@/utils/helper";
+import { BookinCardProps } from "@/@types/booking.typs";
 
-// ─── Helpers ───────────────────────────────────────────────────────────────────
-
-const formatDate = (iso: string): string =>
-  new Date(iso).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
-
-const getImageUri = (booking: Booking): string | null => {
-  if (booking.type === "HOTEL") return booking.hotel?.images?.[0] ?? null;
-  return booking.trip?.image ?? null;
-};
-
-// ─── Component ────────────────────────────────────────────────────────────────
-
-interface Props {
-  booking: Booking & { _count?: { travellers: number } };
-  onPress?: (booking: Booking) => void;
-}
-
-const BookingCard: React.FC<Props> = ({ booking, onPress }) => {
+const BookingCard: React.FC<BookinCardProps> = ({ booking, onPress }) => {
   const imageUri = getImageUri(booking);
   const name = booking.type === "HOTEL" ? booking.hotel?.name : booking.trip?.title;
   const location = booking.type === "HOTEL" ? booking.hotel?.location : booking.trip?.destination;
@@ -32,16 +17,13 @@ const BookingCard: React.FC<Props> = ({ booking, onPress }) => {
 
   return (
     <TouchableOpacity activeOpacity={0.88} style={styles.card} onPress={() => onPress?.(booking)}>
-      {/* ── Image ── */}
       <Image
         source={imageUri ? { uri: imageUri } : images.dummyCard}
         style={styles.image}
         resizeMode="cover"
       />
 
-      {/* ── Content ── */}
       <View style={styles.content}>
-        {/* Name + Status */}
         <View style={styles.row}>
           <Text style={styles.name} numberOfLines={1}>
             {name ?? "Booking"}
@@ -49,7 +31,6 @@ const BookingCard: React.FC<Props> = ({ booking, onPress }) => {
           <BookingStatusBadge status={booking.status} />
         </View>
 
-        {/* Location */}
         {location ? (
           <View style={styles.metaRow}>
             <Icon name="map-marker-alt" size={11} color={colors.neutral500} />
@@ -59,14 +40,12 @@ const BookingCard: React.FC<Props> = ({ booking, onPress }) => {
           </View>
         ) : null}
 
-        {/* Room / type label */}
         {subTitle ? (
           <Text style={styles.subTitle} numberOfLines={1}>
             {subTitle}
           </Text>
         ) : null}
 
-        {/* Dates */}
         <View style={styles.metaRow}>
           <Icon name="calendar-alt" size={11} color={colors.neutral500} />
           <Text style={styles.metaText}>
@@ -74,10 +53,8 @@ const BookingCard: React.FC<Props> = ({ booking, onPress }) => {
           </Text>
         </View>
 
-        {/* Divider */}
         <View style={styles.divider} />
 
-        {/* Footer: travellers + price */}
         <View style={styles.footer}>
           <View style={styles.metaRow}>
             <Icon name="user-friends" size={11} color={colors.neutral500} />
@@ -97,8 +74,6 @@ const BookingCard: React.FC<Props> = ({ booking, onPress }) => {
 };
 
 export default memo(BookingCard);
-
-// ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
   card: {

@@ -286,3 +286,10 @@ export type WishlistItem = {
     images: string[];
   } | null;
 };
+
+export interface Message {
+  id: string;
+  text: string;
+  sender: "user" | "ai";
+  createdAt: Date;
+}

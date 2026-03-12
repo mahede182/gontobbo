@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { GeminiClient } from "../src/utils/gemini";
+import { GeminiClient } from "../src/config/gemini";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -7,10 +7,8 @@ dotenv.config();
 const prisma = new PrismaClient();
 
 async function populateEmbeddings() {
-  console.log("🚀 Starting embedding population...");
-
-  // 1. Hotels
-  console.log("🏨 Processing Hotels...");
+  console.log("Starting embedding population...");
+  console.log("Processing Hotels...");
   const hotels = await prisma.hotel.findMany({
     select: { id: true, name: true, description: true, location: true },
   });
@@ -27,8 +25,7 @@ async function populateEmbeddings() {
     );
   }
 
-  // 2. Trips
-  console.log("✈️ Processing Trips...");
+  console.log("Processing Trips...");
   const trips = await prisma.trip.findMany({
     select: { id: true, title: true, description: true, destination: true },
   });
@@ -45,8 +42,7 @@ async function populateEmbeddings() {
     );
   }
 
-  // 3. Flights
-  console.log("🛫 Processing Flights...");
+  console.log("Processing Flights...");
   const flights = await prisma.flight.findMany({
     select: { id: true, airline: true, route: true },
   });
@@ -63,12 +59,12 @@ async function populateEmbeddings() {
     );
   }
 
-  console.log("✅ Embedding population complete!");
+  console.log("Embedding population complete!");
 }
 
 populateEmbeddings()
   .catch((e) => {
-    console.error("❌ Population failed:", e);
+    console.error("Population failed:", e);
     process.exit(1);
   })
   .finally(async () => {

@@ -1,5 +1,6 @@
 import { createNavigationContainerRef } from "@react-navigation/native";
 import { AppleUser, GoogleUser, SocialUser } from "@/@types/auth.type";
+import { Booking } from "@/@types/api.type";
 
 /**
  * Validates an email address using a regular expression.
@@ -129,4 +130,12 @@ export const getAuthProvider = (userData: SocialUser | null): string => {
  */
 export const encdUri = (val: string | number): string => {
   return encodeURIComponent(val.toString());
+};
+
+export const formatDate = (iso: string): string =>
+  new Date(iso).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+
+export const getImageUri = (booking: Booking): string | null => {
+  if (booking.type === "HOTEL") return booking.hotel?.images?.[0] ?? null;
+  return booking.trip?.image ?? null;
 };

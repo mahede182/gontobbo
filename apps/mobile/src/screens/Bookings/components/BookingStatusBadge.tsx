@@ -1,22 +1,8 @@
+import { BookingStatusProps, STATUS_CONFIG } from "@/constants/booking";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { colors } from "@/theme/colors";
-import type { Booking } from "@/@types/api.type";
 
-type Status = Booking["status"];
-
-const STATUS_CONFIG: Record<Status, { label: string; bg: string; text: string }> = {
-  PENDING: { label: "Pending", bg: colors.warning + "25", text: colors.warning },
-  CONFIRMED: { label: "Confirmed", bg: colors.success + "25", text: colors.success },
-  CANCELLED: { label: "Cancelled", bg: colors.danger + "25", text: colors.danger },
-  COMPLETED: { label: "Completed", bg: colors.primary600 + "25", text: colors.primary600 },
-};
-
-interface Props {
-  status: Status;
-}
-
-const BookingStatusBadge: React.FC<Props> = ({ status }) => {
+const BookingStatusBadge: React.FC<BookingStatusProps> = ({ status }) => {
   const config = STATUS_CONFIG[status];
   return (
     <View style={[styles.badge, { backgroundColor: config.bg }]}>

@@ -6,6 +6,8 @@ import TripCard from "./TripCard";
 import { useGetPopularTripsQuery, type Trip } from "@/store/api/tripsApi";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
+import { spacing } from "@/theme/spacing";
+import { fontSizes } from "@/theme/fontSizes";
 
 const PopularTrip: React.FC = () => {
   const { t } = useTranslation();
@@ -28,7 +30,7 @@ const PopularTrip: React.FC = () => {
   const keyExtractor = useCallback((item: Trip) => item.id, []);
 
   return (
-    <Box paddingHorizontal="medium" marginTop="twenty">
+    <Box paddingHorizontal="medium" marginTop="ten">
       <GradientTitle style={styles.title}>{t("Home.popularTrip")}</GradientTitle>
       {isLoading ? (
         <ActivityIndicator />
@@ -48,8 +50,8 @@ const PopularTrip: React.FC = () => {
 const styles = StyleSheet.create({
   title: {
     fontFamily: typography.poppinsSemibold,
-    fontSize: 20,
-    marginBottom: 10,
+    fontSize: fontSizes.lg,
+    marginBottom: spacing.five,
   },
 });
 

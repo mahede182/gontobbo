@@ -7,8 +7,6 @@ import { env } from "./config/env";
 import passport from "./config/passport";
 import { swaggerSpec } from "./config/swagger";
 import { errorHandler } from "./middleware/errorHandler";
-
-// Route imports
 import authRoutes from "./modules/auth/auth.routes";
 import usersRoutes from "./modules/users/users.routes";
 import hotelsRoutes from "./modules/hotels/hotels.routes";
@@ -17,18 +15,14 @@ import bookingsRoutes from "./modules/bookings/bookings.routes";
 import flightsRoutes from "./modules/flights/flights.routes";
 import tripsRoutes from "./modules/trips/trips.routes";
 import wishlistRoutes from "./modules/wishlist/wishlist.routes";
-import offersRoutes from "./modules/offers/offers.routes";
 import notificationsRoutes from "./modules/notifications/notifications.routes";
 import paymentsRoutes from "./modules/payments/payments.routes";
 import locationsRoutes from "./modules/locations/locations.routes";
-import tagsRoutes from "./modules/tags/tags.routes";
 import searchesRoutes from "./modules/searches/searches.routes";
 import adminRoutes from "./modules/admin/admin.routes";
 import chatRoutes from "./modules/chat/chat.routes";
 
 const app = express();
-
-// ─── Global Middleware ──────────────────────────────────────────────────────
 
 app.use(helmet());
 app.use(
@@ -41,8 +35,6 @@ app.use(morgan(env.NODE_ENV === "development" ? "dev" : "combined"));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize() as unknown as express.RequestHandler);
-
-// ─── Health Check ───────────────────────────────────────────────────────────
 
 app.get("/", (_req, res) => {
   res.json({
@@ -57,8 +49,6 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// ─── API Routes ─────────────────────────────────────────────────────────────
-
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/hotels", hotelsRoutes);
@@ -67,16 +57,12 @@ app.use("/api/bookings", bookingsRoutes);
 app.use("/api/flights", flightsRoutes);
 app.use("/api/trips", tripsRoutes);
 app.use("/api/wishlist", wishlistRoutes);
-app.use("/api/offers", offersRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/payments", paymentsRoutes);
 app.use("/api/locations", locationsRoutes);
-app.use("/api/tags", tagsRoutes);
 app.use("/api/searches", searchesRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/chat", chatRoutes);
-
-// ─── Swagger Docs ───────────────────────────────────────────────────────────
 
 app.use(
   "/api/docs",
@@ -91,16 +77,12 @@ app.get("/api/docs.json", (_req, res) => {
   res.json(swaggerSpec);
 });
 
-// ─── 404 Handler ────────────────────────────────────────────────────────────
-
 app.use((_req, res) => {
   res.status(404).json({
     success: false,
     error: { code: 404, message: "Route not found" },
   });
 });
-
-// ─── Error Handler ──────────────────────────────────────────────────────────
 
 app.use(errorHandler);
 

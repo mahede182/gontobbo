@@ -27,6 +27,7 @@ import { TAGS_DATA } from "@/data/tagData";
 import Icon from "@expo/vector-icons/Ionicons";
 
 type Props = {};
+const _IMG_SIZE = 52;
 
 const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const navigation = useNavigation<any>();
@@ -63,13 +64,13 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
           <TouchableOpacity onPress={drawerOpen}>
             <Image
               source={images.menuBtn}
-              style={{ height: 48, width: 48, resizeMode: "contain" }}
+              style={{ height: _IMG_SIZE, width: _IMG_SIZE, resizeMode: "cover" }}
             />
           </TouchableOpacity>
           <Pressable onPress={() => navigation.navigate("NOTIFICATION")}>
             <Image
               source={images.notifiocationBtn}
-              style={{ height: 48, width: 48, resizeMode: "contain" }}
+              style={{ height: _IMG_SIZE, width: _IMG_SIZE, resizeMode: "cover" }}
             />
           </Pressable>
         </Box>

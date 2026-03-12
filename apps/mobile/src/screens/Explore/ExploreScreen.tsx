@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Box } from "@/theme";
 import { images } from "@/theme/images";
 import Tag from "../Home/component/Tag";
@@ -36,21 +36,24 @@ const ExploreScreens: React.FC<Props> = (): JSX.Element => {
       </Box>
 
       {/* === Tags === */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.tagList}>
-        {TAGS_DATA.map((tag) => (
-          <Tag
-            key={tag.id}
-            id={tag.id}
-            icon={tag.icon}
-            label={tag.label}
-            active={activeTag === tag.label}
-            onPress={handleTagPress}
-          />
-        ))}
-      </ScrollView>
+      <View style={{ flexGrow: 0, paddingVertical: 10 }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ flexGrow: 0 }}
+          contentContainerStyle={styles.tagList}>
+          {TAGS_DATA.map((tag) => (
+            <Tag
+              key={tag.id}
+              id={tag.id}
+              icon={tag.icon}
+              label={tag.label}
+              active={activeTag === tag.label}
+              onPress={handleTagPress}
+            />
+          ))}
+        </ScrollView>
+      </View>
 
       {/* === Content based on active tag === */}
       {activeTag === "Hotels" && <SearchForm />}

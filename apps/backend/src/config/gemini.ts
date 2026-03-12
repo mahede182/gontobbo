@@ -1,24 +1,11 @@
 import axios from "axios";
-import { env } from "../config/env";
+import { env } from "./env";
+import { GeminiContent } from "../@types/express";
 
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models";
 const API_KEY = env.GONTOBBO_AI;
 
-export type GeminiRole = "user" | "model";
-
-export interface GeminiPart {
-  text: string;
-}
-
-export interface GeminiContent {
-  role: GeminiRole;
-  parts: GeminiPart[];
-}
-
 export class GeminiClient {
-  /**
-   * Generates text content using Gemini model
-   */
   static async generateContent(
     message: string,
     history: GeminiContent[] = [],
@@ -29,9 +16,6 @@ export class GeminiClient {
 
     const contents: GeminiContent[] = [];
 
-    // System instruction as a user message followed by a model acknowledgment
-    // OR use system_instruction if the model version supports it correctly in REST
-    // For simplicity and compatibility with existing logic:
     if (systemPrompt) {
       contents.push({
         role: "user",
@@ -43,10 +27,8 @@ export class GeminiClient {
       });
     }
 
-    // Add history
     contents.push(...history);
 
-    // Add current message
     contents.push({
       role: "user",
       parts: [{ text: message }],
@@ -65,9 +47,6 @@ export class GeminiClient {
     }
   }
 
-  /**
-   * Generates vector embedding for a given text
-   */
   static async embedContent(text: string): Promise<number[]> {
     const model = "gemini-embedding-001";
     const url = `${GEMINI_API_URL}/${model}:embedContent?key=${API_KEY}`;

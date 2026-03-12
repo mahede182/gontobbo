@@ -3,14 +3,9 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { colors } from "@/theme/colors";
+import { TABS } from "@/constants/booking";
 
 export type BookingTypeFilter = "ALL" | "HOTEL" | "TRIP";
-
-const TABS: { key: BookingTypeFilter; label: string }[] = [
-  { key: "ALL", label: "All" },
-  { key: "HOTEL", label: "Hotel" },
-  { key: "TRIP", label: "Trip" },
-];
 
 interface Props {
   active: BookingTypeFilter;

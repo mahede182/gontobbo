@@ -222,7 +222,6 @@ const RegisterScreen: React.FC = (): JSX.Element => {
           </Box>
         </KeyboardStickyView>
       </Background>
-      <KeyboardToolbar />
     </>
   );
 };
