@@ -12,16 +12,20 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderTitle from "@/components/HeaderTitle";
 import { typography } from "@/theme/typography";
+import { colors } from "@/theme/colors";
+import { images } from "@/theme/images";
 import Tag from "./component/Tag";
 import PriceSelect from "./component/PriceSelect";
 import { Divider } from "./component/Divider";
 import { useGetHotelRoomsQuery, type Room } from "@/store/api/hotelsApi";
+import { MotiView } from "moti";
 
 const SelectRoom = () => {
   const navigation = useNavigation<any>();
   const route = useRoute();
-  const hotelId = (route.params as any)?.hotelId;
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const params = (route.params as any) ?? {};
+  const hotelId = params.hotelId;
+  const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
 
   const { data: rooms = [], isLoading } = useGetHotelRoomsQuery(hotelId, {
     skip: !hotelId,
@@ -29,8 +33,8 @@ const SelectRoom = () => {
 
   if (isLoading) {
     return (
-      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
-        <ActivityIndicator size="large" />
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={colors.primary700} />
       </SafeAreaView>
     );
   }
@@ -47,65 +51,79 @@ const SelectRoom = () => {
     return tags;
   };
 
+  const selectedRoom = rooms.find((r) => r.id === selectedRoomId);
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderTitle title="Select Room" />
-      <ScrollView showsHorizontalScrollIndicator>
-        {rooms.map((room: Room) => {
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {rooms.map((room: Room, index) => {
           const roomImages = room.images?.slice(0, 3) ?? [];
+          const isSelected = selectedRoomId === room.id;
+
           return (
-            <Box key={room.id}>
+            <MotiView
+              key={room.id}
+              from={{ opacity: 0, translateY: 20 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ type: "timing", duration: 500, delay: index * 100 }}
+              style={[styles.roomCard, isSelected && styles.selectedCard]}>
               <Box style={styles.imageContainer}>
                 <Image
-                  source={
-                    roomImages[0] ? { uri: roomImages[0] } : require("@/assets/hotel_image_1.png")
-                  }
-                  style={styles.leftImage}
+                  source={roomImages[0] ? { uri: roomImages[0] } : images.dummyCard}
+                  style={styles.mainImage}
                 />
-                <Box style={styles.rightImageContainer}>
-                  {roomImages[1] && (
-                    <Image source={{ uri: roomImages[1] }} style={styles.rightImage} />
+                <Box style={styles.sideImagesContainer}>
+                  {roomImages[1] ? (
+                    <Image source={{ uri: roomImages[1] }} style={styles.sideImage} />
+                  ) : (
+                    <Box style={[styles.sideImage, styles.placeholderImage]} />
                   )}
-                  {roomImages[2] && (
-                    <Image source={{ uri: roomImages[2] }} style={styles.rightImage} />
+                  {roomImages[2] ? (
+                    <Image source={{ uri: roomImages[2] }} style={styles.sideImage} />
+                  ) : (
+                    <Box style={[styles.sideImage, styles.placeholderImage]} />
                   )}
                 </Box>
               </Box>
-              <Box>
-                <RestyleText style={styles.title}>{room.name}</RestyleText>
-                <Box style={{ flexDirection: "row", flexWrap: "wrap" }}>
+
+              <Box padding="medium">
+                <RestyleText style={styles.roomName}>{room.name}</RestyleText>
+                <Box style={styles.tagWrapper}>
                   {buildTags(room).map((tag, i) => (
                     <Tag key={i} tag={tag} />
                   ))}
                 </Box>
-                <Divider />
-                <TouchableOpacity onPress={() => setSelectedRoom(room)}>
-                  <PriceSelect
-                    gradient={selectedRoom?.id === room.id}
-                    buttonText="Select"
-                    type="booking"
-                    price={room.price}
-                    priceSub={room.taxInfo || "+taxes & fees, Per Night for 1 Room"}
-                  />
-                </TouchableOpacity>
+
+                <Divider style={styles.divider} />
+
+                <PriceSelect
+                  gradient={isSelected}
+                  buttonText={isSelected ? "Selected" : "Select"}
+                  type="booking"
+                  price={room.price}
+                  priceSub={room.taxInfo || "+$45 taxes & fees, Per Night"}
+                  onPress={() => setSelectedRoomId(room.id)}
+                />
               </Box>
-            </Box>
+            </MotiView>
           );
         })}
       </ScrollView>
-      {selectedRoom && (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("REVIEW_BOOKING", { hotelId, roomId: selectedRoom.id })
-          }>
+
+      {selectedRoomId && (
+        <MotiView from={{ translateY: 100 }} animate={{ translateY: 0 }} style={styles.footer}>
           <PriceSelect
             gradient
             buttonText="Book Now"
             type="booking"
-            price={selectedRoom.price}
-            priceSub={selectedRoom.taxInfo || "+taxes & fees, Per Night for 1 Room"}
+            price={selectedRoom?.price ?? 0}
+            priceSub={selectedRoom?.taxInfo || "+taxes & fees, Total"}
+            onPress={() =>
+              navigation.navigate("REVIEW_BOOKING", { hotelId, roomId: selectedRoomId, ...params })
+            }
           />
-        </TouchableOpacity>
+        </MotiView>
       )}
     </SafeAreaView>
   );
@@ -114,32 +132,72 @@ const SelectRoom = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 10,
+    backgroundColor: colors.white,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.white,
+  },
+  scrollContent: {
+    padding: 16,
+    paddingBottom: 100,
+  },
+  roomCard: {
+    backgroundColor: colors.white100,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: colors.neutral200,
+    marginBottom: 20,
+    overflow: "hidden",
+  },
+  selectedCard: {
+    borderColor: colors.primary700,
+    borderWidth: 2,
   },
   imageContainer: {
     flexDirection: "row",
-    paddingVertical: 10,
+    height: 180,
   },
-  leftImage: {
-    width: "50%",
-    height: 200,
-    borderRadius: 10,
-    marginHorizontal: 10,
+  mainImage: {
+    flex: 2,
+    height: "100%",
   },
-  rightImageContainer: {
-    width: "50%",
-    height: 200,
-    justifyContent: "space-between",
+  sideImagesContainer: {
+    flex: 1,
+    paddingLeft: 2,
   },
-  rightImage: {
-    height: "49%",
-    borderRadius: 10,
+  sideImage: {
+    flex: 1,
+    marginBottom: 2,
   },
-  title: {
-    fontFamily: typography.poppinsMedium,
-    fontSize: 22,
-    marginHorizontal: 20,
-    marginVertical: 10,
+  placeholderImage: {
+    backgroundColor: colors.neutral200,
+  },
+  roomName: {
+    fontFamily: typography.poppinsSemibold,
+    fontSize: 20,
+    color: colors.black100,
+    marginBottom: 8,
+  },
+  tagWrapper: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginBottom: 4,
+  },
+  divider: {
+    marginVertical: 12,
+    backgroundColor: colors.neutral100,
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: colors.white,
+    borderTopWidth: 1,
+    borderTopColor: colors.neutral200,
   },
 });
 

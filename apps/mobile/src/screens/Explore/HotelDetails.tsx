@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { colors } from "@/theme/colors";
 import Icon from "@expo/vector-icons/FontAwesome6";
-import MapView, { Marker } from "react-native-maps";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { images } from "@/theme/images";
 import PriceSelect from "./component/PriceSelect";
@@ -89,6 +88,8 @@ const HotelDetails = () => {
     );
   }
 
+  const params = (route.params as any) ?? {};
+
   const startingPrice = hotel.rooms?.[0]?.price ?? 0;
   const amenityNames = hotel.amenities?.slice(0, 3).map((a: any) => a.name) ?? [];
 
@@ -156,8 +157,8 @@ const HotelDetails = () => {
               {t("Explore.travelDatesAndGuests")}
             </RestyleText>
             <RestyleText style={styles.sectionContent}>
-              {t("Explore.checkIn")}: {hotel.checkInTime} | {t("Explore.checkOut")}:{" "}
-              {hotel.checkOutTime}
+              {t("Explore.checkIn")}: {params.checkIn || hotel.checkInTime} |{" "}
+              {t("Explore.checkOut")}: {params.checkOut || hotel.checkOutTime}
             </RestyleText>
           </Box>
         </Box>
@@ -175,7 +176,7 @@ const HotelDetails = () => {
             <Box style={styles.amenitiesContainer}>
               {amenityNames.map((amenity: string, index: number) => (
                 <Box key={index} style={styles.amenityContainer}>
-                  <Icon name="dumbbell" size={16} color={colors.neutral600} />
+                  <Icon key={index} name="dumbbell" size={16} color={colors.neutral600} />
                   <RestyleText style={styles.amenity}>{amenity}</RestyleText>
                 </Box>
               ))}
@@ -210,13 +211,13 @@ const HotelDetails = () => {
                 </RestyleText>
               </Box>
               <RestyleText style={styles.reviewText}>{review.text}</RestyleText>
-              <Box style={styles.reviewRating}>
+              {/* <Box style={styles.reviewRating}>
                 {Array(review.rating)
                   .fill(null)
                   .map((_: any, i: number) => (
                     <Icon key={i} name="star" size={16} color={colors.linearEnd} />
                   ))}
-              </Box>
+              </Box> */}
             </Box>
           ))}
           <TouchableOpacity onPress={() => navigation.navigate("REVIEW", { hotelId: hotel.id })}>
@@ -238,24 +239,30 @@ const HotelDetails = () => {
             marginVertical={"ten"}
             style={styles.section}>
             <RestyleText style={styles.sectionTitle}>{t("Explore.location")}</RestyleText>
-            {isIOS && hotel.latitude && hotel.longitude ? (
-              <MapView
-                style={styles.map}
-                initialRegion={{
-                  latitude: hotel.latitude,
-                  longitude: hotel.longitude,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
-                }}>
-                <Marker
-                  coordinate={{
-                    latitude: hotel.latitude,
-                    longitude: hotel.longitude,
-                  }}
-                  title={hotel.name}
-                />
-              </MapView>
-            ) : null}
+            <Box
+              style={styles.map}
+              alignItems="center"
+              justifyContent="center"
+              backgroundColor="neutral100"
+              borderRadius={10}>
+              <Image
+                source={
+                  images.map || { uri: "https://via.placeholder.com/400x200?text=Map+Location" }
+                }
+                style={{ width: "100%", height: "100%" }}
+                resizeMode="cover"
+              />
+              <Box
+                position="absolute"
+                backgroundColor="white"
+                padding="small"
+                borderRadius={4}
+                style={{ opacity: 0.8 }}>
+                <RestyleText style={{ fontSize: 12, color: colors.black100 }}>
+                  {hotel.location}
+                </RestyleText>
+              </Box>
+            </Box>
             <RestyleText style={styles.locationAddress}>{hotel.location}</RestyleText>
           </Box>
         </TouchableOpacity>
@@ -263,13 +270,15 @@ const HotelDetails = () => {
         <PriceSelect
           buttonText={t("Explore.selectRoom")}
           price={startingPrice}
+          onPress={() => navigation.navigate("SELECT_ROOM", { hotelId: hotel.id, ...params })}
           gradient
-          priceSub={`+$45 ${t("Explore.taxesAndFees" as any)}, ${t("Explore.perNightForOneRoom")}`}
+          priceSub={`+$45 ${t("Explore.taxesAndFees", "taxes & fees")}, ${t("Explore.perNightForOneRoom", "Per Night for 1 Room")}`}
         />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

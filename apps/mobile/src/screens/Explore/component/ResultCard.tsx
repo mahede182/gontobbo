@@ -4,6 +4,7 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import GradientTitle from "@/components/GradientTitle";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@/theme/colors";
+import { images } from "@/theme/images";
 
 interface ResultCardProps {
   id: string;
@@ -11,18 +12,23 @@ interface ResultCardProps {
   location: string;
   price: number;
   imageUrl?: string;
+  searchParams?: any;
 }
 
-const ResultCard: React.FC<ResultCardProps> = ({ id, name, location, price, imageUrl }) => {
-  const navigation = useNavigation();
+const ResultCard: React.FC<ResultCardProps> = ({
+  id,
+  name,
+  location,
+  price,
+  imageUrl,
+  searchParams,
+}) => {
+  const navigation = useNavigation<any>();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS", { hotelId: id })}
+      onPress={() => navigation.navigate("SEARCH_RESULT_DETAILS", { hotelId: id, ...searchParams })}
       style={styles.container}>
-      <Image
-        source={imageUrl ? { uri: imageUrl } : require("@/assets/hotel_image_1.png")}
-        style={styles.image}
-      />
+      <Image source={imageUrl ? { uri: imageUrl } : images.dummyCard} style={styles.image} />
       <Box style={styles.detailsContainer}>
         <Box style={styles.titleContainer}>
           <RestyleText style={styles.name}>{name}</RestyleText>

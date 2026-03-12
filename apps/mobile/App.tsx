@@ -14,6 +14,8 @@ import { store } from "@/store/store";
 
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import Toast from "react-native-toast-message";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { googleSignInConfig } from "@/config/google";
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>;
@@ -24,6 +26,10 @@ interface AppProps {
  */
 export default function App(props: AppProps) {
   const [areFontsLoaded] = useFonts(customFontsToLoad);
+
+  useEffect(() => {
+    GoogleSignin.configure(googleSignInConfig);
+  }, []);
 
   if (!areFontsLoaded) return null;
 

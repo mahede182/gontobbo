@@ -112,7 +112,8 @@ const RegisterScreen: React.FC = (): JSX.Element => {
                   style={[
                     styles.input as any,
                     {
-                      borderColor: isValidEmail ? colors.neutral300 : colors.danger,
+                      borderColor:
+                        email.length === 0 || isValidEmail ? colors.neutral300 : colors.danger,
                     },
                   ]}
                   placeholder="Email Address"
@@ -129,7 +130,10 @@ const RegisterScreen: React.FC = (): JSX.Element => {
                   style={[
                     styles.passwordContainer as any,
                     {
-                      borderColor: isValidPassword ? colors.neutral300 : colors.danger,
+                      borderColor:
+                        password.length === 0 || isValidPassword
+                          ? colors.neutral300
+                          : colors.danger,
                     },
                   ]}>
                   <TextInput

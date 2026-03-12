@@ -13,6 +13,9 @@ import { useSearchHotelsQuery } from "@/store/api/hotelsApi";
 import ResultCard from "./component/ResultCard";
 import Dropdown from "@/components/Dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { MotiView } from "moti";
+import Icon from "@expo/vector-icons/MaterialIcons";
+import { typography } from "@/theme/typography";
 
 const SearchResult = () => {
   const navigation = useNavigation<any>();
@@ -20,7 +23,7 @@ const SearchResult = () => {
   const params = (route.params as any) ?? {};
   const [sortBy, setSortBy] = useState<string>("");
 
-  const location = params.location ?? "";
+  const location = params.location || params.selectedLocation || "Nearby Hotels";
   const subtitle = [
     params.checkIn,
     params.checkOut,
@@ -28,11 +31,12 @@ const SearchResult = () => {
     params.guests ? `${params.guests} Adults` : null,
   ]
     .filter(Boolean)
-    .join(", ");
+    .join(" · ");
 
   const searchParams = useMemo(() => {
     const p: any = {};
-    if (params.location) p.location = params.location;
+    if (params.location || params.selectedLocation)
+      p.location = params.location || params.selectedLocation;
     if (params.checkIn) p.checkIn = params.checkIn;
     if (params.checkOut) p.checkOut = params.checkOut;
     if (params.guests) p.guests = params.guests;
@@ -45,26 +49,36 @@ const SearchResult = () => {
       p.sortOrder = "asc";
     }
     return p;
-  }, [params.location, params.checkIn, params.checkOut, params.guests, params.rooms, sortBy]);
+  }, [params, sortBy]);
 
   const { data, isLoading } = useSearchHotelsQuery(searchParams);
   const hotels = (data as any)?.data ?? data ?? [];
 
   return (
     <SafeAreaView style={styles.container}>
-      <Box style={styles.header}>
-        <Box style={styles.headerContent}>
-          <RestyleText style={styles.title}>{location || "Hotels"}</RestyleText>
-          <RestyleText style={styles.subtitle}>{subtitle || "All results"}</RestyleText>
-        </Box>
-        <TouchableOpacity
-          style={styles.searchButton}
-          onPress={() => navigation.navigate("SWITCH_TO_FLIGHT")}>
-          <RestyleText style={styles.searchButtonText}>Search</RestyleText>
+      <MotiView
+        from={{ translateY: -50, opacity: 0 }}
+        animate={{ translateY: 0, opacity: 1 }}
+        style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Icon name="arrow-back" size={24} color={colors.black100} />
         </TouchableOpacity>
-      </Box>
-      <Box style={styles.filters}>
-        <Box alignItems={"center"} justifyContent={"center"}>
+
+        <Box flex={1} marginHorizontal="small">
+          <RestyleText style={styles.title} numberOfLines={1}>
+            {location}
+          </RestyleText>
+          <RestyleText style={styles.subtitle} numberOfLines={1}>
+            {subtitle || "All Hotels"}
+          </RestyleText>
+        </Box>
+
+        <TouchableOpacity style={styles.editButton} onPress={() => navigation.goBack()}>
+          <Icon name="edit" size={20} color={colors.primary700} />
+        </TouchableOpacity>
+      </MotiView>
+      <Box style={styles.filtersWrapper}>
+        <Box flex={1} marginRight="small">
           <Dropdown
             label="Sort By"
             data={[
@@ -73,33 +87,48 @@ const SearchResult = () => {
             ]}
           />
         </Box>
-        <Box alignItems={"center"} justifyContent={"center"}>
-          {/* TODO: Use react native rating bar */}
+        <Box flex={1}>
           <Dropdown
-            label="Star Rating"
+            label="Rating"
             data={[
-              { label: "⭐⭐⭐⭐⭐", value: "5" },
-              { label: "⭐⭐⭐⭐", value: "4" },
-              { label: "⭐⭐⭐", value: "3" },
+              { label: "5 Stars", value: "5" },
+              { label: "4 Stars", value: "4" },
+              { label: "3 Stars", value: "3" },
             ]}
           />
         </Box>
       </Box>
       {isLoading ? (
-        <ActivityIndicator style={{ marginTop: 20 }} />
+        <Box flex={1} justifyContent="center" alignItems="center">
+          <ActivityIndicator size="large" color={colors.primary700} />
+          <RestyleText style={styles.loadingText}>Finding best deals...</RestyleText>
+        </Box>
       ) : (
         <FlatList
           data={hotels}
-          renderItem={({ item }) => (
-            <ResultCard
-              id={item.id}
-              name={item.name}
-              location={item.location}
-              price={item.startingPrice ?? 0}
-              imageUrl={item.images?.[0]}
-            />
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item, index }) => (
+            <MotiView
+              from={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "timing", duration: 400, delay: index * 100 }}>
+              <ResultCard
+                id={item.id}
+                name={item.name}
+                location={item.location}
+                price={item.startingPrice ?? 0}
+                imageUrl={item.images?.[0]}
+                searchParams={params}
+              />
+            </MotiView>
           )}
           keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <Box padding="xxl" alignItems="center">
+              <RestyleText style={styles.emptyText}>No hotels found for this criteria.</RestyleText>
+            </Box>
+          }
         />
       )}
     </SafeAreaView>
@@ -109,50 +138,53 @@ const SearchResult = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.white100,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
     backgroundColor: colors.white,
-    borderWidth: 1,
-    borderColor: colors.secondary500,
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.neutral200,
   },
-  headerContent: {
-    flex: 1,
+  backButton: {
+    padding: 4,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: typography.poppinsSemibold,
+    fontSize: 18,
+    color: colors.black100,
   },
   subtitle: {
-    fontSize: 16,
+    fontFamily: typography.poppinsRegular,
+    fontSize: 12,
     color: colors.neutral500,
   },
-  searchButton: {
-    backgroundColor: colors.blue800,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 4,
-  },
-  searchButtonText: {
-    color: colors.white,
-    fontWeight: "bold",
-    fontFamily: "Poppins-SemiBold",
-  },
-  filters: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    padding: 16,
+  editButton: {
+    padding: 8,
+    backgroundColor: colors.primary50,
     borderRadius: 8,
-    marginHorizontal: 16,
-    marginVertical: 8,
+  },
+  filtersWrapper: {
+    flexDirection: "row",
+    padding: 16,
+    backgroundColor: colors.white,
+    marginBottom: 8,
+  },
+  listContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontFamily: typography.poppinsMedium,
+    color: colors.neutral500,
+  },
+  emptyText: {
+    fontFamily: typography.poppinsMedium,
+    color: colors.neutral500,
+    textAlign: "center",
   },
 });
 

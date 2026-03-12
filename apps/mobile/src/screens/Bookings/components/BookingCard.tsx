@@ -8,7 +8,11 @@ import BookingStatusBadge from "./BookingStatusBadge";
 import { getImageUri, formatDate } from "@/utils/helper";
 import { BookinCardProps } from "@/@types/booking.typs";
 
-const BookingCard: React.FC<BookinCardProps> = ({ booking, onPress }) => {
+const BookingCard: React.FC<BookinCardProps & { onCancel?: (booking: Booking) => void }> = ({
+  booking,
+  onPress,
+  onCancel,
+}) => {
   const imageUri = getImageUri(booking);
   const name = booking.type === "HOTEL" ? booking.hotel?.name : booking.trip?.title;
   const location = booking.type === "HOTEL" ? booking.hotel?.location : booking.trip?.destination;
@@ -68,6 +72,17 @@ const BookingCard: React.FC<BookinCardProps> = ({ booking, onPress }) => {
           </View>
           <Text style={styles.price}>${booking.totalPrice}</Text>
         </View>
+
+        {(booking.status === "CONFIRMED" || booking.status === "PENDING") && (
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={(e) => {
+              e.stopPropagation();
+              onCancel?.(booking);
+            }}>
+            <Text style={styles.cancelText}>Cancel Booking</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -145,5 +160,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
     color: colors.primary700,
+  },
+  cancelButton: {
+    marginTop: 10,
+    backgroundColor: colors.secondary50,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.secondary200,
+    alignItems: "center",
+  },
+  cancelText: {
+    color: colors.secondary700,
+    fontSize: 12,
+    fontWeight: "600",
   },
 });

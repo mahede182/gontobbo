@@ -2,10 +2,11 @@ import React, { useCallback, useState } from "react";
 import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@/theme/colors";
-import { useGetBookingsQuery } from "@/store/api/bookingsApi";
 import type { Booking } from "@/@types/api.type";
+import { Alert } from "react-native";
 import HeaderTitle from "@/components/HeaderTitle";
 import BookingCard from "./components/BookingCard";
+import { useGetBookingsQuery, useCancelBookingMutation } from "@/store/api/bookingsApi";
 import BookingFilterTabs, { type BookingTypeFilter } from "./components/BookingFilterTabs";
 import BookingEmptyState from "./components/BookingEmptyState";
 
@@ -17,25 +18,49 @@ const BookingsScreens: React.FC = (): JSX.Element => {
     activeFilter === "ALL" ? undefined : { type: activeFilter as "HOTEL" | "TRIP" };
 
   const { data: response, isLoading, isFetching } = useGetBookingsQuery(queryParams);
+  const [cancelBooking, { isLoading: isCancelling }] = useCancelBookingMutation();
   const bookings = response?.data ?? [];
+
+  const handleCancelPress = useCallback(
+    (booking: Booking) => {
+      Alert.alert(
+        "Cancel Booking",
+        "Are you sure you want to cancel this booking?",
+        [
+          { text: "No", style: "cancel" },
+          {
+            text: "Yes, Cancel",
+            style: "destructive",
+            onPress: async () => {
+              try {
+                await cancelBooking(booking.id).unwrap();
+                Alert.alert("Success", "Booking cancelled successfully.");
+              } catch (error) {
+                Alert.alert("Error", "Failed to cancel booking. Please try again.");
+              }
+            },
+          },
+        ],
+        { cancelable: true },
+      );
+    },
+    [cancelBooking],
+  );
 
   const handleCardPress = useCallback((booking: Booking) => {}, []);
 
   const renderItem = useCallback(
-    ({ item }: { item: Booking }) => <BookingCard booking={item} onPress={handleCardPress} />,
-    [handleCardPress],
+    ({ item }: { item: Booking }) => (
+      <BookingCard booking={item} onPress={handleCardPress} onCancel={handleCancelPress} />
+    ),
+    [handleCardPress, handleCancelPress],
   );
 
   const keyExtractor = useCallback((item: Booking) => item.id, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <HeaderTitle title="Bookings" />
-        {(isLoading || isFetching) && (
-          <ActivityIndicator size="small" color={colors.primary700} style={styles.spinner} />
-        )}
-      </View>
+      <HeaderTitle title="Bookings" />
 
       <BookingFilterTabs active={activeFilter} onChange={setActiveFilter} />
 
@@ -96,8 +121,10 @@ const styles = StyleSheet.create({
   listContent: {
     paddingTop: 4,
     paddingBottom: 24,
+    flexGrow: 1,
+    justifyContent: "flex-start",
   },
   listEmpty: {
-    flex: 1,
+    justifyContent: "center",
   },
 });

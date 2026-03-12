@@ -144,82 +144,12 @@ const TabNavigation = () => {
         }}
         component={ChatScreen}
       />
-      {/* <Tab.Screen
-        name="WISHLIST"
-        options={{
-          title: "",
-          tabBarIcon: ({ focused }) => (
-            <Box alignItems={"center"} justifyContent={"center"}>
-              {true ? (
-                <Box
-                  style={{
-                    position: "absolute",
-                    backgroundColor: colors.danger,
-                    bottom: 0,
-                    top: isIOS ? "undefined" : -10,
-                    right: 5,
-                    zIndex: 999,
-                    height: 16,
-                    width: 16,
-                    borderRadius: 20,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}>
-                  <RestyleText style={{ fontSize: 13, color: colors.white }}>
-                    {wishlistCount}
-                  </RestyleText>
-                </Box>
-              ) : null}
-
-              <Image
-                source={focused ? images.wishlistActive : images.wishlist}
-                tintColor={focused ? colors.tabSelected : colors.tabUnselected}
-                style={{ height: 18, width: 22 }}
-              />
-              <RestyleText
-                style={[
-                  styles.title,
-                  dynamicCss(
-                    "fontFamily",
-                    focused ? typography.poppinsMedium : typography.poppinsRegular,
-                  ),
-                  dynamicCss("fontWeight", focused ? "600" : "400"),
-                  dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
-                ]}>
-                {t("common.wishlist")}
-              </RestyleText>
-            </Box>
-          ),
-        }}
-        component={WishListScreens}
-      /> */}
       <Tab.Screen
         name="BOOKINGS"
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
             <Box alignItems={"center"} justifyContent={"center"}>
-              {true ? (
-                <Box
-                  style={{
-                    position: "absolute",
-                    backgroundColor: colors.danger,
-                    bottom: 0,
-                    top: isIOS ? "undefined" : -10,
-                    right: 5,
-                    zIndex: 999,
-                    height: 16,
-                    width: 16,
-                    borderRadius: 20,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}>
-                  <RestyleText style={{ fontSize: 13, color: colors.white }}>
-                    {bookingsCount}
-                  </RestyleText>
-                </Box>
-              ) : null}
-
               <Image
                 source={focused ? images.bookingActive : images.booking}
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}

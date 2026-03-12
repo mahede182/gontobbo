@@ -10,11 +10,13 @@ import { googleSignInConfig } from "@/config/google";
 import { showToast } from "@/utils/toast";
 
 export const handleGoogleLogin = async () => {
-  GoogleSignin.configure(googleSignInConfig);
   try {
     await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    return userInfo;
+    const res = await GoogleSignin.signIn();
+    if ((res as any).type === "cancelled") {
+      return null;
+    }
+    return res;
   } catch (error: any) {
     if (isErrorWithCode(error)) {
       switch (error.code) {
