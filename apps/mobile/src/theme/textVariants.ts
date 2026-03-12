@@ -1,52 +1,49 @@
 import { typography } from "./typography";
+import { fontSizes } from "./fontSizes";
 
 export const textVariants = {
   defaults: {
     fontFamily: typography.poppinsRegular,
-    fontSize: 14,
+    fontSize: fontSizes.md,
     fontWeight: "500",
   },
   textBase: {
-    fontSize: 16,
-    // lineHeight: 24,
+    fontSize: fontSizes.lg,
   },
   buttonLabel: {
     fontFamily: typography.poppinsMedium,
     color: "white",
-    fontSize: 16,
+    fontSize: fontSizes.lg,
     fontWeight: "500",
   },
   h2: {
-    fontSize: 20,
+    fontSize: fontSizes.xxl,
     fontWeight: "bold",
-    // lineHeight: 24,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: fontSizes.lg,
     fontWeight: "500",
-    // lineHeight: 20,
   },
   caption: {
-    fontSize: 12,
+    fontSize: fontSizes.sm,
     fontFamily: typography.poppinsRegular,
     fontWeight: "200",
   },
   gradientTitle: {
     fontFamily: typography.poppinsSemibold,
-    fontSize: 20,
+    fontSize: fontSizes.xxl,
     fontWeight: "600",
   },
   searchHotelTitle: {
     color: "neutral700",
     fontFamily: typography.poppinsMedium,
-    fontSize: 16,
+    fontSize: fontSizes.lg,
     fontWeight: "600",
   },
   inputTitle: {
     fontFamily: typography.poppinsRegular,
     color: "neutral700",
-    fontSize: 16,
-    // lineHeight: "100%",
+    fontSize: fontSizes.lg,
     fontWeight: "500",
     marginBottom: "five",
   },

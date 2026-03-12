@@ -40,8 +40,7 @@ export const LOCATIONS_POPULAR = "/locations/popular";
 export const NOTIFICATIONS = "/notifications";
 export const NOTIFICATION_READ = (id: string | number) => `/notifications/${encdUri(id)}/read`;
 export const NOTIFICATIONS_READ_ALL = "/notifications/read-all";
-export const OFFERS = "/offers";
-export const OFFER_DETAIL = (id: string | number) => `/offers/${encdUri(id)}`;
+
 export const PAYMENTS_METHODS = "/payments/methods";
 export const PAYMENT_METHOD_DETAIL = (id: string | number) => `/payments/methods/${encdUri(id)}`;
 export const REVIEWS = "/reviews";
@@ -49,7 +48,7 @@ export const REVIEW_DETAIL = (id: string | number) => `/reviews/${encdUri(id)}`;
 
 export const SEARCHES_RECENT = "/searches/recent";
 
-export const TAGS = "/tags";
+export const CHAT_AI = "/chat";
 
 export const TRIPS_POPULAR = "/trips/popular";
 export const TRIPS = "/trips";

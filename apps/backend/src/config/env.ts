@@ -19,6 +19,7 @@ const envSchema = z.object({
   ADMIN_EMAIL: z.string().default("admin@gontobbo.co"),
   ADMIN_PASSWORD: z.string().default("Admin@123456"),
   CORS_ORIGIN: z.string().default("*"),
+  GONTOBBO_AI: z.string().min(1, "GONTOBBO_AI (Gemini API key) is required"),
 });
 
 const parsed = envSchema.safeParse(process.env);

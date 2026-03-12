@@ -11,6 +11,7 @@ export const bnTranslations = {
     wishlist: "ইচ্ছার তালিকা",
     profile: "প্রোফাইল",
     bookings: "বুকিংস",
+    chat: "চ্যাট",
   },
   login: {
     continueWithApple: "অ্যাপল দিয়ে চালিয়ে যান",

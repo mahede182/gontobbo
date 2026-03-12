@@ -47,12 +47,14 @@ const SearchForm = () => {
       <Box flexDirection="row" justifyContent="space-between" marginVertical="medium">
         <DateInput
           date="10, Nov 25"
+          label="Check In"
           onPress={() => {
             navigation.navigate("PICK_DATE");
           }}
         />
         <DateInput
           date={"15, Nov 25"}
+          label="Check Out"
           onPress={() => {
             navigation.navigate("PICK_DATE");
           }}

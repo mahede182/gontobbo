@@ -6,7 +6,7 @@ import { images } from "@/theme/images";
 import { Box, RestyleText } from "@/theme";
 import { typography } from "@/theme/typography";
 import { useTranslation } from "react-i18next";
-import OfferScreen from "@/screens/Offer";
+import ChatScreen from "@/screens/Chat";
 import TravelScreens from "@/screens/Explore";
 import ProfileScreen from "@/screens/Profile";
 import DrawerNavigation from "./DrawerNavigation";
@@ -117,13 +117,13 @@ const TabNavigation = () => {
         component={TravelScreens}
       />
       <Tab.Screen
-        name="OFFERS"
+        name="CHAT"
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
             <Box alignItems={"center"} justifyContent={"center"}>
               <Image
-                source={focused ? images.offerActive : images.offer}
+                source={focused ? images.chatActive : images.chat}
                 tintColor={focused ? colors.tabSelected : colors.tabUnselected}
                 style={styles.imgStyle}
               />
@@ -137,12 +137,12 @@ const TabNavigation = () => {
                   dynamicCss("fontWeight", focused ? "600" : "400"),
                   dynamicCss("color", focused ? colors.tabSelected : colors.tabUnselected),
                 ]}>
-                {t("common.offers")}
+                {t("common.chat")}
               </RestyleText>
             </Box>
           ),
         }}
-        component={OfferScreen}
+        component={ChatScreen}
       />
       {/* <Tab.Screen
         name="WISHLIST"

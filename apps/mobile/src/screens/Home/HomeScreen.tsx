@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Box } from "@/theme";
-
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import {
@@ -10,33 +9,47 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { Input } from "@/components/Input";
 import PopularTrip from "./component/PopularTrip";
 import { useTranslation } from "react-i18next";
 import Tag from "./component/Tag";
-import { useGetTagsQuery, type Tag as TagType } from "@/store/api/tagsApi";
 import FeaturedHotels from "./component/FeaturedHotels";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
+import { fontSizes } from "@/theme/fontSizes";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { useAppSelector } from "@/store/hooks";
+import { TAGS_DATA } from "@/data/tagData";
+import Icon from "@expo/vector-icons/Ionicons";
 
 type Props = {};
 
 const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
   const { user } = useAppSelector((state) => state.auth);
-  const { data: tags = [] } = useGetTagsQuery();
+  const [activeTag, setActiveTag] = useState("Hotels");
+  const [aiQuery, setAiQuery] = useState("");
 
   const drawerOpen = () => {
-    (navigation as any).navigate("DRAWER");
+    navigation.navigate("DRAWER");
     navigation.dispatch(DrawerActions.openDrawer());
   };
+
+  const handleTagPress = useCallback((label: string) => {
+    setActiveTag(label);
+  }, []);
+
+  const handleAiSubmit = useCallback(() => {
+    if (!aiQuery.trim()) return;
+    navigation.navigate("CHAT", { initialMessage: aiQuery.trim() });
+    setAiQuery("");
+  }, [aiQuery, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,7 +66,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
               style={{ height: 48, width: 48, resizeMode: "contain" }}
             />
           </TouchableOpacity>
-          <Pressable onPress={() => (navigation as any).navigate("NOTIFICATION")}>
+          <Pressable onPress={() => navigation.navigate("NOTIFICATION")}>
             <Image
               source={images.notifiocationBtn}
               style={{ height: 48, width: 48, resizeMode: "contain" }}
@@ -63,17 +76,23 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
 
         {/* === AI Section === */}
         <Box paddingHorizontal="medium" marginTop="small">
-          <Box
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="flex-start"
-            marginBottom="ten">
-            <Image source={images.magicAiBtn} style={{ height: 16, width: 16, marginRight: 10 }} />
-            <GradientTitle style={{ fontFamily: typography.poppinsRegular, fontSize: 13 }}>
-              {t("Home.askAi")}
-            </GradientTitle>
-          </Box>
-          <Input placeholder={t("Home.askMeAnything")} />
+          <GradientTitle style={{ fontFamily: typography.poppinsRegular, fontSize: fontSizes.md }}>
+            {t("Home.askAi")}
+          </GradientTitle>
+          <View style={styles.aiInputRow}>
+            <TextInput
+              style={styles.aiInput}
+              placeholder={t("Home.askMeAnything")}
+              placeholderTextColor={colors.neutral400}
+              value={aiQuery}
+              onChangeText={setAiQuery}
+              onSubmitEditing={handleAiSubmit}
+              returnKeyType="send"
+            />
+            <TouchableOpacity style={styles.aiButton} onPress={handleAiSubmit}>
+              <Image source={images.magicAiBtn} style={{ height: 22, width: 22 }} />
+            </TouchableOpacity>
+          </View>
         </Box>
 
         {/* === Tags === */}
@@ -81,21 +100,35 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.tagList}>
-          {tags.map((tag) => (
+          {TAGS_DATA.map((tag) => (
             <Tag
               key={tag.id}
               id={tag.id}
-              icon={tag.icon ? { uri: tag.icon } : images.menuBtn}
+              icon={tag.icon}
               label={tag.label}
+              active={activeTag === tag.label}
+              onPress={handleTagPress}
             />
           ))}
         </ScrollView>
 
-        {/* === Featured Hotels === */}
-        <FeaturedHotels />
-
-        {/* === Popular Trips === */}
-        <PopularTrip />
+        {/* === Content based on active tag === */}
+        {activeTag === "Hotels" && <FeaturedHotels />}
+        {activeTag === "Trips" && <PopularTrip />}
+        {activeTag === "Hotels" && <PopularTrip />}
+        {activeTag === "Flights" && (
+          <Box
+            paddingHorizontal="medium"
+            marginTop="twenty"
+            alignItems="center"
+            justifyContent="center"
+            style={{ paddingVertical: 40 }}>
+            <Icon name="airplane-outline" size={48} color={colors.neutral400} />
+            <GradientTitle style={{ fontSize: fontSizes.lg, marginTop: 12 }}>
+              Flight search coming soon
+            </GradientTitle>
+          </Box>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -114,5 +147,27 @@ const styles = StyleSheet.create({
   tagList: {
     paddingHorizontal: 12,
     paddingVertical: 10,
+  },
+  aiInputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.neutral300,
+    paddingHorizontal: 12,
+    marginTop: 6,
+    marginBottom: 4,
+  },
+  aiInput: {
+    flex: 1,
+    fontSize: fontSizes.md,
+    fontFamily: typography.poppinsRegular,
+    color: colors.neutral700,
+    paddingVertical: 10,
+  },
+  aiButton: {
+    padding: 6,
+    marginLeft: 4,
   },
 });

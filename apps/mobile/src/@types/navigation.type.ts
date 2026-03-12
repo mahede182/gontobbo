@@ -35,8 +35,8 @@ export type AuthdStackParamList = {
 export type TabStackParamList = {
   HOME: undefined;
   EXPLORE: undefined;
-  OFFERS: undefined;
-  WISHLIST: undefined;
+  CHAT: { initialMessage?: string } | undefined;
+  BOOKINGS: undefined;
   PROFILE: undefined;
   DRAWER: undefined;
 };

@@ -32,15 +32,12 @@ async function main() {
   await prisma.flightPreferences.deleteMany();
   await prisma.passportDetails.deleteMany();
   await prisma.refreshToken.deleteMany();
-  await prisma.otp.deleteMany();
   await prisma.room.deleteMany();
   await prisma.hotelAmenity.deleteMany();
-  await prisma.offer.deleteMany();
   await prisma.hotel.deleteMany();
   await prisma.flight.deleteMany();
   await prisma.trip.deleteMany();
   await prisma.location.deleteMany();
-  await prisma.tag.deleteMany();
   await prisma.user.deleteMany();
 
   // ─── Users ─────────────────────────────────────────────────────────────
@@ -127,20 +124,6 @@ async function main() {
       dateOfExpiry: new Date("2030-01-10"),
     },
   });
-
-  // ─── Tags ──────────────────────────────────────────────────────────────
-  console.log("🏷️  Creating tags...");
-  const tags = await Promise.all([
-    prisma.tag.create({ data: { label: "Hotels", icon: "hotel", active: true } }),
-    prisma.tag.create({ data: { label: "Trip", icon: "trip", active: true } }),
-    prisma.tag.create({ data: { label: "Flights", icon: "flight", active: true } }),
-    prisma.tag.create({ data: { label: "Beach", icon: "beach", active: true } }),
-    prisma.tag.create({ data: { label: "Mountain", icon: "mountain", active: true } }),
-    prisma.tag.create({ data: { label: "City", icon: "city", active: true } }),
-    prisma.tag.create({ data: { label: "Adventure", icon: "adventure", active: true } }),
-    prisma.tag.create({ data: { label: "Luxury", icon: "luxury", active: true } }),
-  ]);
-  console.log(`  ✅ Created ${tags.length} tags`);
 
   // ─── Locations ─────────────────────────────────────────────────────────
   console.log("📍 Creating locations...");
@@ -1004,89 +987,6 @@ async function main() {
   ]);
   console.log(`  ✅ Created ${flights.length} flights`);
 
-  // ─── Offers ────────────────────────────────────────────────────────────
-  console.log("🎁 Creating offers...");
-  const offers = await Promise.all([
-    prisma.offer.create({
-      data: {
-        hotelId: hotel1.id,
-        name: "Caesars Palace - Summer Special",
-        location: "Las Vegas, United States",
-        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
-        tier1Title: "Weekend Getaway",
-        tier1Subtitle: "2 nights stay",
-        tier1Value: "Save $150",
-        tier1Discount: 25,
-        tier1Price: 299,
-        tier2Title: "Week-long Escape",
-        tier2Subtitle: "5 nights stay",
-        tier2Value: "Save $500",
-        tier2Discount: 35,
-        tier2Price: 649,
-        validFrom: new Date("2025-01-01"),
-        validTo: new Date("2025-12-31"),
-        isActive: true,
-      },
-    }),
-    prisma.offer.create({
-      data: {
-        hotelId: hotel3.id,
-        name: "Seaside Suites - Beach Bundle",
-        location: "Miami Beach, Florida",
-        image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
-        tier1Title: "Romantic Escape",
-        tier1Subtitle: "3 nights, couples spa",
-        tier1Value: "Save $200",
-        tier1Discount: 20,
-        tier1Price: 999,
-        tier2Title: "Family Beach Fun",
-        tier2Subtitle: "5 nights, kids free",
-        tier2Value: "Save $450",
-        tier2Discount: 30,
-        tier2Price: 1499,
-        validFrom: new Date("2025-01-01"),
-        validTo: new Date("2025-09-30"),
-        isActive: true,
-      },
-    }),
-    prisma.offer.create({
-      data: {
-        hotelId: hotel8.id,
-        name: "Ritz-Carlton Dubai - Luxury Package",
-        location: "Dubai, UAE",
-        image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800",
-        tier1Title: "Golden Weekend",
-        tier1Subtitle: "2 nights + desert safari",
-        tier1Value: "Save $300",
-        tier1Discount: 15,
-        tier1Price: 1299,
-        tier2Title: "Platinum Week",
-        tier2Subtitle: "7 nights all-inclusive",
-        tier2Value: "Save $1200",
-        tier2Discount: 25,
-        tier2Price: 3499,
-        validFrom: new Date("2025-02-01"),
-        validTo: new Date("2025-11-30"),
-        isActive: true,
-      },
-    }),
-    prisma.offer.create({
-      data: {
-        name: "Early Bird Summer Sale",
-        location: "Multiple Destinations",
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
-        tier1Title: "Book Early",
-        tier1Subtitle: "Any destination",
-        tier1Value: "10% Off",
-        tier1Discount: 10,
-        validFrom: new Date("2025-01-15"),
-        validTo: new Date("2025-06-30"),
-        isActive: true,
-      },
-    }),
-  ]);
-  console.log(`  ✅ Created ${offers.length} offers`);
-
   // ─── Wishlists ─────────────────────────────────────────────────────────
   console.log("❤️  Creating wishlists...");
   const wishlists = await Promise.all([
@@ -1324,14 +1224,6 @@ async function main() {
     prisma.notification.create({
       data: {
         userId: john.id,
-        title: "Special Offer for You 💰",
-        body: "Save 25% on your next booking at Caesars Palace. Weekend Getaway package starting at $299!",
-        isRead: false,
-      },
-    }),
-    prisma.notification.create({
-      data: {
-        userId: john.id,
         title: "Trip Completed ✅",
         body: "How was your Maldives Beach Escape? Leave a review to help other travelers.",
         isRead: true,
@@ -1342,14 +1234,6 @@ async function main() {
         userId: jane.id,
         title: "Booking Pending ⏳",
         body: "Your booking at Seaside Suites is pending confirmation. We'll notify you once it's confirmed.",
-        isRead: false,
-      },
-    }),
-    prisma.notification.create({
-      data: {
-        userId: jane.id,
-        title: "New Offer Alert! 🎁",
-        body: "Seaside Suites is offering a Beach Bundle — Romantic Escape starting at $999. Book now!",
         isRead: false,
       },
     }),
@@ -1401,13 +1285,11 @@ async function main() {
   console.log("║     🌱 Seeding Complete!              ║");
   console.log("╠═══════════════════════════════════════╣");
   console.log(`║  Users:          ${4}                    ║`);
-  console.log(`║  Tags:           ${tags.length}                    ║`);
   console.log(`║  Locations:      ${locations.length}                   ║`);
   console.log(`║  Hotels:         ${allHotels.length}                    ║`);
   console.log(`║  Reviews:        ${reviews.length}                    ║`);
   console.log(`║  Trips:          ${allTrips.length}                    ║`);
   console.log(`║  Flights:        ${flights.length}                    ║`);
-  console.log(`║  Offers:         ${offers.length}                    ║`);
   console.log(`║  Wishlists:      ${wishlists.length}                    ║`);
   console.log(`║  Bookings:       ${bookings.length}                    ║`);
   console.log(`║  Payments:       ${payments.length}                    ║`);

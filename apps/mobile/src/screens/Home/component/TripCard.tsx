@@ -22,7 +22,7 @@ const TripCard: React.FC<TripCardProps> = React.memo(
     const navigation = useNavigation();
     return (
       <Pressable
-        onPress={() => (navigation as any).navigate("SEARCH_RESULT_DETAILS", { tripId: id })}
+        onPress={() => (navigation as any).navigate("TRIP_REVIEW_BOOKING", { tripId: id })}
         style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}>
         <Image
           source={image ? { uri: image } : require("@/assets/hotel_image_1.png")}

@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector(map: "vector")]
 }
 
 // ─── Enums ──────────────────────────────────────────────────────────────────
@@ -161,12 +163,12 @@ model Hotel {
   isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  embedding    Unsupported("vector(768)")?
 
   amenities HotelAmenity[]
   rooms     Room[]
   reviews   Review[]
   bookings  Booking[]
-  offers    Offer[]
   wishlist  WishlistItem[]
 
   @@map("hotels")
@@ -293,6 +295,7 @@ model Trip {
   isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  embedding    Unsupported("vector(768)")?
 
   packageDetails TripPackageDetail[]
   bookings       Booking[]
@@ -328,39 +331,12 @@ model Flight {
   isActive         Boolean  @default(true)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  embedding        Unsupported("vector(768)")?
 
   @@map("flights")
 }
 
-// ─── Offers ─────────────────────────────────────────────────────────────────
 
-model Offer {
-  id            String    @id @default(uuid())
-  hotelId       String?
-  hotel         Hotel?    @relation(fields: [hotelId], references: [id])
-  name          String
-  location      String?
-  image         String?
-  tier1Title    String?
-  tier1Subtitle String?
-  tier1Value    String?
-  tier1Discount Float?
-  tier1Price    Float?
-  tier2Title    String?
-  tier2Subtitle String?
-  tier2Value    String?
-  tier2Discount Float?
-  tier2Price    Float?
-  validFrom     DateTime?
-  validTo       DateTime?
-  isActive      Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  wishlist WishlistItem[]
-
-  @@map("offers")
-}
 
 // ─── Wishlist ───────────────────────────────────────────────────────────────
 
@@ -370,8 +346,6 @@ model WishlistItem {
   user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   hotelId   String?
   hotel     Hotel?       @relation(fields: [hotelId], references: [id])
-  offerId   String?
-  offer     Offer?       @relation(fields: [offerId], references: [id])
   type      WishlistType
   name      String
   rating    Float?
@@ -441,16 +415,7 @@ model Location {
   @@map("locations")
 }
 
-// ─── Tags ───────────────────────────────────────────────────────────────────
 
-model Tag {
-  id     String  @id @default(uuid())
-  label  String  @unique
-  icon   String?
-  active Boolean @default(true)
-
-  @@map("tags")
-}
 
 // ─── Recent Searches ────────────────────────────────────────────────────────
 

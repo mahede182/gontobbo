@@ -12,12 +12,13 @@ export const enTranslations = {
     offers: "Offers",
     wishlist: "Wishlist",
     profile: "Profile",
-    searchHotel: "Search Hotels",
+    searchHotel: "Search",
     discoveryTheWorld: "Discover the World with",
     oneJourneyAt: "One Journey at a Time.",
     uniqueAdvantureAwait: "Unique adventures await, memories.",
     loading: "Loading...",
     bookings: "Bookings",
+    chat: "Chat",
   },
   login: {
     continueWithApple: "Continue with Apple",
@@ -61,7 +62,7 @@ export const enTranslations = {
   Home: {
     askAi: "Ask AI",
     askMeAnything: "Ask me anything you're searching for",
-    featureHotels: "Feature Hotels",
+    featureHotels: "Featured",
     popularTrip: "Popular Trip",
   },
   Explore: {

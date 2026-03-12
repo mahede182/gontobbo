@@ -1,38 +1,31 @@
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
+import { fontSizes } from "@/theme/fontSizes";
 
 type Props = {
   id: string | number;
   icon: any;
   label: string;
+  active?: boolean;
+  onPress?: (label: string) => void;
 };
 
-const Tag = ({ icon, label, id }: Props) => {
-  const [active, setActive] = useState(false);
-
-  const handlePress = () => {
-    setActive((prev) => !prev);
-  };
-
-  return (
-    <TouchableOpacity onPress={handlePress}>
-      <Box style={[styles.containerBase, { backgroundColor: active ? colors.blue800 : "#fff" }]}>
-        <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
-        <RestyleText style={[styles.labelBase, { color: active ? "#fff" : "#000" }]}>
-          {label}
-        </RestyleText>
-      </Box>
-    </TouchableOpacity>
-  );
-};
+const Tag = ({ icon, label, active = false, onPress }: Props) => (
+  <TouchableOpacity onPress={() => onPress?.(label)} activeOpacity={0.8}>
+    <Box style={[styles.container, active && styles.activeContainer]}>
+      <Image source={icon} style={styles.icon} tintColor={active ? "#fff" : "#000"} />
+      <RestyleText style={[styles.label, active && styles.activeLabel]}>{label}</RestyleText>
+    </Box>
+  </TouchableOpacity>
+);
 
 export default Tag;
 
 const styles = StyleSheet.create({
-  containerBase: {
+  container: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
@@ -41,14 +34,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     marginRight: 10,
+    backgroundColor: colors.white,
+  },
+  activeContainer: {
+    backgroundColor: colors.blue800,
+    borderColor: colors.blue800,
   },
   icon: {
     width: 20,
     height: 20,
     marginRight: 8,
   },
-  labelBase: {
+  label: {
     fontFamily: typography.poppinsMedium,
-    fontSize: 16,
+    fontSize: fontSizes.lg,
+    color: colors.neutral700,
+  },
+  activeLabel: {
+    color: colors.white,
   },
 });

@@ -24,6 +24,7 @@ import locationsRoutes from "./modules/locations/locations.routes";
 import tagsRoutes from "./modules/tags/tags.routes";
 import searchesRoutes from "./modules/searches/searches.routes";
 import adminRoutes from "./modules/admin/admin.routes";
+import chatRoutes from "./modules/chat/chat.routes";
 
 const app = express();
 
@@ -73,6 +74,7 @@ app.use("/api/locations", locationsRoutes);
 app.use("/api/tags", tagsRoutes);
 app.use("/api/searches", searchesRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/chat", chatRoutes);
 
 // ─── Swagger Docs ───────────────────────────────────────────────────────────
 
