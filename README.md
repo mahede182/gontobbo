@@ -1,296 +1,126 @@
-At Gontobbo.co, every reservation is instantly confirmed. When you find your perfect stay, a few clicks are all it takes.
+# Gontobbo (গন্তব্য)
 
-**required**
+**AI-Powered Full-Stack Travel Platform | Intelligent Bookings | Seamless Experience**
 
-- Expo : 51
-- Node : 20.13.1
-- Supported iOS versions: 13.4+
-- Supported Android versions: 7.0+
+Gontobbo is a sophisticated, production-grade **Full-Stack** travel platform built with a modern **Monorepo** architecture. It integrates cutting-edge **Generative AI** with a robust booking engine to provide a truly intelligent travel discovery and reservation experience.
 
-## Web App
+---
 
-Url: [https://www.gontobbo.co/](https://www.gontobbo.co/)
+## 🔥 Project Highlights: AI & Full-Stack
 
-## API Docs
+### 🤖 **AI-Driven Intelligence**
 
-API Documentation: [https://devapi.gontobbo.co/documentation/v1.0.0#](https://devapi.gontobbo.co/documentation/v1.0.0#)
+- **Context-Aware AI Chat**: Powered by **Google Gemini**, the platform features a Chat interface that understands user intent.
+- **RAG (Retrieval-Augmented Generation)**: Uses vector search and semantic retrieval to provide accurate, data-driven travel recommendations and support.
+- **Intelligent Discovery**: AI-generated trip suggestions and smart search filters.
 
-## Styles Guide
+### 💻 **Full-Stack Architecture**
 
-[https://www.figma.com/design/7P9n2uJaN7rPecgwr8stoY/Gontobbo-App-Design?node-id=23-2&t=tpfikUyNtM991vUi-0](https://www.figma.com/design/7P9n2uJaN7rPecgwr8stoY/Gontobbo-App-Design?node-id=23-2&t=tpfikUyNtM991vUi-0)
+- **Unified Monorepo**: Managed with **Turborepo** for ultra-fast builds and centralized package management.
+- **Scalable Backend**: A high-performance **Express** server using **Prisma ORM** as the bridge to a PostgreSQL database.
+- **Premium Mobile UI**: A cross-platform **React Native (Expo)** application featuring smooth **Moti** animations and a custom design system.
 
-- Spacing should be consistent and whitespace thought of as a first class technique up there with color and typefaces.
-- Should be used for borders widths, margins, paddings.
-- Should be used no color literals
-- Raw text should not be used; instead, use the i18n way
-- should used image from @theme/images
+---
 
-```ts
-import { colors } from "@/theme/colors";import { typography } from "@/theme/typography";const styles = StyleSheet.create({ styleName : {    fontFamily: typography['fontName'],    fontSize: 26,    fontWeight: "600",    color: colors.white, }}
+## 🚀 Tech Stack
+
+### **Backend (`apps/backend`)**
+
+- ⚡ **Node.js & Express**: Fast and minimalist web framework.
+- ◮ **Prisma**: Type-safe ORM for structured data management.
+- ✨ **Gemini AI**: Advanced LLM integration for the RAG-based chat system.
+- 🛡️ **Zod**: Runtime schema validation for robust API endpoints.
+- 📁 **Multer & Sharp**: Industrial-grade image processing and storage.
+
+### **Mobile (`apps/mobile`)**
+
+- ⚛️ **React Native & Expo (v51)**: Leading framework for modern mobile apps.
+- 🎨 **Shopify Restyle**: Type-safe design system for scalable UI.
+- 🌀 **Moti & Reanimated**: High-performance layout and micro-animations.
+- 🏗️ **Redux Toolkit**: Centralized state management with RTK Query for efficient data fetching.
+- 🌍 **i18next**: Deep internationalization support for global reach.
+
+---
+
+## 📂 Monorepo Structure
+
+```text
+.
+├── apps
+│   ├── backend          # Express API, Prisma Schema, Gemini RAG Logic
+│   └── mobile           # React Native App (Design System, AI Chat, Bookings)
+├── packages             # Shared configurations (Linting, TSConfig, Types)
+└── turbo.json           # Turborepo orchestration
 ```
 
-```ts
-import { useTheme } from "@shopify/restyle";import { Theme } from "@/@types/theme.type";const   ComponentName = (props: Props) => {    const { images } = useTheme<Theme>();    return(    ...    <Image source={images.imageName} />    ...    )}
-```
+---
 
-```ts
-//localization/EN/en.ts    ...    common: {        gontobbo: "Gontobbo",        ...    }    // ComponentName.tsx    import { useTranslation } from "react-i18next";    ...    const { t } = useTranslation();    ...    <RestyleText>{t("common.gontobbo")}</RestyleText>
-```
+## 🛠 Getting Started
 
-## Fonts:
+### **Prerequisites**
 
-So here’s the hierarchy:
+- **Node.js**: v20.13.1+
+- **Yarn**: v4.x (Berry)
+- **Database**: PostgreSQL
 
-- Launch screen header ("Gontobbo"): Poppins-Bold
-- Everything else: Poppins-Regular
+### **Installation**
 
-### Adding a new font
+1. Clone & Enter:
 
-1.  Find .ttf on Google Fonts
-2.  Add to `src/assets/fonts`
-3.  Place with `app.config.ts` expo.plugins.font
+   ```bash
+   git clone https://github.com/mahede182/gontobbo.git && cd gontobbo
+   ```
 
-## Setup & Run Locally:
+2. Install all dependencies:
 
-### Clone repository
+   ```bash
+   yarn install
+   ```
 
-```
-git clone https://github.com/rafser01/gontobbo_mobile_app.git
-```
+3. Initialize Databases:
+   ```bash
+   cd apps/backend && npx prisma db push
+   ```
 
-### Change directory
+### **Running in Development**
 
-```
-cd gontobbo
-```
-
-### Install dependencies
-
-```
-yarn
-```
-
-### Run Server
-
-```
-yarn start
-```
-
-Note: Use OTP in command line for verification code
-
-## Docker Setup
-
-Docker provides a consistent development environment with all dependencies pre-configured.
-
-### Prerequisites
-
-- [Docker](https://docs.docker.com/get-docker/) installed
-- [Docker Compose](https://docs.docker.com/compose/install/) installed
-
-### Build and Run with Docker
-
-#### Development Environment
+Launch the entire ecosystem (Backend + Mobile + AI Services):
 
 ```bash
-# Build the Docker imagedocker-compose build# Start the development serverdocker-compose up# Or run in detached modedocker-compose up -d# View logsdocker-compose logs -f
+yarn dev
 ```
 
-#### Staging Environment
+Target specific apps:
 
 ```bash
-# Start staging environmentdocker-compose --profile staging up app-staging# Or in detached modedocker-compose --profile staging up -d app-staging
+yarn dev:backend  # Start API only
+yarn dev:mobile   # Start Mobile only
 ```
 
-### Access the Application
+---
 
-- **Metro Bundler**: [http://localhost:8081](http://localhost:8081)
-- **Expo DevTools**: [http://localhost:19000](http://localhost:19000)
+## 🎨 Development Guidelines
 
-For staging:
+To maintain the **Premium Visuals** and **Code Quality** of Gontobbo:
 
-- **Metro Bundler**: [http://localhost:8082](http://localhost:8082)
-- **Expo DevTools**: [http://localhost:19003](http://localhost:19003)
+1.  **Strict Theming**: Use tokens from `@/theme` only. No raw colors or spacing values.
+2.  **AI Pattern**: New AI features should follow the existing RAG pattern located in `apps/backend/src/modules/ai`.
+3.  **Clean Components**: One component per file. Adhere to SPIR (Single Purpose, Intelligent Routing).
+4.  **Logging**: Always use `AppLogger` static methods for production-ready debugging.
 
-### Stop Docker Containers
+---
 
-```bash
-# Stop all running containersdocker-compose down# Stop and remove volumesdocker-compose down -v
-```
+## 🤝 Contributing & Roadmap
 
-### Docker Troubleshooting
+We are building the future of travel.
 
-**Issue: Port already in use**
+- [x] Full-stack RAG AI Chat.
+- [x] Modern Hotel & Trip booking flow.
+- [x] Interactive Search & Dynamic Filtering.
+- [x] Unified Monorepo workflow with Turbo.
+- [ ] Multi-region Flight Booking (Next).
+- [ ] AI-powered Travel Itinerary Generator.
 
-```bash
-# Check what's using the portlsof -i :8081# Stop the process or use different ports in docker-compose.yml
-```
+---
 
-**Issue: Changes not reflecting**
-
-```bash
-# Restart Metro bundler with clean cachedocker-compose exec app yarn start:clean
-```
-
-**Issue: Need to rebuild after dependency changes**
-
-```bash
-# Rebuild the Docker imagedocker-compose build --no-cache# Restart containersdocker-compose up
-```
-
-## Internal / Staging Testing
-
-Continue...
-
-### Android Internal Testing
-
-1.  Open Android Studio
-2.  Build -> Generate Signed Bundle
-3.  Select keystore `my-release-key.keystore`
-4.  Select `stagingRelease` variant
-5.  Create new internal testing release in Google Play
-6.  Add this build and rollout to internal testing group
-
-### iOS Internal Testing
-
-1.  Open xCode
-2.  Select Gather (Staging) scheme
-3.  Product -> Archive
-4.  Distribute to Testflight
-5.  Add internal testing group on Testflight
-
-## Production Builds
-
-**Android Production Build**
-
-1.  Open Android Studio
-2.  Build -> Generate Signed Bundle
-3.  Select keystore `my-release-key.keystore`
-4.  Select `productionRelease` variant
-5.  Create new internal testing release in Google Play
-6.  Add this build and rollout to internal testing group
-
-**IOS Production Build**
-
-1.  Open xCode
-2.  Select Gather scheme
-3.  Product -> Archive
-4.  Distribute to Testflight
-5.  Add internal testing group on Testflight
-
-## OTA Deploy (TBD)
-
-Pushes app over the air to user's phone. Good when you don't need to notify user of change and/or we need to update the Expo SDK.
-
-```
-eas update --branch production --message "test expo publish"
-```
-
-Publishing to `prod` release channel is the ONLY way the app will connect to our production BE
-
-## App Structure
-
-We defined the following structure to work
-
-Folder
-
-Business Logic
-
-assets
-
-for core-image,fonts
-
-src/assets
-
-for figma design used images
-
-modules
-
-for work with native modules
-
-components
-
-for reusable components
-
-screenName/component
-
-for screen specific component
-
-config
-
-for config firebase,google,facebook etc
-
-data
-
-for dummy hardcode data
-
-localization
-
-for use i18n
-
-machine
-
-for x-state management logic
-
-constants
-
-for constant variables
-
-api
-
-for service logic
-
-contexts
-
-for consumable states
-
-hooks
-
-for custom hooks
-
-@types
-
-for the global interface and types
-
-navigation
-
-for the navigation stack for every module
-
-screens
-
-for all app screen
-
-theme
-
-for styles and @shopify/restyle set up
-
-utils
-
-for reusable useful code
-
-### Components
-
-For create a screen, layout or reusable component we need to follow the next structure
-
-- Screen Name
-  - ComponentName
-  - ComponentName.tsx (React Native Component)
-
-- index.ts (For export)
-
-![carbon (3)](https://user-images.githubusercontent.com/19823989/140749679-1c28da42-9155-4e5e-8ced-fe3163705fde.png)
-
-# PUSH NOTIFICATION Configuration for production and staging
-
-Changes required in following files:
-
-## Contributing
-
-We welcome contributions! Here are the steps:
-
-1.  Fork the repo and create a new branch.
-2.  Make your changes and ensure tests pass.
-3.  Add new tests for new features/changes.
-4.  Update docs if needed.
-5.  Submit a pull request with a clear description.
-
-For major changes, open an issue first to discuss.
+© 2026 [Gontobbo.co](https://www.gontobbo.co/). Every reservation is instantly confirmed.
