@@ -11,9 +11,10 @@ interface InputProps extends TextInputProps, BoxProps<Theme> {
   label?: string;
   error?: string;
   icon?: string;
+  leftElement?: React.ReactNode;
 }
 
-export const Input: React.FC<InputProps> = ({ label, error, icon, ...props }) => {
+export const Input: React.FC<InputProps> = ({ label, error, icon, leftElement, ...props }) => {
   const { colors } = useTheme<Theme>();
   return (
     <Box marginBottom="medium">
@@ -30,7 +31,8 @@ export const Input: React.FC<InputProps> = ({ label, error, icon, ...props }) =>
         borderRadius={8}
         padding="medium"
         style={dynamicCSS("backgroundColor", colors.white)}>
-        {icon && <Ionicons name={icon} size={24} color="#999" style={styles.icon} />}
+        {leftElement}
+        {icon && <Ionicons name={icon as any} size={24} color="#999" style={styles.icon} />}
         <TextInput style={styles.input} placeholderTextColor={colors.neutral300} {...props} />
       </Box>
       {error && (

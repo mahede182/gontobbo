@@ -1,14 +1,88 @@
-export type TUser = {
-  accessToken: string;
+export type User = {
+  id: string;
   email: string;
   firstName: string;
-  gender: string;
-  id: number;
-  image: string;
   lastName: string;
-  refreshToken: string;
-  username: string;
+  username: string | null;
+  avatar: string | null;
+  gender: string | null;
+  phone: string | null;
+  nationality: string | null;
+  address: string | null;
+  memberNumber: string | null;
+  memberClass: "BRONZE" | "SILVER" | "GOLD" | "PLATINUM";
+  role: "USER" | "ADMIN";
+  googleId?: string | null;
+  appleId?: string | null;
+  socialType?: "GOOGLE" | "APPLE" | "FACEBOOK" | "NONE";
+  createdAt: string;
+  updatedAt: string;
+  passport?: Passport;
+  flightPreference?: FlightPreference;
+  baggages?: Baggage[];
 };
+
+export type Passport = {
+  id: string;
+  userId: string;
+  passportNumber: string;
+  nationality: string;
+  dateOfBirth: string;
+  dateOfIssue: string;
+  dateOfExpiry: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type FlightPreference = {
+  id: string;
+  userId: string;
+  isFlexibleDates: boolean;
+  isNonStopFlights: boolean;
+  isEarlyDeparture: boolean;
+  isLateDeparture: boolean;
+};
+
+export type Baggage = {
+  id: string;
+  userId: string;
+  type: "CABIN" | "CHECKED" | "SPECIAL" | "PASSPORT" | "VISA" | "INSURANCE" | "VACCINATION";
+  name: string;
+  description: string | null;
+  weight: string;
+  dimensions: string | null;
+  status: "INCLUDED" | "EXTRA_FEE" | "NOT_ALLOWED" | "VALID" | "EXPIRED" | "MISSING";
+  expiryDate?: Date;
+  isRequired: boolean;
+};
+
+export type AuthTokens = {
+  accessToken: string;
+  refreshToken: string;
+};
+
+// Standard API response wrapper from backend
+export type ApiResponse<T> = {
+  success: boolean;
+  data: T;
+  message?: string;
+};
+
+export type ApiError = {
+  success: false;
+  error: {
+    code: number;
+    message: string;
+    details?: string;
+  };
+};
+
+// Auth endpoint responses
+export type AuthResult = ApiResponse<{
+  user: User;
+  accessToken: string;
+  refreshToken: string;
+}>;
 
 export interface GoogleUser {
   user: {
@@ -42,9 +116,3 @@ export interface AppleUser {
 }
 
 export type SocialUser = GoogleUser | AppleUser;
-
-export interface AuthResponse {
-  status: "success" | "error";
-  user: TUser | null;
-  message?: string;
-}

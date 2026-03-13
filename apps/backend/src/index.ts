@@ -1,29 +1,44 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import { User } from "@gontobbo/shared";
+import app from "./app";
+import { env } from "./config/env";
+import { prisma } from "./config/database";
 
-dotenv.config();
+const PORT = env.PORT;
 
-const app = express();
-const PORT = process.env.PORT || 4000;
+async function bootstrap() {
+  try {
+    // Verify database connection
+    await prisma.$connect();
+    console.log("[:::DATABASE:::] Database connected successfully");
 
-app.use(cors());
-app.use(express.json());
+    const server = app.listen(PORT, () => {
+      console.log(`[:::SERVER:::] Server running on http://localhost:${PORT}`);
+      console.log(`[:::Docs:::] API Docs: http://localhost:${PORT}/api/docs`);
+      console.log(`[:::ENV:::] Environment: ${env.NODE_ENV}`);
+    });
 
-app.get("/", (req, res) => {
-  res.json({ message: "Backend is running!" });
-});
+    // Graceful shutdown
+    const shutdown = async (signal: string) => {
+      console.log(`\n${signal} received. Shutting down gracefully...`);
+      server.close(async () => {
+        await prisma.$disconnect();
+        console.log("Database disconnected. Goodbye!");
+        process.exit(0);
+      });
 
-app.get("/users", (req, res) => {
-  const users: User[] = [
-    { id: "1", name: "John Doe", email: "john@example.com" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com" },
-  ];
-  res.json(users);
-});
+      // Force exit after 10 seconds
+      setTimeout(() => {
+        console.error("Forced shutdown after timeout");
+        process.exit(1);
+      }, 10_000);
+    };
 
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+    process.on("SIGTERM", () => shutdown("SIGTERM"));
+    process.on("SIGINT", () => shutdown("SIGINT"));
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    await prisma.$disconnect();
+    process.exit(1);
+  }
+}
+
+bootstrap();

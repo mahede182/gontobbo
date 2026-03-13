@@ -1,4 +1,3 @@
-// BulletPoint.tsx
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { RestyleText } from "@/theme";
@@ -8,11 +7,12 @@ import { typography } from "@/theme/typography";
 interface BulletPointProps {
   text: string;
   style?: any;
+  spacing?: number;
 }
 
-const BulletPoint: React.FC<BulletPointProps> = ({ text, style }) => {
+const BulletPoint: React.FC<BulletPointProps> = ({ text, style, spacing = 8 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { marginBottom: spacing }]}>
       <View style={styles.bullet} />
       <RestyleText style={[styles.text, style]}>{text}</RestyleText>
     </View>

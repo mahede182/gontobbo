@@ -1,117 +1,49 @@
 import React from "react";
-import { createBox } from "@shopify/restyle";
-import { Theme } from "@/theme";
+import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, MotiView } from "moti";
 import { Box, RestyleText } from "@/theme";
 import HeaderTitle from "@/components/HeaderTitle";
-import { ScrollView, TouchableOpacity, StyleSheet } from "react-native";
-import { SafeAreaView } from "moti";
-import { Ionicons } from "@expo/vector-icons";
-
-const Container = createBox<Theme>();
-
-type LegalDocument = {
-  id: string;
-  title: string;
-  description: string;
-  lastUpdated: string;
-  type: "policy" | "terms" | "guidelines" | "licenses";
-};
-
-const LegalItemCard = ({ item, onPress }: { item: LegalDocument; onPress: () => void }) => {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Container
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        padding="medium"
-        marginVertical="tiny"
-        backgroundColor="white"
-        borderRadius="medium"
-        shadowColor="neutral700"
-        shadowOpacity={0.1}
-        shadowOffset={{ width: 0, height: 2 }}
-        shadowRadius={4}
-        elevation={2}>
-        <Box flex={1}>
-          <RestyleText variant="searchHotelTitle" marginBottom="tiny">
-            {item.title}
-          </RestyleText>
-          <RestyleText variant="caption" color="neutral600" marginBottom="tiny">
-            {item.description}
-          </RestyleText>
-          <RestyleText variant="caption" color="neutral600">
-            Last Updated: {item.lastUpdated}
-          </RestyleText>
-        </Box>
-        <Box marginLeft="small">
-          <Ionicons name="chevron-forward" size={24} color="#4B4B4B" />
-        </Box>
-      </Container>
-    </TouchableOpacity>
-  );
-};
+import { colors } from "@/theme/colors";
+import LegalItemCard from "./components/LegalItemCard";
+import { LEGAL_DOCUMENTS } from "@/constants/legal";
 
 const LegalScreen = () => {
-  const [legalDocuments] = React.useState<LegalDocument[]>([
-    {
-      id: "1",
-      type: "terms",
-      title: "Terms of Service",
-      description: "Terms and conditions for using our services",
-      lastUpdated: "Jan 15, 2024",
-    },
-    {
-      id: "2",
-      type: "policy",
-      title: "Privacy Policy",
-      description: "How we collect, use, and protect your data",
-      lastUpdated: "Jan 10, 2024",
-    },
-    {
-      id: "3",
-      type: "guidelines",
-      title: "Booking Guidelines",
-      description: "Rules and policies for flight bookings",
-      lastUpdated: "Dec 20, 2023",
-    },
-    {
-      id: "4",
-      type: "policy",
-      title: "Refund Policy",
-      description: "Terms and conditions for refunds and cancellations",
-      lastUpdated: "Dec 15, 2023",
-    },
-    {
-      id: "5",
-      type: "licenses",
-      title: "Licenses & Certifications",
-      description: "Our operational licenses and certifications",
-      lastUpdated: "Nov 30, 2023",
-    },
-  ]);
-
   const handleDocumentPress = (documentId: string) => {
-    // Handle document press - navigate to document detail screen
-    console.log("Document pressed:", documentId);
+    // TODO: Navigate to document detail screen
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Container flex={1} backgroundColor="neutral50">
+      <Box flex={1} backgroundColor="white100">
         <HeaderTitle title="Legal Information" />
-        <ScrollView style={styles.scrollView}>
-          <Box paddingVertical="medium">
-            {legalDocuments.map((item) => (
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}>
+          <Box marginTop="medium">
+            {LEGAL_DOCUMENTS.map((item, index) => (
               <LegalItemCard
                 key={item.id}
                 item={item}
+                index={index}
                 onPress={() => handleDocumentPress(item.id)}
               />
             ))}
           </Box>
+
+          <MotiView
+            from={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 600 }}
+            style={styles.footer}>
+            <RestyleText variant="caption" color="neutral500" textAlign="center">
+              Version 1.0.0 (Build 124)
+            </RestyleText>
+            <RestyleText variant="caption" color="neutral500" textAlign="center" marginTop="tiny">
+              © 2026 Gontobbo. All rights reserved.
+            </RestyleText>
+          </MotiView>
         </ScrollView>
-      </Container>
+      </Box>
     </SafeAreaView>
   );
 };
@@ -119,10 +51,15 @@ const LegalScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    backgroundColor: colors.white100,
   },
-  scrollView: {
-    paddingHorizontal: 16,
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+  },
+  footer: {
+    marginTop: 40,
+    paddingBottom: 20,
   },
 });
 

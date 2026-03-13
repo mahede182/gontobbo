@@ -1,33 +1,22 @@
-// OtpInput.tsx
 import React, { useRef, useEffect } from "react";
 import { TextInput, StyleSheet } from "react-native";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 
-// type Props = {
-//   value: string;
-//   index: number;
-//   onChange: (index: number, value: string) => void;
-//   // Add other props as needed
-// };
+type Props = {
+  value: string;
+  index: number;
+  onChange: (index: number, value: string) => void;
+  // Add other props as needed
+};
 
-const OtpInput = ({ value, index, onChange }) => {
-  const inputRef = useRef(null);
+const OtpInput = ({ value, index, onChange }: Props) => {
+  const inputRef = useRef<TextInput>(null);
 
-  useEffect(() => {
-    if (value.length === 1) {
-      const nextInput = inputRef.current?.nextSibling;
-      if (nextInput && nextInput instanceof HTMLInputElement) {
-        nextInput.focus();
-      }
-    }
-  }, [value]);
-
-  const handleChange = (e) => {
-    const { value } = e.target;
+  const handleChange = (text: string) => {
     const regex = /^[0-9]$/;
-    if (regex.test(value) || value === "") {
-      onChange(index, value);
+    if (regex.test(text) || text === "") {
+      onChange(index, text);
     }
   };
 
@@ -46,9 +35,9 @@ const OtpInput = ({ value, index, onChange }) => {
 export default OtpInput;
 const styles = StyleSheet.create({
   input: {
-    ...typography.body,
+    fontFamily: typography.poppinsRegular,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.neutral300,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,

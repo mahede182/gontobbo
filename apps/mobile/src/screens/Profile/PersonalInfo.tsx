@@ -1,33 +1,50 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { SafeAreaView } from "moti";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { SafeAreaView, MotiView } from "moti";
 import { colors } from "@/theme/colors";
 import HeaderTitle from "@/components/HeaderTitle";
-import { images } from "@/theme/images";
+import { useGetProfileQuery } from "@/store/api/usersApi";
+import PersonalInfoCard from "./components/PersonalInfoCard";
+import { Ionicons } from "@expo/vector-icons";
+import { Text } from "react-native";
+import { typography } from "@/theme/typography";
 
 const PersonalInformationScreen: React.FC = () => {
+  const { data: userData, isLoading } = useGetProfileQuery();
+
+  if (isLoading) {
+    return (
+      <View style={[styles.mainContainer, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color={colors.primary700} />
+      </View>
+    );
+  }
+
   const personalInfo = [
-    { id: 1, label: "First Name", value: "John" },
-    { id: 2, label: "Last Name", value: "Doe" },
-    { id: 3, label: "Email", value: "john.doe@example.com" },
-    { id: 4, label: "Phone Number", value: "+1 123 456 7890" },
+    { label: "First Name", value: userData?.firstName || "N/A", icon: "person-outline" },
+    { label: "Last Name", value: userData?.lastName || "N/A", icon: "person-outline" },
+    { label: "Email", value: userData?.email || "N/A", icon: "mail-outline" },
+    { label: "Phone Number", value: userData?.phone || "N/A", icon: "call-outline" },
+    { label: "Username", value: userData?.username || "N/A", icon: "at-outline" },
+    { label: "Nationality", value: userData?.nationality || "N/A", icon: "flag-outline" },
   ];
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <HeaderTitle title="Personal Information" />
-      <View style={styles.container}>
-        <View style={styles.cardContainer}>
-          <Image source={images.profile} style={styles.logo} />
-          <View style={styles.memberDetails}>
-            {personalInfo.map((item) => (
-              <View key={item.id} style={styles.detailsRow}>
-                <Text style={styles.detailsLabel}>{item.label}</Text>
-                <Text style={styles.detailsValue}>{item.value}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
+      <View style={styles.content}>
+        <PersonalInfoCard userData={userData} personalInfo={personalInfo} />
+
+        <MotiView
+          from={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ delay: 1200 }}
+          style={styles.tipBox}>
+          <Ionicons name="shield-checkmark-outline" size={20} color={colors.primary700} />
+          <Text style={styles.tipText}>
+            Your information is encrypted and stored securely according to our privacy policy.
+          </Text>
+        </MotiView>
       </View>
     </SafeAreaView>
   );
@@ -36,54 +53,34 @@ const PersonalInformationScreen: React.FC = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    marginHorizontal: 20,
+    backgroundColor: colors.white100,
   },
-  container: {
-    marginTop: 60,
-    justifyContent: "center",
+  content: {
+    flex: 1,
     alignItems: "center",
-    backgroundColor: colors.neutral100,
+    paddingTop: 30,
   },
-  cardContainer: {
-    backgroundColor: colors.primary100,
-    borderRadius: 8,
-    padding: 16,
-    width: "80%",
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  tipBox: {
+    flexDirection: "row",
+    padding: 20,
+    marginHorizontal: 30,
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    marginTop: 30,
+    alignItems: "center",
+    shadowColor: colors.neutral700,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
     elevation: 5,
   },
-  logo: {
-    width: 80,
-    height: 80,
-    resizeMode: "contain",
-    alignSelf: "center",
-    marginBottom: 16,
-  },
-  memberDetails: {
-    alignItems: "flex-start",
-    marginBottom: 16,
-  },
-  detailsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
-    width: "100%",
-  },
-  detailsLabel: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: colors.neutral500,
-  },
-  detailsValue: {
-    fontSize: 16,
-    fontWeight: "bold",
+  tipText: {
+    flex: 1,
+    marginLeft: 15,
     color: colors.neutral600,
+    fontSize: 12,
+    fontFamily: typography.poppinsRegular,
+    lineHeight: 18,
   },
 });
 

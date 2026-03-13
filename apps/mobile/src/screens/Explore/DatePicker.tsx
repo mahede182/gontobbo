@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
+import { View, StyleSheet, TouchableOpacity, SafeAreaView, Text } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { Calendar } from "react-native-calendars";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "@expo/vector-icons/MaterialIcons";
+import Feather from "@expo/vector-icons/Feather";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import GradientTitle from "@/components/GradientTitle";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
+import HeaderTitle from "@/components/HeaderTitle";
 
 const SelectDateScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { t } = useTranslation();
-  const [selectedCheckInDate, setSelectedCheckInDate] = useState(null);
-  const [selectedCheckOutDate, setSelectedCheckOutDate] = useState(null);
+  const [selectedCheckInDate, setSelectedCheckInDate] = useState<string | null>(null);
+  const [selectedCheckOutDate, setSelectedCheckOutDate] = useState<string | null>(null);
 
-  const handleDayPress = (day) => {
+  const handleDayPress = (day: any) => {
     if (!selectedCheckInDate) {
       setSelectedCheckInDate(day.dateString);
     } else if (!selectedCheckOutDate) {
@@ -32,23 +35,80 @@ const SelectDateScreen = () => {
   };
 
   const handleDonePress = () => {
-    navigation.goBack();
+    navigation.navigate("EXPLORE", {
+      selectedCheckInDate: selectedCheckInDate
+        ? dayjs(selectedCheckInDate).format("D, MMM YY")
+        : null,
+      selectedCheckOutDate: selectedCheckOutDate
+        ? dayjs(selectedCheckOutDate).format("D, MMM YY")
+        : null,
+    });
   };
+
+  // Build the marking object for a continuous period
+  const getMarkedDates = () => {
+    const marks: any = {};
+    if (selectedCheckInDate) {
+      marks[selectedCheckInDate] = {
+        startingDay: true,
+        color: colors.blue800,
+        textColor: colors.white,
+      };
+    }
+    if (selectedCheckOutDate && selectedCheckInDate) {
+      marks[selectedCheckOutDate] = {
+        endingDay: true,
+        color: colors.blue800,
+        textColor: colors.white,
+      };
+
+      // Fill dates between
+      let current = dayjs(selectedCheckInDate).add(1, "day");
+      const end = dayjs(selectedCheckOutDate);
+      while (current.isBefore(end, "day")) {
+        const dateString = current.format("YYYY-MM-DD");
+        marks[dateString] = {
+          color: colors.blue100,
+          textColor: colors.blue800,
+        };
+        current = current.add(1, "day");
+      }
+    }
+    return marks;
+  };
+
+  const formattedIn = selectedCheckInDate ? dayjs(selectedCheckInDate).format("D, MMM YY") : "--";
+  const formattedOut = selectedCheckOutDate
+    ? dayjs(selectedCheckOutDate).format("D, MMM YY")
+    : "--";
 
   const renderFooter = () => (
     <View style={styles.footer}>
-      <Box flexDirection={"row"} justifyContent={"space-between"}>
+      <Box flexDirection={"row"} justifyContent={"space-between"} style={{ marginBottom: 16 }}>
         <Box style={styles.dateBox}>
-          <RestyleText style={styles.dateText}>
-            {selectedCheckInDate || t("Explore.dateAndGuestDetails")}
-          </RestyleText>
-          <RestyleText style={styles.dateLabel}>{t("Explore.checkIn")}</RestyleText>
+          <Box flexDirection="row" alignItems="center" style={{ marginBottom: 4 }}>
+            <Feather
+              name="calendar"
+              size={14}
+              color={colors.neutral600}
+              style={{ marginRight: 6 }}
+            />
+            <Text style={styles.dateText}>{formattedIn}</Text>
+          </Box>
+          <Text style={styles.dateLabel}>{t("Explore.checkIn")}</Text>
         </Box>
+        <View style={{ width: 12 }} />
         <Box style={styles.dateBox}>
-          <RestyleText style={styles.dateText}>
-            {selectedCheckOutDate || t("Explore.dateAndGuestDetails")}
-          </RestyleText>
-          <RestyleText style={styles.dateLabel}>{t("Explore.checkOut")}</RestyleText>
+          <Box flexDirection="row" alignItems="center" style={{ marginBottom: 4 }}>
+            <Feather
+              name="calendar"
+              size={14}
+              color={colors.neutral600}
+              style={{ marginRight: 6 }}
+            />
+            <Text style={styles.dateText}>{formattedOut}</Text>
+          </Box>
+          <Text style={styles.dateLabel}>{t("Explore.checkOut")}</Text>
         </Box>
       </Box>
 
@@ -62,120 +122,157 @@ const SelectDateScreen = () => {
     <SafeAreaView style={styles.container}>
       {/* === Header === */}
       <Box flexDirection={"row"} alignItems={"center"} margin={"medium"}>
-        <Box
-          style={styles.mainContainer}
-          alignItems={"center"}
-          justifyContent={"center"}
-          borderRadius={32}
-          borderColor={"white200"}
-          borderWidth={1}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" size={24} color={colors.black100} />
-          </TouchableOpacity>
-        </Box>
-        <GradientTitle variant="gradientTitle">{t("Explore.selectCheckInDate")}</GradientTitle>
+        <HeaderTitle title={t("Explore.selectCheckInDate")} />
       </Box>
       <Box style={styles.calendarContainer}>
         <Calendar
           onDayPress={handleDayPress}
           markingType="period"
-          markedDates={{
-            [selectedCheckInDate]: {
-              startingDay: true,
-              color: colors.blue800,
-              textColor: "white100",
-            },
-            color: "green",
-            [selectedCheckOutDate]: {
-              endingDay: true,
-              color: colors.blue800,
-              textColor: colors.white100,
-            },
-          }}
+          markedDates={getMarkedDates()}
           style={styles.calenderStyle}
+          hideArrows={false}
+          renderArrow={(direction: string) => (
+            <View style={styles.arrowBox}>
+              <Icon
+                name={direction === "left" ? "chevron-left" : "chevron-right"}
+                size={20}
+                color={colors.neutral400}
+              />
+            </View>
+          )}
           theme={{
-            calendarBackground: "white100",
-            textSectionTitleColor: "black100",
-            textSectionTitleDisabledColor: "gray",
-            dayTextColor: "black100",
-            todayTextColor: "#5A31F4",
-            selectedDayBackgroundColor: "yellow",
-            selectedDayTextColor: "white100",
-            arrowColor: "black100",
+            backgroundColor: colors.white,
+            calendarBackground: colors.white,
+            textSectionTitleColor: colors.neutral400,
+            selectedDayBackgroundColor: colors.blue800,
+            selectedDayTextColor: colors.white,
+            todayTextColor: colors.blue800,
+            dayTextColor: colors.neutral500,
+            textDisabledColor: colors.neutral300,
+            monthTextColor: colors.blue800,
+            textMonthFontFamily: typography.poppinsSemibold,
+            textMonthFontSize: 16,
+            textDayFontFamily: typography.poppinsRegular,
+            textDayHeaderFontFamily: typography.poppinsMedium,
+            "stylesheet.calendar.header": {
+              header: {
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingLeft: 10,
+                paddingRight: 10,
+                marginTop: 6,
+                marginBottom: 10,
+              },
+              monthText: {
+                fontFamily: typography.poppinsSemibold,
+                fontSize: 16,
+                color: colors.blue800,
+                flex: 1,
+                textAlign: "left",
+              },
+              arrow: {
+                padding: 10,
+              },
+            },
           }}
         />
       </Box>
+      <View style={{ flex: 1 }} />
       {renderFooter()}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: { height: 32, width: 32, marginRight: 10 },
+  mainContainer: {
+    height: 36,
+    width: 36,
+    marginRight: 10,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: colors.neutral200,
+    backgroundColor: colors.white,
+  },
   container: {
     flex: 1,
+    backgroundColor: colors.neutral50,
+  },
+  headerTitleSelect: {
+    fontFamily: typography.poppinsBold,
+    fontSize: 20,
+    color: colors.blue800,
   },
   calendarContainer: {
-    marginVertical: 24,
-    paddingHorizontal: 24,
+    marginTop: 10,
+    marginHorizontal: 16,
+    borderRadius: 16,
+    backgroundColor: colors.white,
+    paddingVertical: 10,
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 2,
   },
   calenderStyle: {
-    borderRadius: 10,
-    height: 350,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    borderRadius: 16,
   },
-  footer: {
-    marginHorizontal: 24,
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    backgroundColor: colors.white,
-    borderRadius: 5,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  dateBox: {
+  arrowBox: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: colors.neutral100,
     alignItems: "center",
     justifyContent: "center",
+  },
+  footer: {
+    marginHorizontal: 16,
+    marginBottom: 24,
+    padding: 16,
+    backgroundColor: colors.white,
+    borderRadius: 12,
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  dateBox: {
+    flex: 1,
+    justifyContent: "center",
     borderWidth: 1,
-    borderColor: colors.white200,
+    borderColor: colors.neutral200,
     paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 5,
-    marginBottom: 8,
+    paddingVertical: 12,
+    borderRadius: 8,
   },
   dateText: {
     fontFamily: typography.poppinsBold,
-    fontSize: 14,
-    color: colors.neutral600,
+    fontSize: 15,
+    color: colors.black100,
   },
   dateLabel: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: typography.poppinsRegular,
     fontSize: 12,
-    color: colors.neutral600,
+    color: colors.neutral500,
+    marginLeft: 20, // Align text under date
   },
   doneButton: {
     backgroundColor: colors.blue800,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingVertical: 14,
     borderRadius: 8,
   },
   doneButtonText: {
-    fontFamily: "Poppins-Semibold",
+    fontFamily: typography.poppinsMedium,
     fontSize: 16,
     color: colors.white,
   },

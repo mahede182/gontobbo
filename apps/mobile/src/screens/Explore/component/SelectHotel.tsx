@@ -1,0 +1,36 @@
+import { Image, Pressable } from "react-native";
+import React from "react";
+import { Box, RestyleText } from "@/theme";
+import { colors } from "@/theme/colors";
+import hotelsIcon from "@/assets/Home/hotelTag.png";
+
+type SelectHotelProps = {
+  title: string;
+  subTitle: string;
+  onPress: () => void;
+};
+
+const SelectHotel: React.FC<SelectHotelProps> = ({ title, subTitle, onPress }) => {
+  return (
+    <Pressable style={{ backgroundColor: colors.white100 }} onPress={onPress}>
+      <Box
+        borderColor={"neutral300"}
+        borderWidth={1}
+        padding="small"
+        borderRadius={5}
+        flexDirection="row"
+        alignItems="center">
+        <Image
+          source={hotelsIcon}
+          style={{ marginRight: 6, height: 20, width: 20, resizeMode: "contain" }}
+        />
+        <Box>
+          <RestyleText variant="searchHotelTitle">{title}</RestyleText>
+          <RestyleText variant="caption">{subTitle}</RestyleText>
+        </Box>
+      </Box>
+    </Pressable>
+  );
+};
+
+export default SelectHotel;

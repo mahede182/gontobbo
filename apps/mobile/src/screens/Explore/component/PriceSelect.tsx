@@ -9,14 +9,16 @@ type Props = {
   gradient?: boolean;
   type?: "select" | "booking";
   price: number;
-  priceSub: "string";
-  buttonText: "string";
+  priceSub: string;
+  buttonText: string;
+  onPress?: () => void;
+  containerStyle?: any;
+  disabled?: boolean;
 };
 
 const PriceSelect = (props: Props) => {
-  const navigation = useNavigation();
   return (
-    <Box style={styles.priceSection}>
+    <Box style={[styles.priceSection, props.containerStyle, props.disabled && { opacity: 0.5 }]}>
       <Box style={styles.priceContainer}>
         {props.gradient ? (
           <>
@@ -31,7 +33,8 @@ const PriceSelect = (props: Props) => {
         )}
       </Box>
       <TouchableOpacity
-        onPress={() => navigation.navigate("TRIP_REVIEW_BOOKING")}
+        onPress={props.onPress}
+        disabled={props.disabled}
         style={styles.selectRoomButton}>
         <RestyleText style={styles.selectRoomButtonText}>{props.buttonText}</RestyleText>
       </TouchableOpacity>

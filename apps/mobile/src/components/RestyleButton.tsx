@@ -20,15 +20,14 @@ const restyleFunctions = composeRestyleFunctions<Theme, RestyleProps>([spacing, 
 
 type Props = {
   label: string;
-  onPress: () => void;
+  onPress: () => Promise<void> | void;
   iconSrc?: ImageSourcePropType | undefined;
   loading?: boolean;
-};
+  style?: any;
+  disabled?: boolean;
+} & RestyleProps;
 
-const BaseButton = createRestyleComponent<
-  React.ComponentProps<typeof TouchableOpacity> & Props & RestyleComponentProps<Theme>,
-  Theme
->([restyleFunctions], TouchableOpacity);
+const BaseButton = createRestyleComponent<any, Theme>([restyleFunctions], TouchableOpacity);
 
 const RestyleButton: React.FC<Props> = ({ label, onPress, iconSrc, loading = false, ...props }) => {
   const { isLoading } = useDummyLoading();
@@ -38,7 +37,9 @@ const RestyleButton: React.FC<Props> = ({ label, onPress, iconSrc, loading = fal
       <BaseButton onPress={onPress} {...props}>
         <Box style={styles.buttonContainer}>
           {iconSrc && <Image source={iconSrc} style={styles.icon} />}
-          <RestyleText variant="buttonLabel">{label}</RestyleText>
+          <RestyleText variant="buttonLabel" style={styles.text}>
+            {label}
+          </RestyleText>
         </Box>
       </BaseButton>
     </Skeleton>
@@ -54,7 +55,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   icon: {
-    marginHorizontal: 5,
-    height: 13,
+    // height: 13,
+    padding: 5,
+  },
+  text: {
+    marginLeft: 5,
   },
 });

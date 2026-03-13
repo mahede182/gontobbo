@@ -1,74 +1,35 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthenticatingNavigation from "./AuthenticatingNavigation";
-import { useApp } from "@/hooks/useApp";
 import AuthenticatedNavigation from "./AuthenticatedNavigation";
+import OnboardScreen from "@/screens/Onboard/OnboardScreen";
 import { navigationRef } from "@/utils/helper";
-import { useEffect, useState } from "react";
-import { getItem } from "@/utils/storage";
-import { STORAGE_KEYS } from "@/@types/storage.type";
-import IntroNavigation from "./IntroNavigation";
-
-export type RootStackParamList = {
-  AUTHENTICATING: undefined;
-  AUTHENTICATED: undefined;
-};
+import { useHydrate } from "@/hooks/useHydrate";
+import { useAppSelector } from "@/store/hooks";
+import { RootStackParamList } from "@/@types/navigation.type";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation = () => {
-  const { send, state } = useApp();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, isGuest, isLoading } = useAppSelector((state) => state.auth);
+  const isFirstLaunch = useAppSelector((state) => state.app.isFirstLaunch);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const userData = await getItem(STORAGE_KEYS.USER);
-        setIsAuthenticated(!!userData);
-      } catch (error) {
-        setIsAuthenticated(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+  useHydrate();
 
   if (isLoading) {
     return null;
   }
 
   return (
-    <NavigationContainer
-      onReady={() => {
-        send({ type: "START_APP" });
-      }}
-      ref={navigationRef}>
-      <Stack.Navigator initialRouteName={isAuthenticated ? "AUTHENTICATED" : "AUTHENTICATING"}>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="INITIAL_LOAD"
-          component={IntroNavigation}
-        />
-
-        <Stack.Screen options={{ headerShown: false }} name="AUTHENTICATING">
-          {(props) => {
-            // return state.context.refAuthenticating ? (
-            return (
-              <AuthenticatingNavigation actorRef={state.context.refAuthenticating} {...props} />
-            );
-          }}
-        </Stack.Screen>
-
-        <Stack.Screen options={{ headerShown: false }} name="AUTHENTICATED">
-          {(props) => {
-            // return state.context.refAuthenticated ? (
-            return <AuthenticatedNavigation actorRef={state.context.refAuthenticated} {...props} />;
-            // ) : null;
-          }}
-        </Stack.Screen>
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {isAuthenticated || isGuest ? (
+          <Stack.Screen name="AUTHENTICATED" component={AuthenticatedNavigation} />
+        ) : isFirstLaunch ? (
+          <Stack.Screen name="ONBOARD" component={OnboardScreen} />
+        ) : (
+          <Stack.Screen name="AUTHENTICATING" component={AuthenticatingNavigation} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

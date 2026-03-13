@@ -29,13 +29,13 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>io.bitsofts.gontobbo</string>
+          <string>co.bitsofts.gontobbo</string>
         </array>
       </dict>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.googleusercontent.apps.888391547672-tvllepg2qfpmbi8oub67vcvd8112jlpb</string>
+          <string>com.googleusercontent.apps.228779477149-htkbnhk730s7sssrj68stuntmiglhsu7</string>
         </array>
       </dict>
     </array>

@@ -1,9 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box } from "@/theme";
-import { getUser } from "@/utils/axios";
-import "@/machine/counterMachine";
-
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import {
@@ -12,100 +9,163 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { Input } from "@/components/Input";
 import PopularTrip from "./component/PopularTrip";
 import { useTranslation } from "react-i18next";
 import Tag from "./component/Tag";
-import { tagData } from "@/data/tagData";
 import FeaturedHotels from "./component/FeaturedHotels";
 import GradientTitle from "@/components/GradientTitle";
 import { typography } from "@/theme/typography";
+import { fontSizes } from "@/theme/fontSizes";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useApp } from "@/hooks/useApp";
-import { dynamicCSS } from "@/utils/styles";
+import { useAppSelector } from "@/store/hooks";
+import { TAGS_DATA } from "@/data/tagData";
+import Icon from "@expo/vector-icons/Ionicons";
+import Background from "@/components/Background";
 
 type Props = {};
+const _IMG_SIZE = 52;
 
 const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { state: appState } = useApp();
-
-  useEffect(() => {
-    getUser().then((response) => {
-      const data = response.data.data;
-      setName(`${data?.first_name} ${data?.last_name}`);
-      setEmail(data?.email);
-      setImageUrl(data?.avatar);
-    });
-  }, [name, email, imageUrl]);
+  const { user } = useAppSelector((state) => state.auth);
+  const [activeTag, setActiveTag] = useState("Hotels");
+  const [aiQuery, setAiQuery] = useState("");
 
   const drawerOpen = () => {
     navigation.navigate("DRAWER");
     navigation.dispatch(DrawerActions.openDrawer());
   };
 
+  const handleTagPress = useCallback((label: string) => {
+    setActiveTag(label);
+  }, []);
+
+  const handleAiSubmit = useCallback(() => {
+    if (!aiQuery.trim()) return;
+    navigation.navigate("CHAT", { initialMessage: aiQuery.trim() });
+    setAiQuery("");
+  }, [aiQuery, navigation]);
+
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      {/* === drawer button === */}
-      <Box flexDirection="row" justifyContent="space-between" alignItems="center">
-        <TouchableOpacity onPress={drawerOpen}>
-          <Image source={images.menuBtn} style={{ height: 48, width: 48, resizeMode: "contain" }} />
-        </TouchableOpacity>
-        <Pressable
-          onPress={() => {
-            navigation.navigate("NOTIFICATION");
-          }}>
-          <Image
-            source={images.notifiocationBtn}
-            style={{ height: 48, width: 48, resizeMode: "contain" }}
-          />
-        </Pressable>
-      </Box>
-      {/* === ai section === */}
-      <Box paddingHorizontal="ten">
-        <Box flexDirection="row" alignItems="center" justifyContent="flex-start" marginBottom="ten">
-          <Image source={images.magicAiBtn} style={{ height: 16, width: 16, marginRight: 10 }} />
-          <GradientTitle style={{ fontFamily: typography.poppinsRegular, fontSize: 13 }}>
+    <Background>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        {/* === Header === */}
+        <Box flexDirection="row" justifyContent="space-between" alignItems="center">
+          <TouchableOpacity onPress={drawerOpen}>
+            <Image
+              source={images.menuBtn}
+              style={{ height: _IMG_SIZE, width: _IMG_SIZE, resizeMode: "cover" }}
+            />
+          </TouchableOpacity>
+          <Pressable onPress={() => navigation.navigate("NOTIFICATION")}>
+            <Image
+              source={images.notifiocationBtn}
+              style={{ height: _IMG_SIZE, width: _IMG_SIZE, resizeMode: "cover" }}
+            />
+          </Pressable>
+        </Box>
+
+        {/* === AI Section === */}
+        <Box paddingHorizontal="medium" marginTop="small">
+          <GradientTitle style={{ fontFamily: typography.poppinsRegular, fontSize: fontSizes.md }}>
             {t("Home.askAi")}
           </GradientTitle>
+          <View style={styles.aiInputRow}>
+            <TextInput
+              style={styles.aiInput}
+              placeholder={t("Home.askMeAnything")}
+              placeholderTextColor={colors.neutral400}
+              value={aiQuery}
+              onChangeText={setAiQuery}
+              onSubmitEditing={handleAiSubmit}
+              returnKeyType="send"
+            />
+            <TouchableOpacity style={styles.aiButton} onPress={handleAiSubmit}>
+              <Image source={images.magicAiBtn} style={{ height: 22, width: 22 }} />
+            </TouchableOpacity>
+          </View>
         </Box>
-        <Input placeholder={t("Home.askMeAnything")} />
-      </Box>
-      {/* === Tag === */}
-      <Box>
+
+        {/* === Tags === */}
         <ScrollView
-          style={(dynamicCSS("paddingVertical", 10), dynamicCSS("paddingHorizontal", 10))}
+          horizontal
           showsHorizontalScrollIndicator={false}
-          horizontal>
-          {/* Map over tagData and render Tag component */}
-          {tagData.map((tag, index) => (
-            <Tag key={index} id={tag.id} icon={tag.icon} label={tag.label} />
+          contentContainerStyle={styles.tagList}>
+          {TAGS_DATA.map((tag) => (
+            <Tag
+              key={tag.id}
+              id={tag.id}
+              icon={tag.icon}
+              label={tag.label}
+              active={activeTag === tag.label}
+              onPress={handleTagPress}
+            />
           ))}
         </ScrollView>
-      </Box>
-      {/* === Hotel card section === */}
-      <FeaturedHotels />
-      {/* === trip card === */}
-      <PopularTrip />
-    </SafeAreaView>
+
+        {/* === Content based on active tag === */}
+        {activeTag === "Hotels" && <FeaturedHotels />}
+        {activeTag === "Trips" && <PopularTrip />}
+        {activeTag === "Hotels" && <PopularTrip />}
+        {activeTag === "Flights" && (
+          <Box
+            paddingHorizontal="medium"
+            marginTop="twenty"
+            alignItems="center"
+            justifyContent="center"
+            style={{ paddingVertical: 40 }}>
+            <Icon name="airplane-outline" size={48} color={colors.neutral400} />
+            <GradientTitle style={{ fontSize: fontSizes.lg, marginTop: 12 }}>
+              Flight search coming soon
+            </GradientTitle>
+          </Box>
+        )}
+      </ScrollView>
+    </Background>
   );
 };
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    ...StyleSheet.absoluteFillObject,
+  container: {
+    flex: 1,
     backgroundColor: colors.neutral100,
+  },
+  scrollContent: {
+    paddingBottom: 100,
+  },
+  tagList: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  aiInputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.neutral300,
+    paddingHorizontal: 12,
+    marginTop: 6,
+    marginBottom: 4,
+  },
+  aiInput: {
+    flex: 1,
+    fontSize: fontSizes.md,
+    fontFamily: typography.poppinsRegular,
+    color: colors.neutral700,
+    paddingVertical: 10,
+  },
+  aiButton: {
+    padding: 6,
+    marginLeft: 4,
   },
 });

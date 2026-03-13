@@ -1,0 +1,431 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector(map: "vector")]
+}
+
+// ─── Enums ──────────────────────────────────────────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum MemberClass {
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+}
+
+enum BookingType {
+  HOTEL
+  TRIP
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum BookingFor {
+  MYSELF
+  SOMEONE_ELSE
+}
+
+enum WishlistType {
+  HOTEL
+  FLIGHT
+}
+
+enum BaggageType {
+  CABIN
+  CHECKED
+  SPECIAL
+}
+
+enum BaggageStatus {
+  INCLUDED
+  EXTRA_FEE
+  NOT_ALLOWED
+}
+
+enum PaymentType {
+  CREDIT_CARD
+  PAYPAL
+  MASTER_CARD
+  BKASH
+  NAGAD
+}
+
+enum SearchType {
+  HOTEL
+  FLIGHT
+}
+
+// ─── User & Auth ────────────────────────────────────────────────────────────
+
+model User {
+  id           String      @id @default(uuid())
+  email        String      @unique
+  password     String?
+  firstName    String
+  lastName     String
+  username     String?     @unique
+  avatar       String?
+  gender       String?
+  phone        String?
+  nationality  String?
+  address      String?
+  memberNumber String?     @unique
+  memberClass  MemberClass @default(BRONZE)
+  role         Role        @default(USER)
+  googleId     String?     @unique
+  appleId      String?     @unique
+  isActive     Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  passportDetails   PassportDetails?
+  flightPreferences FlightPreferences?
+  reviews           Review[]
+  bookings          Booking[]
+  wishlist          WishlistItem[]
+  notifications     Notification[]
+  paymentMethods    PaymentMethod[]
+  baggageItems      Baggage[]
+  recentSearches    RecentSearch[]
+  refreshTokens     RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("refresh_tokens")
+}
+
+model PassportDetails {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  passportNumber String
+  nationality    String
+  dateOfBirth    DateTime
+  dateOfIssue    DateTime
+  dateOfExpiry   DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("passport_details")
+}
+
+model FlightPreferences {
+  id               String  @id @default(uuid())
+  userId           String  @unique
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isFlexibleDates  Boolean @default(false)
+  isNonStopFlights Boolean @default(false)
+  isEarlyDeparture Boolean @default(false)
+  isLateDeparture  Boolean @default(false)
+
+  @@map("flight_preferences")
+}
+
+// ─── Hotels ─────────────────────────────────────────────────────────────────
+
+model Hotel {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  location     String
+  latitude     Float?
+  longitude    Float?
+  rating       Float    @default(0)
+  starRating   Int      @default(3)
+  images       String[]
+  checkInTime  String   @default("14:00")
+  checkOutTime String   @default("11:00")
+  isFeatured   Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  embedding    Unsupported("vector(768)")?
+
+  amenities HotelAmenity[]
+  rooms     Room[]
+  reviews   Review[]
+  bookings  Booking[]
+  wishlist  WishlistItem[]
+
+  @@map("hotels")
+}
+
+model HotelAmenity {
+  id      String  @id @default(uuid())
+  hotelId String
+  hotel   Hotel   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  name    String
+  icon    String?
+
+  @@map("hotel_amenities")
+}
+
+model Room {
+  id           String   @id @default(uuid())
+  hotelId      String
+  hotel        Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  sqft         Int?
+  bedType      String?
+  view         String?
+  price        Float
+  taxInfo      String?
+  maxGuests    Int      @default(2)
+  isRefundable Boolean  @default(true)
+  isAvailable  Boolean  @default(true)
+  images       String[]
+  tags         String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@map("rooms")
+}
+
+// ─── Reviews ────────────────────────────────────────────────────────────────
+
+model Review {
+  id        String   @id @default(uuid())
+  hotelId   String
+  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating    Float
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+// ─── Bookings ───────────────────────────────────────────────────────────────
+
+model Booking {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hotelId        String?
+  hotel          Hotel?        @relation(fields: [hotelId], references: [id])
+  roomId         String?
+  room           Room?         @relation(fields: [roomId], references: [id])
+  tripId         String?
+  trip           Trip?         @relation(fields: [tripId], references: [id])
+  type           BookingType
+  status         BookingStatus @default(PENDING)
+  checkIn        DateTime
+  checkOut       DateTime
+  adults         Int           @default(1)
+  children       Int           @default(0)
+  rooms          Int           @default(1)
+  totalPrice     Float
+  discountAmount Float         @default(0)
+  taxAmount      Float         @default(0)
+  flightFee      Float         @default(0)
+  bookingFor     BookingFor    @default(MYSELF)
+  guestTitle     String?
+  guestFirstName String?
+  guestLastName  String?
+  guestEmail     String?
+  guestPhone     String?
+  guestAddress   String?
+  guestState     String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  travellers BookingTraveller[]
+
+  @@map("bookings")
+}
+
+model BookingTraveller {
+  id              String    @id @default(uuid())
+  bookingId       String
+  booking         Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  fullName        String
+  dateOfBirth     DateTime?
+  gender          String?
+  nationality     String?
+  passportNumber  String?
+  passportCountry String?
+  travellerType   String?
+
+  @@map("booking_travellers")
+}
+
+// ─── Trips ──────────────────────────────────────────────────────────────────
+
+model Trip {
+  id           String   @id @default(uuid())
+  title        String
+  destination  String
+  duration     String
+  description  String?
+  feature      String?
+  image        String?
+  peopleJoined Int      @default(0)
+  price        Float
+  isRefundable Boolean  @default(true)
+  isPopular    Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  embedding    Unsupported("vector(768)")?
+
+  packageDetails TripPackageDetail[]
+  bookings       Booking[]
+
+  @@map("trips")
+}
+
+model TripPackageDetail {
+  id     String @id @default(uuid())
+  tripId String
+  trip   Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  detail String
+
+  @@map("trip_package_details")
+}
+
+// ─── Flights ────────────────────────────────────────────────────────────────
+
+model Flight {
+  id               String   @id @default(uuid())
+  airline          String
+  flightNumber     String
+  departureAirport String
+  arrivalAirport   String
+  departureTime    DateTime
+  arrivalTime      DateTime
+  duration         String
+  stops            Int      @default(0)
+  stopLocation     String?
+  price            Float
+  services         String[]
+  route            String
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  embedding        Unsupported("vector(768)")?
+
+  @@map("flights")
+}
+
+
+
+// ─── Wishlist ───────────────────────────────────────────────────────────────
+
+model WishlistItem {
+  id        String       @id @default(uuid())
+  userId    String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hotelId   String?
+  hotel     Hotel?       @relation(fields: [hotelId], references: [id])
+  type      WishlistType
+  name      String
+  rating    Float?
+  createdAt DateTime     @default(now())
+
+  @@unique([userId, hotelId])
+  @@map("wishlist_items")
+}
+
+// ─── Notifications ──────────────────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}
+
+// ─── Payments ───────────────────────────────────────────────────────────────
+
+model PaymentMethod {
+  id        String      @id @default(uuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      PaymentType
+  name      String
+  last4     String?
+  isDefault Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@map("payment_methods")
+}
+
+// ─── Baggage ────────────────────────────────────────────────────────────────
+
+model Baggage {
+  id          String        @id @default(uuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        BaggageType
+  name        String
+  description String?
+  weight      String
+  dimensions  String?
+  status      BaggageStatus @default(INCLUDED)
+
+  @@map("baggage")
+}
+
+// ─── Locations ──────────────────────────────────────────────────────────────
+
+model Location {
+  id        String  @id @default(uuid())
+  name      String
+  country   String
+  image     String?
+  isPopular Boolean @default(false)
+  latitude  Float?
+  longitude Float?
+
+  @@map("locations")
+}
+
+
+
+// ─── Recent Searches ────────────────────────────────────────────────────────
+
+model RecentSearch {
+  id        String     @id @default(uuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      SearchType
+  query     String
+  createdAt DateTime   @default(now())
+
+  @@map("recent_searches")
+}

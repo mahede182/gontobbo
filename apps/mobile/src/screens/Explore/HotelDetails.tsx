@@ -1,11 +1,16 @@
 import React from "react";
 import { Box, RestyleText } from "@/theme";
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { colors } from "@/theme/colors";
 import Icon from "@expo/vector-icons/FontAwesome6";
-import detailsImage from "@/assets/hotel_image_1.png";
-import MapView, { Marker } from "react-native-maps";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { images } from "@/theme/images";
 import PriceSelect from "./component/PriceSelect";
 import { useTranslation } from "react-i18next";
@@ -13,142 +18,134 @@ import { SafeAreaView } from "moti";
 import { typography } from "@/theme/typography";
 import { dynamicCSS } from "@/utils/styles";
 import { isIOS } from "@/utils/device";
-import { clear, getItem, saveItem } from "@/utils/storage";
+import { useGetHotelDetailQuery } from "@/store/api/hotelsApi";
+import { useAddToWishlistMutation } from "@/store/api/wishlistApi";
 
 const HotelDetails = () => {
   const { t } = useTranslation();
-  const name = "Caesars Palace";
-  const rating = 4;
-  const description =
-    "Conveniently situated in the Washington Heights district of New York, Hotel Moca NYC is located 2.8 km from Yankee Stadium, 5 km from Columbia University and 6.3 km from Bronx Zoo.";
-  const checkInDate = "12:00 PM";
-  const checkOutDate = "12:00 PM";
-  const guests = "1 Room / 2 Guests";
-  const amenities = ["Gym", "Laundry", "Free Wi-Fi"];
-  const photos = [detailsImage, detailsImage, detailsImage];
-  const reviews: Review[] = [
-    {
-      name: "Donald Moore",
-      review: "Great hotel with a nice location. The staff was very friendly and helpful.",
-      rating: 4,
-      avatar: "https://example.com/avatar1.jpg",
-    },
-    {
-      name: "Christopher Wilson",
-      review:
-        "Beautiful and clean hotel with amazing views. The rooms were spacious and comfortable.",
-      rating: 4,
-      avatar: "https://example.com/avatar2.jpg",
-    },
-    {
-      name: "Joshua Anderson",
-      review:
-        "A great hotel with a great location. The hotel lobby is beautiful. Highly recommended.",
-      rating: 5,
-      avatar: "https://example.com/avatar3.jpg",
-    },
-  ];
-  const location = {
-    latitude: 40.7829,
-    longitude: -73.9654,
-    address: "3570 Las Vegas Blvd S, Las Vegas, NV 89109",
-  };
+  const navigation = useNavigation<any>();
+  const route = useRoute();
+  const hotelId = (route.params as any)?.hotelId;
+
+  const { data: hotel, isLoading } = useGetHotelDetailQuery(hotelId, {
+    skip: !hotelId,
+  });
+
+  const [addToWishlist] = useAddToWishlistMutation();
+
+  const photos = hotel?.images?.slice(0, 3) ?? [];
 
   const renderImages = () => {
-    switch (photos.length) {
-      case 1:
-        return <Image source={photos[0]} style={styles.singleImage} />;
-      case 2:
-        return (
-          <View style={styles.twoImagesContainer}>
-            <Image
-              source={photos[0]}
-              style={[styles.twoImagesLeft, dynamicCSS("marginRight", 4)]}
-            />
-            <Image
-              source={photos[1]}
-              style={[styles.twoImagesRight, dynamicCSS("marginRight", 4)]}
-            />
-          </View>
-        );
-      case 3:
-        return (
-          <View style={styles.threeImagesContainer}>
-            <Image
-              source={photos[0]}
-              style={[styles.threeImagesLeft, dynamicCSS("marginRight", 4)]}
-            />
-            <View style={styles.threeImagesRightContainer}>
-              <Image
-                source={photos[1]}
-                style={[styles.threeImagesRightTop, dynamicCSS("marginBottom", 4)]}
-              />
-              <Image
-                source={photos[2]}
-                style={[styles.threeImagesRightBottom, dynamicCSS("marginTop", 4)]}
-              />
-            </View>
-          </View>
-        );
-      default:
-        return null;
-    }
+    if (photos.length === 0) return null;
+    if (photos.length === 1)
+      return <Image source={{ uri: photos[0] }} style={styles.singleImage} />;
+    if (photos.length === 2)
+      return (
+        <View style={styles.twoImagesContainer}>
+          <Image
+            source={{ uri: photos[0] }}
+            style={[styles.twoImagesLeft, dynamicCSS("marginRight", 4)]}
+          />
+          <Image
+            source={{ uri: photos[1] }}
+            style={[styles.twoImagesRight, dynamicCSS("marginRight", 4)]}
+          />
+        </View>
+      );
+    return (
+      <View style={styles.threeImagesContainer}>
+        <Image
+          source={{ uri: photos[0] }}
+          style={[styles.threeImagesLeft, dynamicCSS("marginRight", 4)]}
+        />
+        <View style={styles.threeImagesRightContainer}>
+          <Image
+            source={{ uri: photos[1] }}
+            style={[styles.threeImagesRightTop, dynamicCSS("marginBottom", 4)]}
+          />
+          <Image
+            source={{ uri: photos[2] }}
+            style={[styles.threeImagesRightBottom, dynamicCSS("marginTop", 4)]}
+          />
+        </View>
+      </View>
+    );
   };
 
-  const navigation = useNavigation();
+  if (isLoading) {
+    return (
+      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" />
+      </SafeAreaView>
+    );
+  }
+
+  if (!hotel) {
+    return (
+      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <RestyleText>Hotel not found</RestyleText>
+      </SafeAreaView>
+    );
+  }
+
+  const params = (route.params as any) ?? {};
+
+  const startingPrice = hotel.rooms?.[0]?.price ?? 0;
+  const amenityNames = hotel.amenities?.slice(0, 3).map((a: any) => a.name) ?? [];
+
   return (
     <SafeAreaView style={styles.container}>
       <Box style={styles.headerContainer}>
-        {/* Back Button */}
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={images.back} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
-            const favourites = (await getItem("favourites")) || [];
-            const newFavourite = {
-              id: 339,
-              name: "mirpur palace",
-              rating: 7.9,
-            };
-            const updatedFavourites = [...favourites, newFavourite];
-            await saveItem("favourites", updatedFavourites);
+            try {
+              await addToWishlist({
+                hotelId: hotel.id,
+                type: "HOTEL",
+                name: hotel.name,
+                rating: hotel.rating,
+              }).unwrap();
+            } catch {}
           }}>
           <Image
-            tintColor={colors.danger}
+            tintColor={colors.primary400}
             style={styles.headerFavourite}
             source={images.wishlist}
           />
         </TouchableOpacity>
       </Box>
 
-      {true ? (
+      {photos.length > 0 && (
         <TouchableOpacity
-          onPress={() => navigation.navigate("HOTEL_GALLERY")}
+          onPress={() => navigation.navigate("HOTEL_GALLERY", { hotelId: hotel.id })}
           style={styles.imageContainer}>
           {renderImages()}
         </TouchableOpacity>
-      ) : null}
+      )}
 
       <ScrollView style={styles.content}>
-        {/* === Ceasurs Palace === */}
+        {/* Hotel Name & Rating */}
         <Box
           borderWidth={0.6}
           borderRadius={10}
           padding={"ten"}
           borderColor={"neutral300"}
           marginVertical={"ten"}>
-          <RestyleText style={styles.sectionTitle}>{name}</RestyleText>
+          <RestyleText style={styles.sectionTitle}>{hotel.name}</RestyleText>
           <RestyleText style={styles.rating}>
-            {Array(Math.floor(rating))
-              .fill()
-              .map((_, i) => (
+            {Array(Math.floor(hotel.starRating))
+              .fill(null)
+              .map((_: any, i: number) => (
                 <Icon key={i} name="star" size={16} color={colors.linearEnd} />
               ))}
           </RestyleText>
-          <RestyleText style={styles.description}>{description}</RestyleText>
+          <RestyleText style={styles.description}>{hotel.description}</RestyleText>
         </Box>
-        {/* === Travel Dates & guest === */}
+
+        {/* Travel Dates & guest */}
         <Box
           borderWidth={0.6}
           borderRadius={10}
@@ -160,13 +157,14 @@ const HotelDetails = () => {
               {t("Explore.travelDatesAndGuests")}
             </RestyleText>
             <RestyleText style={styles.sectionContent}>
-              {t("Explore.checkIn")}: {checkInDate} | {t("Explore.checkOut")}: {checkOutDate} |{" "}
-              {guests}
+              {t("Explore.checkIn")}: {params.checkIn || hotel.checkInTime} |{" "}
+              {t("Explore.checkOut")}: {params.checkOut || hotel.checkOutTime}
             </RestyleText>
           </Box>
         </Box>
-        {/* === Amenities === */}
-        <TouchableOpacity onPress={() => navigation.navigate("AMENITIES")}>
+
+        {/* Amenities */}
+        <TouchableOpacity onPress={() => navigation.navigate("AMENITIES", { hotelId: hotel.id })}>
           <Box
             borderWidth={0.6}
             borderRadius={10}
@@ -176,22 +174,22 @@ const HotelDetails = () => {
             style={styles.section}>
             <RestyleText style={styles.sectionTitle}>{t("Explore.amenities")}</RestyleText>
             <Box style={styles.amenitiesContainer}>
-              {amenities.map((amenity, index) => (
+              {amenityNames.map((amenity: string, index: number) => (
                 <Box key={index} style={styles.amenityContainer}>
-                  <Icon name="dumbbell" size={16} color={colors.green} />
+                  <Icon key={index} name="dumbbell" size={16} color={colors.neutral600} />
                   <RestyleText style={styles.amenity}>{amenity}</RestyleText>
                 </Box>
               ))}
-              {amenities.length > 3 && (
+              {hotel.amenities.length > 3 && (
                 <RestyleText style={styles.moreAmenities}>
-                  +{amenities.length - 3} {t("Explore.moreAmenities")}
+                  +{hotel.amenities.length - 3} {t("Explore.moreAmenities")}
                 </RestyleText>
               )}
             </Box>
           </Box>
         </TouchableOpacity>
 
-        {/* === Review and Rating === */}
+        {/* Review and Rating */}
         <Box
           borderWidth={0.6}
           borderRadius={10}
@@ -200,32 +198,38 @@ const HotelDetails = () => {
           marginVertical={"ten"}
           style={styles.section}>
           <RestyleText style={styles.sectionTitle}>{t("Explore.reviewsAndRating")}</RestyleText>
-          {reviews.map((review, index) => (
-            <Box key={index} style={styles.reviewContainer}>
+          {(hotel.reviews ?? []).map((review: any) => (
+            <Box key={review.id} style={styles.reviewContainer}>
               <Box style={styles.reviewHeader}>
-                {review.avatar ? (
-                  <Image source={{ uri: review.avatar }} style={styles.reviewAvatar} />
+                {review.user?.avatar ? (
+                  <Image source={{ uri: review.user.avatar }} style={styles.reviewAvatar} />
                 ) : (
                   <Box style={styles.reviewAvatarPlaceholder} />
                 )}
-                <RestyleText style={styles.reviewName}>{review.name}</RestyleText>
+                <RestyleText style={styles.reviewName}>
+                  {review.user?.firstName} {review.user?.lastName}
+                </RestyleText>
               </Box>
-              <RestyleText style={styles.reviewText}>{review.review}</RestyleText>
-              <Box style={styles.reviewRating}>
+              <RestyleText style={styles.reviewText}>{review.text}</RestyleText>
+              {/* <Box style={styles.reviewRating}>
                 {Array(review.rating)
-                  .fill()
-                  .map((_, i) => (
-                    <Icon key={i} name="star" size={16} color={colors.yellow} />
+                  .fill(null)
+                  .map((_: any, i: number) => (
+                    <Icon key={i} name="star" size={16} color={colors.linearEnd} />
                   ))}
-              </Box>
+              </Box> */}
             </Box>
           ))}
-          <TouchableOpacity onPress={() => navigation.navigate("REVIEW")}>
-            <RestyleText>{t("Explore.readMore")} 10+</RestyleText>
+          <TouchableOpacity onPress={() => navigation.navigate("REVIEW", { hotelId: hotel.id })}>
+            <RestyleText>
+              {t("Explore.readMore")} {hotel.reviewCount}+
+            </RestyleText>
           </TouchableOpacity>
         </Box>
-        {/* === Location === */}
-        <TouchableOpacity onPress={() => navigation.navigate("FULL_SCREEN_MAP")}>
+
+        {/* Location */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("FULL_SCREEN_MAP", { hotelId: hotel.id })}>
           <Box
             borderWidth={0.6}
             borderRadius={10}
@@ -235,39 +239,46 @@ const HotelDetails = () => {
             marginVertical={"ten"}
             style={styles.section}>
             <RestyleText style={styles.sectionTitle}>{t("Explore.location")}</RestyleText>
-            {isIOS ? (
-              <MapView
-                style={styles.map}
-                initialRegion={{
-                  latitude: location.latitude,
-                  longitude: location.longitude,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
-                }}>
-                <Marker
-                  coordinate={{
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                  }}
-                  title={name}
-                />
-              </MapView>
-            ) : null}
-
-            <RestyleText style={styles.locationAddress}>{location.address}</RestyleText>
+            <Box
+              style={styles.map}
+              alignItems="center"
+              justifyContent="center"
+              backgroundColor="neutral100"
+              borderRadius={10}>
+              <Image
+                source={
+                  images.map || { uri: "https://via.placeholder.com/400x200?text=Map+Location" }
+                }
+                style={{ width: "100%", height: "100%" }}
+                resizeMode="cover"
+              />
+              <Box
+                position="absolute"
+                backgroundColor="white"
+                padding="small"
+                borderRadius={4}
+                style={{ opacity: 0.8 }}>
+                <RestyleText style={{ fontSize: 12, color: colors.black100 }}>
+                  {hotel.location}
+                </RestyleText>
+              </Box>
+            </Box>
+            <RestyleText style={styles.locationAddress}>{hotel.location}</RestyleText>
           </Box>
         </TouchableOpacity>
 
         <PriceSelect
           buttonText={t("Explore.selectRoom")}
-          price={450}
+          price={startingPrice}
+          onPress={() => navigation.navigate("SELECT_ROOM", { hotelId: hotel.id, ...params })}
           gradient
-          priceSub={`+$45 ${t("Explore.taxesAndFees")}, ${t("Explore.perNightForRoom")}`}
+          priceSub={`+$45 ${t("Explore.taxesAndFees", "taxes & fees")}, ${t("Explore.perNightForOneRoom", "Per Night for 1 Room")}`}
         />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

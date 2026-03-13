@@ -3,16 +3,15 @@ import { Pressable, Image, StyleSheet } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { images } from "@/theme/images";
 import { colors } from "@/theme/colors";
-import { useSelector } from "@xstate/react";
-import { counterActor } from "@/machine/counterMachine";
 
 type GuestInputProps = {
+  rooms?: number;
+  adults?: number;
+  children?: number;
   onPress: () => void;
 };
 
-const GuestInput = ({ onPress }: GuestInputProps) => {
-  // const { state } = useApp();
-  const { rooms, adults, children } = useSelector(counterActor, (snapshot) => snapshot.context);
+const GuestInput = ({ rooms = 1, adults = 1, children = 0, onPress }: GuestInputProps) => {
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <Box

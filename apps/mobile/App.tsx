@@ -9,9 +9,13 @@ import { useFonts } from "expo-font";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { dynamicCSS } from "@/utils/styles";
-import { AppProvider } from "@/hooks/useApp";
-import { clear, getItem, saveItem } from "@/utils/storage";
-import { TOKEN } from "@/constants/config";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
+
+import { KeyboardProvider } from "react-native-keyboard-controller";
+import Toast from "react-native-toast-message";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { googleSignInConfig } from "@/config/google";
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>;
@@ -22,22 +26,25 @@ interface AppProps {
  */
 export default function App(props: AppProps) {
   const [areFontsLoaded] = useFonts(customFontsToLoad);
-  // Before we show the app, we have to wait for our state to be ready.
-  // In iOS: application:didFinishLaunchingWithOptions:
-  // In Android: https://stackoverflow.com/a/45838109/204044
-  // You can replace with your own loading component if you wish.
+
+  useEffect(() => {
+    GoogleSignin.configure(googleSignInConfig);
+  }, []);
+
   if (!areFontsLoaded) return null;
 
-  // otherwise, we're ready to render the app
   return (
-    <GestureHandlerRootView style={dynamicCSS("flex", 1)}>
-      <RestyleProvider theme={theme}>
-        <I18nextProvider i18n={i18next}>
-          <AppProvider>
-            <RootNavigation />
-          </AppProvider>
-        </I18nextProvider>
-      </RestyleProvider>
-    </GestureHandlerRootView>
+    <Provider store={store}>
+      <KeyboardProvider>
+        <GestureHandlerRootView style={dynamicCSS("flex", 1)}>
+          <RestyleProvider theme={theme}>
+            <I18nextProvider i18n={i18next}>
+              <RootNavigation />
+              <Toast />
+            </I18nextProvider>
+          </RestyleProvider>
+        </GestureHandlerRootView>
+      </KeyboardProvider>
+    </Provider>
   );
 }

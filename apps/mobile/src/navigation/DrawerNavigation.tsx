@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import {
+  DrawerContentComponentProps,
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
@@ -15,16 +16,38 @@ import { useNavigation } from "@react-navigation/native";
 import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
 import { dynamicCSS } from "@/utils/styles";
+import { useLogoutMutation } from "@/store/api/authApi";
+import { AppLogger } from "@/utils/applogger";
+import { clearTokens, getTokens } from "@/utils/storage";
+import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import { Alert } from "react-native";
 type Props = {};
 
 const Drawer = createDrawerNavigator();
 
-const CustomDrawerContent = (props) => {
-  const navigation = useNavigation();
+const CustomDrawerContent = (props: DrawerContentComponentProps) => {
+  const { t } = useTranslation();
+  const navigation = useNavigation<any>();
+  const { logout } = useAuth();
+  const [logoutMutation] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    const tokens = await getTokens();
+    try {
+      await logoutMutation({ refreshToken: tokens?.refreshToken }).unwrap();
+    } catch (error) {
+      AppLogger.error("Logout mutation failed", error);
+    } finally {
+      await clearTokens();
+      logout();
+    }
+  };
+
   return (
     <BlurView intensity={100} tint="prominent" style={dynamicCSS("flex", 1)}>
       <DrawerContentScrollView {...props}>
-        <TouchableOpacity onPress={() => navigation.navigate("PROFILE")}>
+        <TouchableOpacity onPress={() => navigation.navigate("ProfileTab")}>
           <LinearGradient
             colors={[colors.linearStart, colors.linearEnd]}
             locations={[0, 1]}
@@ -44,15 +67,21 @@ const CustomDrawerContent = (props) => {
         {/* ::: My Trip ::: */}
         <Box style={styles.group}>
           <GradientTitle style={dynamicCSS("marginBottom", 5)}>My Trip</GradientTitle>
-          <TouchableOpacity style={styles.drawerItemContainer}>
+          <TouchableOpacity
+            style={styles.drawerItemContainer}
+            onPress={() => navigation.navigate("BOOKINGS")}>
             <Image source={images.myBookingIcon} style={styles.iconStyle} />
             <RestyleText>My Booking</RestyleText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItemContainer}>
+          <TouchableOpacity
+            style={styles.drawerItemContainer}
+            onPress={() => navigation.navigate("WISH_LIST")}>
             <Image source={images.savedIcon} style={styles.iconStyle} />
             <RestyleText>Saved</RestyleText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.drawerItemContainer}>
+          <TouchableOpacity
+            style={styles.drawerItemContainer}
+            onPress={() => navigation.navigate("REFER")}>
             <Image source={images.referIcon} style={styles.iconStyle} />
             <RestyleText>Refer</RestyleText>
           </TouchableOpacity>
@@ -75,9 +104,7 @@ const CustomDrawerContent = (props) => {
         </Box>
         {/* ::: Logout ::: */}
         <Box style={styles.group}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SIGN_IN")}
-            style={styles.drawerItemContainer}>
+          <TouchableOpacity onPress={handleLogout} style={styles.drawerItemContainer}>
             <Image source={images.logoutIcon} style={styles.iconStyle} />
             <RestyleText>Logout</RestyleText>
           </TouchableOpacity>

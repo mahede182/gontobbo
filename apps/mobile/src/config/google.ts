@@ -2,11 +2,14 @@
     <> config from firebase 1. google-services.json 
     <> 2. GoogleServices-Info.plist
 */
+// @ts-ignore
+import { GOOGLE_CLIENT_ID, IOS_CLIENT_ID } from "@env";
+
 export const googleSignInConfig = {
-  webClientId: "228779477149-htkbnhk730s7sssrj68stuntmiglhsu7.apps.googleusercontent.com",
-  scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+  webClientId: GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID,
+  scopes: ["email", "profile"],
   offlineAccess: true,
   forceCodeForRefreshToken: true,
-  iosClientId: process.env.IOS_CLIENT_ID,
+  iosClientId: IOS_CLIENT_ID || process.env.IOS_CLIENT_ID,
   profileImageSize: 160,
 };

@@ -6,6 +6,7 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "@/theme/colors";
+import { fontSizes } from "@/theme/fontSizes";
 
 type Props = {
   title: string;
@@ -21,7 +22,7 @@ const HeaderTitle = (props: Props) => {
         <Image source={images.back} />
       </TouchableOpacity>
       {/* Title */}
-      <GradientTitle variant="gradientTitle">{props.title}</GradientTitle>
+      <GradientTitle style={{ fontSize: fontSizes.xxl }}>{props.title}</GradientTitle>
     </Box>
   );
 };
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 15,
   },
   backButton: {
     padding: 10,
