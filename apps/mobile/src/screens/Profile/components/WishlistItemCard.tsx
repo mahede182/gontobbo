@@ -39,8 +39,8 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
         borderWidth={1}
         borderColor="neutral100">
         <Box
-          width={80}
-          height={80}
+          width={90}
+          height={100}
           backgroundColor="neutral100"
           borderRadius={12}
           overflow="hidden"
@@ -52,43 +52,50 @@ const WishlistItemCard: React.FC<WishlistItemCardProps> = ({
           />
         </Box>
 
-        <Box flex={1}>
-          <RestyleText
-            numberOfLines={1}
-            variant="searchHotelTitle"
-            fontFamily={typography.poppinsSemibold}
-            color="neutral700">
-            {name}
-          </RestyleText>
-
-          <Box flexDirection="row" alignItems="center" marginVertical="tiny">
+        <Box flex={1} justifyContent="space-between" height={100} paddingVertical="tiny">
+          <Box>
             <RestyleText
-              variant="caption"
-              color="neutral600"
-              fontFamily={typography.poppinsRegular}>
-              Review
+              numberOfLines={2}
+              variant="searchHotelTitle"
+              fontFamily={typography.poppinsSemibold}
+              color="neutral700">
+              {name}
             </RestyleText>
-            <RestyleText style={styles.star}>★</RestyleText>
-            <RestyleText variant="caption" color="neutral600" fontFamily={typography.poppinsMedium}>
-              {rating.toFixed(1)}
-            </RestyleText>
+
+            <Box flexDirection="row" alignItems="center" marginVertical="tiny">
+              <RestyleText
+                variant="caption"
+                color="neutral600"
+                fontFamily={typography.poppinsRegular}>
+                Review
+              </RestyleText>
+              <RestyleText style={styles.star}> ★</RestyleText>
+              <RestyleText
+                variant="caption"
+                color="neutral700"
+                fontFamily={typography.poppinsMedium}>
+                {rating.toFixed(1)}
+              </RestyleText>
+            </Box>
           </Box>
 
-          <RestyleText
-            variant="subtitle"
-            fontFamily={typography.poppinsSemibold}
-            color="neutral700">
-            ${price}
-          </RestyleText>
-
-          <TouchableOpacity style={styles.addToBagButton} onPress={() => onBookNow(item)}>
+          <Box flexDirection="row" justifyContent="space-between" alignItems="flex-end">
             <RestyleText
-              // color="white"
-              fontFamily={typography.poppinsMedium}
-              style={styles.addToBagText}>
-              Add to Bag
+              variant="subtitle"
+              fontFamily={typography.poppinsSemibold}
+              color="primary700">
+              ${price}
             </RestyleText>
-          </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.bookButton}
+              activeOpacity={0.8}
+              onPress={() => onBookNow(item)}>
+              <RestyleText fontFamily={typography.poppinsMedium} style={styles.bookButtonText}>
+                Booking
+              </RestyleText>
+            </TouchableOpacity>
+          </Box>
         </Box>
 
         <TouchableOpacity style={styles.removeButton} onPress={() => onRemove(item.id)}>
@@ -109,36 +116,44 @@ const styles = StyleSheet.create({
   },
   star: {
     fontSize: 12,
-    color: colors.black,
-    marginHorizontal: 4,
+    color: colors.warning,
+    marginRight: 2,
   },
-  addToBagButton: {
+  bookButton: {
     backgroundColor: colors.primary700,
     paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
     borderRadius: 8,
-    alignSelf: "flex-start",
-    marginTop: 4,
   },
-  addToBagText: {
+  bookButtonText: {
     color: colors.white100,
-    fontSize: 11,
+    fontSize: 12,
   },
   removeButton: {
-    padding: 8,
-    marginLeft: 8,
+    position: "absolute",
+    top: 10,
+    right: 10,
+    padding: 6,
+    backgroundColor: colors.white100,
+    borderRadius: 16,
+    shadowColor: colors.black100,
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
+    elevation: 2,
+    zIndex: 1,
   },
   removeIcon: {
-    width: 20,
-    height: 20,
+    width: 16,
+    height: 16,
     justifyContent: "center",
     alignItems: "center",
   },
   removeLine: {
     position: "absolute",
-    width: 14,
-    height: 2,
-    backgroundColor: colors.neutral400,
+    width: 12,
+    height: 1.5,
+    backgroundColor: colors.neutral700,
     borderRadius: 1,
   },
   removeLine1: {

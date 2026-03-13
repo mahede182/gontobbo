@@ -155,4 +155,15 @@ router.get("/me", authenticate, authController.getMe);
  */
 router.post("/logout", authenticate, authController.logout);
 
+/**
+ * @swagger
+ * /auth/guest:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Continue as guest
+ *     responses:
+ *       200: { description: Guest login successful }
+ */
+router.post("/guest", authController.continueAsGuest);
+
 export default router;

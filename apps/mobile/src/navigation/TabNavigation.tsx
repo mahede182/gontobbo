@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TabStackParamList } from "@/@types/navigation.type";
 import { dynamicCss } from "@/utils/styles";
 import BookingsScreens from "@/screens/Bookings";
+import { AppLogger } from "@/utils/applogger";
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
@@ -29,7 +30,7 @@ const TabNavigation = () => {
         const bookings = await getItem("bookings");
         setBookingsCount(bookings?.length);
       } catch (error) {
-        console.error("Error fetching bookings count:", error);
+        AppLogger.error("Error fetching bookings count:", error);
       }
     };
 

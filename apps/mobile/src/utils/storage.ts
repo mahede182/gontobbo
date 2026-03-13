@@ -9,7 +9,7 @@ export const getItem = async (key: string) => {
     if (!res) return "";
     return JSON.parse(res);
   } catch (e) {
-    console.log("ERROR: Cannot get item from asyncStorage", e);
+    // Silently fail or handle elsewhere
   }
 };
 
@@ -17,7 +17,7 @@ export const saveItem = async (key: string, value: unknown) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
-    console.log("ERROR: Cannot store item in asyncStorage", e);
+    // Silently fail or handle elsewhere
   }
 };
 

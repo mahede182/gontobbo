@@ -8,12 +8,12 @@ async function bootstrap() {
   try {
     // Verify database connection
     await prisma.$connect();
-    console.log("✅ Database connected successfully");
+    console.log("[:::DATABASE:::] Database connected successfully");
 
     const server = app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-      console.log(`📚 API Docs: http://localhost:${PORT}/api/docs`);
-      console.log(`🌍 Environment: ${env.NODE_ENV}`);
+      console.log(`[:::SERVER:::] Server running on http://localhost:${PORT}`);
+      console.log(`[:::Docs:::] API Docs: http://localhost:${PORT}/api/docs`);
+      console.log(`[:::ENV:::] Environment: ${env.NODE_ENV}`);
     });
 
     // Graceful shutdown

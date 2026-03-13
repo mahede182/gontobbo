@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLogoutMutation } from "@/store/api/authApi";
 import { clearTokens, getTokens } from "@/utils/storage";
 import { useAuth } from "@/hooks/useAuth";
+import { AppLogger } from "@/utils/applogger";
 
 const LogoutButton: React.FC = () => {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ const LogoutButton: React.FC = () => {
     try {
       await logoutMutation({ refreshToken: tokens?.refreshToken });
     } catch (error) {
-      console.error("Logout mutation failed", error);
+      AppLogger.error("Logout mutation failed", error);
     }
     await clearTokens();
     logout();

@@ -17,6 +17,7 @@ import { Box, RestyleText } from "@/theme";
 import GradientTitle from "@/components/GradientTitle";
 import { dynamicCSS } from "@/utils/styles";
 import { useLogoutMutation } from "@/store/api/authApi";
+import { AppLogger } from "@/utils/applogger";
 import { clearTokens, getTokens } from "@/utils/storage";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
@@ -36,7 +37,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
     try {
       await logoutMutation({ refreshToken: tokens?.refreshToken }).unwrap();
     } catch (error) {
-      console.error("Logout mutation failed", error);
+      AppLogger.error("Logout mutation failed", error);
     } finally {
       await clearTokens();
       logout();

@@ -17,7 +17,12 @@ import { isIOS } from "@/utils/device";
 
 import { handleGoogleLogin, handleAppleLogin } from "@/utils/socialAuth";
 import Background from "@/components/Background";
-import { useGoogleLoginMutation, useAppleLoginMutation } from "@/store/api/authApi";
+import {
+  useGoogleLoginMutation,
+  useAppleLoginMutation,
+  useLoginMutation,
+  useGuestLoginMutation,
+} from "@/store/api/authApi";
 import { useAppDispatch } from "@/store/hooks";
 import { setGuestMode } from "@/store/slices/authSlice";
 import { showToast } from "@/utils/toast";
@@ -30,13 +35,29 @@ const LoginScreen: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [googleLoginMutation] = useGoogleLoginMutation();
   const [appleLoginMutation] = useAppleLoginMutation();
+  const [loginMutation] = useLoginMutation();
+  const [guestLoginMutation] = useGuestLoginMutation();
+
+  const onDevLogin = async () => {
+    try {
+      setLoading(true);
+      await loginMutation({ email: "admin@gontobbo.co", password: "Admin@123456" }).unwrap();
+    } catch (error: any) {
+      showToast({
+        type: "error",
+        title: "Dev Login Failed",
+        message: error?.data?.message ?? error?.message ?? "An error occurred",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onGoogleSignIn = async () => {
     try {
       setLoading(true);
       const res = await handleGoogleLogin();
       if (!res) return;
-      // Support both old and new Google Sign-In SDK shapes
       const idToken = (res as any).data?.idToken ?? (res as any).idToken;
       if (!idToken) {
         showToast({
@@ -139,12 +160,32 @@ const LoginScreen: React.FC = (): JSX.Element => {
           </TouchableOpacity>
           {/* TODO: split code and create a reusable component button */}
           <TouchableOpacity
-            onPress={() => {
-              dispatch(setGuestMode());
+            onPress={async () => {
+              try {
+                setLoading(true);
+                await guestLoginMutation().unwrap();
+              } catch (error: any) {
+                showToast({
+                  type: "error",
+                  title: "Guest Login Failed",
+                  message: error?.data?.message ?? error?.message ?? "An error occurred",
+                });
+              } finally {
+                setLoading(false);
+              }
             }}>
             <RestyleText style={styles.linkRestyleText}>{t("login.continueAsGuest")}</RestyleText>
           </TouchableOpacity>
         </Box>
+
+        {__DEV__ && (
+          <RestyleButton
+            label="Dev Login"
+            onPress={onDevLogin}
+            style={[styles.button, styles.devButton]}
+            disabled={loading}
+          />
+        )}
       </Box>
       <Box style={styles.footer}>
         <RestyleText style={styles.footerRestyleText}>
@@ -176,6 +217,10 @@ const styles = StyleSheet.create({
   },
   emailButton: {
     backgroundColor: colors.primary700,
+  },
+  devButton: {
+    backgroundColor: colors.neutral700,
+    marginTop: 20,
   },
   divider: {
     flexDirection: "row",

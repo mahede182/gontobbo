@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     usesAppleSignIn: true,
-    bundleIdentifier: "io.bitsofts.gontobbo",
+    bundleIdentifier: "co.bitsofts.gontobbo",
     googleServicesFile: "./GoogleService-Info.plist",
     buildNumber: String(BUILD_NUMBER),
   },
@@ -28,7 +28,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    package: "io.bitsofts.gontobbo",
+    package: "co.bitsofts.gontobbo",
     googleServicesFile: "./google-services.json",
     versionCode: BUILD_NUMBER,
   },

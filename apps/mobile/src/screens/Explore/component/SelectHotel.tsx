@@ -2,15 +2,15 @@ import { Image, Pressable } from "react-native";
 import React from "react";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
-import { images } from "@/theme/images";
+import hotelsIcon from "@/assets/Home/hotelTag.png";
 
-type SelectFlightProps = {
+type SelectHotelProps = {
   title: string;
   subTitle: string;
   onPress: () => void;
 };
 
-const SelectFlight: React.FC<SelectFlightProps> = ({ title, subTitle, onPress }) => {
+const SelectHotel: React.FC<SelectHotelProps> = ({ title, subTitle, onPress }) => {
   return (
     <Pressable style={{ backgroundColor: colors.white100 }} onPress={onPress}>
       <Box
@@ -21,8 +21,7 @@ const SelectFlight: React.FC<SelectFlightProps> = ({ title, subTitle, onPress })
         flexDirection="row"
         alignItems="center">
         <Image
-          source={images.flightIcon}
-          // eslint-disable-next-line react-native/no-inline-styles
+          source={hotelsIcon}
           style={{ marginRight: 6, height: 20, width: 20, resizeMode: "contain" }}
         />
         <Box>
@@ -34,4 +33,4 @@ const SelectFlight: React.FC<SelectFlightProps> = ({ title, subTitle, onPress })
   );
 };
 
-export default SelectFlight;
+export default SelectHotel;

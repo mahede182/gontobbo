@@ -8,29 +8,36 @@ import {
 } from "@react-native-google-signin/google-signin";
 import { googleSignInConfig } from "@/config/google";
 import { showToast } from "@/utils/toast";
+import { AppLogger } from "./applogger";
 
 export const handleGoogleLogin = async () => {
   try {
-    await GoogleSignin.hasPlayServices();
+    GoogleSignin.configure(googleSignInConfig);
+    // await GoogleSignin.hasPlayServices();
     const res = await GoogleSignin.signIn();
+    AppLogger.log(JSON.stringify(res), "response");
     if ((res as any).type === "cancelled") {
       return null;
     }
+
     return res;
   } catch (error: any) {
     if (isErrorWithCode(error)) {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
-          console.log("Login cancelled");
           break;
         case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-          console.log("PLAY_SERVICES_NOT_AVAILABLE");
+          showToast({
+            type: "error",
+            title: "Error",
+            message: "Google Play Services not available",
+          });
           break;
         default:
-          console.log(error);
+          AppLogger.error("Google Login Error:", error);
       }
     } else {
-      console.log(error);
+      AppLogger.error("Google Login Error:", error);
     }
   }
 };
@@ -46,13 +53,11 @@ export const handleAppleLogin = async () => {
     });
     return credential;
   } catch (error: any) {
-    console.log(error);
-    if (error.code === "ERR_REQUEST_CANCELED") {
+    if (error.code === "ERR_CANCELED" || error.code === "ERR_REQUEST_CANCELED") {
       // User canceled the sign-in flow
-      console.log("Apple Login Canceled");
     } else {
       // Handle other errors
-      console.error("Apple Login Error:", error);
+      AppLogger.error("Apple Login Error:", error);
       showToast({
         type: "error",
         title: "Error",

@@ -25,6 +25,7 @@ import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { useAppSelector } from "@/store/hooks";
 import { TAGS_DATA } from "@/data/tagData";
 import Icon from "@expo/vector-icons/Ionicons";
+import Background from "@/components/Background";
 
 type Props = {};
 const _IMG_SIZE = 52;
@@ -53,14 +54,10 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   }, [aiQuery, navigation]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Background>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         {/* === Header === */}
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          paddingHorizontal="medium">
+        <Box flexDirection="row" justifyContent="space-between" alignItems="center">
           <TouchableOpacity onPress={drawerOpen}>
             <Image
               source={images.menuBtn}
@@ -131,7 +128,7 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
           </Box>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </Background>
   );
 };
 

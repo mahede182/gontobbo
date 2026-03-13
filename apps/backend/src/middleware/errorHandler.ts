@@ -43,7 +43,10 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
     return errorResponse(res, 401, "Token expired");
   }
 
-  console.error("Unhandled error:", err);
+  console.error(`🔴 [UNHANDLED ERROR] ${err.name}: ${err.message}`);
+  if (env.NODE_ENV === "development") {
+    console.error(err.stack);
+  }
 
   const message = env.NODE_ENV === "development" ? err.message : "Internal server error";
   return errorResponse(res, 500, message);

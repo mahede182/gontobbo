@@ -15,7 +15,12 @@ interface TripCardProps {
   peopleJoined: number;
 }
 
-const AVATAR_PLACEHOLDER = [colors.secondary400, colors.primary400, colors.blue400, colors.warning];
+const AVATAR_PLACEHOLDER = [
+  "https://randomuser.me/api/portraits/women/44.jpg",
+  "https://randomuser.me/api/portraits/men/32.jpg",
+  "https://randomuser.me/api/portraits/women/12.jpg",
+  "https://randomuser.me/api/portraits/men/45.jpg",
+];
 
 const TripCard: React.FC<TripCardProps> = React.memo(
   ({ id, image, title, duration, feature, peopleJoined }) => {
@@ -33,10 +38,10 @@ const TripCard: React.FC<TripCardProps> = React.memo(
             {title}
           </RestyleText>
           <Box style={styles.metaRow}>
-            <Ionicons name="sunny-outline" size={14} color={colors.gray} />
+            {/* <Ionicons name="sunny-outline" size={14} color={colors.gray} />
             <RestyleText style={styles.metaText} numberOfLines={1}>
-              {duration}
-            </RestyleText>
+              {duration.split(" ")[0]}
+            </RestyleText> */}
             <Ionicons name="airplane-outline" size={14} color={colors.gray} />
             <RestyleText style={styles.metaText} numberOfLines={1}>
               {feature}
@@ -44,11 +49,11 @@ const TripCard: React.FC<TripCardProps> = React.memo(
           </Box>
           <Box style={styles.joinedRow}>
             <Box style={styles.avatarStack}>
-              {AVATAR_PLACEHOLDER.map((bg, i) => (
-                <View key={i} style={[styles.avatar, { backgroundColor: bg, left: i * 16 }]} />
+              {AVATAR_PLACEHOLDER.map((img, i) => (
+                <Image key={i} source={{ uri: img }} style={[styles.avatar, { left: i * 16 }]} />
               ))}
             </Box>
-            <RestyleText style={styles.joinedText}>{peopleJoined}+ People Joined</RestyleText>
+            <RestyleText style={styles.joinedText}>{peopleJoined}+ Joined</RestyleText>
           </Box>
         </Box>
       </Pressable>

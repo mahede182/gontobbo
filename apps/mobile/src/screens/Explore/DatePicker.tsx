@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import HeaderTitle from "@/components/HeaderTitle";
 
 const SelectDateScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { t } = useTranslation();
   const [selectedCheckInDate, setSelectedCheckInDate] = useState<string | null>(null);
   const [selectedCheckOutDate, setSelectedCheckOutDate] = useState<string | null>(null);
@@ -35,7 +35,14 @@ const SelectDateScreen = () => {
   };
 
   const handleDonePress = () => {
-    navigation.goBack();
+    navigation.navigate("EXPLORE", {
+      selectedCheckInDate: selectedCheckInDate
+        ? dayjs(selectedCheckInDate).format("D, MMM YY")
+        : null,
+      selectedCheckOutDate: selectedCheckOutDate
+        ? dayjs(selectedCheckOutDate).format("D, MMM YY")
+        : null,
+    });
   };
 
   // Build the marking object for a continuous period
@@ -158,7 +165,7 @@ const SelectDateScreen = () => {
                 marginBottom: 10,
               },
               monthText: {
-                fontFamily: typography.poppinsSemiBold,
+                fontFamily: typography.poppinsSemibold,
                 fontSize: 16,
                 color: colors.blue800,
                 flex: 1,
@@ -249,7 +256,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontFamily: typography.poppinsBold,
     fontSize: 15,
-    color: colors.neutral800,
+    color: colors.black100,
   },
   dateLabel: {
     fontFamily: typography.poppinsRegular,

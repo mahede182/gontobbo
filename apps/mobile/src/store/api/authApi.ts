@@ -2,8 +2,16 @@ import { apiSlice } from "../slices/apiSlice";
 import type { User, AuthTokens } from "@/@types/auth.type";
 import { saveTokens, saveItem, clearTokens } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/@types/storage.type";
-import { setCredentials, clearCredentials } from "../slices/authSlice";
-import { LOGIN, REGISTER, GOOGLE_LOGIN, APPLE_LOGIN, GET_ME, LOGOUT } from "@/constants/urls";
+import { setCredentials, clearCredentials, setGuestMode } from "../slices/authSlice";
+import {
+  LOGIN,
+  REGISTER,
+  GOOGLE_LOGIN,
+  APPLE_LOGIN,
+  GUEST_LOGIN,
+  GET_ME,
+  LOGOUT,
+} from "@/constants/urls";
 
 interface AuthData {
   user: User;
@@ -107,6 +115,21 @@ export const authApi = apiSlice.injectEndpoints({
       providesTags: ["Auth"],
     }),
 
+    guestLogin: builder.mutation<AuthData, void>({
+      query: () => ({
+        url: GUEST_LOGIN,
+        method: "POST",
+      }),
+      transformResponse: (response: ApiResponse<AuthData>) => response.data,
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          await onAuthSuccess(data, dispatch);
+          dispatch(setGuestMode());
+        } catch {}
+      },
+    }),
+
     logout: builder.mutation<void, { refreshToken?: string }>({
       query: (body) => ({
         url: LOGOUT,
@@ -132,5 +155,6 @@ export const {
   useGoogleLoginMutation,
   useAppleLoginMutation,
   useGetMeQuery,
+  useGuestLoginMutation,
   useLogoutMutation,
 } = authApi;

@@ -24,6 +24,7 @@ import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { TypingIndicator } from "@/components/Typing";
 import { Message } from "@/@types/api.type";
 import { MessageItem } from "@/components/Message";
+import Background from "@/components/Background";
 
 const ChatScreen: React.FC = (): JSX.Element => {
   const route = useRoute<any>();
@@ -101,7 +102,7 @@ const ChatScreen: React.FC = (): JSX.Element => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Background>
       <HeaderTitle title="Chat" />
       <FlatList
         ref={flatListRef}
@@ -139,7 +140,7 @@ const ChatScreen: React.FC = (): JSX.Element => {
           </TouchableOpacity>
         </View>
       </KeyboardStickyView>
-    </SafeAreaView>
+    </Background>
   );
 };
 
@@ -216,6 +217,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   inputContainer: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     flexDirection: "row",
     alignItems: "flex-end",
     paddingHorizontal: 16,
@@ -224,7 +227,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.neutral200,
     paddingBottom: Platform.OS === "ios" ? 30 : 12,
-    marginBottom: 60,
+    marginBottom: 50,
   },
   input: {
     flex: 1,

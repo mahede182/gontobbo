@@ -8,26 +8,35 @@ import DateIcon from "@/assets/Explore/dateIcon.png";
 import { colors } from "@/theme/colors";
 
 type DateInputProps = {
-  date: string;
-  label?: string;
+  date?: string | null;
+  label: string;
+  placeholder?: string;
   onPress: () => void;
 };
 
-const DateInput = ({ date, label = "Check In", onPress }: DateInputProps) => (
+const DateInput = ({ date, label, onPress, placeholder }: DateInputProps) => (
   <Pressable style={styles.wrapper} onPress={onPress}>
     <Box
       borderColor="neutral300"
       borderWidth={1}
       paddingLeft="small"
-      paddingRight="twenty"
+      paddingRight="small"
       paddingVertical="small"
       borderRadius={5}
       flexDirection="row"
       alignItems="center">
       <Image source={DateIcon} style={styles.icon} />
       <Box flexDirection="column">
-        <RestyleText style={styles.dateText}>{date}</RestyleText>
-        <RestyleText style={styles.labelText}>{label}</RestyleText>
+        {date ? (
+          <>
+            <RestyleText style={styles.dateText}>{date}</RestyleText>
+            <RestyleText style={styles.labelText}>{label}</RestyleText>
+          </>
+        ) : (
+          <RestyleText style={[styles.dateText, { color: colors.neutral400, fontSize: 13 }]}>
+            {placeholder || label}
+          </RestyleText>
+        )}
       </Box>
     </Box>
   </Pressable>

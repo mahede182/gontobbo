@@ -15,6 +15,7 @@ export const LOGIN = "/auth/login";
 export const REGISTER = "/auth/register";
 export const GOOGLE_LOGIN = "/auth/google";
 export const APPLE_LOGIN = "/auth/apple";
+export const GUEST_LOGIN = "/auth/guest";
 export const GET_ME = "/auth/me";
 export const LOGOUT = "/auth/logout";
 

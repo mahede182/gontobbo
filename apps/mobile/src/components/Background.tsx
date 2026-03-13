@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
+import { StyleSheet, ImageBackground, SafeAreaView, Platform } from "react-native";
 import { images } from "@/theme/images";
-import { colors } from "@/theme/colors";
+import { spacing } from "@/theme/spacing";
+import { isIOS } from "@/utils/device";
 
 type Props = {
   children: React.ReactNode;
@@ -22,11 +23,10 @@ export default Background;
 const styles = StyleSheet.create({
   safeAreaContainer: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: colors.neutral100,
   },
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: isIOS ? spacing.tiny : spacing.large,
     justifyContent: "space-between",
   },
 });

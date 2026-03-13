@@ -7,6 +7,7 @@ import {
   useUpdateFlightPreferencesMutation,
 } from "@/store/api/usersApi";
 import PreferenceItem from "./components/PreferenceItem";
+import { AppLogger } from "@/utils/applogger";
 
 const FlightPreferencesScreen = () => {
   const { data: preferences, isLoading } = useGetFlightPreferencesQuery();
@@ -25,7 +26,7 @@ const FlightPreferencesScreen = () => {
           key === "isLateDeparture" ? value : (preferences?.isLateDeparture ?? false),
       }).unwrap();
     } catch (error) {
-      console.error("Failed to update preferences", error);
+      AppLogger.error("Failed to update preferences", error);
     }
   };
 

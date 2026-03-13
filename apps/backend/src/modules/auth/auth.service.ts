@@ -281,3 +281,36 @@ export async function logout(userId: string, refreshToken?: string) {
     await prisma.refreshToken.deleteMany({ where: { userId } });
   }
 }
+
+// ─── Guest Login ────────────────────────────────────────────────────────────
+
+export async function continueAsGuest() {
+  const shortId = Math.random().toString(36).substring(2, 8);
+  const tempEmail = `guest_${shortId}@gontobbo.co`;
+
+  const user = await prisma.user.create({
+    data: {
+      email: tempEmail,
+      firstName: "Guest",
+      lastName: "User",
+      memberNumber: `GON-${Date.now().toString(36).toUpperCase()}`,
+      isActive: true,
+    },
+  });
+
+  const tokens = generateTokens(user.id, user.role);
+
+  await prisma.refreshToken.create({
+    data: {
+      token: tokens.refreshToken,
+      userId: user.id,
+      expiresAt: getRefreshTokenExpiry(),
+    },
+  });
+
+  return {
+    user: sanitizeUser(user as unknown as Record<string, unknown>),
+    ...tokens,
+    isGuest: true,
+  };
+}

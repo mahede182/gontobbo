@@ -111,7 +111,7 @@ const HotelDetails = () => {
             } catch {}
           }}>
           <Image
-            tintColor={colors.danger}
+            tintColor={colors.primary400}
             style={styles.headerFavourite}
             source={images.wishlist}
           />

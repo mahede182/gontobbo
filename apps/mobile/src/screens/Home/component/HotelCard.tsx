@@ -3,9 +3,14 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Box, RestyleText as Text } from "@/theme";
 
-import { MotiView } from "moti";
 import { colors } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
+import {
+  useAddToWishlistMutation,
+  useGetWishlistQuery,
+  useRemoveFromWishlistMutation,
+} from "@/store/api/wishlistApi";
+import { showToast } from "@/utils/toast";
 
 interface HotelCardProps {
   id: string;
@@ -17,8 +22,38 @@ interface HotelCardProps {
 
 const HotelCard: React.FC<HotelCardProps> = React.memo(({ id, image, name, location, rating }) => {
   const navigation = useNavigation();
+  const { data: wishlistItems } = useGetWishlistQuery();
+  const [addToWishlist] = useAddToWishlistMutation();
+  const [removeFromWishlist] = useRemoveFromWishlistMutation();
+
+  const isFavorited = React.useMemo(() => {
+    return wishlistItems?.some((item) => item.hotelId === id) ?? false;
+  }, [wishlistItems, id]);
+
+  const toggleWishlist = React.useCallback(async () => {
+    try {
+      if (isFavorited) {
+        // Find the specific wishlist item ID for this hotel
+        const item = wishlistItems?.find((i) => i.hotelId === id);
+        if (item) {
+          await removeFromWishlist(item.id).unwrap();
+        }
+      } else {
+        await addToWishlist({
+          hotelId: id,
+          type: "HOTEL",
+          name,
+          rating,
+        }).unwrap();
+      }
+    } catch (error) {
+      showToast({ type: "error", title: "Oops!", message: "Failed to update wishlist" });
+    }
+  }, [isFavorited, id, name, rating, addToWishlist, removeFromWishlist, wishlistItems]);
+
   return (
     <TouchableOpacity
+      activeOpacity={0.8}
       onPress={() => (navigation as any).navigate("SEARCH_RESULT_DETAILS", { hotelId: id })}>
       <Box
         width={160}
@@ -31,18 +66,16 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(({ id, image, name, locat
             source={image ? { uri: image } : require("@/assets/hotel_image_1.png")}
             style={styles.image}
           />
-          <MotiView
+          <TouchableOpacity
             style={styles.likeContainer}
-            from={{ scale: 1 }}
-            animate={{ scale: 1.25 }}
-            transition={{
-              loop: true,
-              repeatReverse: true,
-              type: "timing",
-              duration: 1000,
-            }}>
-            <Ionicons name="heart-outline" size={18} color="black100" />
-          </MotiView>
+            activeOpacity={0.7}
+            onPress={toggleWishlist}>
+            <Ionicons
+              name={isFavorited ? "heart" : "heart-outline"}
+              size={18}
+              color={isFavorited ? colors.primary400 : colors.black100}
+            />
+          </TouchableOpacity>
           <Box
             position="absolute"
             bottom={8}
@@ -87,11 +120,14 @@ const styles = StyleSheet.create({
   },
   likeContainer: {
     position: "absolute",
-    top: 8,
-    right: 8,
+    top: 0,
+    right: 0,
     backgroundColor: colors.white100,
-    borderRadius: 50,
-    padding: 5,
+    borderBottomLeftRadius: 18,
+    paddingTop: 8,
+    paddingRight: 8,
+    paddingBottom: 10,
+    paddingLeft: 12,
   },
 });
 

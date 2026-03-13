@@ -35,7 +35,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({ provider, onNavigate }) => 
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    marginTop: -80,
+    marginTop: -60,
     paddingHorizontal: 20,
     backgroundColor: colors.white,
     borderRadius: 10,

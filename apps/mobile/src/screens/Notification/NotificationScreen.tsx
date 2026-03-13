@@ -16,6 +16,7 @@ import {
   useMarkAllAsReadMutation,
   type Notification,
 } from "@/store/api/notificationsApi";
+import { AppLogger } from "@/utils/applogger";
 
 const NotificationScreen: React.FC = () => {
   const { data: notifData, isLoading: loading } = useGetNotificationsQuery();
@@ -27,7 +28,7 @@ const NotificationScreen: React.FC = () => {
     try {
       await markAsReadMutation(id).unwrap();
     } catch (error) {
-      console.error("Error marking notification as read:", error);
+      AppLogger.error("Error marking notification as read:", error);
     }
   };
 
@@ -35,7 +36,7 @@ const NotificationScreen: React.FC = () => {
     try {
       await markAllAsReadMutation().unwrap();
     } catch (error) {
-      console.error("Error marking all as read:", error);
+      AppLogger.error("Error marking all as read:", error);
     }
   };
 

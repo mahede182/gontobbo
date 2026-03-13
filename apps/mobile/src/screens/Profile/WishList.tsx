@@ -42,7 +42,7 @@ const WishList: React.FC<Props> = (): JSX.Element => {
 
   const handleBookNow = (item: WishlistItem) => {
     if (item.hotelId) {
-      (navigation as any).navigate("HOTEL_DETAIL", {
+      (navigation as any).navigate("SEARCH_RESULT_DETAILS", {
         hotelId: item.hotelId,
       });
     }

@@ -36,7 +36,7 @@ const LocationSelect = () => {
   const displayLocations = searchQuery.length >= 2 ? searchResults : popularLocations;
 
   const handleSelectLocation = (location: Location) => {
-    navigation.navigate("EXPLORE_SEARCH", { selectedLocation: location.name });
+    navigation.navigate("EXPLORE", { selectedLocation: location.name });
   };
 
   const renderItem = ({ item, index }: { item: Location; index: number }) => (

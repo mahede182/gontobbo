@@ -11,6 +11,7 @@ import MenuSection from "./components/MenuSection";
 import MenuItem from "./components/MenuItem";
 import LogoutButton from "./components/LogoutButton";
 import { images } from "@/theme/images";
+import Background from "@/components/Background";
 
 const ProfileScreen: React.FC = (): JSX.Element => {
   const { t, i18n } = useTranslation();
@@ -46,7 +47,7 @@ const ProfileScreen: React.FC = (): JSX.Element => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Background>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <ProfileHeader userData={userData} displayName={displayName} email={email} />
 
@@ -115,7 +116,7 @@ const ProfileScreen: React.FC = (): JSX.Element => {
 
         <LogoutButton />
       </ScrollView>
-    </SafeAreaView>
+    </Background>
   );
 };
 

@@ -9,6 +9,7 @@ import BookingCard from "./components/BookingCard";
 import { useGetBookingsQuery, useCancelBookingMutation } from "@/store/api/bookingsApi";
 import BookingFilterTabs, { type BookingTypeFilter } from "./components/BookingFilterTabs";
 import BookingEmptyState from "./components/BookingEmptyState";
+import Background from "@/components/Background";
 
 const BookingsScreens: React.FC = (): JSX.Element => {
   const navigation = useNavigation<any>();
@@ -59,7 +60,7 @@ const BookingsScreens: React.FC = (): JSX.Element => {
   const keyExtractor = useCallback((item: Booking) => item.id, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Background>
       <HeaderTitle title="Bookings" />
 
       <BookingFilterTabs active={activeFilter} onChange={setActiveFilter} />
@@ -81,7 +82,7 @@ const BookingsScreens: React.FC = (): JSX.Element => {
           ItemSeparatorComponent={null}
         />
       )}
-    </SafeAreaView>
+    </Background>
   );
 };
 
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white100,
+    marginBottom: 40,
   },
   header: {
     flexDirection: "row",

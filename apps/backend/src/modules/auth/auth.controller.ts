@@ -65,3 +65,12 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
     next(error);
   }
 }
+
+export async function continueAsGuest(req: Request, res: Response, next: NextFunction) {
+  try {
+    const result = await authService.continueAsGuest();
+    successResponse(res, { data: result, message: "Guest login successful", statusCode: 201 });
+  } catch (error) {
+    next(error);
+  }
+}
