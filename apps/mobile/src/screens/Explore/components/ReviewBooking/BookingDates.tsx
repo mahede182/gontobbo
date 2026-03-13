@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";

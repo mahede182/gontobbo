@@ -46,7 +46,7 @@ const HotelCard: React.FC<HotelCardProps> = React.memo(({ id, image, name, locat
           rating,
         }).unwrap();
       }
-    } catch (error) {
+    } catch {
       showToast({ type: "error", title: "Oops!", message: "Failed to update wishlist" });
     }
   }, [isFavorited, id, name, rating, addToWishlist, removeFromWishlist, wishlistItems]);

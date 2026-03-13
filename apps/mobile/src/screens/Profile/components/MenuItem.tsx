@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Image, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import { TouchableOpacity, Image, Text, StyleSheet } from "react-native";
 import { colors } from "@/theme/colors";
 import { images } from "@/theme/images";
 import { MenuItemProps } from "@/@types/profile.type";

@@ -23,14 +23,11 @@ import {
   useLoginMutation,
   useGuestLoginMutation,
 } from "@/store/api/authApi";
-import { useAppDispatch } from "@/store/hooks";
-import { setGuestMode } from "@/store/slices/authSlice";
 import { showToast } from "@/utils/toast";
 
 const LoginScreen: React.FC = (): JSX.Element => {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
-  const dispatch = useAppDispatch();
   const { images } = useTheme<Theme>();
   const [loading, setLoading] = useState(false);
   const [googleLoginMutation] = useGoogleLoginMutation();

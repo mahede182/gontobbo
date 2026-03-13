@@ -8,7 +8,7 @@ export const getItem = async (key: string) => {
     const res = await AsyncStorage.getItem(key);
     if (!res) return "";
     return JSON.parse(res);
-  } catch (e) {
+  } catch {
     // Silently fail or handle elsewhere
   }
 };
@@ -16,7 +16,7 @@ export const getItem = async (key: string) => {
 export const saveItem = async (key: string, value: unknown) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
-  } catch (e) {
+  } catch {
     // Silently fail or handle elsewhere
   }
 };

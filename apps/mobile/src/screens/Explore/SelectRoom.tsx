@@ -1,14 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from "react";
 import { Box, RestyleText } from "@/theme";
-import {
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import { ActivityIndicator, Image, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderTitle from "@/components/HeaderTitle";
 import { typography } from "@/theme/typography";

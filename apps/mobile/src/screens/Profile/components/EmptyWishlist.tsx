@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { MotiView } from "moti";
-import { Box, RestyleText } from "@/theme";
+import { Box } from "@/theme";
 import { colors } from "@/theme/colors";
-import { typography } from "@/theme/typography";
 
 const EmptyWishlist: React.FC = () => {
   return (

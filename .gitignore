@@ -129,3 +129,4 @@ GoogleService-Info.plist
 # Misc
 # ========================
 *.orig.*
+.windsurf

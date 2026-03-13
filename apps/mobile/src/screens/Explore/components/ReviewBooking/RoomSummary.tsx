@@ -4,7 +4,7 @@ import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { MotiView } from "moti";
-import Tag from "../../component/Tag";
+
 import BulletPoint from "../../component/BulletPoint";
 import { Divider } from "../../component/Divider";
 

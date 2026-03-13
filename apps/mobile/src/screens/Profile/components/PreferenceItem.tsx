@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Switch, StyleSheet } from "react-native";
+import { Switch, StyleSheet } from "react-native";
 import { MotiView } from "moti";
-import { Box, RestyleText } from "@/theme";
+import { RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { PreferenceItemProps } from "@/@types/profile.type";

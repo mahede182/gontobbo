@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, Image, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
+import { StyleSheet, Image, TouchableOpacity } from "react-native";
 import { MotiView } from "moti";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { images } from "@/theme/images";
-import { WishlistItem } from "@/store/api/wishlistApi";
+
 import { WishlistItemCardProps } from "@/@types/profile.type";
 
 const WishlistItemCard: React.FC<WishlistItemCardProps> = ({

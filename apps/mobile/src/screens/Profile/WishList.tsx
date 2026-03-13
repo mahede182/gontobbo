@@ -5,18 +5,9 @@ import {
   type WishlistItem,
 } from "@/store/api/wishlistApi";
 import { colors } from "@/theme/colors";
-import { images } from "@/theme/images";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ActivityIndicator, Alert, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, RestyleText } from "@/theme";
 import { SafeAreaView, MotiView } from "moti";
 import WishlistItemCard from "./components/WishlistItemCard";
@@ -24,9 +15,7 @@ import EmptyWishlist from "./components/EmptyWishlist";
 import { typography } from "@/theme/typography";
 import { useTranslation } from "react-i18next";
 
-type Props = {};
-
-const WishList: React.FC<Props> = (): JSX.Element => {
+const WishList = (): JSX.Element => {
   const navigation = useNavigation();
   const { data: wishlist = [], isLoading: loading } = useGetWishlistQuery();
   const [removeFromWishlistMutation] = useRemoveFromWishlistMutation();

@@ -21,13 +21,10 @@ import { AppLogger } from "@/utils/applogger";
 import { clearTokens, getTokens } from "@/utils/storage";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import { Alert } from "react-native";
-type Props = {};
 
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
-  const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const { logout } = useAuth();
   const [logoutMutation] = useLogoutMutation();
@@ -115,7 +112,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   );
 };
 
-const DrawerNavigation = (props: Props) => {
+const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}

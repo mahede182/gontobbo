@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EmailLogin from "@/screens/Login/EmailLogin";
 import RegisterScreen from "@/screens/Register";
 import LoginScreen from "@/screens/Login/LoginScreen";
-import { useLoginMutation } from "@/store/api/authApi";
+
 import { AuthStackParamList } from "@/@types/navigation.type";
 
 const Stack = createStackNavigator<AuthStackParamList>();
