@@ -15,7 +15,8 @@
     "prisma:seed": "tsx prisma/seed.ts",
     "prisma:studio": "prisma studio",
     "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "clean:setup": "make clean-setup"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -38,7 +38,7 @@ const LoginScreen: React.FC = (): JSX.Element => {
   const onDevLogin = async () => {
     try {
       setLoading(true);
-      await loginMutation({ email: "admin@gontobbo.co", password: "Admin@123456" }).unwrap();
+      await loginMutation({ email: "admin@gontobbo.co", password: "Admin@1234" }).unwrap();
     } catch (error: any) {
       showToast({
         type: "error",

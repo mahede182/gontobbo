@@ -18,39 +18,44 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding database...\n");
 
-  // ─── Clean existing data ───────────────────────────────────────────────
   console.log("🧹 Cleaning existing data...");
-  await prisma.recentSearch.deleteMany();
-  await prisma.notification.deleteMany();
-  await prisma.wishlistItem.deleteMany();
-  await prisma.bookingTraveller.deleteMany();
-  await prisma.booking.deleteMany();
-  await prisma.review.deleteMany();
-  await prisma.tripPackageDetail.deleteMany();
-  await prisma.baggage.deleteMany();
-  await prisma.paymentMethod.deleteMany();
-  await prisma.flightPreferences.deleteMany();
-  await prisma.passportDetails.deleteMany();
-  await prisma.refreshToken.deleteMany();
-  await prisma.room.deleteMany();
-  await prisma.hotelAmenity.deleteMany();
-  await prisma.hotel.deleteMany();
-  await prisma.flight.deleteMany();
-  await prisma.trip.deleteMany();
-  await prisma.location.deleteMany();
-  await prisma.user.deleteMany();
+
+  const models = Object.keys(prisma).filter(
+    (key) => !key.startsWith("$") && !key.startsWith("_")
+  );
+
+  const modelsToClean = models.reverse();
+  let allTablesExist = true;
+
+  for (const model of modelsToClean) {
+    try {
+      await (prisma as any)[model].deleteMany();
+    } catch (error: any) {
+      if (error.code === "P2021") {
+        console.log(`  ⚠️  Skipping ${model} (Table does not exist)`);
+        allTablesExist = false;
+      } else {
+        console.error(`  ❌ Failed to clean ${model}:`, error.message);
+      }
+    }
+  }
+
+  if (!allTablesExist) {
+    console.log("\n⚠️  Seeding skipped: Database tables are missing. Please run migrations first.");
+    return;
+  }
 
   // ─── Users ─────────────────────────────────────────────────────────────
   console.log("👤 Creating users...");
-  const hashedPassword = await bcrypt.hash("Admin@123456", 12);
-  const userPassword = await bcrypt.hash("Password@123", 12);
+  const hashedPassword = await bcrypt.hash("Admin@1234", 12);
+  const userPassword = await bcrypt.hash("Test@1234", 12);
 
   const admin = await prisma.user.create({
     data: {
       email: "admin@gontobbo.co",
       password: hashedPassword,
       firstName: "Admin",
-      lastName: "User",
+      lastName: "Last",
       username: "admin",
       role: Role.ADMIN,
       memberClass: MemberClass.PLATINUM,
@@ -60,19 +65,19 @@ async function main() {
     },
   });
 
-  const john = await prisma.user.create({
+  const test = await prisma.user.create({
     data: {
-      email: "john@example.com",
+      email: "test@gmail.com",
       password: userPassword,
-      firstName: "John",
-      lastName: "Doe",
-      username: "johndoe",
+      firstName: "Test",
+      lastName: "User",
+      username: "testuser",
       phone: "+1234567890",
-      nationality: "American",
+      nationality: "Bangladeshi",
       role: Role.USER,
       memberClass: MemberClass.GOLD,
       memberNumber: "GTB-USR-0001",
-      avatar: "https://api.dicebear.com/8.x/avataaars/svg?seed=john",
+      avatar: "https://api.dicebear.com/8.x/avataaars/svg?seed=test",
       isActive: true,
     },
   });
@@ -111,12 +116,12 @@ async function main() {
     },
   });
 
-  console.log(`  ✅ Created ${4} users (1 admin, 3 regular)`);
+  console.log(`  ✅ Created ${2} users (1 admin, 1 regular)`);
 
   // ─── Passport Details ──────────────────────────────────────────────────
   await prisma.passportDetails.create({
     data: {
-      userId: john.id,
+      userId: test.id,
       passportNumber: "US1234567",
       nationality: "American",
       dateOfBirth: new Date("1990-05-15"),
@@ -667,7 +672,7 @@ async function main() {
     prisma.review.create({
       data: {
         hotelId: hotel1.id,
-        userId: john.id,
+        userId: test.id,
         rating: 5,
         text: "Absolutely amazing! The rooms are luxurious and the casino is world-class. Staff went above and beyond. Highly recommend for anyone visiting Las Vegas.",
       },
@@ -683,7 +688,7 @@ async function main() {
     prisma.review.create({
       data: {
         hotelId: hotel2.id,
-        userId: john.id,
+        userId: test.id,
         rating: 4,
         text: "Love the futuristic vibe! The robotic luggage storage is a fun touch. Rooms are compact but cleverly designed. Perfect for a short NYC stay.",
       },
@@ -723,7 +728,7 @@ async function main() {
     prisma.review.create({
       data: {
         hotelId: hotel8.id,
-        userId: john.id,
+        userId: test.id,
         rating: 4.5,
         text: "Incredible property with stunning views. The spa and hammam were relaxing. One of the best hotel experiences I've ever had.",
       },
@@ -992,7 +997,7 @@ async function main() {
   const wishlists = await Promise.all([
     prisma.wishlistItem.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         hotelId: hotel1.id,
         type: WishlistType.HOTEL,
         name: "Caesars Palace",
@@ -1001,7 +1006,7 @@ async function main() {
     }),
     prisma.wishlistItem.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         hotelId: hotel5.id,
         type: WishlistType.HOTEL,
         name: "Rinjani Villa",
@@ -1052,7 +1057,7 @@ async function main() {
   const bookings = await Promise.all([
     prisma.booking.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         hotelId: hotel1.id,
         roomId: caesarsRoom!.id,
         type: BookingType.HOTEL,
@@ -1116,7 +1121,7 @@ async function main() {
     }),
     prisma.booking.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         tripId: trip3.id,
         type: BookingType.TRIP,
         status: BookingStatus.COMPLETED,
@@ -1136,7 +1141,7 @@ async function main() {
   const payments = await Promise.all([
     prisma.paymentMethod.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         type: PaymentType.CREDIT_CARD,
         name: "Visa ending in 4242",
         last4: "4242",
@@ -1145,9 +1150,9 @@ async function main() {
     }),
     prisma.paymentMethod.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         type: PaymentType.PAYPAL,
-        name: "PayPal - john@example.com",
+        name: "PayPal - test@example.com",
         isDefault: false,
       },
     }),
@@ -1176,7 +1181,7 @@ async function main() {
   const baggageItems = await Promise.all([
     prisma.baggage.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         type: BaggageType.CABIN,
         name: "Carry-on Bag",
         description: "Standard carry-on luggage",
@@ -1187,7 +1192,7 @@ async function main() {
     }),
     prisma.baggage.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         type: BaggageType.CHECKED,
         name: "Checked Suitcase",
         description: "Large checked luggage",
@@ -1198,7 +1203,7 @@ async function main() {
     }),
     prisma.baggage.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         type: BaggageType.SPECIAL,
         name: "Golf Bag",
         description: "Oversized sports equipment",
@@ -1215,7 +1220,7 @@ async function main() {
   const notifications = await Promise.all([
     prisma.notification.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         title: "Booking Confirmed! 🎉",
         body: "Your booking at Caesars Palace has been confirmed. Check-in: April 10, 2025. Have a wonderful stay!",
         isRead: false,
@@ -1223,7 +1228,7 @@ async function main() {
     }),
     prisma.notification.create({
       data: {
-        userId: john.id,
+        userId: test.id,
         title: "Trip Completed ✅",
         body: "How was your Maldives Beach Escape? Leave a review to help other travelers.",
         isRead: true,
@@ -1260,13 +1265,13 @@ async function main() {
   console.log("🔍 Creating recent searches...");
   const searches = await Promise.all([
     prisma.recentSearch.create({
-      data: { userId: john.id, type: SearchType.HOTEL, query: "Las Vegas hotels" },
+      data: { userId: test.id, type: SearchType.HOTEL, query: "Las Vegas hotels" },
     }),
     prisma.recentSearch.create({
-      data: { userId: john.id, type: SearchType.HOTEL, query: "Miami Beach resorts" },
+      data: { userId: test.id, type: SearchType.HOTEL, query: "Miami Beach resorts" },
     }),
     prisma.recentSearch.create({
-      data: { userId: john.id, type: SearchType.FLIGHT, query: "JFK to DXB" },
+      data: { userId: test.id, type: SearchType.FLIGHT, query: "JFK to DXB" },
     }),
     prisma.recentSearch.create({
       data: { userId: jane.id, type: SearchType.HOTEL, query: "Dubai luxury hotels" },
@@ -1297,10 +1302,8 @@ async function main() {
   console.log(`║  Searches:       ${searches.length}                    ║`);
   console.log("╚═══════════════════════════════════════╝");
   console.log("\n📧 Test Accounts:");
-  console.log("  Admin:  admin@gontobbo.co / Admin@123456");
-  console.log("  User 1: john@example.com / Password@123");
-  console.log("  User 2: jane@example.com / Password@123");
-  console.log("  User 3: ali@example.com / Password@123");
+  console.log("  Admin:  admin@gontobbo.co / Admin@1234");
+  console.log("  User Test: test@gmail.com / Test@1234");
 }
 
 main()

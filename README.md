@@ -77,10 +77,35 @@ Gontobbo is a sophisticated, production-grade **Full-Stack** travel platform bui
    yarn install
    ```
 
-3. Initialize Databases:
+3. Install package for Backend:
+
    ```bash
-   cd apps/backend && npx prisma db push
+   yarn workspace @gontobbo/backend install
    ```
+
+4. Install package for Mobile:
+
+   ```bash
+   yarn workspace @gontobbo/mobile install
+   ```
+5. Setup DB+pgvector(docker):
+
+   ```bash
+   yarn backend:setup
+   ```
+   `description: create docker container, configure pgvector, migrate and seeds database`
+
+   or
+
+   Setup DB+pgvector(manually):
+
+   - download and configure postgre sql(17)
+   - download and configure pgvector (pgvector-1.0.0-17.0.0-1)[https://github.com/pgvector/pgvector]
+   - create database
+   - create user
+   - grant all privileges
+   - create extension vector `CREATE EXTENSION vector;`
+   - migrate database `yarn prisma:migrate`
 
 ### **Running in Development**
 
