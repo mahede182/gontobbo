@@ -16,7 +16,7 @@ function sanitizeUser(user: Record<string, unknown>) {
 // ─── Register ───────────────────────────────────────────────────────────────
 
 export async function register(input: RegisterInput) {
-  const existing = await prisma.user.findUnique({ where: { email: input.email } });
+  const existing = await prisma.user.findUnique({ where: { email: input.email.toLowerCase() } });
   if (existing) {
     throw AppError.conflict("A user with this email already exists");
   }
@@ -34,7 +34,7 @@ export async function register(input: RegisterInput) {
 
   const user = await prisma.user.create({
     data: {
-      email: input.email,
+      email: input.email.toLowerCase(),
       password: hashedPassword,
       firstName: input.firstName,
       lastName: input.lastName,
@@ -63,7 +63,7 @@ export async function register(input: RegisterInput) {
 // ─── Login ──────────────────────────────────────────────────────────────────
 
 export async function login(email: string, password: string) {
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
 
   if (!user) {
     throw AppError.unauthorized("Invalid email or password");
@@ -115,7 +115,7 @@ export async function googleLogin(input: GoogleAuthInput) {
 
   let user = await prisma.user.findFirst({
     where: {
-      OR: [{ googleId: payload.sub }, { email: payload.email }],
+      OR: [{ googleId: payload.sub }, { email: payload.email.toLowerCase() }],
     },
   });
 
@@ -130,7 +130,7 @@ export async function googleLogin(input: GoogleAuthInput) {
   } else {
     user = await prisma.user.create({
       data: {
-        email: payload.email,
+        email: payload.email.toLowerCase(),
         firstName: payload.given_name || "",
         lastName: payload.family_name || "",
         avatar: payload.picture,
@@ -173,7 +173,10 @@ export async function appleLogin(input: AppleAuthInput) {
 
   let user = await prisma.user.findFirst({
     where: {
-      OR: [...(appleUserId ? [{ appleId: appleUserId }] : []), ...(email ? [{ email }] : [])],
+      OR: [
+        ...(appleUserId ? [{ appleId: appleUserId }] : []),
+        ...(email ? [{ email: email.toLowerCase() }] : []),
+      ],
     },
   });
 
@@ -191,7 +194,7 @@ export async function appleLogin(input: AppleAuthInput) {
 
     user = await prisma.user.create({
       data: {
-        email,
+        email: email.toLowerCase(),
         firstName: input.fullName?.givenName || "",
         lastName: input.fullName?.familyName || "",
         appleId: appleUserId,

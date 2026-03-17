@@ -20,9 +20,7 @@ async function main() {
 
   console.log("🧹 Cleaning existing data...");
 
-  const models = Object.keys(prisma).filter(
-    (key) => !key.startsWith("$") && !key.startsWith("_")
-  );
+  const models = Object.keys(prisma).filter((key) => !key.startsWith("$") && !key.startsWith("_"));
 
   const modelsToClean = models.reverse();
   let allTablesExist = true;

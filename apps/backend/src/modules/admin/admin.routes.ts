@@ -442,6 +442,47 @@ router.post("/hotels/:hotelId/rooms", validate(createRoomSchema), adminControlle
  */
 router.put("/rooms/:id", validate(updateRoomSchema), adminController.updateRoom);
 
+/**
+ * @swagger
+ * /admin/rooms:
+ *   get:
+ *     tags: [Admin]
+ *     summary: List all rooms (paginated)
+ *     security: [{ bearerAuth: [] }]
+ *     parameters:
+ *       - in: query
+ *         name: hotelId
+ *         schema: { type: string, format: uuid }
+ *         description: Filter by hotel ID
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, default: 1 }
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, default: 20 }
+ *     responses:
+ *       200: { description: Paginated list of rooms }
+ */
+router.get("/rooms", adminController.getRooms);
+
+/**
+ * @swagger
+ * /admin/rooms/{id}:
+ *   get:
+ *     tags: [Admin]
+ *     summary: Get room by ID
+ *     security: [{ bearerAuth: [] }]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string, format: uuid }
+ *     responses:
+ *       200: { description: Room details }
+ *       404: { description: Room not found }
+ */
+router.get("/rooms/:id", adminController.getRoomById);
+
 // ═══════════════════════════════════════════════════════════════════════════
 // ─── Offers ─────────────────────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════

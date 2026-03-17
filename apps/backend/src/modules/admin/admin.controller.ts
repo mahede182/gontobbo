@@ -119,6 +119,27 @@ export async function updateRoom(req: Request, res: Response, next: NextFunction
   }
 }
 
+export async function getRooms(req: Request, res: Response, next: NextFunction) {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const hotelId = req.query.hotelId as string;
+    const result = await adminService.getRooms(page, limit, hotelId);
+    successResponse(res, { data: result.data, meta: result.meta });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getRoomById(req: Request, res: Response, next: NextFunction) {
+  try {
+    const room = await adminService.getRoomById(req.params.id);
+    successResponse(res, { data: room });
+  } catch (error) {
+    next(error);
+  }
+}
+
 // ─── Offers ─────────────────────────────────────────────────────────────────
 
 export async function createOffer(req: Request, res: Response, next: NextFunction) {

@@ -1,0 +1,9 @@
+export const COLOR_PRIMARY = "#4A90E2";
+export const COLOR_TEXT_DARK = "#333333";
+export const COLOR_TEXT_MUTED = "#777777";
+export const COLOR_BG_MAIN = "#F7F9FC";
+export const COLOR_BORDER = "#E0E6ED";
+export const COLOR_INFO = "#4A90E2";
+export const COLOR_SUCCESS = "#62DEB1";
+export const COLOR_DANGER = "#FF6D60";
+export const COLOR_WARNING = "#F7D060";
