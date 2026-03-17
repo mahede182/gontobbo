@@ -1,9 +1,30 @@
-export const COLOR_PRIMARY = "#4A90E2";
-export const COLOR_TEXT_DARK = "#333333";
-export const COLOR_TEXT_MUTED = "#777777";
-export const COLOR_BG_MAIN = "#F7F9FC";
-export const COLOR_BORDER = "#E0E6ED";
-export const COLOR_INFO = "#4A90E2";
-export const COLOR_SUCCESS = "#62DEB1";
-export const COLOR_DANGER = "#FF6D60";
-export const COLOR_WARNING = "#F7D060";
+// Primary
+export const COLOR_PRIMARY_500 = "#499DD2";
+export const COLOR_PRIMARY_600 = "#1B75C7";
+export const COLOR_PRIMARY_700 = "#165E9F";
+
+// Secondary (Accents)
+export const COLOR_SECONDARY_500 = "#F39B65";
+export const COLOR_SECONDARY_600 = "#F0823F";
+
+// Neutrals
+export const COLOR_NEUTRAL_50 = "#FAFAFA";
+export const COLOR_NEUTRAL_100 = "#F5F5F5";
+export const COLOR_NEUTRAL_200 = "#EEEEEE";
+export const COLOR_NEUTRAL_700 = "#1F1F1F";
+
+// Status
+export const COLOR_SUCCESS = "#47B881";
+export const COLOR_DANGER = "#F64C4C";
+export const COLOR_WARNING = "#FFAD0D";
+export const COLOR_INFO = "#3B82F6";
+
+// Backgrounds
+export const COLOR_BG_MAIN = "#F5F5F5";
+export const COLOR_BG_CARD = "#FFFFFF";
+
+// Backward Compatibility / General
+export const COLOR_PRIMARY = COLOR_PRIMARY_500;
+export const COLOR_TEXT_DARK = COLOR_NEUTRAL_700;
+export const COLOR_TEXT_MUTED = "#666666";
+export const COLOR_BORDER = "#E1E1E1";

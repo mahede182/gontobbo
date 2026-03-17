@@ -19,7 +19,7 @@ export const StatsGrid = () => {
       />
       <StatCard
         title="Revenue"
-        value={`$${data?.data?.stats?.totalRevenue || "0"}`}
+        value={`$${data?.data?.stats?.totalRevenue.toFixed(2) || "0"}`}
         change="↓ 2.1%"
         className="card-red"
       />

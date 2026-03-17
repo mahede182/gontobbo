@@ -1,7 +1,20 @@
+"use client";
 import Link from "next/link";
-export const SidebarLink = ({ href, label, icon: Icon }: any) => (
-  <Link href={href} className="sidebar-link">
-    <Icon size={20} />
-    {label}
+import { LucideIcon } from "lucide-react";
+
+export const SidebarLink = ({
+  href,
+  label,
+  icon: Icon,
+  active,
+}: {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+  active?: boolean;
+}) => (
+  <Link href={href} className={`sidebar-link ${active ? "active" : ""}`}>
+    <Icon size={18} />
+    <span>{label}</span>
   </Link>
 );
