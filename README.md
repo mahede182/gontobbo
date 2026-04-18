@@ -88,17 +88,18 @@ Gontobbo is a sophisticated, production-grade **Full-Stack** travel platform bui
    ```bash
    yarn workspace @gontobbo/mobile install
    ```
+
 5. Setup DB+pgvector(docker):
 
    ```bash
    yarn backend:setup
    ```
+
    `description: create docker container, configure pgvector, migrate and seeds database`
 
    or
 
    Setup DB+pgvector(manually):
-
    - download and configure postgre sql(17)
    - download and configure pgvector (pgvector-1.0.0-17.0.0-1)[https://github.com/pgvector/pgvector]
    - create database

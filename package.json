@@ -8,6 +8,7 @@
     "build:backend": "turbo run build",
     "build:mobile": "yarn workspace @gontobbo/mobile prebuild",
     "backend:setup": "yarn workspace @gontobbo/backend clean:setup",
+    "admin:dev": "yarn workspace @gontobbo/admin dev",
     "test": "turbo run test",
     "clean": "turbo run clean",
     "ios": "yarn workspace @gontobbo/mobile ios",

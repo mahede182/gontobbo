@@ -201,6 +201,35 @@ export async function updateRoom(id: string, input: Partial<CreateRoomInput>) {
   return prisma.room.update({ where: { id }, data: input });
 }
 
+export async function getRooms(page: number, limit: number, hotelId?: string) {
+  const where: any = {};
+  if (hotelId) where.hotelId = hotelId;
+
+  const [rooms, total] = await Promise.all([
+    prisma.room.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
+      include: { hotel: { select: { name: true, location: true } } },
+    }),
+    prisma.room.count({ where }),
+  ]);
+
+  return { data: rooms, meta: paginationMeta(total, page, limit) };
+}
+
+export async function getRoomById(id: string) {
+  const room = await prisma.room.findUnique({
+    where: { id },
+    include: { hotel: true, bookings: { take: 5, orderBy: { createdAt: "desc" } } },
+  });
+
+  if (!room) throw AppError.notFound("Room not found");
+
+  return room;
+}
+
 // ─── Offers ─────────────────────────────────────────────────────────────────
 
 export async function createOffer(input: CreateOfferInput) {
