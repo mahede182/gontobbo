@@ -15,10 +15,10 @@ DB_NAME ?= gontobbo
 
 setup:
 	@echo Starting Gontobbo Backend initialization
-	@if not exist .env copy .env.example .env
+	@[ -f .env ] || cp .env.example .env
 	docker-compose up -d
 	@echo Waiting for database to be ready
-	@timeout /t 10 /nobreak > nul
+	@sleep 10
 	yarn install
 	docker exec $(DB_CONTAINER) psql -U $(DB_USER) -d $(DB_NAME) -c "CREATE EXTENSION IF NOT EXISTS vector;"
 	npx prisma generate
