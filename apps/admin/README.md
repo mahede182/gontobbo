@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Variables
+
+For deployment and local development, you should configure the following environment variables. In local development, create a `.env.local` file:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL="http://localhost:4000" # URL of the backend API
+```
+
 ## Getting Started
 
 First, run the development server:

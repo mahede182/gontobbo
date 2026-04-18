@@ -1,6 +1,6 @@
 "use client";
 import useSWR from "swr";
-import { fetcher } from "@/utils/api/fetcher";
+import { fetcher, authedRequest } from "@/utils/api/fetcher";
 
 export function useRooms(hotelId?: string, page = 1, limit = 20) {
   const query = new URLSearchParams({ page: String(page), limit: String(limit) });
@@ -15,18 +15,16 @@ export function useRooms(hotelId?: string, page = 1, limit = 20) {
   };
 }
 
-export async function createRoom(hotelId: string, data: any) {
-  return fetch(`/api/admin/hotels/${hotelId}/rooms`, {
+export async function createRoom<T = Record<string, unknown>>(hotelId: string, data: T) {
+  return authedRequest(`/api/admin/hotels/${hotelId}/rooms`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  }).then((res) => res.json());
+  });
 }
 
-export async function updateRoom(id: string, data: any) {
-  return fetch(`/api/admin/rooms/${id}`, {
+export async function updateRoom<T = Record<string, unknown>>(id: string, data: T) {
+  return authedRequest(`/api/admin/rooms/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  }).then((res) => res.json());
+  });
 }

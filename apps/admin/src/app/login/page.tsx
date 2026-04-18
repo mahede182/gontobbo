@@ -21,15 +21,10 @@ const LoginPage = () => {
   };
 
   const handleDevLogin = () => {
-    setEmail("admin@gontobbo.co");
-    setPassword("Admin@1234");
-    // We can't synchronously submit because state updates are batched,
-    // but the user can just click "Login" after autofill, or we can trigger it in a timeout
-    setTimeout(() => {
-      document
-        .getElementById("login-form")
-        ?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-    }, 100);
+    if (process.env.NODE_ENV !== "production") {
+      setEmail("admin@gontobbo.co");
+      setPassword("Admin@1234");
+    }
   };
 
   return (
@@ -77,6 +72,7 @@ const LoginPage = () => {
 
             {/* <div className="mt-24 pt-24" style={{ borderTop: '1px dashed #EEE', textAlign: 'center' }}> */}
             <button
+              type="button"
               onClick={handleDevLogin}
               style={{
                 background: "#F2F8FD",
