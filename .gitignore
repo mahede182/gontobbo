@@ -49,6 +49,14 @@ web-build/
 *.swo
 
 # ========================
+# Claude Code Local Files
+# ========================
+.claude/*.local.json
+.claude/*.local.md
+.claude/temp/
+.claude/cache/
+
+# ========================
 # Logs
 # ========================
 *.log
@@ -130,3 +138,7 @@ GoogleService-Info.plist
 # ========================
 *.orig.*
 .windsurf
+
+# Agents
+.agents/
+!.agents/skills-lock.json

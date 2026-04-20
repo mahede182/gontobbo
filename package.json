@@ -15,6 +15,7 @@
     "android": "yarn workspace @gontobbo/mobile android",
     "lint": "npx eslint . -f pretty",
     "format": "prettier . --write && npx eslint . --fix",
+    "skills:install": "npx skills experimental_install --yes",
     "prepare": "husky"
   },
   "workspaces": [

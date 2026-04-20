@@ -1,0 +1,11 @@
+# Local settings - never commit
+settings.local.json
+*.local.md
+*.local.json
+
+# Temp files
+temp/
+cache/
+
+# Logs
+*.log

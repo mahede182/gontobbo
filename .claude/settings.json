@@ -1,0 +1,63 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash:git:*",
+      "Bash:yarn:*",
+      "Bash:npm:*",
+      "Bash:node:*",
+      "Bash:npx:*",
+      "Bash:cd:*",
+      "Bash:ls:*",
+      "Bash:cat:*",
+      "Bash:mkdir:*",
+      "Bash:touch:*",
+      "Bash:rm:*",
+      "Bash:mv:*",
+      "Bash:cp:*",
+      "Bash:echo:*",
+      "Bash:grep:*",
+      "Bash:find:*",
+      "Bash:prisma:*",
+      "Bash:docker:*",
+      "Bash:eas:*",
+      "Bash:expo:*",
+      "Bash:make:*",
+      "Write:*.ts",
+      "Write:*.tsx",
+      "Write:*.js",
+      "Write:*.json",
+      "Write:*.md",
+      "Write:*.yml",
+      "Write:*.yaml",
+      "Write:*.prisma",
+      "Write:*.sql",
+      "Write:*.css",
+      "Write:*.scss"
+    ],
+    "deny": [
+      "Bash:sudo:*",
+      "Bash:rm -rf /",
+      "Bash:rm -rf ~",
+      "Bash:*>*.key",
+      "Bash:*>*.pem",
+      "Write:*.env",
+      "Write:*.env.local",
+      "Write:*.env.production"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [],
+    "PostToolUse": [],
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "echo 'Welcome to Gontobbo! Run /help for available commands.'",
+        "timeout": 5
+      }
+    ]
+  },
+  "tools": {
+    "preferEdit": true,
+    "maxAutoRuns": 3
+  }
+}
