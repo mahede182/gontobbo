@@ -41,25 +41,6 @@ export const createRoomSchema = z.object({
 
 export const updateRoomSchema = createRoomSchema.partial();
 
-export const createOfferSchema = z.object({
-  hotelId: z.string().uuid().optional(),
-  name: z.string().min(1),
-  location: z.string().optional(),
-  image: z.string().optional(),
-  tier1Title: z.string().optional(),
-  tier1Subtitle: z.string().optional(),
-  tier1Value: z.string().optional(),
-  tier1Discount: z.number().optional(),
-  tier1Price: z.number().optional(),
-  tier2Title: z.string().optional(),
-  tier2Subtitle: z.string().optional(),
-  tier2Value: z.string().optional(),
-  tier2Discount: z.number().optional(),
-  tier2Price: z.number().optional(),
-  validFrom: z.string().optional(),
-  validTo: z.string().optional(),
-});
-
 export const createTripSchema = z.object({
   title: z.string().min(1),
   destination: z.string().min(1),
@@ -86,6 +67,5 @@ export const paginationSchema = z.object({
 
 export type CreateHotelInput = z.infer<typeof createHotelSchema>;
 export type CreateRoomInput = z.infer<typeof createRoomSchema>;
-export type CreateOfferInput = z.infer<typeof createOfferSchema>;
 export type CreateTripInput = z.infer<typeof createTripSchema>;
 export type BroadcastNotificationInput = z.infer<typeof broadcastNotificationSchema>;

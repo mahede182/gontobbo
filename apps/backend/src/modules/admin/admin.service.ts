@@ -4,7 +4,6 @@ import { paginationMeta } from "../../utils/apiResponse";
 import type {
   CreateHotelInput,
   CreateRoomInput,
-  CreateOfferInput,
   CreateTripInput,
   BroadcastNotificationInput,
 } from "./admin.schema";
@@ -228,39 +227,6 @@ export async function getRoomById(id: string) {
   if (!room) throw AppError.notFound("Room not found");
 
   return room;
-}
-
-// ─── Offers ─────────────────────────────────────────────────────────────────
-
-export async function createOffer(input: CreateOfferInput) {
-  return prisma.offer.create({
-    data: {
-      ...input,
-      validFrom: input.validFrom ? new Date(input.validFrom) : undefined,
-      validTo: input.validTo ? new Date(input.validTo) : undefined,
-    },
-  });
-}
-
-export async function updateOffer(id: string, input: Partial<CreateOfferInput>) {
-  const offer = await prisma.offer.findUnique({ where: { id } });
-  if (!offer) throw AppError.notFound("Offer not found");
-
-  return prisma.offer.update({
-    where: { id },
-    data: {
-      ...input,
-      validFrom: input.validFrom ? new Date(input.validFrom) : undefined,
-      validTo: input.validTo ? new Date(input.validTo) : undefined,
-    },
-  });
-}
-
-export async function deleteOffer(id: string) {
-  const offer = await prisma.offer.findUnique({ where: { id } });
-  if (!offer) throw AppError.notFound("Offer not found");
-
-  return prisma.offer.update({ where: { id }, data: { isActive: false } });
 }
 
 // ─── Trips ──────────────────────────────────────────────────────────────────
