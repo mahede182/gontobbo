@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const envSchema = z.object({
-  PORT: z.string().default("4000"),
+  PORT: z.coerce.number().default(4000),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
   JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
