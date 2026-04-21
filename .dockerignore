@@ -17,5 +17,6 @@ dist
 Dockerfile
 docker-compose.yml
 README.md
+.yarn/install-state.gz
 package-lock.json
 pnpm-lock.yaml

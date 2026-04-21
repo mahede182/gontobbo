@@ -9,7 +9,7 @@ WORKDIR /app
 # Stage 2: Dependencies (cached layer)
 FROM base AS dependencies
 COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
+COPY .yarn* ./.yarn/
 COPY apps/backend/package.json ./apps/backend/
 COPY packages/shared/package.json ./packages/shared/
 RUN yarn install
