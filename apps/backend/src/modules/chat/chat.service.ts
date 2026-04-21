@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-import { GeminiClient, GeminiContent, GeminiRole } from "../../config/gemini";
+import { prisma } from "../../config/database";
+import { GeminiClient } from "../../config/gemini";
 
-const prisma = new PrismaClient();
+import { GeminiContent, GeminiRole } from "../../@types/express";
 
 /**
  * Search relevant context using vector similarity search

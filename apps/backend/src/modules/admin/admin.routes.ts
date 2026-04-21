@@ -9,7 +9,6 @@ import {
   updateHotelSchema,
   createRoomSchema,
   updateRoomSchema,
-  createOfferSchema,
   createTripSchema,
   broadcastNotificationSchema,
 } from "./admin.schema";
@@ -482,119 +481,6 @@ router.get("/rooms", adminController.getRooms);
  *       404: { description: Room not found }
  */
 router.get("/rooms/:id", adminController.getRoomById);
-
-// ═══════════════════════════════════════════════════════════════════════════
-// ─── Offers ─────────────────────────────────────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════
-
-/**
- * @swagger
- * /admin/offers:
- *   post:
- *     tags: [Admin]
- *     summary: Create a new offer
- *     security: [{ bearerAuth: [] }]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [name]
- *             properties:
- *               hotelId:
- *                 type: string
- *                 format: uuid
- *                 description: Optional hotel to link the offer to
- *               name:
- *                 type: string
- *                 example: Summer Special
- *               location:
- *                 type: string
- *                 example: Dubai, UAE
- *               image:
- *                 type: string
- *                 example: https://example.com/offer.jpg
- *               tier1Title: { type: string, example: Weekend Getaway }
- *               tier1Subtitle: { type: string, example: 2 nights stay }
- *               tier1Value: { type: string, example: "Save $150" }
- *               tier1Discount: { type: number, example: 25 }
- *               tier1Price: { type: number, example: 299 }
- *               tier2Title: { type: string, example: Week-long Escape }
- *               tier2Subtitle: { type: string, example: 5 nights stay }
- *               tier2Value: { type: string, example: "Save $500" }
- *               tier2Discount: { type: number, example: 35 }
- *               tier2Price: { type: number, example: 649 }
- *               validFrom:
- *                 type: string
- *                 format: date
- *                 example: "2025-01-01"
- *               validTo:
- *                 type: string
- *                 format: date
- *                 example: "2025-12-31"
- *     responses:
- *       201: { description: Offer created }
- */
-router.post("/offers", validate(createOfferSchema), adminController.createOffer);
-
-/**
- * @swagger
- * /admin/offers/{id}:
- *   put:
- *     tags: [Admin]
- *     summary: Update an offer
- *     security: [{ bearerAuth: [] }]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema: { type: string, format: uuid }
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name: { type: string }
- *               location: { type: string }
- *               image: { type: string }
- *               tier1Title: { type: string }
- *               tier1Subtitle: { type: string }
- *               tier1Value: { type: string }
- *               tier1Discount: { type: number }
- *               tier1Price: { type: number }
- *               tier2Title: { type: string }
- *               tier2Subtitle: { type: string }
- *               tier2Value: { type: string }
- *               tier2Discount: { type: number }
- *               tier2Price: { type: number }
- *               validFrom: { type: string, format: date }
- *               validTo: { type: string, format: date }
- *     responses:
- *       200: { description: Offer updated }
- *       404: { description: Offer not found }
- */
-router.put("/offers/:id", validate(createOfferSchema.partial()), adminController.updateOffer);
-
-/**
- * @swagger
- * /admin/offers/{id}:
- *   delete:
- *     tags: [Admin]
- *     summary: Soft-delete an offer
- *     security: [{ bearerAuth: [] }]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema: { type: string, format: uuid }
- *     responses:
- *       200: { description: Offer deleted }
- *       404: { description: Offer not found }
- */
-router.delete("/offers/:id", adminController.deleteOffer);
 
 // ═══════════════════════════════════════════════════════════════════════════
 // ─── Trips ──────────────────────────────────────────────────────────────────

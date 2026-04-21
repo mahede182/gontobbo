@@ -140,35 +140,6 @@ export async function getRoomById(req: Request, res: Response, next: NextFunctio
   }
 }
 
-// ─── Offers ─────────────────────────────────────────────────────────────────
-
-export async function createOffer(req: Request, res: Response, next: NextFunction) {
-  try {
-    const offer = await adminService.createOffer(req.body);
-    successResponse(res, { data: offer, message: "Offer created", statusCode: 201 });
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function updateOffer(req: Request, res: Response, next: NextFunction) {
-  try {
-    const offer = await adminService.updateOffer(req.params.id, req.body);
-    successResponse(res, { data: offer, message: "Offer updated" });
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function deleteOffer(req: Request, res: Response, next: NextFunction) {
-  try {
-    await adminService.deleteOffer(req.params.id);
-    successResponse(res, { data: null, message: "Offer deleted" });
-  } catch (error) {
-    next(error);
-  }
-}
-
 // ─── Trips ──────────────────────────────────────────────────────────────────
 
 export async function createTrip(req: Request, res: Response, next: NextFunction) {

@@ -24,7 +24,6 @@ export async function addToWishlist(userId: string, input: AddWishlistInput) {
     data: {
       userId,
       hotelId: input.hotelId,
-      offerId: input.offerId,
       type: input.type,
       name: input.name,
       rating: input.rating,
