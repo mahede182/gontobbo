@@ -9,7 +9,8 @@ const DEV_HOST = Platform.select({
   default: "localhost",
 });
 
-export const BASE_URL = `http://${DEV_HOST}:4000/api`;
+const DEFAULT_DEV_URL = `http://${DEV_HOST}:10000/api`;
+export const BASE_URL = process.env.EXPO_PUBLIC_API_URL || DEFAULT_DEV_URL;
 
 export const LOGIN = "/auth/login";
 export const REGISTER = "/auth/register";

@@ -1,4 +1,4 @@
-package co.bitsofts.gontobbo
+package co.mahede.gontobbo
 
 import android.app.Application
 import android.content.res.Configuration

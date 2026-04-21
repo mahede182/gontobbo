@@ -3,13 +3,16 @@
     <> 2. GoogleServices-Info.plist
 */
 // @ts-ignore
-import { GOOGLE_CLIENT_ID, IOS_CLIENT_ID } from "@env";
+import { EXPO_PUBLIC_WEB_CLIENT_ID, EXPO_PUBLIC_IOS_CLIENT_ID } from "@env";
+
+console.log("GOOGLE_CLIENT_ID", EXPO_PUBLIC_WEB_CLIENT_ID);
+console.log("IOS_CLIENT_ID", EXPO_PUBLIC_IOS_CLIENT_ID);
 
 export const googleSignInConfig = {
-  webClientId: GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID,
+  webClientId: EXPO_PUBLIC_WEB_CLIENT_ID,
   scopes: ["email", "profile"],
   offlineAccess: true,
   forceCodeForRefreshToken: true,
-  iosClientId: IOS_CLIENT_ID || process.env.IOS_CLIENT_ID,
+  iosClientId: EXPO_PUBLIC_IOS_CLIENT_ID,
   profileImageSize: 160,
 };
