@@ -5,9 +5,6 @@
 // @ts-ignore
 import { EXPO_PUBLIC_WEB_CLIENT_ID, EXPO_PUBLIC_IOS_CLIENT_ID } from "@env";
 
-console.log("GOOGLE_CLIENT_ID", EXPO_PUBLIC_WEB_CLIENT_ID);
-console.log("IOS_CLIENT_ID", EXPO_PUBLIC_IOS_CLIENT_ID);
-
 export const googleSignInConfig = {
   webClientId: EXPO_PUBLIC_WEB_CLIENT_ID,
   scopes: ["email", "profile"],
