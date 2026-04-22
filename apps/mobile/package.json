@@ -6,6 +6,7 @@
     "dev": "npx react-native start",
     "start": "npx react-native start",
     "prebuild": "npx expo prebuild",
+    "build": "eas build --platform android --profile preview",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "test": "jest",

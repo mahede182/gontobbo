@@ -32,6 +32,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     googleServicesFile: "./google-services.json",
     versionCode: BUILD_NUMBER,
   },
+  extra: {
+    eas: {
+      projectId: "bfcd01c5-891a-4863-92df-9a62d1318209",
+    },
+  },
   web: {
     favicon: "./assets/favicon.png",
   },

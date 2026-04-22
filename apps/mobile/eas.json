@@ -1,0 +1,37 @@
+{
+  "cli": {
+    "version": ">= 18.0.5",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "preview": {
+      "node": "22.21.1",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "COREPACK_ENABLE_STRICT": "0"
+      }
+    },
+    "development": {
+      "developmentClient": true,
+      "node": "22.21.1",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "COREPACK_ENABLE_STRICT": "0"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "node": "22.21.1",
+      "env": {
+        "COREPACK_ENABLE_STRICT": "0"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
