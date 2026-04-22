@@ -5,6 +5,15 @@
 Gontobbo is a sophisticated, production-grade **Full-Stack** travel platform built with a modern **Monorepo** architecture. It integrates cutting-edge **Generative AI** with a robust booking engine to provide a truly intelligent travel discovery and reservation experience.
 
 ---
+### 💻 **Preview**
+
+**App:** [https://apkpure.com/p/co.mahede.gontobbo](https://apkpure.com/p/co.mahede.gontobbo)
+
+**Backend:** [https://gontobbo.onrender.com/api/docs/](https://gontobbo.onrender.com/api/docs/)
+
+**Admin:** [https://gontobbo-admin-bi84ztg9l-mahedes-projects.vercel.app/](https://gontobbo-admin-bi84ztg9l-mahedes-projects.vercel.app/)
+
+---
 
 ## 🔥 Project Highlights: AI & Full-Stack
 
