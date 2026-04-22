@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "228779477149",
+    "project_id": "gontobbo-bbdd8",
+    "storage_bucket": "gontobbo-bbdd8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228779477149:android:f5c681ec8b7c5bc78dec74",
+        "android_client_info": {
+          "package_name": "co.mahede.gontobbo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228779477149-r4meno2ipfskc1or21ed5edp4df4fsr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy3LXCDXq_joh91kQrwA-w0ZWXfnkttIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228779477149-r4meno2ipfskc1or21ed5edp4df4fsr2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "228779477149-871f1rq8562pvl9a6dg7n19ndq5049p8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.mahede.gontobbo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
