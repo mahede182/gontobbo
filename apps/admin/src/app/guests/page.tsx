@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useBookings } from "@/hooks/useBookings";
 import { BookingTable } from "@/components/bookings/BookingTable";
+import { TableSkeleton } from "@/components/common/TableSkeleton";
 import { Pagination } from "@/components/common/Pagination";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Maximize, Grid } from "lucide-react";
@@ -53,11 +54,7 @@ export default function GuestsPage() {
           </div>
         </div>
 
-        {isLoading ? (
-          <div className="p-24 text-center">Loading bookings...</div>
-        ) : (
-          <BookingTable bookings={bookings} />
-        )}
+        {isLoading ? <TableSkeleton columns={10} rows={5} /> : <BookingTable bookings={bookings} />}
 
         <div className="pagination-wrapper">
           <p style={{ fontSize: "12px", color: "#999" }}>

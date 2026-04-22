@@ -2,12 +2,12 @@
 import { useHotels, deleteHotel } from "@/hooks/useHotels";
 import { HotelTable } from "@/components/hotels/HotelTable";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { TableSkeleton } from "@/components/common/TableSkeleton";
 
 export default function HotelsPage() {
   const { hotels, isLoading, mutate } = useHotels();
 
   const handleEdit = (hotel: any) => {
-    console.log("Edit hotel:", hotel);
     // Modal implementation will go here
   };
 
@@ -21,7 +21,11 @@ export default function HotelsPage() {
             Add Hotel
           </button>
         </div>
-        {isLoading ? <p>Loading...</p> : <HotelTable hotels={hotels} onEdit={handleEdit} />}
+        {isLoading ? (
+          <TableSkeleton columns={6} rows={5} />
+        ) : (
+          <HotelTable hotels={hotels} onEdit={handleEdit} />
+        )}
       </div>
     </div>
   );

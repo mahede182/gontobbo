@@ -49,13 +49,6 @@ export const SidebarNav = () => {
       />
 
       <div className="sidebar-section-title">Restaurant</div>
-      <SidebarLink href="/menu" label="Menu" icon={Utensils} active={isActive("/menu")} />
-      <SidebarLink
-        href="/menu/add"
-        label="Add Menu"
-        icon={PlusCircle}
-        active={isActive("/menu/add")}
-      />
       <SidebarLink
         href="/orders"
         label="Orders"

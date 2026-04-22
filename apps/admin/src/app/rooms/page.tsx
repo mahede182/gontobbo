@@ -5,6 +5,7 @@ import { useHotels } from "@/hooks/useHotels";
 import { RoomTable } from "@/components/rooms/RoomTable";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Maximize, Grid, Plus } from "lucide-react";
+import { TableSkeleton } from "@/components/common/TableSkeleton";
 import { Pagination } from "@/components/common/Pagination";
 
 export default function RoomsPage() {
@@ -80,7 +81,7 @@ export default function RoomsPage() {
         </div>
 
         {isLoading ? (
-          <div className="p-24 text-center">Loading rooms...</div>
+          <TableSkeleton columns={8} rows={5} />
         ) : (
           <RoomTable
             rooms={rooms}

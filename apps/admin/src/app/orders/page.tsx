@@ -1,19 +1,19 @@
 "use client";
 import { useState } from "react";
-import { useBookings } from "@/hooks/useBookings";
-import { BookingTable } from "@/components/bookings/BookingTable";
+import { useOrders } from "@/hooks/useOrders";
+import { OrderTable } from "@/components/orders/OrderTable";
 import { TableSkeleton } from "@/components/common/TableSkeleton";
 import { Pagination } from "@/components/common/Pagination";
 import { PageHeader } from "@/components/layout/PageHeader";
 
-export default function BookingsPage() {
+export default function OrdersPage() {
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState("");
-  const { bookings, meta, isLoading, mutate } = useBookings({ page, status });
+  const { orders, meta, isLoading } = useOrders({ page, status });
 
   return (
-    <div className="bookings-page">
-      <PageHeader title="Bookings" breadcrumb="Home > Bookings" />
+    <div className="orders-page">
+      <PageHeader title="Orders" breadcrumb="Home > Orders" />
       <div className="card">
         <div className="table-controls mb-24">
           <div className="flex gap-12 align-center">
@@ -31,12 +31,15 @@ export default function BookingsPage() {
                 className="table-filter-select"
                 style={{ width: "150px" }}
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}>
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                  setPage(1); // reset to page 1 on filter
+                }}>
                 <option value="">All Status</option>
                 <option value="PENDING">PENDING</option>
-                <option value="CONFIRMED">CONFIRMED</option>
+                <option value="PREPARING">PREPARING</option>
+                <option value="DELIVERED">DELIVERED</option>
                 <option value="CANCELLED">CANCELLED</option>
-                <option value="COMPLETED">COMPLETED</option>
               </select>
             </div>
           </div>
@@ -51,22 +54,18 @@ export default function BookingsPage() {
             }}>
             <input
               type="text"
-              placeholder="Search booking..."
+              placeholder="Search order..."
               className="border-none bg-transparent"
               style={{ fontSize: "13px", width: "100%" }}
             />
           </div>
         </div>
 
-        {isLoading ? (
-          <TableSkeleton columns={10} rows={5} />
-        ) : (
-          <BookingTable bookings={bookings} mutate={mutate} />
-        )}
+        {isLoading ? <TableSkeleton columns={6} rows={5} /> : <OrderTable orders={orders || []} />}
 
-        <div className="pagination-wrapper">
+        <div className="pagination-wrapper mt-24">
           <p style={{ fontSize: "12px", color: "#999" }}>
-            Showing 1 to {bookings?.length || 0} of {meta?.totalItems || 0} entries
+            Showing 1 to {orders?.length || 0} of {meta?.totalItems || 0} entries
           </p>
           {meta && <Pagination current={page} total={meta.totalPages} onPageChange={setPage} />}
         </div>

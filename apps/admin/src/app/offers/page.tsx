@@ -4,6 +4,7 @@ import { useTrips } from "@/hooks/useTrips";
 import { OfferRow } from "@/components/offers/OfferRow";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TableHead } from "@/components/common/Table/TableHead";
+import { TableSkeleton } from "@/components/common/TableSkeleton";
 
 export default function OffersTripsPage() {
   const { offers, isLoading: offersLoading, mutate: mutateOffers } = useOffers();
@@ -15,7 +16,7 @@ export default function OffersTripsPage() {
       <div className="card mb-24">
         <h3>Offers</h3>
         {offersLoading ? (
-          <p>Loading...</p>
+          <TableSkeleton columns={5} rows={3} />
         ) : (
           <table className="w-full text-left mt-12">
             <thead>
@@ -38,7 +39,7 @@ export default function OffersTripsPage() {
       <div className="card">
         <h3>Trips</h3>
         {tripsLoading ? (
-          <p>Loading...</p>
+          <TableSkeleton columns={3} rows={3} />
         ) : (
           <table className="w-full text-left mt-12">
             <thead>
