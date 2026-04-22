@@ -128,10 +128,13 @@ keystore_pass
 coverage/
 
 # ========================
-# Google Services (sensitive)
+# Google Services
 # ========================
 google-services.json
 GoogleService-Info.plist
+# Allow Firebase config files in mobile app (needed for EAS builds)
+!apps/mobile/google-services.json
+!apps/mobile/GoogleService-Info.plist
 
 # ========================
 # Misc
