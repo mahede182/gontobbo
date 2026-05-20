@@ -1,8 +1,11 @@
 "use client";
 import React from "react";
 import { Eye, Settings } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const OrderRow = ({ order }: { order: any }) => {
+  const { t } = useTranslation();
+
   const getStatusClass = (status: string) => {
     switch (status?.toUpperCase()) {
       case "COMPLETED":
@@ -14,6 +17,16 @@ export const OrderRow = ({ order }: { order: any }) => {
         return "badge-cancelled";
       default:
         return "badge-pending";
+    }
+  };
+
+  const getTranslatedStatus = (status: string) => {
+    switch (status?.toUpperCase()) {
+      case "PENDING": return t("orders.pending");
+      case "PREPARING": return t("orders.preparing");
+      case "DELIVERED": return t("orders.delivered");
+      case "CANCELLED": return t("orders.cancelled");
+      default: return status || t("orders.pending");
     }
   };
 
@@ -31,7 +44,7 @@ export const OrderRow = ({ order }: { order: any }) => {
             alt=""
           />
           <span style={{ fontWeight: 500 }}>
-            {order.user?.firstName || "Guest"} {order.user?.lastName || ""}
+            {order.user?.firstName || t("common.guest")} {order.user?.lastName || ""}
           </span>
         </div>
       </td>
@@ -41,7 +54,7 @@ export const OrderRow = ({ order }: { order: any }) => {
       </td>
       <td>
         <span className={`badge ${getStatusClass(order.status || "PENDING")}`}>
-          {order.status || "PENDING"}
+          {getTranslatedStatus(order.status || "PENDING")}
         </span>
       </td>
       <td>

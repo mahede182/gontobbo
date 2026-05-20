@@ -1,8 +1,11 @@
 "use client";
 import React from "react";
 import { Eye, Settings, ArrowUpDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const BookingRow = ({ booking }: { booking: any }) => {
+  const { t } = useTranslation();
+
   const getPaymentClass = (method: string) => {
     switch (method?.toLowerCase()) {
       case "cash":
@@ -22,7 +25,7 @@ export const BookingRow = ({ booking }: { booking: any }) => {
       <td>
         <div className="flex align-center gap-12">
           <img
-            src={booking.user?.avatar || `https://i.pravatar.cc/150?u=${booking.user?.id}`}
+            src={booking.user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent((booking.user?.firstName || "G") + " " + (booking.user?.lastName || ""))}&background=499dd2&color=fff&size=36`}
             className="avatar-img"
             alt=""
           />
@@ -34,7 +37,7 @@ export const BookingRow = ({ booking }: { booking: any }) => {
       <td>{new Date(booking.checkIn).toLocaleDateString("en-GB")}</td>
       <td>{new Date(booking.checkOut).toLocaleDateString("en-GB")}</td>
       <td>
-        <span style={{ fontSize: "12px" }}>Pan Card</span>
+        <span style={{ fontSize: "12px" }}>{t("bookings.panCard")}</span>
       </td>
       <td>
         <span className={`badge ${getPaymentClass(booking.paymentMethod || "Gpay")}`}>
@@ -51,8 +54,8 @@ export const BookingRow = ({ booking }: { booking: any }) => {
         <span style={{ fontSize: "12px" }}>{booking.room?.name || "304"}</span>
       </td>
       <td>
-        {booking.rooms} Member /{" "}
-        <span style={{ color: "var(--color-primary)" }}>{booking.rooms} Room</span>
+        {booking.rooms} {t("bookings.member")} /{" "}
+        <span style={{ color: "var(--color-primary)" }}>{booking.rooms} {t("bookings.room")}</span>
       </td>
       <td>
         <div className="flex">

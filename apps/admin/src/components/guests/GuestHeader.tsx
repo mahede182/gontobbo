@@ -1,9 +1,2 @@
-export const GuestHeader = () => (
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Checkin</th>
-    </tr>
-  </thead>
-);
+// Deprecated: header is now inline in GuestTable
+export {};

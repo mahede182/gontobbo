@@ -5,27 +5,29 @@ import { OfferRow } from "@/components/offers/OfferRow";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TableHead } from "@/components/common/Table/TableHead";
 import { TableSkeleton } from "@/components/common/TableSkeleton";
+import { useTranslation } from "react-i18next";
 
 export default function OffersTripsPage() {
   const { offers, isLoading: offersLoading, mutate: mutateOffers } = useOffers();
   const { trips, isLoading: tripsLoading } = useTrips();
+  const { t } = useTranslation();
 
   return (
     <div className="offers-trips-page">
-      <PageHeader title="Offers & Trips" breadcrumb="Home > Marketing" />
+      <PageHeader title={t("offers.title")} breadcrumb={t("offers.breadcrumb")} />
       <div className="card mb-24">
-        <h3>Offers</h3>
+        <h3>{t("offers.offers")}</h3>
         {offersLoading ? (
           <TableSkeleton columns={5} rows={3} />
         ) : (
           <table className="w-full text-left mt-12">
             <thead>
               <tr>
-                <TableHead>Offer</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Value</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t("offers.offer")}</TableHead>
+                <TableHead>{t("offers.location")}</TableHead>
+                <TableHead>{t("offers.value")}</TableHead>
+                <TableHead>{t("offers.status")}</TableHead>
+                <TableHead>{t("common.actions")}</TableHead>
               </tr>
             </thead>
             <tbody>
@@ -37,24 +39,24 @@ export default function OffersTripsPage() {
         )}
       </div>
       <div className="card">
-        <h3>Trips</h3>
+        <h3>{t("offers.trips")}</h3>
         {tripsLoading ? (
           <TableSkeleton columns={3} rows={3} />
         ) : (
           <table className="w-full text-left mt-12">
             <thead>
               <tr>
-                <TableHead>Trip Title</TableHead>
-                <TableHead>Destination</TableHead>
-                <TableHead>Price</TableHead>
+                <TableHead>{t("offers.tripTitle")}</TableHead>
+                <TableHead>{t("offers.destination")}</TableHead>
+                <TableHead>{t("offers.price")}</TableHead>
               </tr>
             </thead>
             <tbody>
-              {trips?.map((t: any) => (
-                <tr key={t.id}>
-                  <td className="p-12">{t.title}</td>
-                  <td className="p-12">{t.destination}</td>
-                  <td className="p-12">${t.price}</td>
+              {trips?.map((trip: any) => (
+                <tr key={trip.id}>
+                  <td className="p-12">{trip.title}</td>
+                  <td className="p-12">{trip.destination}</td>
+                  <td className="p-12">${trip.price}</td>
                 </tr>
               ))}
             </tbody>

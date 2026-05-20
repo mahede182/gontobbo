@@ -1,14 +1,17 @@
 "use client";
 import { useHotels } from "@/hooks/useHotels";
+import { useTranslation } from "react-i18next";
 
 export const TopHotels = () => {
   const { hotels } = useHotels();
+  const { t } = useTranslation();
+
   return (
     <div className="card" style={{ flex: 1 }}>
       <div className="flex justify-between align-center mb-24">
-        <h3 style={{ fontSize: "16px", fontWeight: 600 }}>Top Hotels</h3>
+        <h3 style={{ fontSize: "16px", fontWeight: 600 }}>{t("dashboard.topHotels")}</h3>
         <span style={{ color: "var(--color-primary)", fontSize: "12px", cursor: "pointer" }}>
-          view →
+          {t("common.view")}
         </span>
       </div>
       <div className="flex flex-col gap-12">
@@ -39,7 +42,7 @@ export const TopHotels = () => {
               <p style={{ fontSize: "10px", color: "#47B881" }}>↑ 5.6%</p>
             </div>
           </div>
-        )) || <p>Loading...</p>}
+        )) || <p>{t("common.loading")}</p>}
       </div>
     </div>
   );

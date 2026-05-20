@@ -1,7 +1,14 @@
+"use client";
 import { InfoTile } from "./InfoTile";
-export const BookingDetails = () => (
-  <div>
-    <h2>Booking Details</h2>
-    <InfoTile label="ID" value="#LH-2546" />
-  </div>
-);
+import { useTranslation } from "react-i18next";
+
+export const BookingDetails = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <h2>{t("bookingDetails.bookingDetails")}</h2>
+      <InfoTile label={t("bookings.id")} value="#LH-2546" />
+    </div>
+  );
+};

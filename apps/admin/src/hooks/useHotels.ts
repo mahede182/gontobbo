@@ -1,28 +1,27 @@
 "use client";
 import useSWR from "swr";
-import { fetcher } from "@/utils/api/fetcher";
+import { fetcher, authedRequest } from "@/utils/api/fetcher";
+import { HOTELS } from "@/constants/urls";
 
 export function useHotels() {
-  const { data, error, mutate } = useSWR("/api/admin/hotels", fetcher);
-  return { hotels: data?.data, isLoading: !error && !data, isError: error, mutate };
+  const { data, error, mutate } = useSWR(HOTELS, fetcher);
+  return { hotels: data?.data, isLoading: !error && !data, isError: !!error, mutate };
 }
 
-export async function createHotel(data: any) {
-  return fetch("/api/admin/hotels", {
+export async function createHotel(data: Record<string, unknown>) {
+  return authedRequest(HOTELS, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  }).then((res) => res.json());
+  });
 }
 
-export async function updateHotel(id: string, data: any) {
-  return fetch(`/api/admin/hotels/${id}`, {
+export async function updateHotel(id: string, data: Record<string, unknown>) {
+  return authedRequest(`${HOTELS}/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  }).then((res) => res.json());
+  });
 }
 
 export async function deleteHotel(id: string) {
-  return fetch(`/api/admin/hotels/${id}`, { method: "DELETE" }).then((res) => res.json());
+  return authedRequest(`${HOTELS}/${id}`, { method: "DELETE" });
 }

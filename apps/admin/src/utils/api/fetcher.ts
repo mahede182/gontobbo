@@ -11,6 +11,14 @@ export const authedRequest = async (url: string, options: RequestInit = {}) => {
     },
   });
 
+  // If the server responds with 401 Unauthorized, the token is expired or invalid.
+  // Clear it and redirect to login so the user doesn't sit on a broken page.
+  if (res.status === 401 && typeof window !== "undefined") {
+    localStorage.removeItem("admin_token");
+    window.location.href = "/login";
+    throw new Error("Session expired. Please log in again.");
+  }
+
   if (!res.ok) {
     const errorBody = await res.json().catch(() => ({}));
     throw new Error(errorBody.message || "Request failed");

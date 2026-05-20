@@ -1,8 +1,11 @@
 "use client";
 import { TableCell } from "../common/Table/TableCell";
 import { updateUserRole } from "@/hooks/useUsers";
+import { useTranslation } from "react-i18next";
 
 export const UserRow = ({ user, mutate }: any) => {
+  const { t } = useTranslation();
+
   const handleRoleChange = async (e: any) => {
     await updateUserRole(user.id, e.target.value);
     mutate();
@@ -22,7 +25,7 @@ export const UserRow = ({ user, mutate }: any) => {
       </TableCell>
       <TableCell>
         <span className={user.isActive ? "text-success" : "text-danger"}>
-          {user.isActive ? "Active" : "Inactive"}
+          {user.isActive ? t("common.active") : t("common.inactive")}
         </span>
       </TableCell>
     </tr>

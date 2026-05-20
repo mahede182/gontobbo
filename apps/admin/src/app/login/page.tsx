@@ -4,12 +4,14 @@ import { useAuth } from "@/context/AuthContext";
 import { API_BASE_URL } from "@/utils/api/fetcher";
 import { LogoE } from "@/components/layout/sidebar/LogoE";
 import { FullPageLoader } from "@/components/common/FullPageLoader";
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,9 +23,9 @@ const LoginPage = () => {
         body: JSON.stringify({ email, password }),
       }).then((r) => r.json());
       if (res.data?.accessToken) login(res.data.accessToken);
-      else alert("Login failed");
+      else alert(t("login.loginFailed"));
     } catch (error) {
-      alert("Login failed");
+      alert(t("login.loginFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -47,10 +49,10 @@ const LoginPage = () => {
         </div>
         <div className="login-right">
           <div className="login-form-wrapper">
-            <h1 className="login-title">Login</h1>
+            <h1 className="login-title">{t("login.title")}</h1>
             <form id="login-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label className="form-label">Email</label>
+                <label className="form-label">{t("login.email")}</label>
                 <input
                   type="email"
                   className="form-input"
@@ -61,7 +63,7 @@ const LoginPage = () => {
                 />
               </div>
               <div className="form-group">
-                <label className="form-label">Password</label>
+                <label className="form-label">{t("login.password")}</label>
                 <input
                   type="password"
                   className="form-input"
@@ -74,14 +76,13 @@ const LoginPage = () => {
               <div className="login-footer">
                 <label className="checkbox-group">
                   <input type="checkbox" />
-                  Remember Me
+                  {t("login.rememberMe")}
                 </label>
                 <button type="submit" className="btn-login" disabled={isLoading}>
-                  {isLoading ? "Logging in..." : "Login"}
+                  {isLoading ? t("login.loggingIn") : t("login.title")}
                 </button>
               </div>
 
-              {/* <div className="mt-24 pt-24" style={{ borderTop: '1px dashed #EEE', textAlign: 'center' }}> */}
               <button
                 type="button"
                 onClick={handleDevLogin}
@@ -96,9 +97,8 @@ const LoginPage = () => {
                   fontWeight: 500,
                   marginTop: "12px",
                 }}>
-                Dev Quick Login
+                {t("login.devQuickLogin")}
               </button>
-              {/* </div> */}
             </form>
           </div>
         </div>

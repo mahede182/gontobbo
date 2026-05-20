@@ -1,58 +1,58 @@
 "use client";
-import React from "react";
+import { useTranslation } from "react-i18next";
 
-export const Pagination = ({ current, total, onPageChange }: any) => {
-  const pages = Array.from({ length: total }, (_, i) => i + 1);
+interface PaginationProps {
+  current: number;
+  total: number;
+  onPageChange: (page: number) => void;
+}
+
+function getPageNumbers(current: number, total: number): (number | "...")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages: (number | "...")[] = [1];
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+  if (start > 2) pages.push("...");
+  for (let i = start; i <= end; i++) pages.push(i);
+  if (end < total - 1) pages.push("...");
+  pages.push(total);
+  return pages;
+}
+
+export const Pagination = ({ current, total, onPageChange }: PaginationProps) => {
+  const { t } = useTranslation();
+  const pages = getPageNumbers(current, total);
 
   return (
-    <div className="flex align-center gap-12">
+    <div className="pagination">
       <button
-        className="action-btn"
+        className="pagination-btn"
         onClick={() => onPageChange(current - 1)}
         disabled={current <= 1}
-        style={{
-          padding: "8px 16px",
-          fontSize: "13px",
-          borderRadius: "6px",
-          fontWeight: 500,
-          opacity: current <= 1 ? 0.4 : 1,
-          cursor: current <= 1 ? "not-allowed" : "pointer",
-        }}>
-        Previous
+      >
+        {t("common.previous")}
       </button>
-
-      {pages.map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          style={{
-            padding: "8px 12px",
-            borderRadius: "6px",
-            border: "none",
-            fontSize: "13px",
-            fontWeight: 600,
-            cursor: "pointer",
-            backgroundColor: current === page ? "var(--color-primary)" : "transparent",
-            color: current === page ? "white" : "#666",
-            minWidth: "32px",
-          }}>
-          {page}
-        </button>
-      ))}
-
+      {pages.map((page, idx) =>
+        page === "..." ? (
+          <span key={`ellipsis-${idx}`} className="pagination-ellipsis">
+            …
+          </span>
+        ) : (
+          <button
+            key={page}
+            className={`pagination-page ${current === page ? "pagination-page--active" : ""}`}
+            onClick={() => onPageChange(page)}
+          >
+            {page}
+          </button>
+        )
+      )}
       <button
-        className="action-btn"
+        className="pagination-btn"
         onClick={() => onPageChange(current + 1)}
         disabled={current >= total}
-        style={{
-          padding: "8px 16px",
-          fontSize: "13px",
-          borderRadius: "6px",
-          fontWeight: 500,
-          opacity: current >= total ? 0.4 : 1,
-          cursor: current >= total ? "not-allowed" : "pointer",
-        }}>
-        Next
+      >
+        {t("common.next")}
       </button>
     </div>
   );

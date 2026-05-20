@@ -2,9 +2,11 @@
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Home } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export default function NotFound() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <div
@@ -35,7 +37,7 @@ export default function NotFound() {
           color: "#1E293B",
           marginBottom: "1rem",
         }}>
-        Page Not Found
+        {t("notFound.title")}
       </h2>
       <p
         style={{
@@ -44,7 +46,7 @@ export default function NotFound() {
           marginBottom: "2rem",
           fontSize: "1.1rem",
         }}>
-        The page you are looking for doesn't exist or has been moved. Let's get you back on track.
+        {t("notFound.description")}
       </p>
 
       <div style={{ display: "flex", gap: "1rem" }}>
@@ -66,7 +68,7 @@ export default function NotFound() {
           onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#F8FAFC")}
           onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#fff")}>
           <ArrowLeft size={18} />
-          Go Back
+          {t("notFound.goBack")}
         </button>
         <Link
           href="/"
@@ -86,7 +88,7 @@ export default function NotFound() {
           onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#1E293B")}
           onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#0F172A")}>
           <Home size={18} />
-          Return Home
+          {t("notFound.returnHome")}
         </Link>
       </div>
     </div>

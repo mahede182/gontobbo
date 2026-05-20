@@ -14,10 +14,12 @@ import {
 import { SidebarLink } from "./SidebarLink";
 import { Logo } from "./Logo";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export const SidebarNav = () => {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
+  const { t } = useTranslation();
 
   return (
     <nav className="sidebar">
@@ -25,33 +27,33 @@ export const SidebarNav = () => {
         <Logo />
       </div>
 
-      <div className="sidebar-section-title">Main</div>
-      <SidebarLink href="/" label="Dashboard" icon={LayoutDashboard} active={isActive("/")} />
-      <SidebarLink href="/reports" label="Report" icon={FileText} active={isActive("/reports")} />
+      <div className="sidebar-section-title">{t("sidebar.main")}</div>
+      <SidebarLink href="/" label={t("sidebar.dashboard")} icon={LayoutDashboard} active={isActive("/")} />
+      <SidebarLink href="/reports" label={t("sidebar.report")} icon={FileText} active={isActive("/reports")} />
 
-      <div className="sidebar-section-title">Apps</div>
-      <SidebarLink href="/staff" label="Staff" icon={Users} active={isActive("/staff")} />
+      <div className="sidebar-section-title">{t("sidebar.apps")}</div>
+      <SidebarLink href="/staff" label={t("sidebar.staff")} icon={Users} active={isActive("/staff")} />
 
-      <div className="sidebar-section-title">Hotel | Resort</div>
-      <SidebarLink href="/guests" label="Guest" icon={User} active={isActive("/guests")} />
-      <SidebarLink href="/rooms" label="Rooms" icon={DoorOpen} active={isActive("/rooms")} />
+      <div className="sidebar-section-title">{t("sidebar.hotelResort")}</div>
+      <SidebarLink href="/guests" label={t("sidebar.guest")} icon={User} active={isActive("/guests")} />
+      <SidebarLink href="/rooms" label={t("sidebar.rooms")} icon={DoorOpen} active={isActive("/rooms")} />
       <SidebarLink
         href="/bookings"
-        label="Bookings"
+        label={t("sidebar.bookings")}
         icon={Calendar}
         active={isActive("/bookings")}
       />
       <SidebarLink
         href="/invoices"
-        label="Invoice"
+        label={t("sidebar.invoice")}
         icon={FileSpreadsheet}
         active={isActive("/invoices")}
       />
 
-      <div className="sidebar-section-title">Restaurant</div>
+      <div className="sidebar-section-title">{t("sidebar.restaurant")}</div>
       <SidebarLink
         href="/orders"
-        label="Orders"
+        label={t("sidebar.orders")}
         icon={ClipboardList}
         active={isActive("/orders")}
       />

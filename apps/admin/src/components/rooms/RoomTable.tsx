@@ -1,43 +1,38 @@
 "use client";
 import React from "react";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, DoorOpen } from "lucide-react";
 import { RoomRow } from "./RoomRow";
+import { EmptyState } from "@/components/common/EmptyState";
+import { useTranslation } from "react-i18next";
 
-export const RoomTable = ({ rooms, onEdit }: any) => (
-  <table className="data-table">
-    <thead>
-      <tr>
-        <th>
-          ID <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Room Name <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Hotel <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Bed Type <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          View <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Status <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Price <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Capacity <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {rooms?.map((room: any) => (
-        <RoomRow key={room.id} room={room} onEdit={onEdit} />
-      ))}
-    </tbody>
-  </table>
-);
+export const RoomTable = ({ rooms, onEdit }: any) => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <table className="data-table">
+        <thead>
+          <tr>
+            <th>{t("rooms.id")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("rooms.roomName")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("rooms.hotel")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("rooms.bedType")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("rooms.view")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("rooms.status")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("rooms.price")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("rooms.capacity")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("common.action")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rooms?.map((room: any) => (
+            <RoomRow key={room.id} room={room} onEdit={onEdit} />
+          ))}
+        </tbody>
+      </table>
+      {(!rooms || rooms.length === 0) && (
+        <EmptyState icon={DoorOpen} title={t("rooms.noRoomsFound")} description={t("rooms.noRoomsMatch")} />
+      )}
+    </>
+  );
+};

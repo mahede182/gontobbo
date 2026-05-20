@@ -1,43 +1,35 @@
 "use client";
 import React from "react";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, ClipboardList } from "lucide-react";
 import { OrderRow } from "./OrderRow";
+import { EmptyState } from "@/components/common/EmptyState";
+import { useTranslation } from "react-i18next";
 
-export const OrderTable = ({ orders }: { orders: any[] }) => (
-  <table className="data-table">
-    <thead>
-      <tr>
-        <th>
-          Order ID <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Customer <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Date <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Total <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Status <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-        <th>
-          Action <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} />
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {orders?.map((order) => (
-        <OrderRow key={order.id} order={order} />
-      ))}
+export const OrderTable = ({ orders }: { orders: any[] }) => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <table className="data-table">
+        <thead>
+          <tr>
+            <th>{t("orders.orderId")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("orders.customer")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("orders.date")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("orders.total")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("orders.status")} <ArrowUpDown size={12} style={{ marginLeft: 4, opacity: 0.5 }} /></th>
+            <th>{t("common.action")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders?.map((order) => (
+            <OrderRow key={order.id} order={order} />
+          ))}
+        </tbody>
+      </table>
       {(!orders || orders.length === 0) && (
-        <tr>
-          <td colSpan={6} style={{ textAlign: "center", padding: "24px" }}>
-            No orders found.
-          </td>
-        </tr>
+        <EmptyState icon={ClipboardList} title={t("orders.noOrdersFound")} description={t("orders.noOrdersMatch")} />
       )}
-    </tbody>
-  </table>
-);
+    </>
+  );
+};

@@ -1,6 +1,6 @@
 export const PageHeader = ({ title, breadcrumb }: { title: string; breadcrumb: string }) => (
-  <div className="mb-24">
-    <h2>{title}</h2>
-    <small style={{ color: "#777" }}>{breadcrumb}</small>
+  <div className="page-header">
+    <h2 className="page-header-title">{title}</h2>
+    <small className="page-header-breadcrumb">{breadcrumb}</small>
   </div>
 );

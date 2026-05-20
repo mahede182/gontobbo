@@ -1,47 +1,46 @@
-import { PageHeader } from "@/components/layout/PageHeader";
-import { FileSpreadsheet } from "lucide-react";
+"use client";
+import { useState } from "react";
+import { useInvoices } from "@/hooks/useInvoices";
+import { InvoiceTable } from "@/components/invoices/InvoiceTable";
+import { DataPageLayout } from "@/components/common/DataPageLayout";
+import { useTranslation } from "react-i18next";
+import type { FilterConfig } from "@/types";
 
 export default function InvoicesPage() {
+  const [page, setPage] = useState(1);
+  const [status, setStatus] = useState("");
+  const { invoices, meta, isLoading } = useInvoices({ page, status, limit: 10 });
+  const { t } = useTranslation();
+
+  const filters: FilterConfig[] = [
+    {
+      label: t("common.status"),
+      value: status,
+      options: [
+        { label: t("invoices.allStatus"), value: "" },
+        { label: t("invoices.paid"), value: "PAID" },
+        { label: t("invoices.pending"), value: "PENDING" },
+        { label: t("invoices.overdue"), value: "OVERDUE" },
+      ],
+      onChange: (v) => { setStatus(v); setPage(1); },
+    },
+  ];
+
   return (
-    <div className="invoices-page">
-      <PageHeader title="Invoices" breadcrumb="Home > Invoices" />
-      <div
-        className="card"
-        style={{
-          minHeight: "60vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}>
-        <div
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            backgroundColor: "#F1F5F9",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "1rem",
-          }}>
-          <FileSpreadsheet size={32} color="#64748B" />
-        </div>
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "600",
-            marginBottom: "0.5rem",
-            color: "#1E293B",
-          }}>
-          Invoices & Billing
-        </h2>
-        <p style={{ color: "#64748B", maxWidth: "400px" }}>
-          The invoices module is currently being built. You will soon have access to all billing,
-          receipts, and financial records.
-        </p>
-      </div>
-    </div>
+    <DataPageLayout
+      title={t("invoices.title")}
+      breadcrumb={t("invoices.breadcrumb")}
+      searchPlaceholder={t("invoices.searchPlaceholder")}
+      filters={filters}
+      totalItems={meta?.totalItems}
+      currentCount={invoices?.length || 0}
+      page={page}
+      totalPages={meta?.totalPages}
+      onPageChange={setPage}
+      isLoading={isLoading}
+      skeletonColumns={7}
+    >
+      <InvoiceTable invoices={invoices || []} />
+    </DataPageLayout>
   );
 }
