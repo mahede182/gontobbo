@@ -13,6 +13,12 @@ Gontobbo is a sophisticated, production-grade **Full-Stack** travel platform bui
 
 **Admin:** [https://gontobbo-admin-bi84ztg9l-mahedes-projects.vercel.app/](https://gontobbo-admin-bi84ztg9l-mahedes-projects.vercel.app/)
 
+### Credentials
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **admin** | admin@gontobbo.co | Admin@1234 |
+
 ---
 
 ## 🔥 Project Highlights: AI & Full-Stack
