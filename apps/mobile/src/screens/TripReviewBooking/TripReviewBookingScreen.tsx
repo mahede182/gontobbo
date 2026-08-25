@@ -9,14 +9,13 @@ import {
   Text,
   StyleSheet,
   Image,
-  ScrollView,
   TouchableOpacity,
   SafeAreaView,
   TextInput,
   ActivityIndicator,
   Alert,
 } from "react-native";
-import { useGetTripDetailQuery, type Trip } from "@/store/api/tripsApi";
+import { useGetTripDetailQuery } from "@/store/api/tripsApi";
 import { useCreateBookingMutation } from "@/store/api/bookingsApi";
 
 import { KeyboardAwareScrollView, KeyboardToolbar } from "react-native-keyboard-controller";
@@ -178,7 +177,7 @@ const TripReviewBookingScreen = (props: Props) => {
                   guestPhone: contactNumber || undefined,
                 }).unwrap();
                 navigation.navigate("BOOKING_SUCCESS");
-              } catch (error) {
+              } catch {
                 Alert.alert("Error", "Failed to create booking. Please try again.");
               }
             }}>
@@ -234,10 +233,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   checkInDate: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  checkOutDate: {
     fontSize: 16,
     fontWeight: "bold",
   },

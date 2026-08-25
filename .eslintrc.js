@@ -1,8 +1,7 @@
 module.exports = {
   root: true,
   extends: ["expo", "prettier"],
-  // <> Use the `react-native` plugin to enable rules specific to React Native. l[:25 - :29] react-native/*
-  plugins: ["prettier", "react", "react-native"],
+  plugins: ["prettier", "react"],
   rules: {
     "prettier/prettier": [
       "error",
@@ -20,15 +19,13 @@ module.exports = {
     ],
     "react/display-name": "off",
     "no-console": "warn",
-    /**
-     *<> 0 = "off" (disable the rule)
-     *<> 1 = "warn" (show a warning for rule violations)
-     *<> 2 = "error" (show an error for rule violations)
-     */
-    "react-native/no-unused-styles": 2,
-    "react-native/no-inline-styles": 2,
-    "react-native/no-color-literals": 2,
-    "react-native/no-single-element-style-arrays": 2,
+    "@typescript-eslint/no-empty-object-type": "off",
+    "import/no-unresolved": [
+      "error",
+      {
+        ignore: ["^@env$"],
+      },
+    ],
   },
   settings: {
     react: {
@@ -51,6 +48,34 @@ module.exports = {
       parserOptions: {
         project: "./tsconfig.json",
         tsconfigRootDir: __dirname,
+      },
+    },
+    // CLI scripts, seeders, and loggers intentionally use console
+    {
+      files: [
+        "apps/backend/prisma/**/*.{js,ts}",
+        "apps/backend/src/index.ts",
+        "apps/backend/src/config/env.ts",
+        "apps/backend/src/config/gemini.ts",
+        "apps/backend/src/middleware/errorHandler.ts",
+        "apps/backend/src/modules/**/*.ts",
+        "apps/mobile/src/utils/applogger.ts",
+        "apps/mobile/src/config/ReactotronConfig.ts",
+      ],
+      rules: {
+        "no-console": "off",
+      },
+    },
+    // React Native rules only apply to the mobile app
+    {
+      files: ["apps/mobile/**/*.{js,jsx,ts,tsx}"],
+      plugins: ["react-native"],
+      rules: {
+        "react-native/no-unused-styles": "error",
+        // Dynamic/glass UI styles are intentional; StyleSheet for every opacity is noise
+        "react-native/no-inline-styles": "off",
+        "react-native/no-color-literals": "off",
+        "react-native/no-single-element-style-arrays": "error",
       },
     },
   ],

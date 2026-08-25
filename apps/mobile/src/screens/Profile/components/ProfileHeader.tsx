@@ -14,7 +14,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userData, displayName, em
       <View style={styles.profileContainer}>
         <View style={styles.imgBorder}>
           <Image
-            style={[styles.profileImage, { borderRadius: 40 }]}
+            style={styles.profileImage}
             source={
               userData?.avatar
                 ? { uri: userData.avatar }

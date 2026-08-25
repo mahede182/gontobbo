@@ -17,7 +17,6 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "moti";
 import { typography } from "@/theme/typography";
 import { dynamicCSS } from "@/utils/styles";
-import { isIOS } from "@/utils/device";
 import { useGetHotelDetailQuery } from "@/store/api/hotelsApi";
 import { useAddToWishlistMutation } from "@/store/api/wishlistApi";
 
@@ -374,9 +373,6 @@ const styles = StyleSheet.create({
   reviewText: {
     color: colors.neutral700,
     marginBottom: 4,
-  },
-  reviewRating: {
-    flexDirection: "row",
   },
 
   locationAddress: {

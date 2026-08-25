@@ -24,7 +24,7 @@ const WishList = (): JSX.Element => {
   const handleRemove = async (id: string) => {
     try {
       await removeFromWishlistMutation(id).unwrap();
-    } catch (error) {
+    } catch {
       Alert.alert("Error", "Failed to remove item from wishlist");
     }
   };

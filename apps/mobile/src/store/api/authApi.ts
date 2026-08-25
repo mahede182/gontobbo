@@ -1,5 +1,5 @@
 import { apiSlice } from "../slices/apiSlice";
-import type { User, AuthTokens } from "@/@types/auth.type";
+import type { User } from "@/@types/auth.type";
 import { saveTokens, saveItem, clearTokens } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/@types/storage.type";
 import { setCredentials, clearCredentials, setGuestMode } from "../slices/authSlice";

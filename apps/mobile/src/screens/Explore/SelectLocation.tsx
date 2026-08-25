@@ -1,14 +1,6 @@
 import React, { useState } from "react";
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
 import { colors } from "@/theme/colors";
-import { spacing } from "@/theme/spacing";
 import { Box, RestyleText } from "@/theme";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import GradientTitle from "@/components/GradientTitle";

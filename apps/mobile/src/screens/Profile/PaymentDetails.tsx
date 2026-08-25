@@ -1,7 +1,6 @@
 import { StyleSheet, FlatList } from "react-native";
 import { SafeAreaView } from "moti";
 import { colors } from "@/theme/colors";
-import { images } from "@/theme/images";
 import HeaderTitle from "@/components/HeaderTitle";
 import PaymentMethodItem from "./components/PaymentMethodItem";
 import { PAYMENT_METHODS } from "@/constants/paymentMethods";

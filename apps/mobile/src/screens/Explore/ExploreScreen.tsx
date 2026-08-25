@@ -6,7 +6,6 @@ import Tag from "../Home/component/Tag";
 import SearchForm from "./component/SearchForm";
 import TripExplore from "./component/TripExplore";
 import FlightExplore from "./component/FlightExplore";
-import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native";
 import { TAGS_DATA } from "@/data/tagData";
 import Background from "@/components/Background";

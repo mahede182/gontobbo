@@ -10,13 +10,8 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "@/@types/theme.type";
 import { validateEmail, validatePassword } from "@/utils/helper";
 import Background from "@/components/Background";
-import { View } from "moti";
 import { useRegisterMutation } from "@/store/api/authApi";
-import {
-  KeyboardAwareScrollView,
-  KeyboardToolbar,
-  KeyboardStickyView,
-} from "react-native-keyboard-controller";
+import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller";
 import { useKeyboardAnimation } from "@/hooks/useKeyboardAnimation";
 
 const RegisterScreen: React.FC = (): JSX.Element => {

@@ -16,33 +16,38 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { MotiView } from "moti";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { typography } from "@/theme/typography";
-import { useTranslation } from "react-i18next";
 
 const SearchResult = () => {
   const navigation = useNavigation<any>();
-  const { t } = useTranslation();
   const route = useRoute();
-  const params = (route.params as any) ?? {};
+  const routeParams = (route.params as Record<string, string | undefined>) ?? {};
+  const {
+    location: paramLocation,
+    selectedLocation,
+    checkIn,
+    checkOut,
+    guests,
+    rooms,
+  } = routeParams;
   const [sortBy, setSortBy] = useState<string>("");
 
-  const location = params.location || params.selectedLocation || "Nearby Hotels";
+  const location = paramLocation || selectedLocation || "Nearby Hotels";
   const subtitle = [
-    params.checkIn,
-    params.checkOut,
-    params.rooms ? `${params.rooms} Rooms` : null,
-    params.guests ? `${params.guests} Adults` : null,
+    checkIn,
+    checkOut,
+    rooms ? `${rooms} Rooms` : null,
+    guests ? `${guests} Adults` : null,
   ]
     .filter(Boolean)
     .join(" · ");
 
   const searchParams = useMemo(() => {
-    const p: any = {};
-    if (params.location || params.selectedLocation)
-      p.location = params.location || params.selectedLocation;
-    if (params.checkIn) p.checkIn = params.checkIn;
-    if (params.checkOut) p.checkOut = params.checkOut;
-    if (params.guests) p.guests = params.guests;
-    if (params.rooms) p.rooms = params.rooms;
+    const p: Record<string, string> = {};
+    if (paramLocation || selectedLocation) p.location = paramLocation || selectedLocation || "";
+    if (checkIn) p.checkIn = checkIn;
+    if (checkOut) p.checkOut = checkOut;
+    if (guests) p.guests = guests;
+    if (rooms) p.rooms = rooms;
     if (sortBy === "price") {
       p.sortBy = "price";
       p.sortOrder = "asc";
@@ -51,7 +56,7 @@ const SearchResult = () => {
       p.sortOrder = "asc";
     }
     return p;
-  }, [params, sortBy]);
+  }, [paramLocation, selectedLocation, checkIn, checkOut, guests, rooms, sortBy]);
 
   const { data, isLoading } = useSearchHotelsQuery(searchParams);
   const hotels = (data as any)?.data ?? data ?? [];
@@ -142,7 +147,7 @@ const SearchResult = () => {
                 rating={item.rating}
                 reviewCount={item.reviewCount}
                 imageUrl={item.images?.[0]}
-                searchParams={params}
+                searchParams={routeParams}
               />
             </MotiView>
           )}

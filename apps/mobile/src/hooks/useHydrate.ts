@@ -5,6 +5,7 @@ import { setCredentials, clearCredentials } from "@/store/slices/authSlice";
 import { setFirstLaunch } from "@/store/slices/appSlice";
 import { getTokens } from "@/utils/storage";
 import { APP_INITIALIZED } from "@/constants/config";
+import { BASE_URL } from "@/constants/urls";
 // import { INTRO_SHOWN } from "@/constants/config";
 
 export const useHydrate = () => {
@@ -18,7 +19,7 @@ export const useHydrate = () => {
       try {
         const tokens = await getTokens();
         if (tokens?.accessToken) {
-          const result = await fetch(`${require("@/constants/urls").BASE_URL}/auth/me`, {
+          const result = await fetch(`${BASE_URL}/auth/me`, {
             headers: { Authorization: `Bearer ${tokens.accessToken}` },
           });
           if (result.ok) {

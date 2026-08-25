@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  TouchableOpacity,
-} from "react-native";
+import { Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "moti";
 import HeaderTitle from "@/components/HeaderTitle";
 import { colors } from "@/theme/colors";

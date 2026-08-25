@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { MotiView } from "moti";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";

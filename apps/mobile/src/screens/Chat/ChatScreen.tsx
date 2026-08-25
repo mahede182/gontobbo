@@ -1,19 +1,14 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import {
-  SafeAreaView,
   StyleSheet,
   View,
-  ActivityIndicator,
   Platform,
-  KeyboardAvoidingView,
   FlatList,
   TextInput,
   TouchableOpacity,
   Text,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { MotiView } from "moti";
-import { LinearGradient } from "expo-linear-gradient";
 import HeaderTitle from "@/components/HeaderTitle";
 import { colors } from "@/theme/colors";
 import { fontSizes } from "@/theme/fontSizes";
@@ -45,14 +40,6 @@ const ChatScreen: React.FC = (): JSX.Element => {
       },
     ]);
   }, []);
-
-  // Process initial message from HomeScreen
-  useEffect(() => {
-    if (initialMessage && !hasProcessedInitial.current) {
-      hasProcessedInitial.current = true;
-      handleSendMessage(initialMessage);
-    }
-  }, [initialMessage]);
 
   const handleSendMessage = useCallback(
     async (text: string) => {
@@ -88,7 +75,7 @@ const ChatScreen: React.FC = (): JSX.Element => {
           createdAt: new Date(),
         };
         setMessages((prev) => [...prev, aiMsg]);
-      } catch (err) {
+      } catch {
         const errorMsg: Message = {
           id: Date.now().toString() + "_err",
           text: "Sorry, I couldn't process that right now. Please try again.",
@@ -100,6 +87,14 @@ const ChatScreen: React.FC = (): JSX.Element => {
     },
     [messages, sendChat],
   );
+
+  // Process initial message from HomeScreen
+  useEffect(() => {
+    if (initialMessage && !hasProcessedInitial.current) {
+      hasProcessedInitial.current = true;
+      handleSendMessage(initialMessage);
+    }
+  }, [initialMessage, handleSendMessage]);
 
   return (
     <Background>
@@ -147,74 +142,10 @@ const ChatScreen: React.FC = (): JSX.Element => {
 export default ChatScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.neutral100,
-  },
   listContent: {
     paddingHorizontal: 16,
     paddingBottom: 20,
     paddingTop: 10,
-  },
-  messageWrapper: {
-    marginBottom: 20,
-    maxWidth: "85%",
-    flexDirection: "row",
-    alignItems: "flex-end",
-  },
-  userMessageWrapper: {
-    alignSelf: "flex-end",
-  },
-  aiMessageWrapper: {
-    alignSelf: "flex-start",
-  },
-  aiAvatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.blue800,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 8,
-    marginBottom: 20,
-  },
-  messageContent: {
-    flex: 1,
-  },
-  bubble: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
-  },
-  userBubble: {
-    borderBottomRightRadius: 4,
-  },
-  aiBubble: {
-    backgroundColor: colors.white,
-    borderBottomLeftRadius: 4,
-  },
-  messageText: {
-    fontFamily: typography.poppinsRegular,
-    fontSize: fontSizes.md,
-    lineHeight: 22,
-  },
-  userText: {
-    color: colors.white,
-  },
-  aiText: {
-    color: colors.neutral700,
-  },
-  timeText: {
-    fontFamily: typography.poppinsRegular,
-    fontSize: fontSizes.xs,
-    color: colors.neutral400,
-    marginTop: 6,
-    marginHorizontal: 4,
   },
   inputContainer: {
     borderTopLeftRadius: 20,

@@ -1,6 +1,6 @@
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import { Box, RestyleText } from "@/theme";
+import { RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { fontSizes } from "@/theme/fontSizes";

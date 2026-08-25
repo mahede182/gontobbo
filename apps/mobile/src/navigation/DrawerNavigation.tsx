@@ -20,7 +20,6 @@ import { useLogoutMutation } from "@/store/api/authApi";
 import { AppLogger } from "@/utils/applogger";
 import { clearTokens, getTokens } from "@/utils/storage";
 import { useAuth } from "@/hooks/useAuth";
-import { useTranslation } from "react-i18next";
 
 const Drawer = createDrawerNavigator();
 

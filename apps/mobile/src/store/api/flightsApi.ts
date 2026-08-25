@@ -1,5 +1,5 @@
 import { apiSlice } from "../slices/apiSlice";
-import type { Flight, FlightSearchParams, ApiResponse, PaginatedResponse } from "@/@types/api.type";
+import type { Flight, ApiResponse, PaginatedResponse } from "@/@types/api.type";
 import { FLIGHTS, FLIGHT_DETAIL } from "@/constants/urls";
 
 export const flightsApi = apiSlice.injectEndpoints({

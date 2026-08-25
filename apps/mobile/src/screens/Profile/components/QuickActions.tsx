@@ -24,7 +24,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({ provider, onNavigate }) => 
         <Image style={styles.detailsIcon} source={images.rightArrow} />
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.detailsRow, { borderBottomWidth: 0 }]}
+        style={[styles.detailsRow, styles.detailsRowLast]}
         onPress={() => onNavigate("WISH_LIST")}>
         <Text style={styles.detailsLabel}>{t("Profile.wishList")}</Text>
         <Image style={styles.detailsIcon} source={images.rightArrow} />
@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.neutral300,
+  },
+  detailsRowLast: {
+    borderBottomWidth: 0,
   },
   detailsLabel: {
     fontSize: 16,

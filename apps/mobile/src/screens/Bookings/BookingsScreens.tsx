@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import { colors } from "@/theme/colors";
 import type { Booking } from "@/@types/api.type";
 import { Alert } from "react-native";
@@ -12,14 +11,13 @@ import BookingEmptyState from "./components/BookingEmptyState";
 import Background from "@/components/Background";
 
 const BookingsScreens: React.FC = (): JSX.Element => {
-  const navigation = useNavigation<any>();
   const [activeFilter, setActiveFilter] = useState<BookingTypeFilter>("ALL");
 
   const queryParams =
     activeFilter === "ALL" ? undefined : { type: activeFilter as "HOTEL" | "TRIP" };
 
-  const { data: response, isLoading, isFetching } = useGetBookingsQuery(queryParams);
-  const [cancelBooking, { isLoading: isCancelling }] = useCancelBookingMutation();
+  const { data: response, isLoading } = useGetBookingsQuery(queryParams);
+  const [cancelBooking] = useCancelBookingMutation();
   const bookings = response?.data ?? [];
 
   const handleCancelPress = useCallback(
@@ -36,7 +34,7 @@ const BookingsScreens: React.FC = (): JSX.Element => {
               try {
                 await cancelBooking(booking.id).unwrap();
                 Alert.alert("Success", "Booking cancelled successfully.");
-              } catch (error) {
+              } catch {
                 Alert.alert("Error", "Failed to cancel booking. Please try again.");
               }
             },
@@ -48,7 +46,7 @@ const BookingsScreens: React.FC = (): JSX.Element => {
     [cancelBooking],
   );
 
-  const handleCardPress = useCallback((booking: Booking) => {}, []);
+  const handleCardPress = useCallback((_booking: Booking) => {}, []);
 
   const renderItem = useCallback(
     ({ item }: { item: Booking }) => (
@@ -79,7 +77,6 @@ const BookingsScreens: React.FC = (): JSX.Element => {
           contentContainerStyle={[styles.listContent, !bookings.length && styles.listEmpty]}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<BookingEmptyState />}
-          ItemSeparatorComponent={null}
         />
       )}
     </Background>
@@ -89,27 +86,6 @@ const BookingsScreens: React.FC = (): JSX.Element => {
 export default BookingsScreens;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white100,
-    marginBottom: 40,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 8,
-  },
-  headerTitle: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: colors.neutral700,
-    flex: 1,
-  },
-  spinner: {
-    marginLeft: 8,
-  },
   tabDivider: {
     height: 1,
     backgroundColor: colors.neutral200,

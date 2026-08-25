@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { TextInput, StyleSheet } from "react-native";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";

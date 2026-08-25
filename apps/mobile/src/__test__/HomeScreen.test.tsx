@@ -1,6 +1,4 @@
 // HomeScreen.test.tsx
-import React from "react";
-import HomeScreen from "@/screens/Home/HomeScreen";
 
 // Mock imports
 jest.mock("react-i18next", () => ({

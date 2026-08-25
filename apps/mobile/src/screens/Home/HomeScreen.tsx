@@ -6,7 +6,6 @@ import { Theme } from "@/@types/theme.type";
 import {
   Image,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -22,7 +21,6 @@ import { typography } from "@/theme/typography";
 import { fontSizes } from "@/theme/fontSizes";
 import { colors } from "@/theme/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useAppSelector } from "@/store/hooks";
 import { TAGS_DATA } from "@/data/tagData";
 import Icon from "@expo/vector-icons/Ionicons";
 import Background from "@/components/Background";
@@ -34,7 +32,6 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
   const navigation = useNavigation<any>();
   const { t } = useTranslation();
   const { images } = useTheme<Theme>();
-  const { user } = useAppSelector((state) => state.auth);
   const [activeTag, setActiveTag] = useState("Hotels");
   const [aiQuery, setAiQuery] = useState("");
 
@@ -135,10 +132,6 @@ const HomeScreen: React.FC<Props> = (props: Props): JSX.Element => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.neutral100,
-  },
   scrollContent: {
     paddingBottom: 100,
   },

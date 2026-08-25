@@ -1,12 +1,10 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { MotiView } from "moti";
 import { Box, RestyleText } from "@/theme";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
 import { Ionicons } from "@expo/vector-icons";
 import { getStatusColor } from "@/utils/styles";
-import { Baggage } from "@/@types/auth.type";
 import { TravelDocument } from "@/@types/profile.type";
 
 interface DocumentItemProps {

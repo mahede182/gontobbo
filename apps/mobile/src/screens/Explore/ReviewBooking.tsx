@@ -54,7 +54,7 @@ const ReviewBooking = () => {
   }, [hotel, roomId]);
 
   const [isGuestModalVisible, setIsGuestModalVisible] = useState(false);
-  const [isEditStateVisible, setIsEditStateVisible] = useState(false);
+  const [, setIsEditStateVisible] = useState(false);
   const [bookingFor, setBookingFor] = useState<"MYSELF" | "SOMEONE_ELSE">("MYSELF");
   const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -94,7 +94,7 @@ const ReviewBooking = () => {
         guestState: "USA", // Default or from state section
       }).unwrap();
       navigation.navigate("BOOKING_SUCCESS");
-    } catch (error) {
+    } catch {
       Alert.alert("Error", "Failed to create booking. Please try again.");
     }
   };

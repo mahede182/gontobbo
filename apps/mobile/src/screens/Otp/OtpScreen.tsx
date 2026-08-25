@@ -82,9 +82,6 @@ const OtpScreen = (props: Props) => {
 export default OtpScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 20,
-  },
   title: {
     fontFamily: typography.poppinsMedium,
     fontSize: 24,

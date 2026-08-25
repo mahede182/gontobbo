@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import {
   GoogleSignin,

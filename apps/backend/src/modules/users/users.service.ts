@@ -114,7 +114,7 @@ export async function updateBaggage(userId: string, items: UpdateBaggageInput) {
   // Delete existing and recreate
   await prisma.baggage.deleteMany({ where: { userId } });
 
-  const created = await prisma.baggage.createMany({
+  await prisma.baggage.createMany({
     data: items.map((item) => ({
       userId,
       type: item.type,

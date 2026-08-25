@@ -7,7 +7,6 @@ import Icon from "@expo/vector-icons/MaterialIcons";
 import Feather from "@expo/vector-icons/Feather";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
-import GradientTitle from "@/components/GradientTitle";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import HeaderTitle from "@/components/HeaderTitle";
@@ -185,23 +184,9 @@ const SelectDateScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    height: 36,
-    width: 36,
-    marginRight: 10,
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.neutral200,
-    backgroundColor: colors.white,
-  },
   container: {
     flex: 1,
     backgroundColor: colors.neutral50,
-  },
-  headerTitleSelect: {
-    fontFamily: typography.poppinsBold,
-    fontSize: 20,
-    color: colors.blue800,
   },
   calendarContainer: {
     marginTop: 10,

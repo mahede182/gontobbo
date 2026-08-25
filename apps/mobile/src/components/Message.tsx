@@ -34,7 +34,7 @@ export const MessageItem = ({ item, index }: { item: Message; index: number }) =
             <Text style={[styles.messageText, styles.aiText]}>{item.text}</Text>
           </View>
         )}
-        <Text style={[styles.timeText, isUser ? { textAlign: "right" } : { textAlign: "left" }]}>
+        <Text style={[styles.timeText, isUser ? styles.timeTextRight : styles.timeTextLeft]}>
           {item.createdAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
         </Text>
       </View>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 20,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 5,
@@ -102,5 +102,11 @@ const styles = StyleSheet.create({
     color: colors.neutral400,
     marginTop: 6,
     marginHorizontal: 4,
+  },
+  timeTextRight: {
+    textAlign: "right",
+  },
+  timeTextLeft: {
+    textAlign: "left",
   },
 });

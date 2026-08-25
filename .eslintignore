@@ -26,3 +26,9 @@ coverage/
 
 # Assets
 assets/
+
+# Admin uses its own ESLint flat config (eslint.config.mjs)
+apps/admin/**
+
+# Backend build output
+apps/backend/dist/**

@@ -10,34 +10,13 @@ import ChatScreen from "@/screens/Chat";
 import TravelScreens from "@/screens/Explore";
 import ProfileScreen from "@/screens/Profile";
 import DrawerNavigation from "./DrawerNavigation";
-import { isIOS } from "@/utils/device";
-import { getItem } from "@/utils/storage";
-import { useNavigation } from "@react-navigation/native";
 import { TabStackParamList } from "@/@types/navigation.type";
 import { dynamicCss } from "@/utils/styles";
 import BookingsScreens from "@/screens/Bookings";
-import { AppLogger } from "@/utils/applogger";
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigation = () => {
-  const [bookingsCount, setBookingsCount] = React.useState(0);
-  const navigation = useNavigation();
-
-  React.useEffect(() => {
-    const fetchBookingsCount = async () => {
-      try {
-        const bookings = await getItem("bookings");
-        setBookingsCount(bookings?.length);
-      } catch (error) {
-        AppLogger.error("Error fetching bookings count:", error);
-      }
-    };
-
-    const unsubscribe = navigation.addListener("focus", fetchBookingsCount);
-
-    return unsubscribe;
-  }, [navigation]);
   const { t } = useTranslation();
   return (
     <Tab.Navigator
